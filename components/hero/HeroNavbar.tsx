@@ -1,9 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ChevronDown, MessageCircle, Search, ShoppingBag, SlidersHorizontal } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import MagneticButton from "@/components/ui/MagneticButton";
+import Logo from "@/assets/Logo.png";
 
 export default function HeroNavbar() {
   return (
@@ -23,16 +26,31 @@ export default function HeroNavbar() {
         <div className="relative mx-auto flex w-full items-center justify-between gap-3 px-4 py-3 sm:px-6">
 
           {/* Brand */}
-          <div className="relative flex min-w-[150px] items-center">
+          <Link
+            href="/"
+            className="relative flex min-w-[150px] items-center gap-3"
+            aria-label="Go to home"
+          >
+            <div className="relative h-10 w-10 shrink-0">
+              <Image
+                src={Logo}
+                alt="Protronics"
+                fill
+                sizes="40px"
+                className="object-contain"
+                quality={92}
+                priority
+              />
+            </div>
             <div className="leading-none">
-              <div className="text-[15px] font-semibold tracking-tight text-[#39ff88]">
-                Protronics
+              <div className="text-[15px] font-semibold tracking-tight text-white">
+                PROTRONICS
               </div>
               <div className="mt-1 hidden text-[11px] text-white/55 lg:block">
                 Premium. Refurbished. Perfected.
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Search */}
           <div className="relative hidden flex-1 items-center md:flex">
