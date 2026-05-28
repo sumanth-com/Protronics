@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import Footer from "@/components/footer/Footer";
+import HeroNavbar from "@/components/hero/HeroNavbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans bg-[#fafafa] text-black overflow-x-hidden">
         <SmoothScroll>
+          <HeroNavbar />
+          {/* Spacer for fixed navbar */}
+          <div className="h-[60px] sm:h-[64px]" />
           {children}
           <Footer />
         </SmoothScroll>
