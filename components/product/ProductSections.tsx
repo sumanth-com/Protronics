@@ -11,8 +11,8 @@ export function ProductInspectionReport({
   inspection: InspectionResult[];
 }) {
   return (
-    <section className="rounded-2xl border border-white/[0.08] bg-[#141816]/90 p-6 sm:p-8 supports-[backdrop-filter]:backdrop-blur-xl">
-      <p className="text-[12px] font-medium tracking-[0.2em] text-[#39ff88]/80">
+    <section className="rounded-2xl border border-white/[0.08] bg-black p-6 sm:p-8 supports-[backdrop-filter]:backdrop-blur-xl">
+      <p className="text-[12px] font-medium tracking-[0.2em] text-white/55">
         INSPECTION REPORT
       </p>
       <h2 className="mt-2 text-[22px] font-semibold text-white sm:text-[26px]">
@@ -28,7 +28,7 @@ export function ProductInspectionReport({
             className={cn(
               "flex items-center justify-between rounded-xl border px-4 py-3.5",
               item.passed
-                ? "border-[#39ff88]/20 bg-[#39ff88]/[0.04]"
+                ? "border-white/20 bg-white/[0.04]"
                 : "border-white/10 bg-white/[0.03]",
             )}
           >
@@ -36,7 +36,7 @@ export function ProductInspectionReport({
               <span
                 className={cn(
                   "grid h-8 w-8 place-items-center rounded-full",
-                  item.passed ? "bg-[#39ff88]/15 text-[#39ff88]" : "bg-white/10 text-white/50",
+                  item.passed ? "bg-white/10 text-white" : "bg-white/10 text-white/50",
                 )}
               >
                 {item.passed ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
@@ -63,7 +63,7 @@ export function ProductHighlights({
   return (
     <section className="space-y-10">
       <div>
-        <p className="text-[12px] font-medium tracking-[0.2em] text-[#39ff88]/80">HIGHLIGHTS</p>
+        <p className="text-[12px] font-medium tracking-[0.2em] text-white/55">HIGHLIGHTS</p>
         <h2 className="mt-2 text-[22px] font-semibold text-white sm:text-[26px]">
           Why choose this appliance?
         </h2>
@@ -71,7 +71,7 @@ export function ProductHighlights({
           {highlights.map((h) => (
             <div
               key={h.title}
-              className="rounded-2xl border border-white/[0.08] bg-[#141816]/90 p-5 supports-[backdrop-filter]:backdrop-blur-xl"
+              className="rounded-2xl border border-white/[0.08] bg-black p-5 supports-[backdrop-filter]:backdrop-blur-xl"
             >
               <h3 className="text-[16px] font-semibold text-white">{h.title}</h3>
               <p className="mt-2 text-[14px] leading-6 text-white/55">{h.description}</p>
@@ -86,7 +86,7 @@ export function ProductHighlights({
           {(idealCards.length > 0 ? idealCards : IDEAL_FOR_CARDS).map((card) => (
             <div
               key={card.title}
-              className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#39ff88]/[0.08] to-transparent p-5"
+              className="rounded-2xl border border-white/[0.08] bg-gradient-to-br from-white/[0.04] to-transparent p-5"
             >
               <h4 className="text-[15px] font-semibold text-white">{card.title}</h4>
               <p className="mt-2 text-[13px] leading-5 text-white/55">{card.description}</p>
@@ -110,8 +110,8 @@ export function ProductWarrantyDelivery({
   installationSupport: string;
 }) {
   return (
-    <section className="rounded-2xl border border-white/[0.08] bg-[#141816]/90 p-6 sm:p-8 supports-[backdrop-filter]:backdrop-blur-xl">
-      <p className="text-[12px] font-medium tracking-[0.2em] text-[#39ff88]/80">
+    <section className="rounded-2xl border border-white/[0.08] bg-black p-6 sm:p-8 supports-[backdrop-filter]:backdrop-blur-xl">
+      <p className="text-[12px] font-medium tracking-[0.2em] text-white/55">
         WARRANTY & DELIVERY
       </p>
       <h2 className="mt-2 text-[22px] font-semibold text-white">Peace of mind included</h2>
@@ -134,7 +134,7 @@ export function ProductWarrantyDelivery({
       <ul className="mt-5 space-y-2">
         {coverage.map((item) => (
           <li key={item} className="flex items-start gap-2 text-[13px] text-white/60">
-            <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#39ff88]/80" />
+            <Check className="mt-0.5 h-4 w-4 shrink-0 text-white/55" />
             {item}
           </li>
         ))}

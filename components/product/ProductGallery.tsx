@@ -22,7 +22,7 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
       <div className={cn("flex h-full min-h-[260px] flex-col gap-2 sm:min-h-[320px] lg:min-h-0", className)}>
         <div
           className={cn(
-            "relative min-h-0 flex-1 overflow-hidden rounded-2xl bg-[#1a1d1a]",
+            "relative min-h-0 flex-1 overflow-hidden rounded-2xl bg-black",
             "border border-white/[0.08]",
           )}
           onMouseEnter={() => setZoom(true)}
@@ -60,7 +60,7 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
               onClick={() => setActive(i)}
               className={cn(
                 "relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border sm:h-16 sm:w-16",
-                i === active ? "border-[#39ff88]/50" : "border-white/10 opacity-70",
+                i === active ? "border-white/50" : "border-white/10 opacity-70",
               )}
             >
               <Image src={img} alt="" fill className="object-cover object-center" sizes="64px" />
@@ -106,7 +106,7 @@ export function TrustBadgeRow({ badges }: { badges: readonly string[] }) {
       {badges.map((badge) => (
         <span
           key={badge}
-          className="inline-flex items-center gap-1 rounded-full border border-[#39ff88]/20 bg-[#39ff88]/[0.06] px-2 py-0.5 text-[10px] font-medium text-[#39ff88]/90 sm:text-[11px]"
+          className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white sm:text-[11px]"
         >
           <Check className="h-3 w-3" strokeWidth={2.5} />
           {badge}

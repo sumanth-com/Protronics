@@ -1,17 +1,28 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import AboutHero from "@/components/about/AboutHero";
-import AboutMetrics from "@/components/about/AboutMetrics";
-import AboutPromise from "@/components/about/AboutPromise";
-import AboutWhyExists from "@/components/about/AboutWhyExists";
+import DeferredMount from "@/components/layout/DeferredMount";
+
+const AboutWhyExists = dynamic(
+  () => import("@/components/about/AboutWhyExists"),
+);
+const AboutPromise = dynamic(() => import("@/components/about/AboutPromise"));
+const AboutMetrics = dynamic(() => import("@/components/about/AboutMetrics"));
 
 export default function AboutPage() {
   return (
     <main>
       <AboutHero />
-      <AboutWhyExists />
-      <AboutPromise />
-      <AboutMetrics />
+      <DeferredMount minHeight="420px">
+        <AboutWhyExists />
+      </DeferredMount>
+      <DeferredMount minHeight="560px">
+        <AboutPromise />
+      </DeferredMount>
+      <DeferredMount minHeight="360px">
+        <AboutMetrics />
+      </DeferredMount>
     </main>
   );
 }

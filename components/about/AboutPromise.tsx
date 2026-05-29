@@ -60,7 +60,7 @@ export default function AboutPromise() {
 
         <div
           ref={lineRef}
-          className="mx-auto mt-10 h-px w-[min(92%,720px)] bg-[linear-gradient(to_right,transparent,rgba(57,255,136,0.35),transparent)]"
+          className="mx-auto mt-10 h-px w-[min(92%,720px)] bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.25),transparent)]"
           style={{ transform: "scaleX(0)" }}
         />
 

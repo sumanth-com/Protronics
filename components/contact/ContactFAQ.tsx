@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import SectionHeader from "@/components/contact/SectionHeader";
 import { fadeUp, stagger } from "@/lib/animations";
-import { contactGlass, greenGlow } from "@/lib/contact";
+import { contactGlass } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 const faqs = [
@@ -82,12 +82,6 @@ export default function ContactFAQ() {
                       >
                         <ChevronDown className="h-4 w-4 text-white/80" />
                       </motion.span>
-                      <div
-                        className={cn(
-                          "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100",
-                          greenGlow,
-                        )}
-                      />
                     </button>
 
                     <AnimatePresence initial={false}>

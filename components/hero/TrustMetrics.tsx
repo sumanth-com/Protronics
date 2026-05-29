@@ -28,8 +28,7 @@ export default function TrustMetrics() {
           "shadow-[0_30px_120px_rgba(0,0,0,0.70)]",
         )}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(980px_260px_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]" />
-        <div className="grid grid-cols-2 gap-2 px-4 py-2 sm:grid-cols-5 sm:gap-0 sm:px-6 sm:py-3">
+<div className="grid grid-cols-2 gap-2 px-4 py-2 sm:grid-cols-5 sm:gap-0 sm:px-6 sm:py-3">
           {metrics.map((m) => {
             const Icon = m.icon;
             return (

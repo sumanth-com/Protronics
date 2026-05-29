@@ -92,7 +92,7 @@ export default function FooterSocials({ className }: FooterSocialsProps) {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
               "group grid h-10 w-10 place-items-center rounded-full",
-              "border border-white/[0.08] bg-[#141816]/80",
+              "border border-white/[0.08] bg-black",
               "supports-[backdrop-filter]:backdrop-blur-xl",
             )}
           >

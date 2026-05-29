@@ -14,10 +14,10 @@ function CellIcon({ value, highlight }: { value: boolean; highlight?: boolean })
       <span
         className={cn(
           "inline-flex h-8 w-8 items-center justify-center rounded-full",
-          highlight ? "bg-[#39ff88]/15" : "bg-white/[0.06]",
+          highlight ? "bg-white/10" : "bg-white/[0.06]",
         )}
       >
-        <Check className={cn("h-4 w-4", highlight ? "text-[#39ff88]" : "text-white/70")} strokeWidth={2.5} />
+        <Check className={cn("h-4 w-4", highlight ? "text-white" : "text-white/70")} strokeWidth={2.5} />
       </span>
     );
   }
@@ -68,7 +68,7 @@ export default function WhyComparison() {
                       className={cn(
                         "px-3 py-4 text-center text-[12px] font-semibold sm:px-4 sm:text-[13px]",
                         col.highlight
-                          ? "bg-[#39ff88]/[0.08] text-[#39ff88]"
+                          ? "bg-white/[0.06] text-white"
                           : "text-white/55",
                       )}
                     >
@@ -89,7 +89,7 @@ export default function WhyComparison() {
                     <td className="px-4 py-4 text-[14px] font-medium text-white/90 sm:px-6 sm:text-[15px]">
                       {row.label}
                     </td>
-                    <td className="bg-[#39ff88]/[0.04] px-3 py-4 text-center sm:px-4">
+                    <td className="bg-white/[0.04] px-3 py-4 text-center sm:px-4">
                       <CellIcon value={row.protronics} highlight />
                     </td>
                     {competitorKeys.map((key) => (

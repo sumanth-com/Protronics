@@ -57,7 +57,7 @@ export default function FinalCTA() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-[#0a0c0a]">
+    <section className="relative overflow-hidden bg-black">
       {/* seamless continuation */}
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 

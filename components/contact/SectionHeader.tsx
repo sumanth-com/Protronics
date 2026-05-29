@@ -29,7 +29,7 @@ export default function SectionHeader({
       className={cn(centered && "mx-auto max-w-2xl text-center", className)}
     >
       {eyebrow ? (
-        <p className="text-[12px] font-medium tracking-[0.22em] text-[#39ff88]/80">
+        <p className="text-[12px] font-medium tracking-[0.22em] text-white/55">
           {eyebrow}
         </p>
       ) : null}
@@ -45,7 +45,7 @@ export default function SectionHeader({
       </h2>
       <div
         className={cn(
-          "mt-3 h-[2px] w-12 rounded-full bg-[#39ff88]/70",
+          "mt-3 h-[2px] w-12 rounded-full bg-white/50",
           centered && "mx-auto",
         )}
       />

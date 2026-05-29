@@ -59,7 +59,7 @@ const inputClass = (hasError: boolean) =>
     "[&:-webkit-autofill]:[box-shadow:0_0_0px_1000px_rgb(14_14_14)_inset]",
     hasError
       ? "border-red-400/50 focus:border-red-400/60 focus:ring-2 focus:ring-red-400/15"
-      : "border-white/12 focus:border-[#39ff88]/40 focus:ring-2 focus:ring-[#39ff88]/15",
+      : "border-white/12 focus:border-white/40 focus:ring-2 focus:ring-white/15",
   );
 
 export default function ContactForm() {
@@ -124,7 +124,7 @@ export default function ContactForm() {
             <div
               className={cn(
                 "relative isolate flex h-full min-h-0 flex-col",
-                "rounded-3xl border border-white/12 bg-[#0a0a0a]",
+                "rounded-3xl border border-white/12 bg-black",
                 "outline-none ring-0 focus-within:outline-none focus-within:ring-0",
                 "p-5",
               )}
@@ -149,7 +149,7 @@ export default function ContactForm() {
                         damping: 18,
                       }}
                     >
-                      <CheckCircle2 className="h-14 w-14 text-[#39ff88]" />
+                      <CheckCircle2 className="h-14 w-14 text-white" />
                     </motion.div>
                     <h3 className="mt-5 text-[22px] font-semibold text-white">
                       Request received
@@ -238,11 +238,11 @@ export default function ContactForm() {
                             "appearance-none pr-11",
                           )}
                         >
-                          <option value="" className="bg-[#111]">
+                          <option value="" className="bg-black">
                             Select refrigerator type
                           </option>
                           {FRIDGE_PRODUCTS.map((p) => (
-                            <option key={p} value={p} className="bg-[#111]">
+                            <option key={p} value={p} className="bg-black">
                               {p}
                             </option>
                           ))}

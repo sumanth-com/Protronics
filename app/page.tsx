@@ -1,13 +1,28 @@
+import dynamic from "next/dynamic";
 import HeroSlider from "@/components/hero/HeroSlider";
 import CategorySection from "@/components/categories/CategorySection";
-import WhyProtronics from "@/components/why-protronics/WhyProtronics";
-import FeaturedProducts from "@/components/featured-products/FeaturedProducts";
-import HowItWorks from "@/components/how-it-works/HowItWorks";
-import LifestyleSection from "@/components/lifestyle/LifestyleSection";
-import TestimonialsSection from "@/components/testimonials/TestimonialsSection";
-import WarrantySupport from "@/components/warranty-support/WarrantySupport";
-import FAQSection from "@/components/faq/FAQSection";
-import FinalCTA from "@/components/final-cta/FinalCTA";
+import DeferredMount from "@/components/layout/DeferredMount";
+
+const WhyProtronics = dynamic(
+  () => import("@/components/why-protronics/WhyProtronics"),
+);
+const FeaturedProducts = dynamic(
+  () => import("@/components/featured-products/FeaturedProducts"),
+);
+const HowItWorks = dynamic(
+  () => import("@/components/how-it-works/HowItWorks"),
+);
+const LifestyleSection = dynamic(
+  () => import("@/components/lifestyle/LifestyleSection"),
+);
+const TestimonialsSection = dynamic(
+  () => import("@/components/testimonials/TestimonialsSection"),
+);
+const WarrantySupport = dynamic(
+  () => import("@/components/warranty-support/WarrantySupport"),
+);
+const FAQSection = dynamic(() => import("@/components/faq/FAQSection"));
+const FinalCTA = dynamic(() => import("@/components/final-cta/FinalCTA"));
 
 export default function Home() {
   return (
@@ -15,14 +30,30 @@ export default function Home() {
       <main>
         <HeroSlider />
         <CategorySection />
-        <WhyProtronics />
-        <FeaturedProducts />
-        <HowItWorks />
-        <LifestyleSection />
-        <TestimonialsSection />
-        <WarrantySupport />
-        <FAQSection />
-        <FinalCTA />
+        <DeferredMount minHeight="640px">
+          <WhyProtronics />
+        </DeferredMount>
+        <DeferredMount minHeight="720px">
+          <FeaturedProducts />
+        </DeferredMount>
+        <DeferredMount minHeight="560px">
+          <HowItWorks />
+        </DeferredMount>
+        <DeferredMount minHeight="520px">
+          <LifestyleSection />
+        </DeferredMount>
+        <DeferredMount minHeight="560px">
+          <TestimonialsSection />
+        </DeferredMount>
+        <DeferredMount minHeight="480px">
+          <WarrantySupport />
+        </DeferredMount>
+        <DeferredMount minHeight="480px">
+          <FAQSection />
+        </DeferredMount>
+        <DeferredMount minHeight="420px">
+          <FinalCTA />
+        </DeferredMount>
       </main>
     </div>
   );

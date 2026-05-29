@@ -86,7 +86,7 @@ export default function SupportCenter({
               className={cn(
                 "rounded-full px-3.5 py-1.5 text-[12px] font-medium capitalize transition-colors",
                 mobilePane === pane
-                  ? "bg-[#39ff88]/15 text-[#39ff88]/90"
+                  ? "bg-white/10 text-white"
                   : "text-white/45 hover:text-white/70",
               )}
             >

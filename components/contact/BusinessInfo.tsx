@@ -52,7 +52,7 @@ const items = [
 export default function BusinessInfo() {
   return (
     <section className="relative overflow-hidden bg-black py-16 sm:py-20">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(57,255,136,0.35),transparent)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.25),transparent)]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
         <motion.div
@@ -76,8 +76,8 @@ export default function BusinessInfo() {
               const content = (
                 <>
                   <div className="flex items-start gap-4">
-                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-[#39ff88]/10">
-                      <Icon className="h-4 w-4 text-[#39ff88]/90" />
+                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-white/[0.06]">
+                      <Icon className="h-4 w-4 text-white" />
                     </div>
                     <div className="min-w-0">
                       <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/45">

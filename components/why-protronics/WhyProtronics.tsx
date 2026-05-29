@@ -21,8 +21,6 @@ import { fadeUp, stagger } from "@/lib/animations";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function WhyProtronics() {
-  const glowARef = useRef<HTMLDivElement | null>(null);
-  const glowBRef = useRef<HTMLDivElement | null>(null);
   const connectorRef = useRef<HTMLDivElement | null>(null);
 
   const features = useMemo(
@@ -80,42 +78,10 @@ export default function WhyProtronics() {
   );
 
   useEffect(() => {
-    const a = glowARef.current;
-    const b = glowBRef.current;
     const connector = connectorRef.current;
-    if (!a || !b || !connector) return;
+    if (!connector) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        a,
-        { y: -10 },
-        {
-          y: 18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: a,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-
-      gsap.fromTo(
-        b,
-        { y: 12 },
-        {
-          y: -18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: b,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-
       gsap.fromTo(
         connector,
         { scaleX: 0, opacity: 0 },
@@ -139,24 +105,7 @@ export default function WhyProtronics() {
 
   return (
     <section className="relative overflow-hidden bg-black">
-      {/* Seamless continuation (no hard break) */}
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
-
-      {/* premium ambient background */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(900px_520px_at_50%_-10%,rgba(255,90,85,0.12),transparent_62%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(780px_520px_at_18%_36%,rgba(255,255,255,0.06),transparent_62%)]" />
-        <div className="absolute inset-0 opacity-[0.035] [background-image:radial-gradient(#ffffff_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
-
-        <div
-          ref={glowARef}
-          className="absolute -left-24 top-24 h-80 w-80 rounded-full bg-[#ff5a55]/[0.10] blur-3xl"
-        />
-        <div
-          ref={glowBRef}
-          className="absolute -right-24 top-44 h-96 w-96 rounded-full bg-white/[0.06] blur-3xl"
-        />
-      </div>
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
         <SectionHeading
@@ -165,17 +114,15 @@ export default function WhyProtronics() {
           description="Rigorously restored appliances with premium standards—designed to remove doubt and make refurbished feel first‑class."
         />
 
-        {/* subtle connector line behind feature rail */}
         <div className="relative mt-10 sm:mt-12">
           <div className="pointer-events-none absolute inset-x-0 top-1/2 hidden -translate-y-1/2 md:block">
             <div
               ref={connectorRef}
-              className="mx-auto h-px w-[92%] bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.10),rgba(255,90,85,0.26),rgba(255,255,255,0.10),transparent)]"
+              className="mx-auto h-px w-[92%] bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.14),rgba(255,255,255,0.14),transparent)]"
               style={{ transform: "scaleX(0)" }}
             />
           </div>
 
-          {/* Desktop: premium horizontal showcase */}
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -183,23 +130,13 @@ export default function WhyProtronics() {
             viewport={{ once: true, margin: "-15% 0px -10% 0px" }}
             className="hidden items-stretch grid-cols-2 gap-4 md:grid lg:grid-cols-4 lg:gap-5"
           >
-            {features.map((f, idx) => (
-              <motion.div
-                key={f.title}
-                variants={fadeUp}
-                className="h-full lg:col-span-1"
-              >
-                <FeatureCard
-                  icon={f.icon}
-                  title={f.title}
-                  description={f.description}
-                  tone={idx % 2 === 0 ? "cool" : "neutral"}
-                />
+            {features.map((f) => (
+              <motion.div key={f.title} variants={fadeUp} className="h-full lg:col-span-1">
+                <FeatureCard icon={f.icon} title={f.title} description={f.description} />
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Mobile: premium horizontal slider */}
           <div className="md:hidden">
             <motion.div
               variants={stagger}
@@ -209,18 +146,9 @@ export default function WhyProtronics() {
               className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
               <div className="flex snap-x snap-mandatory gap-4">
-                {features.map((f, idx) => (
-                  <motion.div
-                    key={f.title}
-                    variants={fadeUp}
-                    className="w-[86%] shrink-0 snap-start"
-                  >
-                    <FeatureCard
-                      icon={f.icon}
-                      title={f.title}
-                      description={f.description}
-                      tone={idx % 2 === 0 ? "cool" : "neutral"}
-                    />
+                {features.map((f) => (
+                  <motion.div key={f.title} variants={fadeUp} className="w-[86%] shrink-0 snap-start">
+                    <FeatureCard icon={f.icon} title={f.title} description={f.description} />
                   </motion.div>
                 ))}
               </div>
@@ -231,4 +159,3 @@ export default function WhyProtronics() {
     </section>
   );
 }
-

@@ -2,8 +2,8 @@ import { BUSINESS } from "@/lib/contact";
 
 export const shopGlass = [
   "rounded-2xl border border-white/[0.08]",
-  "bg-[#141816]/90",
-  "supports-[backdrop-filter]:bg-[#141816]/75 supports-[backdrop-filter]:backdrop-blur-xl",
+  "bg-black",
+  "supports-[backdrop-filter]:bg-black supports-[backdrop-filter]:backdrop-blur-xl",
 ].join(" ");
 
 export type ShopCategoryId =

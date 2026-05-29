@@ -11,7 +11,7 @@ import {
 import CtaButton from "@/components/ui/CtaButton";
 import SectionHeader from "@/components/contact/SectionHeader";
 import { fadeUp, stagger } from "@/lib/animations";
-import { BUSINESS, contactGlass, greenGlow } from "@/lib/contact";
+import { BUSINESS, contactGlass } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 type Option = {
@@ -91,15 +91,9 @@ export default function ContactOptions() {
                     "flex flex-col p-6",
                   )}
                 >
-                  <div
-                    className={cn(
-                      "pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100",
-                      greenGlow,
-                    )}
-                  />
                   <div className="relative flex flex-1 flex-col">
-                    <div className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] ring-1 ring-[#39ff88]/10 transition-colors group-hover:border-[#39ff88]/25 group-hover:bg-[#39ff88]/10">
-                      <Icon className="h-5 w-5 text-[#39ff88]/90" />
+                    <div className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] ring-1 ring-white/10 transition-colors group-hover:border-white/25 group-hover:bg-white/[0.06]">
+                      <Icon className="h-5 w-5 text-white" />
                     </div>
                     <h3 className="mt-5 text-[16px] font-semibold tracking-tight text-white">
                       {opt.title}

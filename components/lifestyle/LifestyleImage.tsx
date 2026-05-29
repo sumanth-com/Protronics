@@ -64,10 +64,7 @@ export default function LifestyleImage({ src, alt, className }: LifestyleImagePr
 
       {/* cinematic overlays */}
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.70),rgba(0,0,0,0.10)_60%,rgba(0,0,0,0))]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_420px_at_65%_35%,rgba(255,90,85,0.16),transparent_60%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:radial-gradient(#ffffff_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
-
-      {/* soft mask bottom */}
+{/* soft mask bottom */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-[linear-gradient(to_top,rgba(0,0,0,0.72),transparent)]" />
     </div>
   );

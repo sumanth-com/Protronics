@@ -12,16 +12,13 @@ import CtaButton from "@/components/ui/CtaButton";
 
 const footerSurface = cn(
   "rounded-[28px] border border-white/[0.08]",
-  "bg-[#141816]/90",
-  "supports-[backdrop-filter]:bg-[#141816]/75 supports-[backdrop-filter]:backdrop-blur-xl",
+  "bg-black",
+  "supports-[backdrop-filter]:bg-black supports-[backdrop-filter]:backdrop-blur-xl",
 );
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-[#0a0c0a]">
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#121512_0%,#0c0e0c_42%,#090a09_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1000px_480px_at_50%_0%,rgba(57,255,136,0.04),transparent_68%)]" />
-
+    <footer className="relative overflow-hidden bg-black">
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-10 sm:px-6 sm:pt-16">
         <FooterNewsletter className={footerSurface} />
 
@@ -34,8 +31,8 @@ export default function Footer() {
         >
           <motion.div variants={fadeUp} className="md:col-span-4">
             <div className="flex items-center gap-2">
-              <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/[0.08] bg-[#141816]/80">
-                <Sparkles className="h-5 w-5 text-[#39ff88]/90" />
+              <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/[0.08] bg-black">
+                <Sparkles className="h-5 w-5 text-white" />
               </div>
               <div className="text-[16px] font-semibold tracking-tight text-white">
                 Protronics

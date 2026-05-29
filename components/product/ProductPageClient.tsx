@@ -1,13 +1,11 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 import ProductGallery, { TrustBadgeRow } from "@/components/product/ProductGallery";
-import CallbackModal from "@/components/product/CallbackModal";
-import CompareModal from "@/components/product/CompareModal";
-import ReserveModal from "@/components/product/ReserveModal";
-import ProductRelated from "@/components/product/ProductRelated";
+import DeferredMount from "@/components/layout/DeferredMount";
 import {
   ProductHighlights,
   ProductInspectionReport,
@@ -22,6 +20,22 @@ import {
 } from "@/lib/product-detail";
 import type { ShopProduct } from "@/lib/shop";
 import { getCategoryBySlug } from "@/lib/shop";
+
+const ProductRelated = dynamic(
+  () => import("@/components/product/ProductRelated"),
+);
+const ReserveModal = dynamic(
+  () => import("@/components/product/ReserveModal"),
+  { ssr: false },
+);
+const CallbackModal = dynamic(
+  () => import("@/components/product/CallbackModal"),
+  { ssr: false },
+);
+const CompareModal = dynamic(
+  () => import("@/components/product/CompareModal"),
+  { ssr: false },
+);
 
 type ProductPageClientProps = {
   product: ProductDetail;
@@ -52,7 +66,7 @@ export default function ProductPageClient({ product, related }: ProductPageClien
   };
 
   return (
-    <main className="min-h-screen bg-[#0a0c0a] pb-32 text-white">
+    <main className="min-h-screen bg-black pb-32 text-white">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-5">
         {/* Breadcrumb */}
         <nav className="mb-3 flex items-center gap-1 overflow-hidden text-[11px] text-white/45 sm:mb-4 sm:text-[12px]">
@@ -102,7 +116,7 @@ export default function ProductPageClient({ product, related }: ProductPageClien
                 <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-white/70">
                   {product.condition}
                 </span>
-                <span className="rounded-full border border-[#39ff88]/25 bg-[#39ff88]/[0.06] px-2.5 py-0.5 text-[11px] font-medium text-[#39ff88]/90">
+                <span className="rounded-full border border-white/25 bg-white/[0.06] px-2.5 py-0.5 text-[11px] font-medium text-white">
                   {product.warranty} Warranty
                 </span>
                 <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-white/70">
@@ -119,7 +133,7 @@ export default function ProductPageClient({ product, related }: ProductPageClien
                     <span className="pb-0.5 text-[13px] text-white/40 line-through">
                       ₹{product.originalPrice.toLocaleString("en-IN")}
                     </span>
-                    <span className="mb-0.5 rounded-full bg-[#39ff88]/15 px-2 py-0.5 text-[11px] font-semibold text-[#39ff88]">
+                    <span className="mb-0.5 rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-semibold text-white">
                       {discount}% off
                     </span>
                   </>
@@ -149,7 +163,9 @@ export default function ProductPageClient({ product, related }: ProductPageClien
             deliveryTimeline={product.deliveryTimeline}
             installationSupport={product.installationSupport}
           />
-          <ProductRelated products={related} />
+          <DeferredMount minHeight="360px">
+            <ProductRelated products={related} />
+          </DeferredMount>
         </div>
       </div>
 
@@ -159,17 +175,27 @@ export default function ProductPageClient({ product, related }: ProductPageClien
         onCallback={() => setCallbackOpen(true)}
         onCompare={openCompare}
       />
-      <ReserveModal
-        product={product}
-        open={reserveOpen}
-        onClose={() => setReserveOpen(false)}
-      />
-      <CallbackModal
-        product={product}
-        open={callbackOpen}
-        onClose={() => setCallbackOpen(false)}
-      />
-      <CompareModal open={compareOpen} onClose={() => setCompareOpen(false)} products={compareProducts} />
+      {reserveOpen ? (
+        <ReserveModal
+          product={product}
+          open={reserveOpen}
+          onClose={() => setReserveOpen(false)}
+        />
+      ) : null}
+      {callbackOpen ? (
+        <CallbackModal
+          product={product}
+          open={callbackOpen}
+          onClose={() => setCallbackOpen(false)}
+        />
+      ) : null}
+      {compareOpen ? (
+        <CompareModal
+          open={compareOpen}
+          onClose={() => setCompareOpen(false)}
+          products={compareProducts}
+        />
+      ) : null}
     </main>
   );
 }

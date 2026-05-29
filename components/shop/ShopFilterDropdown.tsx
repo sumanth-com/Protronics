@@ -62,13 +62,13 @@ export default function ShopFilterDropdown({
           "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2",
           "border text-[13px] font-medium transition-colors",
           active
-            ? "border-[#39ff88]/35 bg-[#39ff88]/10 text-[#39ff88]"
-            : "border-white/[0.08] bg-[#141816]/80 text-white/75 hover:border-white/15 hover:text-white",
+            ? "border-white/35 bg-white/[0.06] text-white"
+            : "border-white/[0.08] bg-black text-white/75 hover:border-white/15 hover:text-white",
         )}
       >
         {label}
         {active ? (
-          <span className="grid h-4 min-w-4 place-items-center rounded-full bg-[#39ff88]/20 px-1 text-[10px] font-semibold text-[#39ff88]">
+          <span className="grid h-4 min-w-4 place-items-center rounded-full bg-white/15 px-1 text-[10px] font-semibold text-white">
             {selected.length}
           </span>
         ) : null}
@@ -81,7 +81,7 @@ export default function ShopFilterDropdown({
         <div
           className={cn(
             "absolute right-0 top-[calc(100%+8px)] z-50 min-w-[200px]",
-            "rounded-xl border border-white/[0.08] bg-[#121412]/95 p-2",
+            "rounded-xl border border-white/[0.08] bg-black/95 p-2",
             "shadow-[0_20px_60px_rgba(0,0,0,0.65)] backdrop-blur-xl",
           )}
         >
@@ -95,17 +95,17 @@ export default function ShopFilterDropdown({
                 className={cn(
                   "flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-[13px] transition-colors",
                   checked
-                    ? "bg-[#39ff88]/10 text-[#39ff88]"
+                    ? "bg-white/[0.06] text-white"
                     : "text-white/75 hover:bg-white/[0.04] hover:text-white",
                 )}
               >
                 <span
                   className={cn(
                     "grid h-4 w-4 shrink-0 place-items-center rounded border",
-                    checked ? "border-[#39ff88]/50 bg-[#39ff88]/20" : "border-white/20",
+                    checked ? "border-white/50 bg-white/15" : "border-white/20",
                   )}
                 >
-                  {checked ? <span className="h-1.5 w-1.5 rounded-full bg-[#39ff88]" /> : null}
+                  {checked ? <span className="h-1.5 w-1.5 rounded-full bg-white" /> : null}
                 </span>
                 {opt.label}
               </button>

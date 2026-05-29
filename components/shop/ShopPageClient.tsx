@@ -1,9 +1,10 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import ShopEmptyState from "@/components/shop/ShopEmptyState";
-import ShopHero, { ShopFilterDrawer } from "@/components/shop/ShopHero";
+import ShopHero from "@/components/shop/ShopHero";
 import ShopMobileFilters from "@/components/shop/ShopMobileFilters";
 import ShopProductCard from "@/components/shop/ShopProductCard";
 import ShopStickyFilterBar from "@/components/shop/ShopStickyFilterBar";
@@ -16,6 +17,14 @@ import {
   type ShopFilterState,
   type ShopSortId,
 } from "@/lib/shop";
+
+const ShopFilterDrawer = dynamic(
+  () =>
+    import("@/components/shop/ShopHero").then((mod) => ({
+      default: mod.ShopFilterDrawer,
+    })),
+  { ssr: false },
+);
 
 type ShopPageProps = {
   initialCategory?: string;
@@ -49,7 +58,7 @@ export default function ShopPageClient({ initialCategory }: ShopPageProps) {
   }, [handleCategoryChange]);
 
   return (
-    <main className="min-h-screen bg-[#0a0c0a] text-white">
+    <main className="min-h-screen bg-black text-white">
       <ShopHero productCount={SHOP_PRODUCTS.length} categoryCount={5} />
 
       <ShopStickyFilterBar
@@ -80,15 +89,17 @@ export default function ShopPageClient({ initialCategory }: ShopPageProps) {
       </div>
 
       <ShopFilterDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <ShopMobileFilters
-          filters={filters}
-          activeCategory={categorySlug}
-          sort={sort}
-          onCategoryChange={handleCategoryChange}
-          onFiltersChange={setFilters}
-          onSortChange={setSort}
-          onClear={handleClear}
-        />
+        {drawerOpen ? (
+          <ShopMobileFilters
+            filters={filters}
+            activeCategory={categorySlug}
+            sort={sort}
+            onCategoryChange={handleCategoryChange}
+            onFiltersChange={setFilters}
+            onSortChange={setSort}
+            onClear={handleClear}
+          />
+        ) : null}
       </ShopFilterDrawer>
     </main>
   );

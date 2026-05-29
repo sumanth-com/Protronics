@@ -1,42 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutAmbient from "@/components/about/AboutAmbient";
 import CtaButton from "@/components/ui/CtaButton";
 import { WHY_LINKS, whyGlass } from "@/lib/why";
 import { fadeUp, stagger } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function WhyFinalCTA() {
-  const orbRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const orb = orbRef.current;
-    if (!orb) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(orb, { y: -10 }, {
-        y: 16, ease: "none",
-        scrollTrigger: { trigger: orb, start: "top bottom", end: "bottom top", scrub: true },
-      });
-    }, orb);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section aria-labelledby="why-cta-heading" className="relative overflow-hidden bg-black py-20 sm:py-24">
       <AboutAmbient variant="cta" />
-      <div
-        ref={orbRef}
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#39ff88]/[0.07] blur-3xl"
-      />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
         <motion.div
@@ -77,7 +52,7 @@ export default function WhyFinalCTA() {
               )}
             >
               Talk to an Expert
-              <MessageCircle className="h-4 w-4 text-[#39ff88]/90" />
+              <MessageCircle className="h-4 w-4 text-white" />
             </a>
           </motion.div>
         </motion.div>

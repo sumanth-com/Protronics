@@ -40,17 +40,14 @@ export default function TestimonialCard({
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "group relative overflow-hidden rounded-3xl",
-        "border border-white/12 bg-white/[0.06]",
-        "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
+        "border border-white/12 bg-black",
         "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
         "p-6",
         "will-change-transform",
         className,
       )}
     >
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(680px_260px_at_15%_0%,rgba(255,90,85,0.18),transparent_58%),radial-gradient(520px_240px_at_85%_20%,rgba(255,255,255,0.07),transparent_55%)]" />
-
-      <div className="relative flex flex-col">
+<div className="relative flex flex-col">
         {testimonial.homeImageSrc ? (
           <div className="relative mb-5 overflow-hidden rounded-2xl border border-white/10 bg-white aspect-[16/9]">
             <Image
@@ -85,7 +82,7 @@ export default function TestimonialCard({
           <div className="flex items-center gap-2">
             {testimonial.verified ? (
               <span className="inline-flex items-center gap-1 rounded-full border border-white/12 bg-white/[0.05] px-2.5 py-1 text-[11px] font-medium tracking-wide text-white/70">
-                <BadgeCheck className="h-3.5 w-3.5 text-[#ff5a55]/90" />
+                <BadgeCheck className="h-3.5 w-3.5 text-white" />
                 Verified
               </span>
             ) : null}
@@ -98,7 +95,7 @@ export default function TestimonialCard({
               key={i}
               className={cn(
                 "h-4 w-4",
-                i < rating ? "text-[#ff5a55]/90" : "text-white/20",
+                i < rating ? "text-white" : "text-white/20",
               )}
               fill={i < rating ? "currentColor" : "none"}
             />

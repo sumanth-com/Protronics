@@ -36,13 +36,13 @@ export default function SupportCategories({
             )}
           >
             {active ? (
-              <span className="absolute bottom-2.5 left-0 top-2.5 w-[2px] rounded-full bg-[#39ff88]" />
+              <span className="absolute bottom-2.5 left-0 top-2.5 w-[2px] rounded-full bg-white" />
             ) : null}
             <Icon
               {...SUPPORT_ICON_PROPS}
               className={cn(
                 "mt-0.5 shrink-0",
-                active ? "text-[#39ff88]" : "text-white/50 group-hover:text-white/75",
+                active ? "text-white" : "text-white/50 group-hover:text-white/75",
               )}
               aria-hidden
             />

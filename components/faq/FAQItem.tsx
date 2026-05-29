@@ -59,8 +59,7 @@ export default function FAQItem({
         </motion.div>
 
         {/* subtle hover sheen */}
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(700px_260px_at_15%_0%,rgba(255,90,85,0.18),transparent_58%),radial-gradient(520px_240px_at_85%_20%,rgba(255,255,255,0.07),transparent_55%)]" />
-      </button>
+</button>
 
       <AnimatePresence initial={false}>
         {isOpen ? (

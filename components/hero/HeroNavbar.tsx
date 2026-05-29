@@ -1,12 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ShoppingBag, Tag } from "lucide-react";
 import Link from "next/link";
+import { ShoppingBag, Tag } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
+import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import Logo from "@/assets/Logo.png";
-import CategoriesDropdown from "@/components/hero/CategoriesDropdown";
+
+const CategoriesDropdown = dynamic(
+  () => import("@/components/hero/CategoriesDropdown"),
+  { ssr: false },
+);
 
 const navLinks = [
   { label: "Why Protronics", href: "/why" },
@@ -34,6 +40,7 @@ export default function HeroNavbar() {
           {/* Brand */}
           <Link
             href="/"
+            prefetch
             className="relative flex shrink-0 items-center gap-3"
             aria-label="Go to home"
           >
@@ -44,7 +51,7 @@ export default function HeroNavbar() {
                 fill
                 sizes="40px"
                 className="object-contain"
-                quality={92}
+                quality={IMAGE_QUALITY.logo}
                 priority
               />
             </div>
@@ -65,9 +72,9 @@ export default function HeroNavbar() {
           >
             <CategoriesDropdown />
             {navLinks.map((l) => (
-              <a key={l.label} href={l.href} className={navLinkClass}>
+              <Link key={l.label} href={l.href} prefetch className={navLinkClass}>
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
 

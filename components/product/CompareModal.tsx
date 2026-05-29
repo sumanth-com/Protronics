@@ -26,11 +26,11 @@ export default function CompareModal({ open, onClose, products }: CompareModalPr
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
-            className="fixed inset-x-4 bottom-4 top-auto z-[91] max-h-[80vh] overflow-auto rounded-2xl border border-white/[0.08] bg-[#121412] p-5 sm:inset-x-auto sm:left-1/2 sm:w-[min(900px,94vw)] sm:-translate-x-1/2"
+            className="fixed inset-x-4 bottom-4 top-auto z-[91] max-h-[80vh] overflow-auto rounded-2xl border border-white/[0.08] bg-[black] p-5 sm:inset-x-auto sm:left-1/2 sm:w-[min(900px,94vw)] sm:-translate-x-1/2"
           >
             <div className="mb-4 flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-[18px] font-semibold text-white">
-                <Scale className="h-5 w-5 text-[#39ff88]/90" />
+                <Scale className="h-5 w-5 text-white" />
                 Compare Appliances
               </h3>
               <button type="button" onClick={onClose}>

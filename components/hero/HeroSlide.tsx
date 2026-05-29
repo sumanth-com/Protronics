@@ -10,6 +10,7 @@ import {
   Truck,
 } from "lucide-react";
 import { fadeUp, stagger } from "@/lib/animations";
+import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import CtaButton from "@/components/ui/CtaButton";
 
@@ -19,9 +20,10 @@ export type Slide = {
 
 export type HeroSlideProps = {
   slide: Slide;
+  priority?: boolean;
 };
 
-export default function HeroSlide({ slide }: HeroSlideProps) {
+export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
   return (
     <div className="h-full">
       <div className="relative h-full overflow-hidden">
@@ -36,19 +38,18 @@ export default function HeroSlide({ slide }: HeroSlideProps) {
             src={slide.imageSrc}
             alt="Premium appliance lifestyle"
             fill
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
             className="object-cover"
-            quality={92}
-            priority={false}
+            quality={IMAGE_QUALITY.hero}
+            priority={priority}
+            loading={priority ? undefined : "lazy"}
           />
         </motion.div>
 
         {/* Cinematic overlays (keeps text readable, premium mood) */}
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,0,0.52)_38%,rgba(0,0,0,0.18)_62%,rgba(0,0,0,0)_80%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.62),rgba(0,0,0,0.10)_55%,rgba(0,0,0,0))]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_520px_at_65%_35%,rgba(255,255,255,0.10),transparent_60%)]" />
-
-        {/* Content overlay */}
+{/* Content overlay */}
         <div className="relative h-full px-6 py-7 md:px-10 md:py-9">
           <div className="grid h-full items-center md:grid-cols-12">
             <motion.div

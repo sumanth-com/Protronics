@@ -1,18 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafafa;
-  --foreground: #101010;
-  --muted: #6b7280;
-  --border: rgba(16, 16, 16, 0.10);
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.06);
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: #a3a3a3;
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 html,
@@ -26,10 +25,10 @@ body {
 }
 
 ::selection {
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.18);
 }
 
-/* Lenis */
+/* Lenis smooth scroll */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -43,3 +42,19 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
+/* Deferred sections — skip paint until near viewport */
+[data-defer-section]:not(:empty) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -28,23 +28,21 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "group relative flex h-full flex-col overflow-hidden rounded-2xl",
-        "border border-white/[0.08] bg-[#141816]/90",
+        "border border-white/[0.08] bg-black",
         "supports-[backdrop-filter]:backdrop-blur-xl",
         "shadow-[0_20px_60px_rgba(0,0,0,0.45)]",
       )}
     >
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(700px_280px_at_50%_0%,rgba(57,255,136,0.10),transparent_58%)]" />
-
-      <div className="relative p-4 sm:p-5">
+<div className="relative p-4 sm:p-5">
         {/* Image */}
-        <div className="relative overflow-hidden rounded-xl bg-[#1a1d1a] aspect-[4/3]">
+        <div className="relative overflow-hidden rounded-xl bg-black aspect-[4/3]">
           {product.tag ? (
             <span className="absolute left-3 top-3 z-10 rounded-full border border-white/10 bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
               {product.tag}
             </span>
           ) : null}
           {discount > 0 ? (
-            <span className="absolute right-3 top-3 z-10 rounded-full bg-[#39ff88]/15 px-2.5 py-1 text-[11px] font-semibold text-[#39ff88]">
+            <span className="absolute right-3 top-3 z-10 rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-white">
               {discount}% off
             </span>
           ) : null}
@@ -77,7 +75,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           {TRUST_BADGES.map((badge) => (
             <span
               key={badge}
-              className="inline-flex items-center gap-1 rounded-full border border-[#39ff88]/20 bg-[#39ff88]/[0.06] px-2 py-0.5 text-[10px] font-medium text-[#39ff88]/90"
+              className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white"
             >
               <Check className="h-2.5 w-2.5" strokeWidth={2.5} />
               {badge}
@@ -99,7 +97,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[10px] text-white/55">
             {product.condition}
           </span>
-          <span className="rounded-full border border-[#39ff88]/25 bg-[#39ff88]/[0.06] px-2 py-0.5 text-[10px] font-medium text-[#39ff88]/90">
+          <span className="rounded-full border border-white/25 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white">
             {product.warranty} Warranty
           </span>
         </div>

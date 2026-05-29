@@ -23,8 +23,7 @@ function PillarCard({ icon: Icon, title, description }: {
         "transition-colors hover:border-white/18",
       )}
     >
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(600px_240px_at_20%_0%,rgba(57,255,136,0.12),transparent_58%)]" />
-      <Icon className="relative h-6 w-6 text-[#39ff88]/90" strokeWidth={1.75} />
+<Icon className="relative h-6 w-6 text-white" strokeWidth={1.75} />
       <h3 className="relative mt-4 text-[16px] font-semibold text-white">{title}</h3>
       <p className="relative mt-2 text-[14px] leading-6 text-white/60">{description}</p>
     </motion.article>

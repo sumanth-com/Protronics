@@ -37,7 +37,7 @@ export default function SupportQuestions({
                 className={cn(
                   "flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-left transition-colors",
                   active
-                    ? "bg-[#39ff88]/10 text-white"
+                    ? "bg-white/[0.06] text-white"
                     : "text-white/80 hover:bg-white/[0.04] hover:text-white",
                 )}
               >
@@ -48,7 +48,7 @@ export default function SupportQuestions({
                   strokeWidth={1.75}
                   className={cn(
                     "h-5 w-5 shrink-0",
-                    active ? "text-[#39ff88]" : "text-white/25",
+                    active ? "text-white" : "text-white/25",
                   )}
                 />
               </button>

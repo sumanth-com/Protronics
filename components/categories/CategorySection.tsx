@@ -51,14 +51,7 @@ export default function CategorySection() {
           "pt-10 pb-16 sm:pt-12 sm:pb-20",
         )}
       >
-        {/* glassmorphic ambient depth */}
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-24 top-10 h-80 w-80 rounded-full bg-white/[0.05] blur-3xl" />
-          <div className="absolute right-[-120px] top-20 h-96 w-96 rounded-full bg-white/[0.04] blur-3xl" />
-          <div className="absolute left-1/2 top-44 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-white/[0.03] blur-3xl" />
-          <div className="absolute inset-0 opacity-[0.035] [background-image:radial-gradient(#ffffff_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
-        </div>
-
+        {/* categories grid */}
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
           <motion.div
             variants={stagger}
@@ -76,7 +69,7 @@ export default function CategorySection() {
 
             <motion.div
               variants={fadeUp}
-              className="mt-2.5 h-[2px] w-14 rounded-full bg-[#1b68ff]"
+              className="mt-2.5 h-[2px] w-14 rounded-full bg-white"
             />
           </motion.div>
 

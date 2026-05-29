@@ -27,9 +27,7 @@ export default function CategoryMenu() {
           "shadow-[0_30px_120px_rgba(0,0,0,0.70)]",
         )}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_260px_at_25%_0%,rgba(57,255,136,0.10),transparent_55%)]" />
-
-        <div className="-mx-4 overflow-x-auto px-4 py-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+<div className="-mx-4 overflow-x-auto px-4 py-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex items-center gap-2">
             {items.map((label, idx) => {
               const isActive = idx === active;
@@ -50,12 +48,12 @@ export default function CategoryMenu() {
                   <Refrigerator
                     className={cn(
                       "h-4 w-4",
-                      isActive ? "text-[#39ff88]" : "text-white/45",
+                      isActive ? "text-white" : "text-white/45",
                     )}
                   />
                   {label}
                   {isActive ? (
-                    <span className="pointer-events-none absolute left-3 right-3 -bottom-1 h-[2px] rounded-full bg-[#39ff88]/80 shadow-[0_0_0_6px_rgba(57,255,136,0.10)]" />
+                    <span className="pointer-events-none absolute left-3 right-3 -bottom-1 h-[2px] rounded-full bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.04)]" />
                   ) : null}
                 </button>
               );

@@ -16,7 +16,6 @@ export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const progressXRef = useRef<HTMLDivElement | null>(null);
   const progressYRef = useRef<HTMLDivElement | null>(null);
-  const glowRef = useRef<HTMLDivElement | null>(null);
   const [activeIdx, setActiveIdx] = useState(0);
 
   const steps = useMemo<ProcessStepData[]>(
@@ -57,27 +56,9 @@ export default function HowItWorks() {
     const section = sectionRef.current;
     const px = progressXRef.current;
     const py = progressYRef.current;
-    const glow = glowRef.current;
-    if (!section || !px || !py || !glow) return;
+    if (!section || !px || !py) return;
 
     const ctx = gsap.context(() => {
-      // ambient parallax glow
-      gsap.fromTo(
-        glow,
-        { y: -12 },
-        {
-          y: 18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-
-      // horizontal timeline progress (desktop)
       gsap.fromTo(
         px,
         { scaleX: 0 },
@@ -124,16 +105,6 @@ export default function HowItWorks() {
       {/* seamless continuation */}
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(1100px_640px_at_50%_-10%,rgba(255,90,85,0.12),transparent_62%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(900px_620px_at_15%_40%,rgba(255,255,255,0.06),transparent_62%)]" />
-        <div className="absolute inset-0 opacity-[0.035] [background-image:radial-gradient(#ffffff_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
-        <div
-          ref={glowRef}
-          className="absolute left-[-180px] top-28 h-[520px] w-[520px] rounded-full bg-[#ff5a55]/[0.08] blur-3xl"
-        />
-      </div>
-
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
         <SectionHeading
           eyebrow="How It Works"
@@ -158,7 +129,7 @@ export default function HowItWorks() {
                 <div className="relative">
                   {/* node */}
                   <div className="pointer-events-none absolute -top-5 left-1/2 hidden -translate-x-1/2 md:block">
-                    <div className="relative h-3 w-3 rounded-full bg-[#ff5a55]/75 shadow-[0_0_0_6px_rgba(255,90,85,0.10),0_12px_30px_rgba(0,0,0,0.55)]" />
+                    <div className="relative h-3 w-3 rounded-full bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.08),0_12px_30px_rgba(0,0,0,0.55)]" />
                   </div>
 
                   <ProcessStep data={s} active={activeIdx >= idx} />
@@ -178,7 +149,7 @@ export default function HowItWorks() {
             <div className="space-y-4">
               {steps.map((s, idx) => (
                 <motion.div key={s.step} variants={fadeUp} className="relative">
-                  <div className="pointer-events-none absolute left-[19px] top-8 h-3 w-3 rounded-full bg-[#ff5a55]/75 shadow-[0_0_0_6px_rgba(255,90,85,0.10),0_12px_30px_rgba(0,0,0,0.55)]" />
+                  <div className="pointer-events-none absolute left-[19px] top-8 h-3 w-3 rounded-full bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.08),0_12px_30px_rgba(0,0,0,0.55)]" />
                   <div className="pl-12">
                     <ProcessStep data={s} active={activeIdx >= idx} />
                   </div>

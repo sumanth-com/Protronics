@@ -27,10 +27,6 @@ export const FRIDGE_PRODUCTS = [
 ] as const;
 
 export const contactGlass = [
-  "rounded-3xl border border-white/12 bg-white/[0.05]",
-  "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
+  "rounded-3xl border border-white/12 bg-black",
   "shadow-[0_30px_100px_rgba(0,0,0,0.55)]",
 ].join(" ");
-
-export const greenGlow =
-  "bg-[radial-gradient(700px_280px_at_20%_0%,rgba(57,255,136,0.14),transparent_58%)]";

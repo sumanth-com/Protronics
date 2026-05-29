@@ -79,7 +79,7 @@ export default function HeroSlider() {
           >
             {slides.map((s, i) => (
               <SwiperSlide key={i}>
-                <HeroSlide slide={s} />
+                <HeroSlide slide={s} priority={i === 0} />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -1,20 +1,14 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { fadeUp, stagger } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import FAQAccordion from "@/components/faq/FAQAccordion";
 import type { FAQ } from "@/components/faq/FAQItem";
 import SupportCTA from "@/components/faq/SupportCTA";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function FAQSection() {
-  const glowRef = useRef<HTMLDivElement | null>(null);
-
   const faqs = useMemo<FAQ[]>(
     () => [
       {
@@ -61,43 +55,9 @@ export default function FAQSection() {
     [],
   );
 
-  useEffect(() => {
-    const glow = glowRef.current;
-    if (!glow) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        glow,
-        { y: -10 },
-        {
-          y: 18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: glow,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-    }, glow);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section className="relative overflow-hidden bg-black">
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
-
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(1200px_680px_at_50%_-10%,rgba(255,90,85,0.10),transparent_62%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(960px_700px_at_25%_55%,rgba(255,255,255,0.06),transparent_62%)]" />
-        <div className="absolute inset-0 opacity-[0.035] [background-image:radial-gradient(#ffffff_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
-        <div
-          ref={glowRef}
-          className="absolute -left-44 top-20 h-[560px] w-[560px] rounded-full bg-[#ff5a55]/[0.08] blur-3xl"
-        />
-      </div>
 
       <div className="relative mx-auto w-full max-w-4xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
         <motion.div

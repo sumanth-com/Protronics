@@ -24,7 +24,6 @@ import SupportCTA from "@/components/warranty-support/SupportCTA";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function WarrantySupport() {
-  const glowRef = useRef<HTMLDivElement | null>(null);
   const visualRef = useRef<HTMLDivElement | null>(null);
 
   const features = useMemo<SupportFeatureData[]>(
@@ -70,26 +69,10 @@ export default function WarrantySupport() {
   );
 
   useEffect(() => {
-    const glow = glowRef.current;
     const visual = visualRef.current;
-    if (!glow || !visual) return;
+    if (!visual) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        glow,
-        { y: -10 },
-        {
-          y: 18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: glow,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-
       gsap.fromTo(
         visual,
         { y: -8 },
@@ -104,7 +87,7 @@ export default function WarrantySupport() {
           },
         },
       );
-    }, glow);
+    }, visual);
 
     return () => ctx.revert();
   }, []);
@@ -112,16 +95,6 @@ export default function WarrantySupport() {
   return (
     <section className="relative overflow-hidden bg-black">
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
-
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(1200px_680px_at_50%_-10%,rgba(255,90,85,0.10),transparent_62%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(960px_700px_at_22%_55%,rgba(255,255,255,0.06),transparent_62%)]" />
-        <div className="absolute inset-0 opacity-[0.035] [background-image:radial-gradient(#ffffff_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
-        <div
-          ref={glowRef}
-          className="absolute -right-40 top-20 h-[560px] w-[560px] rounded-full bg-[#ff5a55]/[0.08] blur-3xl"
-        />
-      </div>
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
         <motion.div
@@ -194,7 +167,6 @@ export default function WarrantySupport() {
                 />
               </div>
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.75),rgba(0,0,0,0.08)_60%,rgba(0,0,0,0))]" />
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(700px_420px_at_65%_35%,rgba(255,90,85,0.16),transparent_60%)]" />
               <div className="relative p-6 sm:p-7">
                 <div className="text-[12px] font-medium tracking-[0.22em] text-white/55">
                   ALWAYS INCLUDED
@@ -204,7 +176,7 @@ export default function WarrantySupport() {
                   <br />
                   Always Included.
                 </div>
-                <div className="mt-3 h-[2px] w-10 rounded-full bg-[#ff5a55]/70" />
+                <div className="mt-3 h-[2px] w-10 rounded-full bg-white/50" />
                 <div className="mt-4 text-[12.5px] leading-6 text-white/75">
                   Clear communication, careful handling, and warranty-backed
                   service—so your purchase feels secure for the long term.

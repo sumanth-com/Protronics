@@ -46,7 +46,7 @@ function Chip({
       className={cn(
         "rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors",
         active
-          ? "border border-[#39ff88]/40 bg-[#39ff88]/12 text-[#39ff88]"
+          ? "border border-white/40 bg-white/[0.08] text-white"
           : "border border-white/[0.08] bg-white/[0.04] text-white/65",
       )}
     >
@@ -79,7 +79,7 @@ export default function ShopMobileFilters({
         <button
           type="button"
           onClick={onClear}
-          className="text-[12px] font-medium text-[#39ff88]/80"
+          className="text-[12px] font-medium text-white/55"
         >
           Clear all
         </button>
@@ -164,7 +164,7 @@ export default function ShopMobileFilters({
               onClick={() => onSortChange(opt.id)}
               className={cn(
                 "rounded-lg px-3 py-2.5 text-left text-[13px]",
-                sort === opt.id ? "bg-[#39ff88]/10 text-[#39ff88]" : "text-white/75",
+                sort === opt.id ? "bg-white/[0.06] text-white" : "text-white/75",
               )}
             >
               {opt.label}

@@ -36,8 +36,8 @@ const TimelineConnector = forwardRef<HTMLDivElement, TimelineConnectorProps>(
           className={cn(
             "absolute",
             orientation === "horizontal"
-              ? "left-0 top-1/2 h-px w-full -translate-y-1/2 bg-[linear-gradient(to_right,rgba(255,90,85,0),rgba(255,90,85,0.55),rgba(255,90,85,0.0))]"
-              : "left-0 top-0 h-full w-px bg-[linear-gradient(to_bottom,rgba(255,90,85,0),rgba(255,90,85,0.55),rgba(255,90,85,0.0))]",
+              ? "left-0 top-1/2 h-px w-full -translate-y-1/2 bg-[linear-gradient(to_right,rgba(255,255,255,0),rgba(255,255,255,0.45),rgba(255,255,255,0))]"
+              : "left-0 top-0 h-full w-px bg-[linear-gradient(to_bottom,rgba(255,255,255,0),rgba(255,255,255,0.45),rgba(255,255,255,0))]",
           )}
           style={{
             transform:

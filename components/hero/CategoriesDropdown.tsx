@@ -66,15 +66,13 @@ export default function CategoriesDropdown() {
         <div
           className={cn(
             "absolute left-1/2 top-[calc(100%+10px)] z-50 w-[min(340px,calc(100vw-2rem))] -translate-x-1/2",
-            "rounded-2xl border border-white/10 bg-[#0c0c0c]",
+            "rounded-2xl border border-white/10 bg-black",
             "shadow-[0_24px_80px_rgba(0,0,0,0.85),0_0_0_1px_rgba(255,255,255,0.04)_inset]",
             "p-4 sm:left-0 sm:translate-x-0",
           )}
           role="menu"
         >
-          <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[radial-gradient(480px_160px_at_20%_0%,rgba(255,255,255,0.08),transparent_60%)]" />
-
-          <div className="relative">
+<div className="relative">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/40">
               Shop refrigerators
             </p>

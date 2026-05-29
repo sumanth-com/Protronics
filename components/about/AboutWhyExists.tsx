@@ -46,8 +46,8 @@ export default function AboutWhyExists() {
                   "px-6 py-6 text-center sm:text-left",
                 )}
               >
-                <div className="mx-auto grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-[#39ff88]/10 sm:mx-0">
-                  <Icon className="h-5 w-5 text-[#39ff88]/90" />
+                <div className="mx-auto grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-white/[0.06] sm:mx-0">
+                  <Icon className="h-5 w-5 text-white" />
                 </div>
                 <h3 className="mt-4 text-[15px] font-semibold text-white">
                   {point.title}

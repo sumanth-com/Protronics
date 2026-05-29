@@ -13,7 +13,7 @@ export default function FooterNewsletter({ className }: FooterNewsletterProps) {
     <div className={cn("px-6 py-6 sm:px-7 sm:py-7", className)}>
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="max-w-xl">
-          <div className="text-[12px] font-medium tracking-[0.22em] text-[#39ff88]/80">
+          <div className="text-[12px] font-medium tracking-[0.22em] text-white/55">
             WHATSAPP CHANNEL
           </div>
           <div className="mt-3 text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
@@ -31,9 +31,9 @@ export default function FooterNewsletter({ className }: FooterNewsletterProps) {
           rel="noreferrer"
           className={cn(
             "inline-flex shrink-0 items-center justify-center gap-2 rounded-full",
-            "border border-[#39ff88]/40 bg-[#39ff88]/[0.08] px-6 py-3.5",
-            "text-[13px] font-semibold text-[#39ff88]",
-            "transition-colors hover:bg-[#39ff88]/12",
+            "border border-white/40 bg-white/[0.06] px-6 py-3.5",
+            "text-[13px] font-semibold text-white",
+            "transition-colors hover:bg-white/[0.08]",
           )}
         >
           Join WhatsApp Channel

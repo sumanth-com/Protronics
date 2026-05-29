@@ -38,16 +38,12 @@ export default function ProductCard({ product, className }: ProductCardProps) {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "group relative h-full overflow-hidden rounded-3xl",
-        "border border-white/12 bg-white/[0.06]",
-        "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
+        "border border-white/12 bg-black",
         "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
         "will-change-transform",
         className,
       )}
     >
-      {/* ambient edge light */}
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-[radial-gradient(900px_360px_at_50%_0%,rgba(0,0,0,0.10),transparent_55%),radial-gradient(520px_240px_at_80%_20%,rgba(255,90,85,0.14),transparent_55%)]" />
-
       <div className="relative flex h-full flex-col p-5 sm:p-6">
         {/* header badges */}
         <div className="flex flex-wrap items-center gap-2">
@@ -141,7 +137,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
       </div>
 
       {/* premium micro-line */}
-      <div className="pointer-events-none absolute bottom-0 left-0 h-px w-full bg-[linear-gradient(to_right,transparent,rgba(255,90,85,0.30),transparent)] opacity-70" />
+      <div className="pointer-events-none absolute bottom-0 left-0 h-px w-full bg-[linear-gradient(to_right,transparent,rgba(255,255,255,0.25),transparent)] opacity-70" />
     </motion.article>
   );
 }

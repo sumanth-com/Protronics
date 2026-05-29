@@ -26,7 +26,7 @@ export default function SupportAnswerPanel({
   return (
     <div className={cn("flex h-full min-h-0 flex-col", className)}>
       <div className="shrink-0 px-5 py-4 sm:px-6">
-        <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-[#39ff88]/85">
+        <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-white/55">
           {category.label}
         </p>
         <h1 className="mt-2 text-[22px] font-semibold leading-snug tracking-tight text-white sm:text-[26px]">
@@ -59,7 +59,7 @@ export default function SupportAnswerPanel({
                       href={link.href}
                       target={link.external ? "_blank" : undefined}
                       rel={link.external ? "noreferrer" : undefined}
-                      className="inline-flex text-[15px] font-medium text-[#39ff88]/90 transition-opacity hover:opacity-80"
+                      className="inline-flex text-[15px] font-medium text-white transition-opacity hover:opacity-80"
                     >
                       {link.label} →
                     </Link>
@@ -103,9 +103,9 @@ export default function SupportAnswerPanel({
             rel="noreferrer"
             className={cn(
               "inline-flex shrink-0 items-center justify-center gap-2 rounded-full",
-              "border border-[#39ff88]/45 bg-transparent px-5 py-2.5",
-              "text-[15px] font-semibold text-[#39ff88]",
-              "transition-colors hover:bg-[#39ff88]/10",
+              "border border-white/45 bg-transparent px-5 py-2.5",
+              "text-[15px] font-semibold text-white",
+              "transition-colors hover:bg-white/[0.06]",
             )}
           >
             Chat with us
@@ -116,7 +116,7 @@ export default function SupportAnswerPanel({
           For detailed inquiries, send us an email at{" "}
           <a
             href={BUSINESS.emailHref}
-            className="font-medium text-[#39ff88]/90 transition-opacity hover:opacity-80"
+            className="font-medium text-white transition-opacity hover:opacity-80"
           >
             {BUSINESS.email}
           </a>

@@ -17,7 +17,6 @@ import { cn } from "@/lib/utils";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroSection() {
-  const orbRef = useRef<HTMLDivElement | null>(null);
   const mediaRef = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(0);
 
@@ -40,26 +39,10 @@ export default function HeroSection() {
   }, [slides.length]);
 
   useEffect(() => {
-    const orb = orbRef.current;
     const media = mediaRef.current;
-    if (!orb || !media) return;
+    if (!media) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        orb,
-        { y: -10 },
-        {
-          y: 18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: orb,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-
       gsap.fromTo(
         media,
         { y: -8 },
@@ -74,24 +57,13 @@ export default function HeroSection() {
           },
         },
       );
-    }, orb);
+    }, media);
 
     return () => ctx.revert();
   }, []);
 
   return (
     <section className="relative overflow-hidden bg-black">
-      {/* ambient hero background (seamless with next section) */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(1200px_680px_at_50%_-10%,rgba(255,255,255,0.08),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(960px_700px_at_20%_50%,rgba(255,255,255,0.06),transparent_62%)]" />
-        <div className="absolute inset-0 opacity-[0.035] [background-image:radial-gradient(#ffffff_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
-        <div
-          ref={orbRef}
-          className="absolute -right-44 top-12 h-[560px] w-[560px] rounded-full bg-white/[0.06] blur-3xl"
-        />
-      </div>
-
       <div
         className={cn(
           "relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10",
@@ -196,7 +168,6 @@ export default function HeroSection() {
                     quality={92}
                   />
                   <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.70),rgba(0,0,0,0.10)_60%,rgba(0,0,0,0))]" />
-                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_520px_at_60%_35%,rgba(255,255,255,0.10),transparent_60%)]" />
                 </motion.div>
               </AnimatePresence>
             </div>

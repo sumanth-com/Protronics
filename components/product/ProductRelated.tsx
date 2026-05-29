@@ -25,7 +25,7 @@ export default function ProductRelated({ products }: ProductRelatedProps) {
     <section className="overflow-hidden">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-[12px] font-medium tracking-[0.2em] text-[#39ff88]/80">RELATED</p>
+          <p className="text-[12px] font-medium tracking-[0.2em] text-white/55">RELATED</p>
           <h2 className="mt-2 text-[22px] font-semibold text-white sm:text-[26px]">
             Similar appliances
           </h2>
@@ -49,18 +49,18 @@ export default function ProductRelated({ products }: ProductRelatedProps) {
             640: { slidesPerView: 2.2 },
             1024: { slidesPerView: 4 },
           }}
-          className="!overflow-visible [&_.swiper-button-next]:text-[#39ff88] [&_.swiper-button-prev]:text-[#39ff88]"
+          className="!overflow-visible [&_.swiper-button-next]:text-white [&_.swiper-button-prev]:text-white"
         >
           {products.map((p) => (
             <SwiperSlide key={p.id}>
               <Link
                 href={buildProductPath(p.id)}
                 className={cn(
-                  "group block overflow-hidden rounded-2xl border border-white/[0.08] bg-[#141816]/90",
+                  "group block overflow-hidden rounded-2xl border border-white/[0.08] bg-black",
                   "transition-transform duration-300 hover:-translate-y-1",
                 )}
               >
-                <div className="relative aspect-[4/3] bg-[#1a1d1a]">
+                <div className="relative aspect-[4/3] bg-black">
                   <Image
                     src={p.image}
                     alt={p.name}

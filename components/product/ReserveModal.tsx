@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const inputClass =
-  "w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white outline-none placeholder:text-white/30 focus:border-[#39ff88]/30";
+  "w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-[14px] text-white outline-none placeholder:text-white/30 focus:border-white/30";
 
 type ReserveModalProps = {
   product: ProductDetail;
@@ -92,7 +92,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
             exit={{ opacity: 0, y: 12 }}
             className={cn(
               "fixed left-1/2 top-1/2 z-[91] max-h-[90vh] w-[min(440px,92vw)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto",
-              "rounded-2xl border border-white/[0.08] bg-[#121412] p-6 shadow-2xl",
+              "rounded-2xl border border-white/[0.08] bg-[black] p-6 shadow-2xl",
             )}
           >
             <button
@@ -106,13 +106,13 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
 
             {referenceId ? (
               <div className="pt-2 text-center">
-                <CheckCircle2 className="mx-auto h-12 w-12 text-[#39ff88]" />
+                <CheckCircle2 className="mx-auto h-12 w-12 text-white" />
                 <h3 className="mt-4 text-[20px] font-semibold text-white">
                   Appliance Reserved Successfully
                 </h3>
-                <div className="mt-4 rounded-xl border border-[#39ff88]/20 bg-[#39ff88]/[0.06] px-4 py-3">
+                <div className="mt-4 rounded-xl border border-white/20 bg-white/[0.06] px-4 py-3">
                   <p className="text-[11px] uppercase tracking-wide text-white/45">Reference ID</p>
-                  <p className="mt-1 font-mono text-[15px] font-semibold text-[#39ff88]">
+                  <p className="mt-1 font-sans tabular-nums tracking-wide text-[15px] font-semibold text-white">
                     {referenceId}
                   </p>
                 </div>
@@ -131,7 +131,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
                     href={getWhatsAppReserveSuccessLink(product.name, referenceId)}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#39ff88]/15 py-3 text-[13px] font-semibold text-[#39ff88]"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-full bg-white/10 py-3 text-[13px] font-semibold text-white"
                   >
                     <MessageCircle className="h-4 w-4" />
                     Chat On WhatsApp
@@ -140,7 +140,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
               </div>
             ) : (
               <>
-                <p className="text-[12px] font-medium tracking-wide text-[#39ff88]/80">RESERVE</p>
+                <p className="text-[12px] font-medium tracking-wide text-white/55">RESERVE</p>
                 <h3 className="mt-1 pr-8 text-[18px] font-semibold text-white">
                   Reserve This Appliance
                 </h3>
@@ -179,7 +179,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
                           className={cn(
                             "flex-1 rounded-xl border py-2.5 text-[13px] font-medium transition-colors",
                             contactPreference === method
-                              ? "border-[#39ff88]/40 bg-[#39ff88]/10 text-[#39ff88]"
+                              ? "border-white/40 bg-white/[0.06] text-white"
                               : "border-white/10 bg-white/[0.04] text-white/70",
                           )}
                         >

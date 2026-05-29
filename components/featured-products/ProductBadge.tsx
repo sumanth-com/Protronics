@@ -23,12 +23,12 @@ export default function ProductBadge({
         "border backdrop-blur-md",
         scheme === "dark"
           ? tone === "premium"
-            ? "border-[#ff5a55]/25 bg-[#ff5a55]/10 text-[#ff5a55]"
+            ? "border-white/20 bg-white/[0.08] text-white"
             : tone === "warranty"
               ? "border-white/12 bg-white/[0.06] text-white/75"
               : "border-white/12 bg-white/[0.05] text-white/70"
           : tone === "premium"
-            ? "border-[#ff5a55]/25 bg-[#ff5a55]/10 text-[#ff5a55]"
+            ? "border-black/10 bg-black/[0.04] text-black"
             : tone === "warranty"
               ? "border-black/10 bg-black/[0.04] text-black/75"
               : "border-black/10 bg-white/70 text-black/70",
