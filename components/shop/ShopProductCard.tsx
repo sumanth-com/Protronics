@@ -1,9 +1,11 @@
 "use client";
 
-import { ArrowUpRight, Check, MessageCircle } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import CompareButton from "@/components/compare/CompareButton";
 import CtaButton from "@/components/ui/CtaButton";
 import { buildProductPath } from "@/lib/product-detail";
 import type { ShopProduct } from "@/lib/shop";
@@ -119,7 +121,11 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           ))}
         </ul>
 
-        <div className="mt-4 flex gap-2">
+        <div className="mt-3">
+          <CompareButton productId={product.id} size="sm" className="w-full" />
+        </div>
+
+        <div className="mt-3 flex gap-2">
           <CtaButton href={buildProductPath(product.id)} size="sm" className="flex-1">
             View Details
             <ArrowUpRight className="h-3.5 w-3.5 text-black/80" />
@@ -131,7 +137,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
             aria-label="WhatsApp inquiry"
             className="shrink-0 px-3"
           >
-            <MessageCircle className="h-4 w-4 text-black/80" />
+            <WhatsAppIcon className="h-4 w-4 text-black/80" />
           </CtaButton>
         </div>
       </div>

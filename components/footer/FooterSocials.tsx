@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import type React from "react";
 import { cn } from "@/lib/utils";
 
@@ -17,7 +17,7 @@ export type FooterSocialsProps = {
 
 const socials: Social[] = [
   { label: "Instagram", href: "#", icon: InstagramIcon },
-  { label: "WhatsApp", href: "https://wa.me/", icon: MessageCircle },
+  { label: "WhatsApp", href: "https://wa.me/", icon: WhatsAppIcon },
   { label: "Facebook", href: "#", icon: FacebookIcon },
   { label: "LinkedIn", href: "#", icon: LinkedInIcon },
 ];

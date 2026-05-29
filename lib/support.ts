@@ -7,6 +7,7 @@ import {
   Package,
   Receipt,
   Shield,
+  ShieldCheck,
 } from "lucide-react";
 import { BUSINESS } from "@/lib/contact";
 
@@ -28,12 +29,19 @@ export type SupportArticle = {
   links?: SupportLink[];
 };
 
+export type SupportTrustCard = {
+  title: string;
+  items: string[];
+};
+
 export type SupportCategory = {
   id: string;
   label: string;
   icon: LucideIcon;
   description: string;
   articles: SupportArticle[];
+  trustCard?: SupportTrustCard;
+  protectionCta?: boolean;
 };
 
 export const SUPPORT_ICON_PROPS = {
@@ -79,6 +87,78 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
         question: "Can warranty be transferred?",
         answer:
           "Warranty is registered to the original buyer and delivery address. If you resell the unit, contact us before transfer—we can re-register coverage in eligible cases for a one-time fee.",
+      },
+    ],
+  },
+  {
+    id: "protronics-protection",
+    label: "Protronics Protection",
+    icon: ShieldCheck,
+    description: "Warranty, coverage & peace of mind",
+    protectionCta: true,
+    trustCard: {
+      title: "Protronics Protection Promise",
+      items: [
+        "100+ Point Tested",
+        "Sanitized & Verified",
+        "Warranty Protection",
+        "Expert Support",
+        "Safe Delivery",
+        "Dedicated Assistance",
+      ],
+    },
+    articles: [
+      {
+        id: "protection-included",
+        question: "What protection comes with my appliance?",
+        answer:
+          "Every Protronics appliance undergoes 100+ quality checks, deep sanitization, performance testing, and is backed by warranty protection for additional peace of mind.",
+      },
+      {
+        id: "protection-coverage",
+        question: "What does the warranty cover?",
+        answer:
+          "The warranty covers manufacturing-related and performance-related issues that occur under normal usage conditions during the coverage period.",
+      },
+      {
+        id: "protection-exclusions",
+        question: "What is not covered under warranty?",
+        answer:
+          "Coverage does not include accidental physical damage after delivery, misuse, unauthorized repairs, power surge damage without protection, or normal cosmetic wear from everyday use. Our team explains exclusions clearly before you buy.",
+      },
+      {
+        id: "protection-claim",
+        question: "How do I make a warranty claim?",
+        answer:
+          "Contact Protronics through WhatsApp, phone, or the support center. Our team will verify the issue, review eligibility, and guide you through the next steps.",
+        links: [
+          { label: "WhatsApp support", href: BUSINESS.whatsappMessage, external: true },
+          { label: "Call support", href: BUSINESS.phoneHref },
+        ],
+      },
+      {
+        id: "protection-response-time",
+        question: "How quickly does Protronics respond?",
+        answer:
+          "WhatsApp and phone inquiries during business hours are typically answered within a few hours. Urgent cooling or performance issues are prioritized. After-hours messages are handled first thing the next business day.",
+      },
+      {
+        id: "protection-after-delivery",
+        question: "Do I get support after delivery?",
+        answer:
+          "Yes. Our support team remains available even after delivery for assistance related to installation guidance, warranty questions, and product support.",
+      },
+      {
+        id: "protection-fault",
+        question: "What happens if a product develops a fault?",
+        answer:
+          "Report the issue with your order details and a short video if possible. We diagnose the problem, confirm warranty eligibility, and arrange repair or resolution according to our service policy—you are not left dealing with it alone.",
+      },
+      {
+        id: "protection-installation",
+        question: "Is installation support available?",
+        answer:
+          "Yes. Delivery includes placement, leveling, and basic setup guidance. If you need additional help after delivery, our team can walk you through operation and care over WhatsApp or phone at no extra charge.",
       },
     ],
   },

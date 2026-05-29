@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, ChevronDown, Loader2 } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import ContactAmbient from "@/components/contact/ContactAmbient";
 import ContactLocationMap from "@/components/contact/ContactLocationMap";
 import SectionHeader from "@/components/contact/SectionHeader";
@@ -163,6 +164,7 @@ export default function ContactForm() {
                       external
                       className="mt-6"
                     >
+                      <WhatsAppIcon className="h-4 w-4 text-black/80" />
                       Open WhatsApp
                     </CtaButton>
                     <button

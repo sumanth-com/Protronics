@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MessageCircle, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import ContactAmbient from "@/components/contact/ContactAmbient";
 import { fadeUp, stagger } from "@/lib/animations";
@@ -46,7 +47,7 @@ export default function ContactFinalCTA() {
             className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
             <CtaButton href={BUSINESS.whatsappMessage} external size="lg" fullWidth className="sm:w-auto">
-              <MessageCircle className="h-4 w-4 text-black/80" />
+              <WhatsAppIcon className="h-4 w-4 text-black/80" />
               WhatsApp Inquiry
             </CtaButton>
             <CtaButton href={BUSINESS.phoneHref} size="lg" fullWidth className="sm:w-auto">

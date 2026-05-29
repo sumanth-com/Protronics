@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     "premium refurbished appliances",
     "appliance warranty",
   ],
+  alternates: {
+    canonical: "/why-protronics",
+  },
   openGraph: {
     title: "Why Protronics | The Safer Way to Buy Refurbished",
     description:
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Why() {
+export default function WhyProtronicsPage() {
   return (
     <>
       <script

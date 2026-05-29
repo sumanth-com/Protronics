@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import BlurContainer from "@/components/ui/BlurContainer";
 import CtaButton from "@/components/ui/CtaButton";
 import { cn } from "@/lib/utils";
@@ -76,7 +77,7 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-3 md:flex">
             <CtaButton href="https://wa.me/" external size="sm">
-              <MessageCircle className="h-4 w-4 text-black/80" />
+              <WhatsAppIcon className="h-4 w-4 text-black/80" />
               WhatsApp Inquiry
             </CtaButton>
           </div>
@@ -121,7 +122,7 @@ export default function Navbar() {
                 className="mt-3"
                 onClick={() => setOpen(false)}
               >
-                <MessageCircle className="h-4 w-4 text-black/80" />
+                <WhatsAppIcon className="h-4 w-4 text-black/80" />
                 WhatsApp Inquiry
               </CtaButton>
             </div>

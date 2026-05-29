@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import AboutAmbient from "@/components/about/AboutAmbient";
 import CtaButton from "@/components/ui/CtaButton";
 import { WHY_LINKS, whyGlass } from "@/lib/why";
@@ -52,7 +53,7 @@ export default function WhyFinalCTA() {
               )}
             >
               Talk to an Expert
-              <MessageCircle className="h-4 w-4 text-white" />
+              <WhatsAppIcon className="h-4 w-4 text-white" />
             </a>
           </motion.div>
         </motion.div>

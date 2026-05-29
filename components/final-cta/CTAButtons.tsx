@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight, MessageCircle, Video } from "lucide-react";
+import { ArrowUpRight, Video } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +34,7 @@ export default function CTAButtons({
 
       <CtaButton href={whatsappHref} size="lg" fullWidth external className="sm:w-auto">
         WhatsApp Inquiry
-        <MessageCircle className="h-4 w-4 text-black/80" />
+        <WhatsAppIcon className="h-4 w-4 text-black/80" />
       </CtaButton>
 
       {showVideoDemo ? (

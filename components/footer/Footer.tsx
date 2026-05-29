@@ -1,14 +1,18 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Mail, Phone, Sparkles } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import { fadeUp, stagger } from "@/lib/animations";
+import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import FooterLinks from "@/components/footer/FooterLinks";
 import FooterNewsletter from "@/components/footer/FooterNewsletter";
 import FooterSocials from "@/components/footer/FooterSocials";
 import FooterBottom from "@/components/footer/FooterBottom";
 import CtaButton from "@/components/ui/CtaButton";
+import Logo from "@/assets/Logo.png";
 
 const footerSurface = cn(
   "rounded-[28px] border border-white/[0.08]",
@@ -30,14 +34,21 @@ export default function Footer() {
           className="mt-10 grid gap-10 md:grid-cols-12 md:gap-10"
         >
           <motion.div variants={fadeUp} className="md:col-span-4">
-            <div className="flex items-center gap-2">
-              <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/[0.08] bg-black">
-                <Sparkles className="h-5 w-5 text-white" />
+            <Link href="/" prefetch className="inline-flex items-center gap-2.5">
+              <div className="relative h-10 w-10 shrink-0">
+                <Image
+                  src={Logo}
+                  alt="Protronics"
+                  fill
+                  sizes="40px"
+                  className="object-contain"
+                  quality={IMAGE_QUALITY.logo}
+                />
               </div>
               <div className="text-[16px] font-semibold tracking-tight text-white">
                 Protronics
               </div>
-            </div>
+            </Link>
 
             <div className="mt-4 max-w-sm text-[13px] leading-7 text-white/65">
               Premium renewed appliances engineered for modern living—restored

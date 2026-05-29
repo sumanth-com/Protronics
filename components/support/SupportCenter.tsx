@@ -131,6 +131,7 @@ export default function SupportCenter({
               articles={category.articles}
               activeArticleId={articleId}
               onSelect={selectArticle}
+              trustCard={category.trustCard}
             />
           </div>
 

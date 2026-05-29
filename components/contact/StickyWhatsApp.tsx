@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { BUSINESS } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +22,7 @@ export default function StickyWhatsApp() {
         "min-h-[48px] min-w-[48px]",
       )}
     >
-      <MessageCircle className="h-5 w-5 text-black/85" />
+      <WhatsAppIcon className="h-5 w-5 text-black/85" />
       <span className="hidden sm:inline">WhatsApp</span>
     </a>
   );

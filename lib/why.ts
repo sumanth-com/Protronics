@@ -171,7 +171,7 @@ export const whyPageJsonLd = {
   name: "Why Protronics | Trust & Quality",
   description:
     "See why Protronics is safer than local dealers, OLX, and marketplace sellers—100+ checks, warranty, sanitization, and certified performance.",
-  url: "https://protronics.in/why",
+  url: "https://protronics.in/why-protronics",
   about: {
     "@type": "Organization",
     name: "Protronics",

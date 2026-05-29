@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import { cn } from "@/lib/utils";
 
@@ -30,7 +31,7 @@ export default function ProductCTA({
           aria-label="WhatsApp Inquiry"
           className="shrink-0 px-3"
         >
-          <MessageCircle className="h-4 w-4 text-black/80" />
+          <WhatsAppIcon className="h-4 w-4 text-black/80" />
         </CtaButton>
       ) : null}
     </div>

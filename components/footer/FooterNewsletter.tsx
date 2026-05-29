@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { BUSINESS } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +37,7 @@ export default function FooterNewsletter({ className }: FooterNewsletterProps) {
           )}
         >
           Join WhatsApp Channel
-          <MessageCircle className="h-4 w-4" strokeWidth={1.75} />
+          <WhatsAppIcon className="h-4 w-4" />
         </a>
       </div>
 

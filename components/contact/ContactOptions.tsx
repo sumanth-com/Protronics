@@ -1,13 +1,14 @@
 "use client";
 
+import type { ComponentType } from "react";
 import { motion } from "framer-motion";
 import {
   Mail,
-  MessageCircle,
   Phone,
   Video,
   type LucideIcon,
 } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import SectionHeader from "@/components/contact/SectionHeader";
 import { fadeUp, stagger } from "@/lib/animations";
@@ -15,7 +16,8 @@ import { BUSINESS, contactGlass } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 type Option = {
-  icon: LucideIcon;
+  icon?: LucideIcon;
+  customIcon?: ComponentType<{ className?: string }>;
   title: string;
   description: string;
   cta: string;
@@ -25,7 +27,7 @@ type Option = {
 
 const options: Option[] = [
   {
-    icon: MessageCircle,
+    customIcon: WhatsAppIcon,
     title: "WhatsApp Support",
     description:
       "Fastest way to get answers—share photos, models, and budget. Our team replies personally.",
@@ -79,6 +81,7 @@ export default function ContactOptions() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {options.map((opt) => {
               const Icon = opt.icon;
+              const CustomIcon = opt.customIcon;
               return (
                 <motion.div
                   key={opt.title}
@@ -93,7 +96,11 @@ export default function ContactOptions() {
                 >
                   <div className="relative flex flex-1 flex-col">
                     <div className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.04] ring-1 ring-white/10 transition-colors group-hover:border-white/25 group-hover:bg-white/[0.06]">
-                      <Icon className="h-5 w-5 text-white" />
+                      {CustomIcon ? (
+                        <CustomIcon className="h-5 w-5 text-white" />
+                      ) : Icon ? (
+                        <Icon className="h-5 w-5 text-white" />
+                      ) : null}
                     </div>
                     <h3 className="mt-5 text-[16px] font-semibold tracking-tight text-white">
                       {opt.title}

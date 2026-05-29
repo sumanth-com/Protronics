@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingBag, Tag } from "lucide-react";
+import { RefreshCw, ShoppingBag } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,7 @@ const CategoriesDropdown = dynamic(
 );
 
 const navLinks = [
-  { label: "Why Protronics", href: "/why" },
+  { label: "Why Protronics", href: "/why-protronics" },
   { label: "Support", href: "/support" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
@@ -80,10 +80,10 @@ export default function HeroNavbar() {
 
           {/* CTAs */}
           <div className="ml-auto flex items-center gap-2.5 sm:gap-3 lg:ml-0">
-            <CtaButton href="#sell" size="sm" className="shrink-0">
-              <Tag className="h-4 w-4 text-black/80" />
-              <span className="hidden sm:inline">Sell Now</span>
-              <span className="sm:hidden">Sell</span>
+            <CtaButton href="/trade-in" size="sm" className="shrink-0">
+              <RefreshCw className="h-4 w-4 text-black/80" />
+              <span className="hidden sm:inline">Trade-In & Upgrade</span>
+              <span className="sm:hidden">Trade-In</span>
             </CtaButton>
 
             <CtaButton href="/shop" size="sm" className="shrink-0">

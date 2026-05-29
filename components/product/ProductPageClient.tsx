@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import ProductGallery, { TrustBadgeRow } from "@/components/product/ProductGallery";
 import DeferredMount from "@/components/layout/DeferredMount";
 import {
@@ -12,10 +12,9 @@ import {
   ProductWarrantyDelivery,
 } from "@/components/product/ProductSections";
 import ProductStickyBar from "@/components/product/ProductStickyBar";
-import { useCompare } from "@/hooks/useProductStore";
+import CompareButton from "@/components/compare/CompareButton";
 import {
   TRUST_BADGES,
-  getProductById,
   type ProductDetail,
 } from "@/lib/product-detail";
 import type { ShopProduct } from "@/lib/shop";
@@ -32,10 +31,6 @@ const CallbackModal = dynamic(
   () => import("@/components/product/CallbackModal"),
   { ssr: false },
 );
-const CompareModal = dynamic(
-  () => import("@/components/product/CompareModal"),
-  { ssr: false },
-);
 
 type ProductPageClientProps = {
   product: ProductDetail;
@@ -45,25 +40,11 @@ type ProductPageClientProps = {
 export default function ProductPageClient({ product, related }: ProductPageClientProps) {
   const [reserveOpen, setReserveOpen] = useState(false);
   const [callbackOpen, setCallbackOpen] = useState(false);
-  const [compareOpen, setCompareOpen] = useState(false);
-  const { ids: compareIds } = useCompare();
-
-  const compareProducts = useMemo(
-    () =>
-      compareIds
-        .map((id) => getProductById(id))
-        .filter((p): p is ProductDetail => p !== null),
-    [compareIds],
-  );
 
   const category = getCategoryBySlug(product.categoryId);
   const discount = Math.round(
     ((product.originalPrice - product.price) / product.originalPrice) * 100,
   );
-
-  const openCompare = () => {
-    if (compareProducts.length > 0) setCompareOpen(true);
-  };
 
   return (
     <main className="min-h-screen bg-black pb-32 text-white">
@@ -149,6 +130,8 @@ export default function ProductPageClient({ product, related }: ProductPageClien
                   </li>
                 ))}
               </ul>
+
+              <CompareButton productId={product.id} className="mt-1" />
             </div>
           </div>
         </div>
@@ -173,7 +156,6 @@ export default function ProductPageClient({ product, related }: ProductPageClien
         product={product}
         onReserve={() => setReserveOpen(true)}
         onCallback={() => setCallbackOpen(true)}
-        onCompare={openCompare}
       />
       {reserveOpen ? (
         <ReserveModal
@@ -187,13 +169,6 @@ export default function ProductPageClient({ product, related }: ProductPageClien
           product={product}
           open={callbackOpen}
           onClose={() => setCallbackOpen(false)}
-        />
-      ) : null}
-      {compareOpen ? (
-        <CompareModal
-          open={compareOpen}
-          onClose={() => setCompareOpen(false)}
-          products={compareProducts}
         />
       ) : null}
     </main>

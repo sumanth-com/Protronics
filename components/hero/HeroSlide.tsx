@@ -13,6 +13,7 @@ import { fadeUp, stagger } from "@/lib/animations";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import CtaButton from "@/components/ui/CtaButton";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 
 export type Slide = {
   imageSrc: string | StaticImageData;
@@ -127,6 +128,7 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
                   external
                   className="sm:w-auto"
                 >
+                  <WhatsAppIcon className="h-4 w-4 text-black/80" />
                   Chat on WhatsApp
                 </CtaButton>
               </motion.div>

@@ -1,6 +1,7 @@
 "use client";
 
-import { MessageCircle, PhoneCall } from "lucide-react";
+import { PhoneCall } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import { cn } from "@/lib/utils";
 
@@ -39,7 +40,7 @@ export default function SupportCTA({
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <CtaButton href={whatsappHref} fullWidth external className="sm:w-auto">
           WhatsApp Support
-          <MessageCircle className="h-4 w-4 text-black/80" />
+          <WhatsAppIcon className="h-4 w-4 text-black/80" />
         </CtaButton>
 
         <CtaButton href={expertHref} fullWidth className="sm:w-auto">

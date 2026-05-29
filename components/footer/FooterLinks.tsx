@@ -33,6 +33,8 @@ export default function FooterLinks({
     {
       title: "Company",
       links: [
+        { label: "Why Protronics", href: "/why-protronics" },
+        { label: "Trade-In & Upgrade", href: "/trade-in" },
         { label: "About", href: "/about" },
         { label: "Contact", href: "/contact" },
         { label: "How It Works", href: "#how" },
@@ -54,7 +56,7 @@ export default function FooterLinks({
                 key={l.label}
                 href={l.href}
                 className={cn(
-                  "group inline-flex items-center text-[13px] text-white/70",
+                  "group block text-[13px] text-white/70",
                   "transition-colors duration-300 hover:text-white",
                 )}
               >

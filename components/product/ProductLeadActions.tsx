@@ -1,26 +1,21 @@
 "use client";
 
-import { MessageCircle, Phone, Scale, Star } from "lucide-react";
-import { useCompare } from "@/hooks/useProductStore";
+import { Phone, Star } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
+import CompareButton from "@/components/compare/CompareButton";
 import { getWhatsAppInquiryLink, type ProductDetail } from "@/lib/product-detail";
-import { cn } from "@/lib/utils";
 
 type ProductLeadActionsProps = {
   product: ProductDetail;
   onReserve: () => void;
   onCallback: () => void;
-  onCompare: () => void;
 };
 
 export function ProductLeadActions({
   product,
   onReserve,
   onCallback,
-  onCompare,
 }: ProductLeadActionsProps) {
-  const { toggle: toggleCompare, isCompared, count: compareCount, max: compareMax } = useCompare();
-  const compared = isCompared(product.id);
-
   const outlineBtn =
     "inline-flex items-center justify-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-2.5 text-[11px] font-semibold text-white transition-colors hover:border-white/25 hover:bg-white/[0.08] sm:gap-2 sm:px-4 sm:text-[12px]";
 
@@ -42,23 +37,12 @@ export function ProductLeadActions({
           rel="noreferrer"
           className={outlineBtn}
         >
-          <MessageCircle className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
+          <WhatsAppIcon className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
           <span className="hidden min-[380px]:inline">WhatsApp</span>
           <span className="min-[380px]:hidden">Chat</span>
         </a>
 
-        <button
-          type="button"
-          onClick={() => {
-            const added = toggleCompare(product.id);
-            if (!added && !compared && compareCount >= compareMax) return;
-            onCompare();
-          }}
-          className={cn(outlineBtn, compared && "border-white/30 bg-white/[0.08]")}
-        >
-          <Scale className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
-          Compare
-        </button>
+        <CompareButton productId={product.id} size="sm" className="min-w-0 px-2 text-[10px] sm:px-3 sm:text-[11px]" />
 
         <button type="button" onClick={onCallback} className={outlineBtn}>
           <Phone className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />

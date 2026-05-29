@@ -1,8 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import Link from "next/link";
+import { Phone } from "lucide-react";
+import SupportCallbackModal from "@/components/support/SupportCallbackModal";
+import SupportProtectionTrustCard from "@/components/support/SupportProtectionTrustCard";
 import type { SupportArticle, SupportCategory } from "@/lib/support";
 import { getRelatedArticles } from "@/lib/support";
 import { BUSINESS } from "@/lib/contact";
@@ -22,6 +26,7 @@ export default function SupportAnswerPanel({
   className,
 }: SupportAnswerPanelProps) {
   const related = getRelatedArticles(category.id, article.id, 3);
+  const [callbackOpen, setCallbackOpen] = useState(false);
 
   return (
     <div className={cn("flex h-full min-h-0 flex-col", className)}>
@@ -43,6 +48,12 @@ export default function SupportAnswerPanel({
           transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-8 sm:px-6"
         >
+          {category.trustCard ? (
+            <div className="mb-6 lg:hidden">
+              <SupportProtectionTrustCard trustCard={category.trustCard} />
+            </div>
+          ) : null}
+
           <p className="max-w-2xl text-[16px] leading-8 text-white/78 sm:text-[17px]">
             {article.answer}
           </p>
@@ -93,35 +104,78 @@ export default function SupportAnswerPanel({
       </AnimatePresence>
 
       <div className="shrink-0 border-t border-white/10 px-5 py-5 sm:px-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[16px] font-semibold text-white sm:text-[17px]">
-            Still have questions?
-          </p>
-          <a
-            href={BUSINESS.whatsappMessage}
-            target="_blank"
-            rel="noreferrer"
-            className={cn(
-              "inline-flex shrink-0 items-center justify-center gap-2 rounded-full",
-              "border border-white/45 bg-transparent px-5 py-2.5",
-              "text-[15px] font-semibold text-white",
-              "transition-colors hover:bg-white/[0.06]",
-            )}
-          >
-            Chat with us
-            <MessageCircle className="h-4 w-4" strokeWidth={1.75} />
-          </a>
-        </div>
-        <p className="mt-3 text-[14px] leading-6 text-white/55 sm:text-[15px]">
-          For detailed inquiries, send us an email at{" "}
-          <a
-            href={BUSINESS.emailHref}
-            className="font-medium text-white transition-opacity hover:opacity-80"
-          >
-            {BUSINESS.email}
-          </a>
-          .
-        </p>
+        {category.protectionCta ? (
+          <>
+            <p className="text-[16px] font-semibold text-white sm:text-[17px]">
+              Still Need Help?
+            </p>
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={BUSINESS.whatsappMessage}
+                target="_blank"
+                rel="noreferrer"
+                className={cn(
+                  "inline-flex flex-1 items-center justify-center gap-2 rounded-full",
+                  "bg-white px-5 py-2.5 text-[14px] font-semibold text-black",
+                  "transition-opacity hover:opacity-90",
+                )}
+              >
+                <WhatsAppIcon className="h-4 w-4 text-black/85" />
+                WhatsApp Support
+              </a>
+              <button
+                type="button"
+                onClick={() => setCallbackOpen(true)}
+                className={cn(
+                  "inline-flex flex-1 items-center justify-center gap-2 rounded-full",
+                  "border border-white/15 bg-white/[0.04] px-5 py-2.5",
+                  "text-[14px] font-semibold text-white transition-colors",
+                  "hover:border-white/30 hover:bg-white/[0.08]",
+                )}
+              >
+                <Phone className="h-4 w-4" />
+                Request Callback
+              </button>
+            </div>
+            <SupportCallbackModal
+              open={callbackOpen}
+              onClose={() => setCallbackOpen(false)}
+              context="Protronics Protection"
+            />
+          </>
+        ) : (
+          <>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-[16px] font-semibold text-white sm:text-[17px]">
+                Still have questions?
+              </p>
+              <a
+                href={BUSINESS.whatsappMessage}
+                target="_blank"
+                rel="noreferrer"
+                className={cn(
+                  "inline-flex shrink-0 items-center justify-center gap-2 rounded-full",
+                  "border border-white/45 bg-transparent px-5 py-2.5",
+                  "text-[15px] font-semibold text-white",
+                  "transition-colors hover:bg-white/[0.06]",
+                )}
+              >
+                Chat with us
+                <WhatsAppIcon className="h-4 w-4" />
+              </a>
+            </div>
+            <p className="mt-3 text-[14px] leading-6 text-white/55 sm:text-[15px]">
+              For detailed inquiries, send us an email at{" "}
+              <a
+                href={BUSINESS.emailHref}
+                className="font-medium text-white transition-opacity hover:opacity-80"
+              >
+                {BUSINESS.email}
+              </a>
+              .
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

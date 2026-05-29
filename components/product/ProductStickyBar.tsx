@@ -8,14 +8,12 @@ type ProductStickyBarProps = {
   product: ProductDetail;
   onReserve: () => void;
   onCallback: () => void;
-  onCompare: () => void;
 };
 
 export default function ProductStickyBar({
   product,
   onReserve,
   onCallback,
-  onCompare,
 }: ProductStickyBarProps) {
   return (
     <motion.div
@@ -29,7 +27,6 @@ export default function ProductStickyBar({
           product={product}
           onReserve={onReserve}
           onCallback={onCallback}
-          onCompare={onCompare}
         />
       </div>
     </motion.div>

@@ -1,7 +1,8 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-import type { SupportArticle } from "@/lib/support";
+import SupportProtectionTrustCard from "@/components/support/SupportProtectionTrustCard";
+import type { SupportArticle, SupportTrustCard } from "@/lib/support";
 import { cn } from "@/lib/utils";
 
 type SupportQuestionsProps = {
@@ -9,6 +10,7 @@ type SupportQuestionsProps = {
   articles: SupportArticle[];
   activeArticleId: string;
   onSelect: (articleId: string) => void;
+  trustCard?: SupportTrustCard;
 };
 
 export default function SupportQuestions({
@@ -16,6 +18,7 @@ export default function SupportQuestions({
   articles,
   activeArticleId,
   onSelect,
+  trustCard,
 }: SupportQuestionsProps) {
   return (
     <div className="flex h-full min-h-0 flex-col">
@@ -25,6 +28,12 @@ export default function SupportQuestions({
         </p>
         <p className="mt-1 text-[15px] text-white/60">{articles.length} articles</p>
       </div>
+
+      {trustCard ? (
+        <div className="shrink-0 px-4 pb-3">
+          <SupportProtectionTrustCard trustCard={trustCard} />
+        </div>
+      ) : null}
 
       <ul className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 pb-3">
         {articles.map((article) => {

@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, MessageCircle, Star, X } from "lucide-react";
+import { CheckCircle2, Star, X } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { submitLead, type ContactPreference } from "@/lib/leads";
@@ -133,7 +134,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
                     rel="noreferrer"
                     className="flex flex-1 items-center justify-center gap-2 rounded-full bg-white/10 py-3 text-[13px] font-semibold text-white"
                   >
-                    <MessageCircle className="h-4 w-4" />
+                    <WhatsAppIcon className="h-4 w-4" />
                     Chat On WhatsApp
                   </a>
                 </div>

@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
-import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutAmbient from "@/components/about/AboutAmbient";
 import CtaButton from "@/components/ui/CtaButton";
@@ -112,7 +113,7 @@ export default function AboutHero() {
               )}
             >
               WhatsApp Inquiry
-              <MessageCircle className="h-4 w-4 text-white" />
+              <WhatsAppIcon className="h-4 w-4 text-white" />
             </a>
           </motion.div>
         </motion.div>
