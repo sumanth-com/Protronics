@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { ChevronDown, MessageCircle, Search, ShoppingBag, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, Search, ShoppingBag, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import MagneticButton from "@/components/ui/MagneticButton";
@@ -62,7 +61,7 @@ export default function HeroNavbar() {
                 "px-4 py-2",
               )}
             >
-              <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(520px_120px_at_30%_20%,rgba(57,255,136,0.10),transparent_60%)]" />
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(520px_120px_at_30%_20%,rgba(255,90,85,0.12),transparent_60%)]" />
               <Search className="h-4 w-4 text-white/55" />
               <input
                 placeholder="Search premium appliances…"
@@ -79,10 +78,10 @@ export default function HeroNavbar() {
           </div>
 
           {/* Links */}
-          <div className="relative hidden items-center gap-4 lg:flex">
+          <div className="relative hidden items-center gap-5 lg:flex">
             <a
               href="#"
-              className="inline-flex items-center gap-1 text-[12px] font-medium tracking-wide text-white/65 transition-colors hover:text-white"
+              className="inline-flex items-center gap-1 text-[13px] font-semibold tracking-wide text-white/80 transition-colors hover:text-white"
             >
               Categories <ChevronDown className="h-4 w-4 text-white/45" />
             </a>
@@ -90,7 +89,7 @@ export default function HeroNavbar() {
               <a
                 key={l}
                 href="#"
-                className="text-[12px] font-medium tracking-wide text-white/65 transition-colors hover:text-white"
+                className="text-[13px] font-semibold tracking-wide text-white/80 transition-colors hover:text-white"
               >
                 {l}
               </a>
@@ -99,31 +98,15 @@ export default function HeroNavbar() {
 
           {/* Right CTAs */}
           <div className="relative flex items-center gap-3">
-            <a href="https://wa.me/" className="hidden sm:block">
-              <motion.button
-                whileHover={{ y: -1 }}
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className={cn(
-                  "rounded-full px-3.5 py-2",
-                  "border border-[#39ff88]/20 bg-[#39ff88]/10 text-[#a9ffcd]",
-                  "text-[12px] font-medium tracking-wide",
-                  "inline-flex items-center gap-2",
-                )}
-              >
-                <MessageCircle className="h-4 w-4 text-[#39ff88]/85" />
-                WhatsApp Inquiry
-              </motion.button>
-            </a>
-
             <a href="#shop">
               <MagneticButton
                 className={cn(
                   "rounded-full px-3.5 py-2",
-                  // reference-like premium green pill
-                  "bg-[#39ff88] text-black",
+                  // reference-like premium red pill
+                  "bg-[#ff5a55] text-black",
                   "ring-1 ring-white/10",
-                  "shadow-[0_18px_50px_rgba(57,255,136,0.18),0_30px_110px_rgba(0,0,0,0.65)]",
-                  "text-[12px] font-semibold tracking-wide",
+                  "shadow-[0_18px_50px_rgba(255,90,85,0.20),0_30px_110px_rgba(0,0,0,0.65)]",
+                  "text-[13px] font-semibold tracking-wide",
                   "inline-flex items-center gap-2",
                 )}
               >

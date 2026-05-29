@@ -46,7 +46,7 @@ export default function HeroSlide({ slide }: HeroSlideProps) {
         {/* Cinematic overlays (keeps text readable, premium mood) */}
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,0,0.52)_38%,rgba(0,0,0,0.18)_62%,rgba(0,0,0,0)_80%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.62),rgba(0,0,0,0.10)_55%,rgba(0,0,0,0))]" />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_520px_at_65%_35%,rgba(57,255,136,0.12),transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_520px_at_65%_35%,rgba(255,90,85,0.14),transparent_60%)]" />
 
         {/* Content overlay */}
         <div className="relative h-full px-6 py-7 md:px-10 md:py-9">
@@ -61,7 +61,7 @@ export default function HeroSlide({ slide }: HeroSlideProps) {
                 variants={fadeUp}
                 className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-1.5 text-[12px] text-white/70 supports-[backdrop-filter]:bg-black/25 supports-[backdrop-filter]:backdrop-blur-xl"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#39ff88]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#ff5a55]" />
                 Refurbished. Restored. Reliable.
               </motion.div>
 
@@ -74,7 +74,7 @@ export default function HeroSlide({ slide }: HeroSlideProps) {
               >
                 Premium Appliances.
                 <br />
-                <span className="text-[#39ff88]">Unbeatable Value.</span>
+                <span className="text-[#ff5a55]">Unbeatable Value.</span>
               </motion.h1>
 
               <motion.p
@@ -102,7 +102,7 @@ export default function HeroSlide({ slide }: HeroSlideProps) {
                       key={x.t}
                       className="flex items-start gap-2 rounded-2xl border border-white/10 bg-black/35 px-3 py-3 supports-[backdrop-filter]:bg-black/25 supports-[backdrop-filter]:backdrop-blur-xl"
                     >
-                      <Icon className="mt-[2px] h-4 w-4 text-[#39ff88]/90" />
+                      <Icon className="mt-[2px] h-4 w-4 text-[#ff5a55]/90" />
                       <div className="text-[12px] leading-5 text-white/70">
                         {x.t}
                       </div>
@@ -120,9 +120,9 @@ export default function HeroSlide({ slide }: HeroSlideProps) {
                   <MagneticButton
                     className={cn(
                       "w-full rounded-full px-6 py-3.5",
-                      "bg-[#39ff88] text-black",
+                      "bg-[#ff5a55] text-black",
                       "text-[12px] font-semibold tracking-wide",
-                      "shadow-[0_24px_70px_rgba(57,255,136,0.20)]",
+                      "shadow-[0_24px_70px_rgba(255,90,85,0.22)]",
                     )}
                   >
                     Explore Collection →
@@ -166,7 +166,7 @@ export default function HeroSlide({ slide }: HeroSlideProps) {
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
                   key={i}
-                  className="h-3.5 w-3.5 text-[#39ff88]/90"
+                  className="h-3.5 w-3.5 text-[#ff5a55]/90"
                   fill="currentColor"
                 />
               ))}
