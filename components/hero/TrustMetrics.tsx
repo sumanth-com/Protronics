@@ -28,7 +28,7 @@ export default function TrustMetrics() {
           "shadow-[0_30px_120px_rgba(0,0,0,0.70)]",
         )}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(980px_260px_at_50%_0%,rgba(255,90,85,0.14),transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(980px_260px_at_50%_0%,rgba(255,255,255,0.08),transparent_60%)]" />
         <div className="grid grid-cols-2 gap-2 px-4 py-2 sm:grid-cols-5 sm:gap-0 sm:px-6 sm:py-3">
           {metrics.map((m) => {
             const Icon = m.icon;
@@ -42,7 +42,7 @@ export default function TrustMetrics() {
                 )}
               >
                 <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/[0.03]">
-                  <Icon className="h-5 w-5 text-[#ff5a55]/90" />
+                  <Icon className="h-5 w-5 text-white/85" />
                 </div>
                 <div className="min-w-0">
                   <div className="text-[13px] font-semibold text-white">

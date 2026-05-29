@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, Headset } from "lucide-react";
-import MagneticButton from "@/components/ui/MagneticButton";
+import CtaButton from "@/components/ui/CtaButton";
 import { cn } from "@/lib/utils";
 
 export type SupportCTAProps = {
@@ -17,35 +17,15 @@ export default function SupportCTA({
 }: SupportCTAProps) {
   return (
     <div className={cn("mt-7 flex flex-col gap-3 sm:flex-row", className)}>
-      <a href={warrantyHref} className="w-full sm:w-auto">
-        <MagneticButton
-          className={cn(
-            "w-full rounded-full px-5 py-3",
-            "bg-white text-black",
-            "text-[12px] font-medium tracking-wide",
-            "shadow-[0_18px_50px_rgba(0,0,0,0.55)]",
-            "ring-1 ring-white/10",
-          )}
-        >
-          View Warranty Details
-          <ArrowUpRight className="ml-2 h-4 w-4 opacity-85" />
-        </MagneticButton>
-      </a>
+      <CtaButton href={warrantyHref} fullWidth className="sm:w-auto">
+        View Warranty Details
+        <ArrowUpRight className="h-4 w-4 text-black/80" />
+      </CtaButton>
 
-      <a href={supportHref} className="w-full sm:w-auto">
-        <MagneticButton
-          className={cn(
-            "w-full rounded-full px-5 py-3",
-            "border border-white/12 bg-white/[0.06] text-white",
-            "text-[12px] font-medium tracking-wide",
-            "shadow-[0_18px_50px_rgba(0,0,0,0.55)]",
-          )}
-        >
-          Contact Support
-          <Headset className="ml-2 h-4 w-4 opacity-80" />
-        </MagneticButton>
-      </a>
+      <CtaButton href={supportHref} fullWidth className="sm:w-auto">
+        Contact Support
+        <Headset className="h-4 w-4 text-black/80" />
+      </CtaButton>
     </div>
   );
 }
-

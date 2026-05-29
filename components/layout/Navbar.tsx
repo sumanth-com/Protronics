@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { Menu, X, MessageCircle } from "lucide-react";
 import BlurContainer from "@/components/ui/BlurContainer";
-import MagneticButton from "@/components/ui/MagneticButton";
+import CtaButton from "@/components/ui/CtaButton";
 import { cn } from "@/lib/utils";
 
 const nav = [
@@ -75,20 +75,10 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
-            <MagneticButton
-              className={cn(
-                "h-10 rounded-full px-4",
-                "bg-[#1b68ff] text-white",
-                "shadow-[0_10px_26px_rgba(27,104,255,0.22)]",
-                "transition-transform hover:scale-[1.01]",
-              )}
-              type="button"
-            >
-              <span className="flex items-center gap-2 text-[13px] font-semibold">
-                <MessageCircle className="h-4 w-4 opacity-90" />
-                WhatsApp Inquiry
-              </span>
-            </MagneticButton>
+            <CtaButton href="https://wa.me/" external size="sm">
+              <MessageCircle className="h-4 w-4 text-black/80" />
+              WhatsApp Inquiry
+            </CtaButton>
           </div>
 
           <button
@@ -124,20 +114,16 @@ export default function Navbar() {
                   </a>
                 ))}
               </div>
-              <MagneticButton
-                className={cn(
-                  "mt-3 h-11 w-full rounded-full px-4",
-                  "bg-[#1b68ff] text-white",
-                  "shadow-[0_10px_26px_rgba(27,104,255,0.22)]",
-                )}
-                type="button"
+              <CtaButton
+                href="https://wa.me/"
+                external
+                fullWidth
+                className="mt-3"
                 onClick={() => setOpen(false)}
               >
-                <span className="flex items-center justify-center gap-2 text-[13px] font-semibold">
-                  <MessageCircle className="h-4 w-4 opacity-90" />
-                  WhatsApp Inquiry
-                </span>
-              </MagneticButton>
+                <MessageCircle className="h-4 w-4 text-black/80" />
+                WhatsApp Inquiry
+              </CtaButton>
             </div>
           </div>
         </motion.div>

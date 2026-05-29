@@ -11,7 +11,7 @@ import FooterLinks from "@/components/footer/FooterLinks";
 import FooterNewsletter from "@/components/footer/FooterNewsletter";
 import FooterSocials from "@/components/footer/FooterSocials";
 import FooterBottom from "@/components/footer/FooterBottom";
-import MagneticButton from "@/components/ui/MagneticButton";
+import CtaButton from "@/components/ui/CtaButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -125,19 +125,9 @@ export default function Footer() {
                 </div>
               </div>
 
-              <a href="#contact" className="mt-6 block">
-                <MagneticButton
-                  className={cn(
-                    "w-full rounded-full px-5 py-3",
-                    "bg-white text-black",
-                    "text-[12px] font-medium tracking-wide",
-                    "shadow-[0_22px_70px_rgba(0,0,0,0.65)]",
-                    "ring-1 ring-white/10",
-                  )}
-                >
-                  Talk to an Expert
-                </MagneticButton>
-              </a>
+              <CtaButton href="#contact" fullWidth className="mt-6">
+                Talk to an Expert
+              </CtaButton>
             </div>
           </motion.div>
         </motion.div>

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import CtaButton from "@/components/ui/CtaButton";
 import { cn } from "@/lib/utils";
 
 export type FooterNewsletterProps = {
@@ -44,23 +44,10 @@ export default function FooterNewsletter({ className }: FooterNewsletterProps) {
             "outline-none focus:border-[#ff5a55]/35 focus:ring-2 focus:ring-[#ff5a55]/15",
           )}
         />
-        <motion.button
-          whileTap={{ scale: 0.98 }}
-          whileHover={{ y: -1 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          type="submit"
-          className={cn(
-            "inline-flex items-center justify-center rounded-full px-6 py-3",
-            "bg-white text-black",
-            "text-[12px] font-medium tracking-wide",
-            "shadow-[0_22px_70px_rgba(0,0,0,0.65)]",
-            "ring-1 ring-white/10",
-            "w-full sm:w-auto",
-          )}
-        >
+        <CtaButton type="submit" fullWidth className="sm:w-auto">
           Subscribe
-          <ArrowUpRight className="ml-2 h-4 w-4 opacity-85" />
-        </motion.button>
+          <ArrowUpRight className="h-4 w-4 text-black/80" />
+        </CtaButton>
       </form>
     </div>
   );

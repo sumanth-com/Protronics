@@ -83,12 +83,12 @@ export default function HeroSection() {
     <section className="relative overflow-hidden bg-black">
       {/* ambient hero background (seamless with next section) */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(1200px_680px_at_50%_-10%,rgba(255,90,85,0.12),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(1200px_680px_at_50%_-10%,rgba(255,255,255,0.08),transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(960px_700px_at_20%_50%,rgba(255,255,255,0.06),transparent_62%)]" />
         <div className="absolute inset-0 opacity-[0.035] [background-image:radial-gradient(#ffffff_0.6px,transparent_0.6px)] [background-size:18px_18px]" />
         <div
           ref={orbRef}
-          className="absolute -right-44 top-12 h-[560px] w-[560px] rounded-full bg-[#ff5a55]/[0.08] blur-3xl"
+          className="absolute -right-44 top-12 h-[560px] w-[560px] rounded-full bg-white/[0.06] blur-3xl"
         />
       </div>
 
@@ -151,7 +151,7 @@ export default function HeroSection() {
           >
             <span className="inline-flex items-center gap-1 rounded-full border border-white/12 bg-white/[0.05] px-3 py-1.5">
               Rated <span className="font-semibold text-white/85">4.9</span>
-              <span className="text-[#ff5a55]/90">★</span> by customers
+              <span className="text-white/90">★</span> by customers
             </span>
             <span className="hidden sm:inline text-white/40">•</span>
             <span className="hidden sm:inline">Bengaluru delivery & setup</span>
@@ -196,7 +196,7 @@ export default function HeroSection() {
                     quality={92}
                   />
                   <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.70),rgba(0,0,0,0.10)_60%,rgba(0,0,0,0))]" />
-                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_520px_at_60%_35%,rgba(255,90,85,0.16),transparent_60%)]" />
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_520px_at_60%_35%,rgba(255,255,255,0.10),transparent_60%)]" />
                 </motion.div>
               </AnimatePresence>
             </div>

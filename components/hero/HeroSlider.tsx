@@ -113,8 +113,8 @@ export default function HeroSlider() {
             }
             .hero-dot-active {
               width: 28px;
-              background: rgba(255, 90, 85, 0.85);
-              box-shadow: 0 0 0 6px rgba(255, 90, 85, 0.12);
+              background: rgba(255, 255, 255, 0.88);
+              box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.12);
             }
           `}</style>
         </div>

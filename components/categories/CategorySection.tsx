@@ -71,7 +71,7 @@ export default function CategorySection() {
               variants={fadeUp}
               className="text-center text-[28px] font-semibold tracking-tight text-white sm:text-[34px]"
             >
-              Shop by Category
+              Shop Refrigerators
             </motion.h2>
 
             <motion.div
