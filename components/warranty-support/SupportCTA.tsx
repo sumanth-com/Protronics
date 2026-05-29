@@ -12,7 +12,7 @@ export type SupportCTAProps = {
 
 export default function SupportCTA({
   warrantyHref = "#warranty",
-  supportHref = "#contact",
+  supportHref = "/contact",
   className,
 }: SupportCTAProps) {
   return (

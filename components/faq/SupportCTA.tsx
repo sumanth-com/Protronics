@@ -12,7 +12,7 @@ export type SupportCTAProps = {
 
 export default function SupportCTA({
   whatsappHref = "https://wa.me/",
-  expertHref = "#contact",
+  expertHref = "/contact",
   className,
 }: SupportCTAProps) {
   return (

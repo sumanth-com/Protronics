@@ -1,0 +1,240 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import ShopFilterDropdown from "@/components/shop/ShopFilterDropdown";
+import {
+  CAPACITY_OPTIONS,
+  PRICE_PRESETS,
+  SHOP_BRANDS,
+  SHOP_CATEGORIES,
+  SHOP_SORT_OPTIONS,
+  type ShopFilterState,
+  type ShopSortId,
+} from "@/lib/shop";
+import { cn } from "@/lib/utils";
+
+const CATEGORY_PILLS = [
+  { slug: undefined, label: "All Products" },
+  ...SHOP_CATEGORIES.map((c) => ({
+    slug: c.slug as string | undefined,
+    label: c.id === "premium-hubs" ? "Premium" : c.label,
+  })),
+];
+
+const BAR_SORT_OPTIONS = SHOP_SORT_OPTIONS.filter(
+  (o) => o.id !== "best-selling",
+);
+
+const PRICE_OPTIONS = PRICE_PRESETS.map((p) => ({
+  value: `${p.min}-${p.max}`,
+  label: p.label,
+}));
+
+const CAPACITY_OPTS = CAPACITY_OPTIONS.map((c) => ({ value: c, label: c }));
+const BRAND_OPTS = SHOP_BRANDS.map((b) => ({ value: b, label: b }));
+
+type ShopStickyFilterBarProps = {
+  activeCategory?: string;
+  filters: ShopFilterState;
+  sort: ShopSortId;
+  resultCount: number;
+  onCategoryChange: (slug: string | undefined) => void;
+  onFiltersChange: (filters: ShopFilterState) => void;
+  onSortChange: (sort: ShopSortId) => void;
+  onMobileFilterOpen: () => void;
+};
+
+function getPriceSelected(filters: ShopFilterState): string[] {
+  if (filters.priceMin == null || filters.priceMax == null) return [];
+  return [`${filters.priceMin}-${filters.priceMax}`];
+}
+
+function setPriceFromSelected(filters: ShopFilterState, selected: string[]): ShopFilterState {
+  if (!selected.length) {
+    return { ...filters, priceMin: null, priceMax: null };
+  }
+  const [min, max] = selected[0]!.split("-").map(Number);
+  return { ...filters, priceMin: min!, priceMax: max! };
+}
+
+export default function ShopStickyFilterBar({
+  activeCategory,
+  filters,
+  sort,
+  resultCount,
+  onCategoryChange,
+  onFiltersChange,
+  onSortChange,
+  onMobileFilterOpen,
+}: ShopStickyFilterBarProps) {
+  const [sortOpen, setSortOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sortOpen) return;
+    const onPointerDown = (e: MouseEvent) => {
+      if (!sortRef.current?.contains(e.target as Node)) setSortOpen(false);
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    return () => document.removeEventListener("mousedown", onPointerDown);
+  }, [sortOpen]);
+
+  const sortLabel = BAR_SORT_OPTIONS.find((o) => o.id === sort)?.label ?? "Sort";
+
+  return (
+    <div
+      className={cn(
+        "sticky top-[60px] z-40 border-b border-white/[0.06]",
+        "bg-[#0a0c0a]/90 backdrop-blur-xl sm:top-[64px]",
+      )}
+    >
+      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+        {/* Desktop */}
+        <div className="hidden items-center justify-between gap-4 lg:flex">
+          <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {CATEGORY_PILLS.map((pill) => {
+              const active = (pill.slug ?? undefined) === (activeCategory ?? undefined);
+              return (
+                <button
+                  key={pill.label}
+                  type="button"
+                  onClick={() => onCategoryChange(pill.slug)}
+                  className={cn(
+                    "relative shrink-0 rounded-full px-4 py-2 text-[13px] font-medium transition-all duration-300",
+                    active
+                      ? "border border-[#39ff88]/40 bg-[linear-gradient(135deg,rgba(57,255,136,0.18),rgba(57,255,136,0.06))] text-white shadow-[0_0_24px_rgba(57,255,136,0.12)]"
+                      : "border border-white/[0.08] bg-white/[0.04] text-white/65 hover:border-white/15 hover:text-white",
+                  )}
+                >
+                  {active ? (
+                    <motion.span
+                      layoutId="shop-category-pill"
+                      className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-[#39ff88]/25"
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  ) : null}
+                  <span className="relative">{pill.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex shrink-0 items-center gap-2">
+            <ShopFilterDropdown
+              label="Price"
+              options={PRICE_OPTIONS}
+              selected={getPriceSelected(filters)}
+              onChange={(sel) => onFiltersChange(setPriceFromSelected(filters, sel))}
+              single
+            />
+            <ShopFilterDropdown
+              label="Capacity"
+              options={CAPACITY_OPTS}
+              selected={filters.capacities}
+              onChange={(capacities) => onFiltersChange({ ...filters, capacities })}
+            />
+            <ShopFilterDropdown
+              label="Brand"
+              options={BRAND_OPTS}
+              selected={filters.brands}
+              onChange={(brands) => onFiltersChange({ ...filters, brands })}
+            />
+            <ShopFilterDropdown
+              label="Warranty"
+              options={[{ value: "1 Year", label: "1 Year" }]}
+              selected={filters.warranties}
+              onChange={(warranties) => onFiltersChange({ ...filters, warranties })}
+            />
+
+            <div ref={sortRef} className="relative">
+              <button
+                type="button"
+                onClick={() => setSortOpen((o) => !o)}
+                className={cn(
+                  "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2",
+                  "border border-white/[0.08] bg-[#141816]/80",
+                  "text-[13px] font-medium text-white/75 hover:text-white",
+                )}
+              >
+                {sortLabel}
+                <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", sortOpen && "rotate-180")} />
+              </button>
+              {sortOpen ? (
+                <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[180px] rounded-xl border border-white/[0.08] bg-[#121412]/95 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.65)] backdrop-blur-xl">
+                  {BAR_SORT_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => {
+                        onSortChange(opt.id);
+                        setSortOpen(false);
+                      }}
+                      className={cn(
+                        "w-full rounded-lg px-3 py-2 text-left text-[13px] transition-colors",
+                        sort === opt.id
+                          ? "bg-[#39ff88]/10 text-[#39ff88]"
+                          : "text-white/75 hover:bg-white/[0.04]",
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile */}
+        <div className="flex items-center justify-between gap-3 lg:hidden">
+          <button
+            type="button"
+            onClick={onMobileFilterOpen}
+            className={cn(
+              "inline-flex items-center gap-2 rounded-full px-4 py-2",
+              "border border-white/[0.08] bg-[#141816]/80 text-[13px] font-medium text-white",
+            )}
+          >
+            Filters & Categories
+          </button>
+          <p className="text-[12px] text-white/45">{resultCount} products</p>
+          <div ref={sortRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setSortOpen((o) => !o)}
+              className={cn(
+                "inline-flex items-center gap-1 rounded-full px-3 py-2",
+                "border border-white/[0.08] bg-[#141816]/80 text-[12px] font-medium text-white/75",
+              )}
+            >
+              Sort
+              <ChevronDown className="h-3 w-3" />
+            </button>
+            {sortOpen ? (
+              <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[160px] rounded-xl border border-white/[0.08] bg-[#121412]/95 p-2 shadow-xl backdrop-blur-xl">
+                {BAR_SORT_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => {
+                      onSortChange(opt.id);
+                      setSortOpen(false);
+                    }}
+                    className={cn(
+                      "w-full rounded-lg px-3 py-2 text-left text-[13px]",
+                      sort === opt.id ? "text-[#39ff88]" : "text-white/75",
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

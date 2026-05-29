@@ -92,12 +92,11 @@ export default function FooterSocials({ className }: FooterSocialsProps) {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
               "group grid h-10 w-10 place-items-center rounded-full",
-              "border border-white/12 bg-white/[0.05]",
-              "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
-              "shadow-[0_18px_50px_rgba(0,0,0,0.55)]",
+              "border border-white/[0.08] bg-[#141816]/80",
+              "supports-[backdrop-filter]:backdrop-blur-xl",
             )}
           >
-            <Icon className="h-4 w-4 text-white/75 transition-colors duration-300 group-hover:text-[#ff5a55]/90" />
+            <Icon className="h-4 w-4 text-white/75 transition-colors duration-300 group-hover:text-white" />
           </motion.a>
         );
       })}

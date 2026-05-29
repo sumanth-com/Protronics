@@ -9,10 +9,10 @@ import Logo from "@/assets/Logo.png";
 import CategoriesDropdown from "@/components/hero/CategoriesDropdown";
 
 const navLinks = [
-  { label: "Why Protronics", href: "#why" },
-  { label: "Support", href: "#support" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Why Protronics", href: "/why" },
+  { label: "Support", href: "/support" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 const navLinkClass =
@@ -79,7 +79,7 @@ export default function HeroNavbar() {
               <span className="sm:hidden">Sell</span>
             </CtaButton>
 
-            <CtaButton href="#shop" size="sm" className="shrink-0">
+            <CtaButton href="/shop" size="sm" className="shrink-0">
               <ShoppingBag className="h-4 w-4 text-black/80" />
               <span className="hidden sm:inline">Shop Now</span>
               <span className="sm:hidden">Shop</span>

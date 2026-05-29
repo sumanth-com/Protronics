@@ -12,7 +12,7 @@ export type CTAButtonsProps = {
 
 export default function CTAButtons({
   primaryHref = "#shop",
-  secondaryHref = "#contact",
+  secondaryHref = "/contact",
   className,
 }: CTAButtonsProps) {
   return (

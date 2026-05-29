@@ -17,24 +17,24 @@ export default function FooterLinks({
     {
       title: "Shop",
       links: [
-        { label: "Refrigerators", href: "#shop" },
-        { label: "Premium Collection", href: "#shop" },
-        { label: "Best Sellers", href: "#shop" },
+        { label: "Refrigerators", href: "/shop" },
+        { label: "Premium Collection", href: "/shop/premium-hubs" },
+        { label: "Best Sellers", href: "/shop" },
       ],
     },
     {
       title: "Support",
       links: [
         { label: "Warranty", href: "#warranty" },
-        { label: "FAQ", href: "#faq" },
-        { label: "Delivery Support", href: "#contact" },
+        { label: "Help Center", href: "/support" },
+        { label: "Delivery Support", href: "/contact" },
       ],
     },
     {
       title: "Company",
       links: [
-        { label: "About", href: "#about" },
-        { label: "Contact", href: "#contact" },
+        { label: "About", href: "/about" },
+        { label: "Contact", href: "/contact" },
         { label: "How It Works", href: "#how" },
       ],
     },
@@ -60,7 +60,7 @@ export default function FooterLinks({
               >
                 <span className="relative">
                   {l.label}
-                  <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[#ff5a55]/70 transition-transform duration-300 group-hover:scale-x-100" />
+                  <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 group-hover:scale-x-100" />
                 </span>
               </a>
             ))}

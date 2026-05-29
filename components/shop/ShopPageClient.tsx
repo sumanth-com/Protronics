@@ -1,0 +1,95 @@
+"use client";
+
+import { useCallback, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import ShopEmptyState from "@/components/shop/ShopEmptyState";
+import ShopHero, { ShopFilterDrawer } from "@/components/shop/ShopHero";
+import ShopMobileFilters from "@/components/shop/ShopMobileFilters";
+import ShopProductCard from "@/components/shop/ShopProductCard";
+import ShopStickyFilterBar from "@/components/shop/ShopStickyFilterBar";
+import {
+  DEFAULT_FILTERS,
+  SHOP_PRODUCTS,
+  buildShopPath,
+  filterProducts,
+  sortProducts,
+  type ShopFilterState,
+  type ShopSortId,
+} from "@/lib/shop";
+
+type ShopPageProps = {
+  initialCategory?: string;
+};
+
+export default function ShopPageClient({ initialCategory }: ShopPageProps) {
+  const router = useRouter();
+  const [filters, setFilters] = useState<ShopFilterState>(DEFAULT_FILTERS);
+  const [sort, setSort] = useState<ShopSortId>("popular");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const categorySlug = initialCategory;
+
+  const filtered = useMemo(
+    () => sortProducts(filterProducts(SHOP_PRODUCTS, categorySlug, filters), sort),
+    [categorySlug, filters, sort],
+  );
+
+  const handleCategoryChange = useCallback(
+    (slug: string | undefined) => {
+      router.push(buildShopPath(slug), { scroll: false });
+      setDrawerOpen(false);
+    },
+    [router],
+  );
+
+  const handleClear = useCallback(() => {
+    setFilters(DEFAULT_FILTERS);
+    setSort("popular");
+    handleCategoryChange(undefined);
+  }, [handleCategoryChange]);
+
+  return (
+    <main className="min-h-screen bg-[#0a0c0a] text-white">
+      <ShopHero productCount={SHOP_PRODUCTS.length} categoryCount={5} />
+
+      <ShopStickyFilterBar
+        activeCategory={categorySlug}
+        filters={filters}
+        sort={sort}
+        resultCount={filtered.length}
+        onCategoryChange={handleCategoryChange}
+        onFiltersChange={setFilters}
+        onSortChange={setSort}
+        onMobileFilterOpen={() => setDrawerOpen(true)}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
+        <p className="mb-5 hidden text-[13px] text-white/45 lg:block">
+          {filtered.length} {filtered.length === 1 ? "product" : "products"}
+        </p>
+
+        {filtered.length > 0 ? (
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            {filtered.map((product) => (
+              <ShopProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <ShopEmptyState onClear={handleClear} />
+        )}
+      </div>
+
+      <ShopFilterDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <ShopMobileFilters
+          filters={filters}
+          activeCategory={categorySlug}
+          sort={sort}
+          onCategoryChange={handleCategoryChange}
+          onFiltersChange={setFilters}
+          onSortChange={setSort}
+          onClear={handleClear}
+        />
+      </ShopFilterDrawer>
+    </main>
+  );
+}

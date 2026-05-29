@@ -12,8 +12,8 @@ const nav = [
   { label: "Shop", href: "#shop" },
   { label: "How It Works", href: "#how" },
   { label: "Warranty", href: "#warranty" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {

@@ -171,7 +171,7 @@ export default function WarrantySupport() {
               ))}
             </div>
 
-            <SupportCTA warrantyHref="#warranty" supportHref="#contact" />
+            <SupportCTA warrantyHref="#warranty" supportHref="/contact" />
           </motion.div>
 
           {/* Right: premium visual + reassurance */}

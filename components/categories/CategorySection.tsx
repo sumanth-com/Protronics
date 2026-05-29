@@ -10,31 +10,31 @@ const categories = [
     title: "Single Door",
     img: "https://images.unsplash.com/photo-1623092242739-5a382879cec9?auto=format&fit=crop&w=1200&q=80",
     pos: "50% 55%",
-    href: "#shop",
+    href: "/shop/single-door",
   },
   {
     title: "Double Door",
     img: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80",
     pos: "55% 55%",
-    href: "#shop",
+    href: "/shop/double-door",
   },
   {
     title: "Mini Fridges",
     img: "https://images.unsplash.com/photo-1585338667391-5b279a0c5eb8?auto=format&fit=crop&w=1200&q=80",
     pos: "50% 55%",
-    href: "#shop",
+    href: "/shop/mini-fridges",
   },
   {
     title: "Premium Hubs",
     img: "https://images.unsplash.com/photo-1667404202905-4335b5370d96?auto=format&fit=crop&w=1200&q=80",
     pos: "55% 55%",
-    href: "#shop",
+    href: "/shop/premium-hubs",
   },
   {
     title: "Commercial",
     img: "https://images.unsplash.com/photo-1722942624429-4e179ed18ec6?auto=format&fit=crop&w=1200&q=80",
     pos: "55% 55%",
-    href: "#shop",
+    href: "/shop/commercial",
   },
 ];
 
