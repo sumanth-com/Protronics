@@ -186,7 +186,7 @@ export function getProductJsonLd(product: ProductDetail) {
       price: product.price,
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
-      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://protronics.in"}/product/${product.id}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://protronics.store"}/product/${product.id}`,
       seller: { "@type": "Organization", name: "Protronics" },
     },
   };

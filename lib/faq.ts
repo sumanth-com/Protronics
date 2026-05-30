@@ -68,7 +68,7 @@ export function buildBreadcrumbJsonLd(
       "@type": "ListItem",
       position: i + 1,
       name: item.name,
-      item: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://protronics.in"}${item.path}`,
+      item: `${process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://protronics.store"}${item.path}`,
     })),
   };
 }

@@ -1,5 +1,8 @@
+const DEFAULT_SITE_URL = "https://protronics.store";
+
+/** Empty string from next.config env must not override the default (?? only catches null/undefined). */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://protronics.in";
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL;
 
 export const SITE_NAME = "Protronics";
 

@@ -10,9 +10,15 @@ const distDir =
     : "node_modules/.cache/next";
 
 /** Expose VITE_* from .env to the Next.js client bundle. */
+const DEFAULT_SITE_URL = "https://protronics.store";
+
 const viteFormEndpoint = process.env.VITE_FORM_ENDPOINT_URL?.trim() ?? "";
 const viteGaId = process.env.VITE_GA_MEASUREMENT_ID?.trim() ?? "";
 const viteSiteUrl = process.env.VITE_SITE_URL?.trim() ?? "";
+const siteUrl =
+  viteSiteUrl ||
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+  DEFAULT_SITE_URL;
 
 const nextConfig: NextConfig = {
   distDir,
@@ -21,8 +27,7 @@ const nextConfig: NextConfig = {
       viteFormEndpoint || process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL?.trim() || "",
     NEXT_PUBLIC_GA_MEASUREMENT_ID:
       viteGaId || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || "",
-    NEXT_PUBLIC_SITE_URL:
-      viteSiteUrl || process.env.NEXT_PUBLIC_SITE_URL?.trim() || "",
+    NEXT_PUBLIC_SITE_URL: siteUrl,
   },
   turbopack: {
     root: __dirname,
