@@ -2442,15 +2442,15 @@ html:not([data-theme="light"]) footer .footer-link::after {
 
 [data-theme="dark"] .hero-trust-icon,
 html:not([data-theme="light"]) .hero-trust-icon {
-  color: #b88a44 !important;
-  -webkit-text-fill-color: #b88a44 !important;
-  stroke: #b88a44;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  stroke: #ffffff;
 }
 
 [data-theme="dark"] .hero-trust-icon-wrap,
 html:not([data-theme="light"]) .hero-trust-icon-wrap {
-  background: rgba(184, 138, 68, 0.12) !important;
-  border-color: rgba(184, 138, 68, 0.28) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
 }
 
 [data-theme="dark"] .hero-trust-title {
