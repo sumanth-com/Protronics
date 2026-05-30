@@ -37,6 +37,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# generated at build/dev (scripts/write-forms-endpoint.mjs)
+/public/forms-endpoint.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -56,7 +56,7 @@ POST body: `application/x-www-form-urlencoded` with field `payload` = JSON strin
 4. **Deploy → Web app** — Execute as **Me**, Access **Anyone**.
 5. Copy the **`/exec`** URL.
 6. Set `VITE_FORM_ENDPOINT_URL` in project root `.env` (and on Vercel/Netlify).
-7. `npm run build` — writes `public/forms-endpoint.json` and validates URL in CI/production.
+7. `npm run build` — writes `public/forms-endpoint.json`. Missing URL warns but deploy continues; set `FORMS_REQUIRE_ENDPOINT=1` in CI to hard-fail without a URL.
 8. Submit a test form; confirm a row in the correct tab.
 9. In browser console: `window.__FORM_HEALTH__` → `{ ready: true, url: "...", source: "env"|"json" }`.
 
@@ -72,7 +72,7 @@ POST body: `application/x-www-form-urlencoded` with field `payload` = JSON strin
 
 | Symptom | Fix |
 |--------|-----|
-| Build fails “endpoint required” | Set `NEXT_PUBLIC_FORM_ENDPOINT_URL` or use `FORMS_SKIP_ASSERT=1` for local-only builds |
+| Build fails “endpoint required” | Set `NEXT_PUBLIC_FORM_ENDPOINT_URL` on Vercel, or unset `FORMS_REQUIRE_ENDPOINT` if you opted into strict CI |
 | `__FORM_HEALTH__.ready === false` | Missing env or invalid `/forms-endpoint.json`; URL must match `https://script.google.com/macros/s/.../exec` |
 | CORS error | Use urlencoded `payload` (already in `googleSheetsClient.ts`); redeploy Apps Script as **Anyone** |
 | Row in wrong tab | `sheet_tab` / `SHEET_TABS` mismatch between frontend and Apps Script |

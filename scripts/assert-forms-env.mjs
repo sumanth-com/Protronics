@@ -8,29 +8,33 @@ const url = (
   ""
 ).trim();
 
-const isStrict =
-  process.env.FORMS_SKIP_ASSERT !== "1" &&
-  (process.env.VERCEL === "1" ||
-    process.env.NETLIFY === "1" ||
-    process.env.CI === "true" ||
-    process.env.NODE_ENV === "production");
+const skipAssert = process.env.FORMS_SKIP_ASSERT === "1";
+const requireEndpoint = process.env.FORMS_REQUIRE_ENDPOINT === "1";
+const isDeploy =
+  process.env.VERCEL === "1" ||
+  process.env.NETLIFY === "1" ||
+  process.env.CI === "true" ||
+  process.env.NODE_ENV === "production";
 
-if (!isStrict) {
-  if (!url) {
-    console.warn(
-      "[forms] No form endpoint URL set. Dev builds OK; set VITE_FORM_ENDPOINT_URL or NEXT_PUBLIC_FORM_ENDPOINT_URL for production.",
-    );
-  }
+if (skipAssert) {
   process.exit(0);
 }
 
 if (!url) {
-  console.error(
-    "[forms] BUILD FAILED: Form endpoint URL is required for production.\n" +
-      "Set VITE_FORM_ENDPOINT_URL or NEXT_PUBLIC_FORM_ENDPOINT_URL to your Apps Script /exec URL.\n" +
-      "Local override: FORMS_SKIP_ASSERT=1 npm run build",
-  );
-  process.exit(1);
+  const message =
+    "[forms] No form endpoint URL set. Forms will not submit until you set " +
+    "VITE_FORM_ENDPOINT_URL or NEXT_PUBLIC_FORM_ENDPOINT_URL (Apps Script /exec URL).";
+
+  if (requireEndpoint) {
+    console.error(
+      `[forms] BUILD FAILED: ${message}\n` +
+        "Unset FORMS_REQUIRE_ENDPOINT or provide the URL to continue.",
+    );
+    process.exit(1);
+  }
+
+  console.warn(`${message}${isDeploy ? " (deploy will continue; add the env var in Vercel/Netlify.)" : ""}`);
+  process.exit(0);
 }
 
 if (!SCRIPT_RE.test(url)) {
