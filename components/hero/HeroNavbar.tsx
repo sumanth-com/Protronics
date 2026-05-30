@@ -44,9 +44,9 @@ export default function HeroNavbar() {
         <div
           className={cn(
             "navbar-inner relative mx-auto flex w-full max-w-[1520px] items-center",
-            /* Mobile & tablet — clean icon bar */
-            "h-16 gap-2.5 px-4",
-            "min-[480px]:h-[4.5rem] min-[480px]:gap-3",
+            /* Mobile & tablet — clean icon bar, tighter left inset */
+            "h-16 gap-2 pl-2 pr-4",
+            "min-[375px]:gap-2.5 min-[480px]:h-[4.5rem] min-[480px]:gap-3 min-[480px]:pl-2.5",
             /* Desktop — unchanged */
             "lg:h-auto lg:gap-7 lg:py-3.5 lg:pl-5 lg:pr-7",
             "xl:gap-8 xl:pl-6 xl:pr-8",
@@ -61,22 +61,24 @@ export default function HeroNavbar() {
           >
             <div
               className={cn(
-                "relative shrink-0",
-                "h-8 w-8 min-[375px]:h-9 min-[375px]:w-9",
-                "sm:h-10 sm:w-10",
-                "lg:h-[52px] lg:w-[52px]",
+                "navbar-logo-pill relative flex shrink-0 items-center justify-center overflow-hidden",
+                "h-9 w-9 rounded-full border border-theme-border bg-theme-elevated shadow-theme-sm",
+                "min-[375px]:h-10 min-[375px]:w-10",
+                "lg:h-[52px] lg:w-[52px] lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none",
               )}
             >
-              <Image
-                src={Logo}
-                alt=""
-                fill
-                sizes="(max-width: 1023px) 36px, 56px"
-                className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
-                quality={IMAGE_QUALITY.logo}
-                priority
-                aria-hidden
-              />
+              <div className="relative h-[58%] w-[58%] lg:h-full lg:w-full">
+                <Image
+                  src={Logo}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1023px) 36px, 56px"
+                  className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+                  quality={IMAGE_QUALITY.logo}
+                  priority
+                  aria-hidden
+                />
+              </div>
             </div>
             <div className="min-w-0 leading-none">
               <div className="navbar-brand-title truncate">PROTRONICS</div>

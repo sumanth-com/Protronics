@@ -370,6 +370,23 @@ html.theme-transition *::after {
   color: var(--theme-fg-muted);
 }
 
+.navbar-logo-pill {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.navbar-brand:hover .navbar-logo-pill {
+  border-color: color-mix(in srgb, var(--theme-accent) 35%, var(--theme-border));
+}
+
+@media (min-width: 1024px) {
+  .navbar-brand:hover .navbar-logo-pill {
+    border-color: transparent;
+  }
+}
+
 @media (min-width: 1024px) {
   .navbar-brand-tagline {
     font-size: 0.75rem;
@@ -2912,8 +2929,14 @@ body.mobile-nav-scroll-lock {
 /* Safe area for notched devices */
 @supports (padding: max(0px)) {
   .navbar-shell > div.navbar-inner {
-    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-left: max(0.5rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  @media (min-width: 480px) {
+    .navbar-shell > div.navbar-inner {
+      padding-left: max(0.625rem, env(safe-area-inset-left));
+    }
   }
 
   @media (min-width: 1024px) {
