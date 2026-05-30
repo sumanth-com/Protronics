@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useMobileLiteMotion } from "@/hooks/useMobileLiteMotion";
 import { cn } from "@/lib/utils";
 
 type TradeInSectionHeaderProps = {
@@ -57,12 +58,18 @@ export function TradeInReveal({
   className?: string;
   delay?: number;
 }) {
+  const lite = useMobileLiteMotion();
+
+  if (lite) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+      transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}

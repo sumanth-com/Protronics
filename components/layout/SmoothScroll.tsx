@@ -33,11 +33,16 @@ export default function SmoothScroll({
 
       gsap.registerPlugin(ScrollTrigger);
 
+      const mobileScroll =
+        window.matchMedia("(max-width: 1023px)").matches ||
+        window.matchMedia("(pointer: coarse)").matches;
+
       instance = new Lenis({
-        lerp: 0.12,
+        lerp: mobileScroll ? 1 : 0.12,
         wheelMultiplier: 0.9,
-        touchMultiplier: 1,
-        smoothWheel: true,
+        touchMultiplier: mobileScroll ? 1.2 : 1,
+        smoothWheel: !mobileScroll,
+        syncTouch: false,
         autoRaf: true,
       });
 

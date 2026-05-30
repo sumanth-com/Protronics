@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import SupportAnswerPanel from "@/components/support/SupportAnswerPanel";
@@ -31,11 +31,11 @@ export default function SupportCenter({
   const [articleId, setArticleId] = useState(initialArticleId);
   const [mobilePane, setMobilePane] = useState<MobilePane>("categories");
 
-  useEffect(() => {
-    if (pathname === "/support") {
-      setMobilePane("categories");
-    }
-  }, [pathname]);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    if (pathname === "/support") setMobilePane("categories");
+  }
 
   const category = useMemo(() => getCategoryById(categoryId), [categoryId]);
   const article = useMemo(

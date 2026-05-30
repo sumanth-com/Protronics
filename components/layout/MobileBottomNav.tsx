@@ -6,8 +6,8 @@ import {
   Headset,
   Home,
   Phone,
+  RefreshCw,
   ShoppingBag,
-  Tags,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,11 +21,11 @@ const tabs = [
     match: (p: string) => p.startsWith("/shop"),
   },
   {
-    id: "deals",
-    label: "Deals",
-    href: "/best-deals",
-    icon: Tags,
-    match: (p: string) => p === "/best-deals" || p.startsWith("/best-deals/"),
+    id: "trade-in",
+    label: "Trade In",
+    href: "/trade-in",
+    icon: RefreshCw,
+    match: (p: string) => p === "/trade-in" || p.startsWith("/trade-in/"),
   },
   {
     id: "support",
@@ -63,6 +63,7 @@ export default function MobileBottomNav() {
                 prefetch
                 className={cn("mobile-bottom-nav-item", active && "is-active")}
                 aria-current={active ? "page" : undefined}
+                aria-label={tab.label}
               >
                 <Icon className="mobile-bottom-nav-icon" strokeWidth={2} />
                 <span>{tab.label}</span>

@@ -75,19 +75,26 @@ export default function BestDealsSection() {
             <motion.h2
               variants={fadeUp}
               className={cn(
-                "mt-3 font-semibold tracking-tight text-white",
-                "type-section-title text-[34px] leading-[1.06] sm:text-[44px] sm:leading-[1.04]",
+                "mt-2 font-semibold tracking-tight text-white sm:mt-3",
+                "text-[22px] leading-[1.08] sm:type-section-title sm:text-[44px] sm:leading-[1.04]",
               )}
             >
-              This Week&apos;s Top Picks
+              Shop Best Deals
             </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              className="mt-2 text-[13px] leading-6 text-white/65 sm:mt-3 sm:text-[15px]"
+            >
+              Discounted refurbished appliances—tap any product to view and buy.
+            </motion.p>
           </div>
 
           <motion.div
             variants={fadeUp}
-            className="flex flex-wrap gap-2"
+            className="best-deals-tabs -mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:flex-wrap sm:overflow-visible sm:pb-0"
             role="tablist"
             aria-label="Deal categories"
+            data-lenis-prevent
           >
             {TABS.map((tab) => {
               const Icon = tab.icon;
@@ -100,7 +107,7 @@ export default function BestDealsSection() {
                   aria-selected={active}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    "deals-tab inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12px] font-medium transition-all duration-300",
+                    "deals-tab inline-flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-medium transition-all duration-300 sm:px-3.5 sm:py-2 sm:text-[12px]",
                     active
                       ? "deals-tab-active bg-theme-accent text-theme-accent-fg shadow-theme-sm"
                       : "border border-white/10 text-white/60 hover:border-white/20 hover:text-white",
@@ -121,7 +128,7 @@ export default function BestDealsSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+            className="best-deals-grid mt-6 grid grid-cols-2 gap-2.5 sm:mt-10 sm:gap-4 lg:grid-cols-4"
             role="tabpanel"
           >
             {deals.map((product) => {
@@ -136,40 +143,43 @@ export default function BestDealsSection() {
                   href={buildProductPath(product.id)}
                   prefetch
                   className={cn(
-                    "premium-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02]",
+                    "best-deals-card premium-card group relative overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.02] sm:rounded-2xl",
                     "transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04]",
                   )}
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-white/[0.03]">
+                  <div className="relative aspect-square overflow-hidden bg-white/[0.03] sm:aspect-[4/3]">
                     <Image
                       src={product.image}
                       alt={product.name}
                       fill
                       sizes="(max-width: 640px) 50vw, 25vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      className="object-contain p-2 transition-transform duration-500 group-hover:scale-[1.03] sm:object-cover sm:p-0"
                       quality={IMAGE_QUALITY.card}
                     />
                     {savingsPct > 0 && (
-                      <span className="deals-save-pill absolute left-3 top-3 z-[1]">
-                        Save {savingsPct}%
+                      <span className="deals-save-pill absolute left-2 top-2 z-[1] text-[10px] sm:left-3 sm:top-3 sm:text-[11px]">
+                        {savingsPct}% off
                       </span>
                     )}
                   </div>
-                  <div className="p-4">
-                    <p className="text-[11px] font-medium text-white/45">
+                  <div className="p-2.5 sm:p-4">
+                    <p className="hidden text-[11px] font-medium text-white/45 sm:block">
                       {product.brand}
                     </p>
-                    <h3 className="mt-1 line-clamp-2 text-[14px] font-semibold leading-snug text-white">
+                    <h3 className="line-clamp-2 text-[12px] font-semibold leading-snug text-white sm:mt-1 sm:text-[14px]">
                       {product.name}
                     </h3>
-                    <div className="mt-3 flex items-baseline gap-2">
-                      <span className="text-[16px] font-semibold text-white">
+                    <div className="mt-1.5 flex flex-wrap items-baseline gap-1 sm:mt-3 sm:gap-2">
+                      <span className="text-[13px] font-semibold text-white sm:text-[16px]">
                         {formatPrice(product.price)}
                       </span>
-                      <span className="text-[12px] text-white/40 line-through">
+                      <span className="text-[10px] text-white/40 line-through sm:text-[12px]">
                         {formatPrice(product.originalPrice)}
                       </span>
                     </div>
+                    <span className="best-deals-view mt-2 hidden w-full rounded-md border border-white/10 py-1.5 text-center text-[11px] font-semibold text-white/80 sm:inline-block">
+                      View
+                    </span>
                   </div>
                 </Link>
               );

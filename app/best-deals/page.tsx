@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function BestDealsPage() {
   return (
-    <main className="bg-black">
+    <main className="best-deals-page bg-black pb-4 lg:pb-0">
       <BestDealsSection />
     </main>
   );

@@ -3542,3 +3542,37 @@ table {
     display: block;
   }
 }
+
+/* Trade-in page — mobile marketplace form UX */
+@media (max-width: 1023px) {
+  .trade-in-page {
+    overflow-x: clip;
+    padding-bottom: 0.5rem;
+  }
+
+  .trade-in-field,
+  .trade-in-page select {
+    font-size: 16px;
+  }
+
+  .trade-in-story-card:last-child {
+    margin-right: 0.75rem;
+  }
+
+  .trade-in-scroll-x {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: none;
+    touch-action: pan-x;
+  }
+
+  .trade-in-hero {
+    transform: none;
+  }
+
+  .trade-in-hero [class*="will-change"],
+  .trade-in-hero .trade-in-hero-media {
+    will-change: auto;
+    transform: none !important;
+  }
+}

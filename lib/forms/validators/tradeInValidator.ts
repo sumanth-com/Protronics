@@ -4,12 +4,15 @@ import { isValidPhone, required } from "@/lib/forms/validation/shared";
 export type TradeInFormValues = {
   name: string;
   phone: string;
+  email?: string;
   city: string;
   applianceType: string;
   brand: string;
   model: string;
   age: string;
   condition: string;
+  workingStatus?: string;
+  description?: string;
   expectedPrice?: string;
   estimatedLow?: string;
   estimatedHigh?: string;
@@ -57,6 +60,9 @@ export function validateTradeIn(
       model: String(raw.model).trim(),
       age: String(raw.age),
       condition: String(raw.condition),
+      email: String(raw.email ?? "").trim(),
+      workingStatus: String(raw.workingStatus ?? ""),
+      description: String(raw.description ?? "").trim(),
       expectedPrice: String(raw.expectedPrice ?? ""),
       estimatedLow: String(raw.estimatedLow ?? ""),
       estimatedHigh: String(raw.estimatedHigh ?? ""),
