@@ -10,6 +10,7 @@ import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import HeroImage from "@/assets/4.png";
 import { fadeUp, stagger } from "@/lib/animations";
+import { canRunGsapScroll, gsapScroller } from "@/lib/gsapScroll";
 import { TRADE_IN_LINKS } from "@/lib/trade-in";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +20,8 @@ export default function TradeInHero() {
   const mediaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!canRunGsapScroll()) return;
+
     const media = mediaRef.current;
     if (!media) return;
 
@@ -31,6 +34,7 @@ export default function TradeInHero() {
           ease: "none",
           scrollTrigger: {
             trigger: media,
+            scroller: gsapScroller(),
             start: "top bottom",
             end: "bottom top",
             scrub: true,

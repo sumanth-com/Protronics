@@ -57,7 +57,7 @@ export default function WhyComparison() {
           viewport={{ once: true, margin: "-12% 0px" }}
           className={cn("mt-10 overflow-hidden", whyGlass)}
         >
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto" data-lenis-prevent>
             <table className="w-full min-w-[720px] border-collapse text-left">
               <thead>
                 <tr className="border-b border-white/10">

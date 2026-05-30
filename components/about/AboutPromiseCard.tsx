@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
-import { fadeUp } from "@/lib/animations";
+import { fadeUpCard } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
 type AboutPromiseCardProps = {
@@ -18,31 +18,26 @@ export default function AboutPromiseCard({
 }: AboutPromiseCardProps) {
   return (
     <motion.article
-      variants={fadeUp}
-      whileHover={{ y: -3 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      variants={fadeUpCard}
       className={cn(
-        "group relative overflow-hidden rounded-2xl",
+        "about-promise-card group relative overflow-hidden rounded-2xl",
         "border border-white/12 bg-black",
         "px-6 py-6",
         "h-full min-h-[200px]",
       )}
     >
       <div className="relative flex h-full flex-col">
-        <div
-          className={cn(
-            "grid h-12 w-12 place-items-center rounded-xl",
-            "border border-white/12 bg-white/[0.06]",
-          )}
-        >
-          <Icon className="h-5 w-5 text-white" />
+        <div className="about-promise-icon-wrap grid h-12 w-12 place-items-center rounded-xl border border-white/12 bg-white/[0.06]">
+          <Icon className="about-promise-icon h-5 w-5 text-white" strokeWidth={1.75} />
         </div>
 
-        <h3 className="mt-4 text-[15px] font-semibold tracking-tight text-white">
+        <h3 className="about-promise-title mt-4 text-[15px] font-semibold tracking-tight text-white">
           {title}
         </h3>
-        <div className="mt-2 h-[2px] w-10 rounded-full bg-white/50" />
-        <p className="mt-3 text-[13px] leading-6 text-white/65">{description}</p>
+        <div className="about-promise-accent mt-2 h-[2px] w-10 rounded-full" aria-hidden />
+        <p className="about-promise-desc mt-3 text-[13px] leading-6 text-white/65">
+          {description}
+        </p>
       </div>
     </motion.article>
   );

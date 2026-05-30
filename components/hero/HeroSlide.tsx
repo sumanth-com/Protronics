@@ -10,7 +10,7 @@ import {
   Truck,
 } from "lucide-react";
 import { fadeUp, stagger } from "@/lib/animations";
-import { IMAGE_QUALITY } from "@/lib/images";
+import { IMAGE_QUALITY, HERO_REVIEW_AVATARS } from "@/lib/images";
 import { BUSINESS } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 import CtaButton from "@/components/ui/CtaButton";
@@ -62,7 +62,7 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
             >
               <motion.div
                 variants={fadeUp}
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-1.5 text-[12px] text-white/70 supports-[backdrop-filter]:bg-black/25 supports-[backdrop-filter]:backdrop-blur-xl"
+                className="hero-eyebrow inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/40 px-3 py-1.5 text-[12px] text-white/70 supports-[backdrop-filter]:bg-black/25 supports-[backdrop-filter]:backdrop-blur-xl"
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-white/90" />
                 Refurbished. Restored. Reliable.
@@ -103,9 +103,9 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
                   return (
                     <div
                       key={x.t}
-                      className="flex items-start gap-2 rounded-2xl border border-white/10 bg-black/35 px-3 py-3 supports-[backdrop-filter]:bg-black/25 supports-[backdrop-filter]:backdrop-blur-xl"
+                      className="hero-feature-card flex items-start gap-2 rounded-2xl border border-white/10 bg-black/35 px-3 py-3 supports-[backdrop-filter]:bg-black/25 supports-[backdrop-filter]:backdrop-blur-xl"
                     >
-                      <Icon className="mt-[2px] h-4 w-4 text-white/85" />
+                      <Icon className="hero-feature-icon mt-[2px] h-4 w-4 text-white/85" strokeWidth={1.75} />
                       <div className="text-[12px] leading-5 text-white/70">
                         {x.t}
                       </div>
@@ -114,11 +114,8 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
                 })}
               </motion.div>
 
-              {/* CTAs */}
-              <motion.div
-                variants={fadeUp}
-                className="mt-7 flex flex-col gap-3 sm:flex-row"
-              >
+              {/* CTAs — no entrance delay so clicks feel instant */}
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <CtaButton href="#shop" size="lg" fullWidth className="sm:w-auto">
                   Explore Collection →
                 </CtaButton>
@@ -132,21 +129,28 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
                   <WhatsAppIcon className="h-4 w-4 text-black/80" />
                   Chat on WhatsApp
                 </CtaButton>
-              </motion.div>
+              </div>
             </motion.div>
           </div>
         </div>
 
         {/* rating pill (bottom-right, reference-style) */}
         <div className="absolute bottom-4 right-4">
-          <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/55 px-3 py-2.5 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_30px_120px_rgba(0,0,0,0.70)]">
+          <div className="hero-rating-pill flex items-center gap-3 rounded-2xl border border-white/10 bg-black/55 px-3 py-2.5 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_30px_120px_rgba(0,0,0,0.70)]">
             <div className="flex -space-x-2">
-              {["A", "S", "N"].map((ch) => (
+              {HERO_REVIEW_AVATARS.map((avatar) => (
                 <div
-                  key={ch}
-                  className="grid h-7 w-7 place-items-center rounded-full border border-white/10 bg-white/[0.06] text-[11px] font-semibold text-white/80"
+                  key={avatar.src}
+                  className="relative h-7 w-7 shrink-0 overflow-hidden rounded-full border border-white/10 bg-white/[0.06] ring-1 ring-black/25"
                 >
-                  {ch}
+                  <Image
+                    src={avatar.src}
+                    alt={avatar.alt}
+                    fill
+                    sizes="28px"
+                    className="object-cover"
+                    quality={IMAGE_QUALITY.card}
+                  />
                 </div>
               ))}
             </div>

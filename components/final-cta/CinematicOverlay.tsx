@@ -13,7 +13,7 @@ export type CinematicOverlayProps = {
 const CinematicOverlay = forwardRef<HTMLDivElement, CinematicOverlayProps>(
   ({ src, alt, className }, ref) => {
     return (
-      <div className={cn("absolute inset-0 overflow-hidden", className)}>
+      <div className={cn("final-cta-bg absolute inset-0 overflow-hidden", className)}>
         <div ref={ref} className="absolute inset-0">
           <Image
             src={src}
@@ -21,13 +21,13 @@ const CinematicOverlay = forwardRef<HTMLDivElement, CinematicOverlayProps>(
             fill
             priority={false}
             sizes="100vw"
-            className="object-cover"
+            className="final-cta-bg-image object-cover"
             quality={92}
           />
         </div>
 
         {/* cinematic masking + lighting */}
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.80),rgba(0,0,0,0.40)_55%,rgba(0,0,0,0.15)_78%,rgba(0,0,0,0))]" />
+        <div className="final-cta-cinematic-mask pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.80),rgba(0,0,0,0.40)_55%,rgba(0,0,0,0.15)_78%,rgba(0,0,0,0))]" />
       </div>
     );
   },

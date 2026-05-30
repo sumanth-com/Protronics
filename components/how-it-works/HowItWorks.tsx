@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { BadgeCheck, ShieldCheck, Sparkles, Truck } from "lucide-react";
 import { fadeUp, stagger } from "@/lib/animations";
+import { canRunGsapScroll, gsapScroller } from "@/lib/gsapScroll";
 import ProcessStep, { type ProcessStepData } from "@/components/how-it-works/ProcessStep";
 import TimelineConnector from "@/components/how-it-works/TimelineConnector";
 import SectionHeading from "@/components/how-it-works/SectionHeading";
@@ -53,6 +54,8 @@ export default function HowItWorks() {
   );
 
   useEffect(() => {
+    if (!canRunGsapScroll()) return;
+
     const section = sectionRef.current;
     const px = progressXRef.current;
     const py = progressYRef.current;
@@ -68,6 +71,7 @@ export default function HowItWorks() {
           transformOrigin: "0% 50%",
           scrollTrigger: {
             trigger: section,
+            scroller: gsapScroller(),
             start: "top 70%",
             end: "bottom 40%",
             scrub: true,
@@ -89,6 +93,7 @@ export default function HowItWorks() {
           transformOrigin: "50% 0%",
           scrollTrigger: {
             trigger: section,
+            scroller: gsapScroller(),
             start: "top 72%",
             end: "bottom 45%",
             scrub: true,
@@ -101,7 +106,7 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section id="how" ref={sectionRef} className="relative overflow-hidden bg-black">
+    <section id="how" ref={sectionRef} className="theme-section-b relative overflow-hidden bg-black">
       {/* seamless continuation */}
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 

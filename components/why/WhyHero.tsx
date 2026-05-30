@@ -12,6 +12,7 @@ import CtaButton from "@/components/ui/CtaButton";
 import HeroImage from "@/assets/3.png";
 import { WHY_LINKS } from "@/lib/why";
 import { fadeUp, stagger } from "@/lib/animations";
+import { canRunGsapScroll, gsapScroller } from "@/lib/gsapScroll";
 import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -20,13 +21,15 @@ export default function WhyHero() {
   const mediaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!canRunGsapScroll()) return;
+
     const media = mediaRef.current;
     if (!media) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(media, { y: -8 }, {
         y: 12, ease: "none",
-        scrollTrigger: { trigger: media, start: "top bottom", end: "bottom top", scrub: true },
+        scrollTrigger: { trigger: media, scroller: gsapScroller(), start: "top bottom", end: "bottom top", scrub: true },
       });
     }, media);
 

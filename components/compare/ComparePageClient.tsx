@@ -151,7 +151,7 @@ export default function ComparePageClient() {
         </div>
 
         {/* Product columns — horizontal scroll on mobile */}
-        <div className="mt-10 -mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
+        <div className="mt-10 -mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden" data-lenis-prevent>
           <div
             className={cn(
               "flex min-w-max gap-4 sm:min-w-0 sm:grid",

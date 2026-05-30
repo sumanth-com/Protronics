@@ -2,16 +2,20 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { refreshScrollTriggers, scrollToTarget, useLenis } from "@/hooks/useLenis";
 
-/** Instant scroll to top on route change — no smooth delay. */
+/** Reset scroll position on route change — synced with Lenis. */
 export default function RouteScrollReset() {
   const pathname = usePathname();
+  const lenis = useLenis();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }, [pathname]);
+    scrollToTarget(lenis, 0, { immediate: true });
+    const id = requestAnimationFrame(() => {
+      void refreshScrollTriggers();
+    });
+    return () => cancelAnimationFrame(id);
+  }, [pathname, lenis]);
 
   return null;
 }

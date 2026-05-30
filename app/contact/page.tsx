@@ -1,5 +1,17 @@
 import type { Metadata } from "next";
-import ContactPage from "@/components/contact/ContactPage";
+import dynamic from "next/dynamic";
+import ContactForm from "@/components/contact/ContactForm";
+
+const ContactOptions = dynamic(
+  () => import("@/components/contact/ContactOptions"),
+);
+const BusinessInfo = dynamic(
+  () => import("@/components/contact/BusinessInfo"),
+);
+const ContactFAQ = dynamic(() => import("@/components/contact/ContactFAQ"));
+const StickyWhatsApp = dynamic(
+  () => import("@/components/contact/StickyWhatsApp"),
+);
 
 export const metadata: Metadata = {
   title: "Contact | Protronics",
@@ -10,7 +22,13 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <div className="min-h-screen bg-black text-white">
-      <ContactPage />
+      <main>
+        <ContactForm />
+        <ContactOptions />
+        <BusinessInfo />
+        <ContactFAQ />
+        <StickyWhatsApp />
+      </main>
     </div>
   );
 }

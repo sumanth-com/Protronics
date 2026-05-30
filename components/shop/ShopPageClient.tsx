@@ -72,7 +72,7 @@ export default function ShopPageClient({
   }, [handleCategoryChange]);
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="shop-page theme-section-a min-h-screen bg-black text-white">
       <ShopHero productCount={SHOP_PRODUCTS.length} categoryCount={5} />
 
       <ShopStickyFilterBar
@@ -87,7 +87,7 @@ export default function ShopPageClient({
       />
 
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-        <p className="mb-5 hidden text-[13px] text-white/45 lg:block">
+        <p className="shop-result-count mb-5 hidden text-[13px] text-white/45 lg:block">
           {filtered.length} {filtered.length === 1 ? "product" : "products"}
         </p>
 

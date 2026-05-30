@@ -18,7 +18,7 @@ export default function Skeleton({ className }: SkeletonProps) {
 
 export function PageSkeleton() {
   return (
-    <div className="min-h-screen bg-black px-4 py-16 sm:px-6">
+    <div className="min-h-screen bg-theme-bg px-4 py-16 sm:px-6">
       <div className="mx-auto max-w-7xl space-y-8">
         <Skeleton className="mx-auto h-8 w-48" />
         <Skeleton className="mx-auto h-14 w-full max-w-2xl" />

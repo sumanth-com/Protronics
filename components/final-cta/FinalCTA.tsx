@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import CTAButtons from "@/components/final-cta/CTAButtons";
 import BackgroundEffects from "@/components/final-cta/BackgroundEffects";
 import CinematicOverlay from "@/components/final-cta/CinematicOverlay";
+import { SECTION_IMAGES } from "@/lib/images";
+import { canRunGsapScroll, gsapScroller } from "@/lib/gsapScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,6 +19,8 @@ export default function FinalCTA() {
   const bgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (!canRunGsapScroll()) return;
+
     const orb = orbRef.current;
     const bg = bgRef.current;
     if (!orb || !bg) return;
@@ -30,6 +34,7 @@ export default function FinalCTA() {
           ease: "none",
           scrollTrigger: {
             trigger: orb,
+            scroller: gsapScroller(),
             start: "top bottom",
             end: "bottom top",
             scrub: true,
@@ -45,6 +50,7 @@ export default function FinalCTA() {
           ease: "none",
           scrollTrigger: {
             trigger: bg,
+            scroller: gsapScroller(),
             start: "top bottom",
             end: "bottom top",
             scrub: true,
@@ -57,13 +63,13 @@ export default function FinalCTA() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-black">
+    <section className="final-cta-section theme-section-b relative overflow-hidden bg-black">
       {/* seamless continuation */}
-      <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
+      <div className="section-seam-fade pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
       <CinematicOverlay
         ref={bgRef}
-        src="/final/final-cta.jpg"
+        src={SECTION_IMAGES.finalCta}
         alt="Premium modern kitchen lifestyle background"
       />
 
@@ -72,7 +78,7 @@ export default function FinalCTA() {
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-16 pb-16 sm:px-6 sm:pt-20 sm:pb-20">
         <div
           className={cn(
-            "mx-auto max-w-4xl rounded-[34px]",
+            "final-cta-card mx-auto max-w-4xl rounded-[34px]",
             "border border-white/12 bg-white/[0.05]",
             "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
             "shadow-[0_40px_140px_rgba(0,0,0,0.70)]",
@@ -112,9 +118,9 @@ export default function FinalCTA() {
               by trust, warranty, and premium care.
             </motion.p>
 
-            <motion.div variants={fadeUp}>
+            <div className="mt-8">
               <CTAButtons />
-            </motion.div>
+            </div>
 
             <motion.div
               variants={fadeUp}
@@ -130,7 +136,7 @@ export default function FinalCTA() {
                 <div
                   key={x.k}
                   className={cn(
-                    "rounded-2xl border border-white/12 bg-white/[0.04]",
+                    "final-cta-stat rounded-2xl border border-white/12 bg-white/[0.04]",
                     "px-4 py-4",
                   )}
                 >

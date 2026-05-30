@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/faq",
+        destination: "/support",
+        permanent: true,
+      },
+      {
         source: "/why",
         destination: "/why-protronics",
         permanent: true,

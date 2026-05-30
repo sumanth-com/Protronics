@@ -86,12 +86,11 @@ export default function ContactOptions() {
                 <motion.div
                   key={opt.title}
                   variants={fadeUp}
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className={cn(
                     "group relative overflow-hidden",
                     contactGlass,
                     "flex flex-col p-6",
+                    "transition-transform duration-150 ease-out hover:-translate-y-1",
                   )}
                 >
                   <div className="relative flex flex-1 flex-col">

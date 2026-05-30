@@ -42,12 +42,12 @@ export default function CategorySection() {
   return (
     <section id="shop" className="relative">
       {/* Seamless transition from hero */}
-      <div className="pointer-events-none absolute inset-x-0 -top-24 h-24 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
+      <div className="category-hero-fade pointer-events-none absolute inset-x-0 -top-24 h-24 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
       <div
         className={cn(
           "relative",
-          "bg-black",
+          "bg-black theme-section-a",
           "pt-10 pb-16 sm:pt-12 sm:pb-20",
         )}
       >
@@ -96,7 +96,7 @@ export default function CategorySection() {
 
           {/* Mobile premium horizontal slider */}
           <div className="mt-8 sm:hidden">
-            <div className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-lenis-prevent>
               <div className="flex snap-x snap-mandatory gap-4">
                 {categories.map((c) => (
                   <div

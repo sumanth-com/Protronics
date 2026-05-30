@@ -10,6 +10,38 @@ import ProductCTA from "@/components/featured-products/ProductCTA";
 
 const FALLBACK_IMAGE = "/featured/featured-1.jpg";
 
+/** Shorter pill copy so badges stay on one row inside narrow cards */
+function badgeDisplayLabel(label: string): string {
+  const short: Record<string, string> = {
+    "1-Year Warranty Included": "1Y Warranty",
+    "Warranty Included": "Warranty",
+    "Certified Premium": "Cert. Premium",
+  };
+  return short[label] ?? label;
+}
+
+/** Readable short labels — full text on hover, no ellipsis clipping */
+function specDisplayLabel(spec: string): string {
+  const short: Record<string, string> = {
+    "Stabilizer Free": "Stabilizer",
+    "Space Optimized": "Space Save",
+    "Energy Saver": "Energy Saver",
+    "Commercial Grade": "Commercial",
+    "Premium Finish": "Premium",
+    "Smart Shelves": "Smart Shelf",
+    "Display Ready": "Display",
+    "Fast Recovery": "Fast Cool",
+    "Door Cooling+": "Door Cool+",
+    "Twin Cooling": "Twin Cool",
+    "Power Cool": "Power Cool",
+    "Heavy Duty": "Heavy Duty",
+    "Low Noise": "Low Noise",
+    "Quick Chill": "Quick Chill",
+    "Low Power": "Low Power",
+  };
+  return short[spec] ?? spec;
+}
+
 export type FeaturedProduct = {
   name: string;
   image: string;
@@ -34,28 +66,40 @@ export default function ProductCard({ product, className }: ProductCardProps) {
 
   return (
     <motion.article
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "group relative h-full overflow-hidden rounded-3xl",
         "border border-white/12 bg-black",
         "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
-        "will-change-transform",
+        "transition-transform duration-150 ease-out hover:-translate-y-1",
         className,
       )}
     >
       <div className="relative flex h-full flex-col p-5 sm:p-6">
-        {/* header badges */}
-        <div className="flex flex-wrap items-center gap-2">
+        {/* header badges — single row */}
+        <div className="product-card-badges flex min-w-0 flex-nowrap items-center gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {(product.tags ?? []).slice(0, 1).map((t) => (
-            <ProductBadge key={t} label={t} tone="premium" scheme="dark" />
+            <ProductBadge
+              key={t}
+              label={badgeDisplayLabel(t)}
+              title={t}
+              tone="premium"
+              scheme="dark"
+              compact
+            />
           ))}
           <ProductBadge
-            label={product.warranty}
+            label={badgeDisplayLabel(product.warranty)}
+            title={product.warranty}
             tone="warranty"
             scheme="dark"
+            compact
           />
-          <ProductBadge label={product.condition} scheme="dark" />
+          <ProductBadge
+            label={badgeDisplayLabel(product.condition)}
+            title={product.condition}
+            scheme="dark"
+            compact
+          />
         </div>
 
         {/* image */}
@@ -68,11 +112,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
             "aspect-[4/3]",
           )}
         >
-          <motion.div
-            className="absolute inset-0"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <div className="absolute inset-0 transition-transform duration-300 ease-out group-hover:scale-[1.03]">
             <Image
               src={src}
               alt={product.name}
@@ -90,14 +130,14 @@ export default function ProductCard({ product, className }: ProductCardProps) {
                 if (src !== FALLBACK_IMAGE) setSrc(FALLBACK_IMAGE);
               }}
             />
-          </motion.div>
+          </div>
         </div>
 
         {/* content */}
-        <div className="mt-5 flex flex-1 flex-col">
+        <div className="mt-5 flex flex-1 flex-col sm:mt-6">
           <div
             className={cn(
-              "text-[15px] font-semibold leading-snug tracking-tight text-white sm:text-[16px]",
+              "text-[16px] font-semibold leading-snug tracking-tight text-white sm:text-[17px]",
               "overflow-hidden [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]",
             )}
           >
@@ -105,34 +145,39 @@ export default function ProductCard({ product, className }: ProductCardProps) {
           </div>
 
           {/* pricing */}
-          <div className="mt-2 flex items-end gap-2">
-            <div className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
+          <div className="mt-2.5 flex items-end gap-2.5">
+            <div className="text-[20px] font-semibold tracking-tight text-white sm:text-[22px]">
               ₹{product.price.toLocaleString("en-IN")}
             </div>
             {product.originalPrice ? (
-              <div className="pb-[2px] text-[12px] font-medium text-white/45 line-through">
+              <div className="pb-0.5 text-[13px] font-medium text-white/45 line-through sm:text-[14px]">
                 ₹{product.originalPrice.toLocaleString("en-IN")}
               </div>
             ) : null}
           </div>
 
-          {/* specs */}
-          <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2">
-            {product.specs.slice(0, 4).map((s) => (
-              <li key={s} className="flex items-start gap-2">
-                <CheckCircle2 className="mt-[2px] h-4 w-4 text-white/70" />
-                <span className="text-[12px] leading-5 text-white/70">
-                  {s}
+          {/* specs — full labels, one row, spread across card */}
+          <ul className="product-card-specs mt-4 flex w-full items-center justify-between gap-1 sm:mt-4 sm:gap-1.5">
+            {product.specs.slice(0, 3).map((s) => (
+              <li key={s} className="flex items-center gap-1">
+                <CheckCircle2
+                  className="h-3.5 w-3.5 shrink-0 text-white/70"
+                  strokeWidth={2}
+                  aria-hidden
+                />
+                <span
+                  className="whitespace-nowrap text-[12px] font-medium leading-none text-white/75"
+                  title={s}
+                >
+                  {specDisplayLabel(s)}
                 </span>
               </li>
             ))}
           </ul>
 
-          <ProductCTA
-            className="mt-auto"
-            href={product.href}
-            whatsappHref={product.whatsappHref}
-          />
+          <div className="mt-auto pt-5 sm:pt-6">
+            <ProductCTA href={product.href} whatsappHref={product.whatsappHref} />
+          </div>
         </div>
       </div>
 

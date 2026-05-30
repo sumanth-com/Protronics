@@ -26,33 +26,27 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
 
   return (
     <motion.article
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl",
+        "shop-product-card group relative flex h-full flex-col overflow-hidden rounded-2xl",
         "border border-white/[0.08] bg-black",
         "supports-[backdrop-filter]:backdrop-blur-xl",
         "shadow-[0_20px_60px_rgba(0,0,0,0.45)]",
+        "transition-transform duration-150 ease-out hover:-translate-y-1",
       )}
     >
 <div className="relative p-4 sm:p-5">
-        {/* Image */}
-        <div className="relative overflow-hidden rounded-xl bg-black aspect-[4/3]">
+        <div className="shop-product-stage relative aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white">
           {product.tag ? (
-            <span className="absolute left-3 top-3 z-10 rounded-full border border-white/10 bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
+            <span className="shop-product-tag absolute left-3 top-3 z-10 rounded-full border border-white/10 bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
               {product.tag}
             </span>
           ) : null}
           {discount > 0 ? (
-            <span className="absolute right-3 top-3 z-10 rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-white">
+            <span className="shop-product-discount absolute right-3 top-3 z-10 rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-white">
               {discount}% off
             </span>
           ) : null}
-          <motion.div
-            className="absolute inset-0"
-            whileHover={{ scale: 1.04 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          >
+          <div className="absolute inset-0 transition-transform duration-300 ease-out group-hover:scale-[1.04]">
             <Image
               src={src}
               alt={product.name}
@@ -69,7 +63,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
                 if (src !== FALLBACK) setSrc(FALLBACK);
               }}
             />
-          </motion.div>
+          </div>
         </div>
 
         {/* Trust badges */}
@@ -77,7 +71,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           {TRUST_BADGES.map((badge) => (
             <span
               key={badge}
-              className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white"
+              className="shop-trust-pill inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white"
             >
               <Check className="h-2.5 w-2.5" strokeWidth={2.5} />
               {badge}
@@ -87,35 +81,35 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
 
         {/* Info */}
         <div className="mt-3">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-white/45">
+          <p className="shop-product-meta text-[11px] font-medium uppercase tracking-wide text-white/45">
             {product.brand} · {product.capacity}
           </p>
-          <h3 className="mt-1 text-[15px] font-semibold leading-snug text-white sm:text-[16px]">
+          <h3 className="shop-product-title mt-1 text-[15px] font-semibold leading-snug text-white sm:text-[16px]">
             {product.name}
           </h3>
         </div>
 
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[10px] text-white/55">
+          <span className="shop-product-chip rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[10px] text-white/55">
             {product.condition}
           </span>
-          <span className="rounded-full border border-white/25 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white">
+          <span className="shop-product-chip shop-product-chip-accent rounded-full border border-white/25 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white">
             {product.warranty} Warranty
           </span>
         </div>
 
         <div className="mt-3 flex items-end gap-2">
-          <span className="text-[20px] font-semibold tracking-tight text-white">
+          <span className="shop-product-price text-[20px] font-semibold tracking-tight text-white">
             ₹{product.price.toLocaleString("en-IN")}
           </span>
-          <span className="pb-0.5 text-[12px] text-white/40 line-through">
+          <span className="shop-product-was pb-0.5 text-[12px] text-white/40 line-through">
             ₹{product.originalPrice.toLocaleString("en-IN")}
           </span>
         </div>
 
         <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
           {product.specs.slice(0, 3).map((spec) => (
-            <li key={spec} className="text-[12px] text-white/55">
+            <li key={spec} className="shop-product-spec text-[12px] text-white/55">
               {spec}
             </li>
           ))}

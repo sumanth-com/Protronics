@@ -47,11 +47,11 @@ export default function ContactFinalCTA() {
             className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
             <CtaButton href={BUSINESS.whatsappMessage} external size="lg" fullWidth className="sm:w-auto">
-              <WhatsAppIcon className="h-4 w-4 text-black/80" />
+              <WhatsAppIcon className="h-4 w-4" />
               WhatsApp Inquiry
             </CtaButton>
             <CtaButton href={BUSINESS.phoneHref} size="lg" fullWidth className="sm:w-auto">
-              <Phone className="h-4 w-4 text-black/80" />
+              <Phone className="h-4 w-4" />
               Call Now
             </CtaButton>
           </motion.div>

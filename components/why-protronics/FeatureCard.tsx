@@ -19,15 +19,13 @@ export default function FeatureCard({
 }: FeatureCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -3 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "group relative overflow-hidden rounded-2xl",
         "border border-white/12 bg-black",
         "shadow-[0_22px_60px_rgba(0,0,0,0.45)]",
         "px-6 py-6",
         "h-[206px] sm:h-[214px] lg:h-[224px]",
-        "will-change-transform",
+        "transition-transform duration-150 ease-out hover:-translate-y-0.5",
         className,
       )}
     >

@@ -1,52 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
 import { ArrowUpRight } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutAmbient from "@/components/about/AboutAmbient";
 import CtaButton from "@/components/ui/CtaButton";
-import HeroImage from "@/assets/2.png";
+import HeroImage from "@/assets/About.png";
 import { ABOUT_LINKS } from "@/lib/about";
 import { fadeUp, stagger } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
-gsap.registerPlugin(ScrollTrigger);
+const HERO_TAGS = [
+  "100+ Quality Checks",
+  "Deep Sanitized",
+  "1-Year Warranty",
+] as const;
 
 export default function AboutHero() {
-  const mediaRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const media = mediaRef.current;
-    if (!media) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        media,
-        { y: -8 },
-        {
-          y: 12,
-          ease: "none",
-          scrollTrigger: {
-            trigger: media,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-    }, media);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
       aria-labelledby="about-hero-heading"
-      className="relative overflow-hidden bg-black"
+      className="theme-section-a relative overflow-hidden bg-black"
     >
       <AboutAmbient variant="hero" />
 
@@ -92,10 +67,7 @@ export default function AboutHero() {
             through rigorous testing, restoration, and certification.
           </motion.p>
 
-          <motion.div
-            variants={fadeUp}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-          >
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <CtaButton href={ABOUT_LINKS.collection} size="lg" fullWidth className="sm:w-auto">
               Explore Collection
               <ArrowUpRight className="h-4 w-4 text-black/80" />
@@ -109,13 +81,13 @@ export default function AboutHero() {
                 "inline-flex w-full items-center justify-center gap-2 rounded-full sm:w-auto",
                 "border border-white/15 bg-white/[0.06] px-6 py-3.5",
                 "text-[13px] font-semibold text-white",
-                "transition-colors hover:bg-white/[0.09] active:bg-white/[0.06]",
+                "transition-colors duration-150 hover:bg-white/[0.09] active:bg-white/[0.06]",
               )}
             >
               WhatsApp Inquiry
               <WhatsAppIcon className="h-4 w-4 text-white" />
             </a>
-          </motion.div>
+          </div>
         </motion.div>
 
         <motion.div
@@ -127,34 +99,35 @@ export default function AboutHero() {
           <motion.div
             variants={fadeUp}
             className={cn(
-              "relative overflow-hidden rounded-[32px]",
-              "border border-white/12 bg-white/[0.05]",
-              "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
-              "shadow-[0_40px_140px_rgba(0,0,0,0.70)]",
+              "theme-preserve-dark relative overflow-hidden rounded-[32px]",
+              "border border-white/12 bg-black",
+              "shadow-[0_40px_140px_rgba(0,0,0,0.55)]",
             )}
           >
-            <div ref={mediaRef} className="relative aspect-[16/11] w-full">
+            <div className="about-hero-media relative aspect-[4/3] w-full overflow-hidden bg-black sm:aspect-[16/10]">
               <Image
                 src={HeroImage}
-                alt="Premium refurbished refrigerator in a modern kitchen"
+                alt="Protronics showroom — refurbished refrigerators on display"
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
-                quality={92}
+                className="object-cover object-center"
+                quality={90}
               />
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.75),rgba(0,0,0,0.15)_55%,rgba(0,0,0,0))]" />
-</div>
+              <div
+                className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[40%] bg-[linear-gradient(to_top,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.45)_50%,transparent_100%)]"
+                aria-hidden
+              />
 
-            <div className="absolute bottom-4 left-4 right-4 flex flex-wrap gap-2">
-              {["100+ checks", "Deep sanitized", "1-year warranty"].map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-white/12 bg-black/50 px-3 py-1.5 text-[11px] font-medium text-white/80 supports-[backdrop-filter]:backdrop-blur-md"
-                >
-                  {tag}
-                </span>
-              ))}
+              <div className="about-hero-pills absolute inset-x-0 bottom-0 z-10 flex justify-center px-4 pb-4 pt-10 sm:px-6 sm:pb-5 sm:pt-12">
+                <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+                  {HERO_TAGS.map((tag) => (
+                    <span key={tag} className="about-hero-pill">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </motion.div>
         </motion.div>

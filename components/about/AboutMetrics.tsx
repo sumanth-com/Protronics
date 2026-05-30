@@ -12,10 +12,9 @@ export default function AboutMetrics() {
   return (
     <section
       aria-labelledby="about-metrics-heading"
-      className="relative overflow-hidden bg-black py-16 sm:py-24"
+      className="theme-section-c relative overflow-hidden bg-black py-16 sm:py-24"
     >
       <AboutAmbient variant="section" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
         <SectionHeader

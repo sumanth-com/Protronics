@@ -19,35 +19,32 @@ const metrics = [
 
 export default function TrustMetrics() {
   return (
-    <div className="w-full px-4 pb-2 sm:px-6 lg:px-10 mt-2">
+    <div className="hero-trust-zone w-full px-4 pb-2 sm:px-6 lg:px-10 mt-2">
       <div
         className={cn(
-          "relative overflow-hidden rounded-3xl",
+          "hero-trust-bar pointer-events-none select-none relative overflow-hidden rounded-3xl",
           "border border-white/10 bg-white/[0.03]",
           "supports-[backdrop-filter]:bg-white/[0.04] supports-[backdrop-filter]:backdrop-blur-2xl",
           "shadow-[0_30px_120px_rgba(0,0,0,0.70)]",
         )}
       >
-<div className="grid grid-cols-2 gap-2 px-4 py-2 sm:grid-cols-5 sm:gap-0 sm:px-6 sm:py-3">
+        <div className="grid grid-cols-2 gap-2 px-4 py-2 sm:grid-cols-5 sm:gap-0 sm:px-6 sm:py-3">
           {metrics.map((m) => {
             const Icon = m.icon;
             return (
               <div
                 key={m.desc}
                 className={cn(
-                  "flex items-center gap-3 rounded-2xl px-3 py-2.5",
-                  "sm:rounded-none sm:px-0 sm:py-0",
-                  "sm:justify-center",
+                  "hero-trust-item flex items-center gap-3 px-3 py-2.5",
+                  "sm:px-0 sm:py-0 sm:justify-center",
                 )}
               >
-                <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/[0.03]">
-                  <Icon className="h-5 w-5 text-white/85" />
+                <div className="hero-trust-icon-wrap grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/[0.03]">
+                  <Icon className="hero-trust-icon h-5 w-5" strokeWidth={1.75} />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-[13px] font-semibold text-white">
-                    {m.title}
-                  </div>
-                  <div className="text-[12px] text-white/55">{m.desc}</div>
+                  <div className="hero-trust-title text-[13px] font-semibold">{m.title}</div>
+                  <div className="hero-trust-desc text-[12px]">{m.desc}</div>
                 </div>
               </div>
             );
@@ -57,4 +54,3 @@ export default function TrustMetrics() {
     </div>
   );
 }
-

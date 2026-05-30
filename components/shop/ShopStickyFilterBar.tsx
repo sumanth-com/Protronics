@@ -14,6 +14,7 @@ import {
   type ShopSortId,
 } from "@/lib/shop";
 import { cn } from "@/lib/utils";
+import { NAVBAR_OFFSET } from "@/lib/navigation";
 
 const CATEGORY_PILLS = [
   { slug: undefined, label: "All Products" },
@@ -70,7 +71,40 @@ export default function ShopStickyFilterBar({
   onMobileFilterOpen,
 }: ShopStickyFilterBarProps) {
   const [sortOpen, setSortOpen] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const [barHeight, setBarHeight] = useState(0);
   const sortRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setPinned(!entry.isIntersecting),
+      {
+        root: null,
+        rootMargin: `-${NAVBAR_OFFSET}px 0px 0px 0px`,
+        threshold: 0,
+      },
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return;
+
+    const updateHeight = () => setBarHeight(bar.offsetHeight);
+    updateHeight();
+
+    const ro = new ResizeObserver(updateHeight);
+    ro.observe(bar);
+    return () => ro.disconnect();
+  }, []);
 
   useEffect(() => {
     if (!sortOpen) return;
@@ -84,16 +118,26 @@ export default function ShopStickyFilterBar({
   const sortLabel = BAR_SORT_OPTIONS.find((o) => o.id === sort)?.label ?? "Sort";
 
   return (
-    <div
-      className={cn(
-        "sticky top-[60px] z-40 border-b border-white/[0.06]",
-        "bg-black/90 backdrop-blur-xl sm:top-[64px]",
-      )}
-    >
+    <div className="shop-filter-shell">
+      <div ref={sentinelRef} className="pointer-events-none h-px w-full" aria-hidden />
+      {pinned && barHeight > 0 ? (
+        <div className="w-full" style={{ height: barHeight }} aria-hidden />
+      ) : null}
+      <div
+        ref={barRef}
+        className={cn(
+          "shop-filter-bar z-[45] border-b border-white/[0.06]",
+          "bg-black/90 backdrop-blur-xl",
+          pinned
+            ? "shop-filter-bar-pinned fixed inset-x-0 top-[60px] sm:top-[64px]"
+            : "relative",
+        )}
+        data-lenis-prevent={pinned ? "" : undefined}
+      >
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
         {/* Desktop */}
         <div className="hidden items-center justify-between gap-4 lg:flex">
-          <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-lenis-prevent>
             {CATEGORY_PILLS.map((pill) => {
               const active = (pill.slug ?? undefined) === (activeCategory ?? undefined);
               return (
@@ -102,9 +146,9 @@ export default function ShopStickyFilterBar({
                   type="button"
                   onClick={() => onCategoryChange(pill.slug)}
                   className={cn(
-                    "relative shrink-0 rounded-full px-4 py-2 text-[13px] font-medium transition-all duration-300",
+                    "shop-category-pill relative shrink-0 rounded-full px-4 py-2 text-[13px] font-medium transition-all duration-200",
                     active
-                      ? "border border-white/40 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] text-white shadow-[0_0_24px_rgba(255,255,255,0.05)]"
+                      ? "shop-category-pill-active border border-white/40 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] text-white shadow-[0_0_24px_rgba(255,255,255,0.05)]"
                       : "border border-white/[0.08] bg-white/[0.04] text-white/65 hover:border-white/15 hover:text-white",
                   )}
                 >
@@ -153,7 +197,7 @@ export default function ShopStickyFilterBar({
                 type="button"
                 onClick={() => setSortOpen((o) => !o)}
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2",
+                  "shop-sort-trigger inline-flex items-center gap-1.5 rounded-full px-3.5 py-2",
                   "border border-white/[0.08] bg-black",
                   "text-[13px] font-medium text-white/75 hover:text-white",
                 )}
@@ -162,7 +206,7 @@ export default function ShopStickyFilterBar({
                 <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", sortOpen && "rotate-180")} />
               </button>
               {sortOpen ? (
-                <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[180px] rounded-xl border border-white/[0.08] bg-black/95 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.65)] backdrop-blur-xl">
+                <div className="shop-filter-menu absolute right-0 top-[calc(100%+8px)] z-50 min-w-[180px] rounded-xl border border-white/[0.08] bg-black/95 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.65)] backdrop-blur-xl">
                   {BAR_SORT_OPTIONS.map((opt) => (
                     <button
                       key={opt.id}
@@ -172,7 +216,7 @@ export default function ShopStickyFilterBar({
                         setSortOpen(false);
                       }}
                       className={cn(
-                        "w-full rounded-lg px-3 py-2 text-left text-[13px] transition-colors",
+                        "shop-filter-menu-item w-full rounded-lg px-3 py-2 text-left text-[13px] transition-colors",
                         sort === opt.id
                           ? "bg-white/[0.06] text-white"
                           : "text-white/75 hover:bg-white/[0.04]",
@@ -193,13 +237,13 @@ export default function ShopStickyFilterBar({
             type="button"
             onClick={onMobileFilterOpen}
             className={cn(
-              "inline-flex items-center gap-2 rounded-full px-4 py-2",
+              "shop-mobile-filter-btn inline-flex items-center gap-2 rounded-full px-4 py-2",
               "border border-white/[0.08] bg-black text-[13px] font-medium text-white",
             )}
           >
             Filters & Categories
           </button>
-          <p className="text-[12px] text-white/45">{resultCount} products</p>
+          <p className="shop-result-count text-[12px] text-white/45">{resultCount} products</p>
           <div ref={sortRef} className="relative">
             <button
               type="button"
@@ -235,6 +279,7 @@ export default function ShopStickyFilterBar({
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

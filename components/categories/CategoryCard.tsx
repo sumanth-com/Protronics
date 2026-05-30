@@ -1,7 +1,6 @@
 "use client";
 
 import Image, { type StaticImageData } from "next/image";
-import { motion } from "framer-motion";
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -25,10 +24,8 @@ export default function CategoryCard({
   const isStatic = typeof image !== "string";
 
   return (
-    <motion.a
+    <a
       href={href}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
         "group block select-none cursor-pointer",
         "rounded-2xl border",
@@ -39,7 +36,7 @@ export default function CategoryCard({
         tone === "dark"
           ? "shadow-[0_18px_50px_rgba(0,0,0,0.35)]"
           : "shadow-[0_10px_28px_rgba(0,0,0,0.06)]",
-        "will-change-transform",
+        "transition-transform duration-150 ease-out hover:-translate-y-1",
       )}
     >
       <div
@@ -78,7 +75,7 @@ export default function CategoryCard({
           {title}
         </span>
       </div>
-    </motion.a>
+    </a>
   );
 }
 

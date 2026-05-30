@@ -40,12 +40,12 @@ export default function SupportCTA({
       <div className="mt-6 flex flex-col gap-3 sm:flex-row">
         <CtaButton href={whatsappHref} fullWidth external className="sm:w-auto">
           WhatsApp Support
-          <WhatsAppIcon className="h-4 w-4 text-black/80" />
+          <WhatsAppIcon className="h-4 w-4" />
         </CtaButton>
 
         <CtaButton href={expertHref} fullWidth className="sm:w-auto">
           Talk to an Expert
-          <PhoneCall className="h-4 w-4 text-black/80" />
+          <PhoneCall className="h-4 w-4" />
         </CtaButton>
       </div>
     </div>

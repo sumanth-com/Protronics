@@ -19,12 +19,12 @@ export default function CTAButtons({
     <div className={cn("mt-7 flex flex-col gap-3 sm:flex-row", className)}>
       <CtaButton href={primaryHref} fullWidth className="sm:w-auto">
         Explore Collection
-        <ArrowUpRight className="h-4 w-4 text-black/80" />
+        <ArrowUpRight className="h-4 w-4" />
       </CtaButton>
 
       <CtaButton href={secondaryHref} fullWidth className="sm:w-auto">
         Talk to an Expert
-        <PhoneCall className="h-4 w-4 text-black/80" />
+        <PhoneCall className="h-4 w-4" />
       </CtaButton>
     </div>
   );

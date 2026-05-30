@@ -27,7 +27,7 @@ export default function CategoryMenu() {
           "shadow-[0_30px_120px_rgba(0,0,0,0.70)]",
         )}
       >
-<div className="-mx-4 overflow-x-auto px-4 py-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+<div className="-mx-4 overflow-x-auto px-4 py-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-lenis-prevent>
           <div className="flex items-center gap-2">
             {items.map((label, idx) => {
               const isActive = idx === active;

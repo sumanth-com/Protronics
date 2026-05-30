@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+import { canRunGsapScroll, gsapScroller } from "@/lib/gsapScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +19,8 @@ export default function LifestyleImage({ src, alt, className }: LifestyleImagePr
   const imgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (!canRunGsapScroll()) return;
+
     const el = imgRef.current;
     if (!el) return;
 
@@ -30,6 +33,7 @@ export default function LifestyleImage({ src, alt, className }: LifestyleImagePr
           ease: "none",
           scrollTrigger: {
             trigger: el,
+            scroller: gsapScroller(),
             start: "top bottom",
             end: "bottom top",
             scrub: true,

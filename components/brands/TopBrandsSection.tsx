@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 export default function TopBrandsSection() {
   return (
-    <section id="brands" className="relative overflow-hidden bg-black">
+    <section id="brands" className="theme-section-c relative overflow-hidden bg-black">
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">

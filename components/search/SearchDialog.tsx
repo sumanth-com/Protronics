@@ -11,6 +11,7 @@ import {
   type SearchResult,
 } from "@/lib/search";
 import { cn } from "@/lib/utils";
+import { useLenis } from "@/hooks/useLenis";
 
 const RECENT_KEY = "protronics-recent-searches";
 
@@ -36,6 +37,7 @@ type SearchDialogProps = {
 
 export default function SearchDialog({ open, onClose }: SearchDialogProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const lenis = useLenis();
   const [query, setQuery] = useState("");
   const [recent, setRecent] = useState<string[]>([]);
   const results = query.trim() ? searchSite(query) : [];
@@ -51,15 +53,19 @@ export default function SearchDialog({ open, onClose }: SearchDialogProps) {
 
   useEffect(() => {
     if (!open) return;
+    lenis?.stop();
+    return () => {
+      lenis?.start();
+    };
+  }, [open, lenis]);
+
+  useEffect(() => {
+    if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
+    return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
   const handleSelect = useCallback(

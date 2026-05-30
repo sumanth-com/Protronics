@@ -17,10 +17,14 @@ export default function ProductCTA({
   className,
 }: ProductCTAProps) {
   return (
-    <div className={cn("mt-5 flex items-center gap-2", className)}>
-      <CtaButton href={href} size="sm" className="flex-1">
+    <div className={cn("flex items-center gap-2.5", className)}>
+      <CtaButton
+        href={href}
+        size="sm"
+        className="product-card-cta min-h-[38px] flex-1 gap-2 px-4 py-2.5 text-[13px] sm:min-h-[40px] sm:text-[14px]"
+      >
         View Details
-        <ArrowUpRight className="h-4 w-4 text-black/80" />
+        <ArrowUpRight className="h-4 w-4" />
       </CtaButton>
 
       {whatsappHref ? (
@@ -29,9 +33,9 @@ export default function ProductCTA({
           size="sm"
           external
           aria-label="WhatsApp Inquiry"
-          className="shrink-0 px-3"
+          className="product-card-cta min-h-[38px] shrink-0 px-3 sm:min-h-[40px]"
         >
-          <WhatsAppIcon className="h-4 w-4 text-black/80" />
+          <WhatsAppIcon className="h-4 w-4" />
         </CtaButton>
       ) : null}
     </div>

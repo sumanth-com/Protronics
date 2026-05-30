@@ -43,21 +43,19 @@ export default function HeroSlider() {
   return (
     <section
       className={cn(
-        "relative overflow-hidden bg-black",
-        // keep the whole hero block within the visible viewport (account for fixed navbar)
+        "hero-section relative overflow-hidden bg-black",
         "min-h-[calc(100svh-64px)] sm:min-h-[calc(100svh-68px)]",
         "flex flex-col",
       )}
     >
-      {/* slider */}
+      {/* slider — cinematic dark zone (background image preserved) */}
       <div className="w-full px-4 pt-5 sm:px-6 lg:px-10">
         <div
           className={cn(
-            "relative overflow-hidden rounded-[34px]",
+            "theme-preserve-dark hero-slider-shell relative overflow-hidden rounded-[34px]",
             "border border-white/10 bg-white/[0.03]",
             "supports-[backdrop-filter]:bg-white/[0.04] supports-[backdrop-filter]:backdrop-blur-2xl",
             "shadow-[0_40px_160px_rgba(0,0,0,0.75)]",
-            // Explicit height to keep trust bar tight and visible
             "h-[460px] sm:h-[500px] lg:h-[540px]",
           )}
         >
@@ -88,7 +86,7 @@ export default function HeroSlider() {
 
           {/* premium dots */}
           <div className="pointer-events-none absolute bottom-5 left-1/2 z-30 -translate-x-1/2 flex items-center">
-            <div className="pointer-events-auto rounded-full border border-white/10 bg-black/55 px-3 py-2 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.70)]">
+            <div className="hero-dots-pill pointer-events-auto rounded-full border border-white/10 bg-black/55 px-3 py-2 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.70)]">
               <div className="hero-dots flex items-center gap-2" />
             </div>
           </div>
@@ -107,9 +105,6 @@ export default function HeroSlider() {
               background: rgba(255, 255, 255, 0.22);
               transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
               display: inline-block;
-            }
-            .hero-dot:hover {
-              background: rgba(255, 255, 255, 0.42);
             }
             .hero-dot-active {
               width: 28px;

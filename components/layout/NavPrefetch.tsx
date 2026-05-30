@@ -2,24 +2,24 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { PREFETCH_ROUTES } from "@/lib/navigation";
 
-const NAV_ROUTES = [
-  "/",
-  "/shop",
-  "/support",
-  "/warranty",
-  "/about",
-  "/faq",
-  "/contact",
-  "/trade-in",
-] as const;
-
-/** Prefetch all main nav routes so clicks feel instant. */
+/** Prefetch key routes after idle so first paint is not blocked. */
 export default function NavPrefetch() {
   const router = useRouter();
 
   useEffect(() => {
-    NAV_ROUTES.forEach((route) => router.prefetch(route));
+    const prefetch = () => {
+      PREFETCH_ROUTES.forEach((route) => router.prefetch(route));
+    };
+
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(prefetch, { timeout: 2500 });
+      return () => window.cancelIdleCallback(id);
+    }
+
+    const id = window.setTimeout(prefetch, 1200);
+    return () => window.clearTimeout(id);
   }, [router]);
 
   return null;

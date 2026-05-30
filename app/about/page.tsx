@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
-import AboutPage from "@/components/about/AboutPage";
+import dynamic from "next/dynamic";
+import AboutHero from "@/components/about/AboutHero";
 import { aboutPageJsonLd } from "@/lib/about";
+
+const AboutWhyExists = dynamic(
+  () => import("@/components/about/AboutWhyExists"),
+);
+const AboutPromise = dynamic(() => import("@/components/about/AboutPromise"));
+const AboutMetrics = dynamic(() => import("@/components/about/AboutMetrics"));
 
 export const metadata: Metadata = {
   title: "About | Premium Refurbished Appliances | Protronics",
@@ -30,7 +37,12 @@ export default function About() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageJsonLd) }}
       />
       <div className="min-h-screen bg-black text-white">
-        <AboutPage />
+        <main>
+          <AboutHero />
+          <AboutWhyExists />
+          <AboutPromise />
+          <AboutMetrics />
+        </main>
       </div>
     </>
   );

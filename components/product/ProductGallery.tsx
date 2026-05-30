@@ -52,7 +52,7 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
             <Maximize2 className="h-4 w-4" />
           </button>
         </div>
-        <div className="flex shrink-0 gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex shrink-0 gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-lenis-prevent>
           {images.map((img, i) => (
             <button
               key={img + i}

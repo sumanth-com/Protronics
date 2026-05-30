@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { HandCoins, ShoppingBag } from "lucide-react";
+import { ShoppingBag, Tags } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
+import NavCtaIcon from "@/components/ui/NavCtaIcon";
 import SearchTrigger from "@/components/search/SearchTrigger";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import Logo from "@/assets/Logo.png";
@@ -15,7 +17,6 @@ const navLinks = [
   { label: "Support", href: "/support" },
   { label: "Warranty", href: "/warranty" },
   { label: "About", href: "/about" },
-  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -34,11 +35,11 @@ export default function HeroNavbar() {
       <div
         className={cn(
           "relative w-full",
-          "border-b border-white/10",
-          "bg-black",
+          "border-b border-theme-border/80",
+          "bg-theme-nav supports-[backdrop-filter]:backdrop-blur-xl",
         )}
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.92),rgba(0,0,0,0))]" />
+        <div className="navbar-glass-gradient pointer-events-none absolute inset-x-0 top-0 h-10" />
 
         <div className="relative mx-auto flex w-full items-center gap-4 px-4 py-3 sm:px-6 lg:gap-6">
           {/* Brand */}
@@ -60,10 +61,10 @@ export default function HeroNavbar() {
               />
             </div>
             <div className="leading-none">
-              <div className="text-[15px] font-semibold tracking-tight text-white">
+              <div className="text-[15px] font-semibold tracking-tight text-theme-fg">
                 PROTRONICS
               </div>
-              <div className="mt-1 hidden text-[11px] text-white/55 xl:block">
+              <div className="mt-1 hidden text-[11px] text-theme-muted xl:block">
                 Premium. Refurbished. Perfected.
               </div>
             </div>
@@ -84,17 +85,17 @@ export default function HeroNavbar() {
                   prefetch
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "relative rounded-lg px-3.5 py-2 text-[13px] font-medium tracking-wide transition-colors duration-200",
+                    "relative rounded-lg px-3.5 py-2 text-[13px] font-medium tracking-wide transition-colors duration-300",
                     active
-                      ? "text-white"
-                      : "text-white/75 hover:bg-white/[0.06] hover:text-white",
+                      ? "text-theme-fg"
+                      : "text-theme-secondary hover:bg-theme-input-bg hover:text-theme-fg",
                   )}
                 >
                   {l.label}
                   {active ? (
                     <motion.span
                       layoutId="navbar-active-line"
-                      className="absolute inset-x-2.5 -bottom-0.5 h-0.5 rounded-full bg-white"
+                      className="absolute inset-x-2.5 -bottom-0.5 h-0.5 rounded-full bg-theme-accent"
                       transition={{
                         type: "spring",
                         stiffness: 380,
@@ -108,19 +109,29 @@ export default function HeroNavbar() {
           </nav>
 
           {/* CTAs */}
-          <div className="ml-auto flex items-center gap-2.5 sm:gap-3 lg:ml-0">
+          <div className="navbar-actions ml-auto flex items-center gap-1.5 sm:gap-2 lg:ml-0">
+            <ThemeToggle className="hidden sm:inline-flex" />
             <SearchTrigger className="lg:hidden" />
-            <CtaButton href="/trade-in" size="sm" className="shrink-0">
-              <HandCoins className="h-4 w-4 text-black/80" />
-              <span className="hidden sm:inline">Trade-In</span>
-              <span className="sm:hidden">Sell</span>
+            <CtaButton
+              href="/trade-in"
+              size="sm"
+              className="nav-cta-btn nav-cta-btn-deals shrink-0"
+            >
+              <NavCtaIcon variant="deals">
+                <Tags className="nav-cta-icon-glyph" strokeWidth={2} />
+              </NavCtaIcon>
+              <span className="nav-cta-label hidden sm:inline">Hot Deals</span>
+              <span className="nav-cta-label sm:hidden">Deals</span>
             </CtaButton>
 
-            <CtaButton href="/shop" size="sm" className="shrink-0">
-              <ShoppingBag className="h-4 w-4 text-black/80" />
-              <span className="hidden sm:inline">Shop Now</span>
-              <span className="sm:hidden">Shop</span>
+            <CtaButton href="/shop" size="sm" className="nav-cta-btn nav-cta-btn-shop shrink-0">
+              <NavCtaIcon variant="shop">
+                <ShoppingBag className="nav-cta-icon-glyph" strokeWidth={2} />
+              </NavCtaIcon>
+              <span className="nav-cta-label hidden sm:inline">Shop Now</span>
+              <span className="nav-cta-label sm:hidden">Shop</span>
             </CtaButton>
+            <ThemeToggle className="sm:hidden" />
           </div>
         </div>
       </div>

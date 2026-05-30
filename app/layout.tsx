@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "../styles/globals.css";
-import SmoothScroll from "@/components/layout/SmoothScroll";
-import RouteScrollReset from "@/components/layout/RouteScrollReset";
-import NavPrefetch from "@/components/layout/NavPrefetch";
 import HeroNavbar from "@/components/hero/HeroNavbar";
-import MotionProvider from "@/components/providers/MotionProvider";
-import CompareShell from "@/components/compare/CompareShell";
+import AppProviders from "@/components/providers/AppProviders";
 import Footer from "@/components/footer/Footer";
+import { THEME_BLOCKING_SCRIPT } from "@/lib/theme";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({
@@ -56,20 +53,18 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} h-full antialiased overflow-x-hidden`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans bg-black text-white overflow-x-hidden">
-        <MotionProvider>
-          <SmoothScroll>
-            <RouteScrollReset />
-            <NavPrefetch />
-            <HeroNavbar />
-            {/* Spacer for fixed navbar */}
-            <div className="h-[60px] sm:h-[64px]" />
-            {children}
-            <Footer />
-            <CompareShell />
-          </SmoothScroll>
-        </MotionProvider>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BLOCKING_SCRIPT }} />
+      </head>
+      <body className="min-h-full flex flex-col font-sans bg-theme-bg text-theme-fg overflow-x-hidden">
+        <AppProviders>
+          <HeroNavbar />
+          <div className="h-[60px] sm:h-[64px]" aria-hidden />
+          {children}
+          <Footer />
+        </AppProviders>
       </body>
     </html>
   );

@@ -77,7 +77,7 @@ export default function Navbar() {
 
           <div className="hidden items-center gap-3 md:flex">
             <CtaButton href="https://wa.me/" external size="sm">
-              <WhatsAppIcon className="h-4 w-4 text-black/80" />
+              <WhatsAppIcon className="h-4 w-4" />
               WhatsApp Inquiry
             </CtaButton>
           </div>
@@ -122,7 +122,7 @@ export default function Navbar() {
                 className="mt-3"
                 onClick={() => setOpen(false)}
               >
-                <WhatsAppIcon className="h-4 w-4 text-black/80" />
+                <WhatsAppIcon className="h-4 w-4" />
                 WhatsApp Inquiry
               </CtaButton>
             </div>

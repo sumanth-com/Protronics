@@ -9,7 +9,12 @@ export type BackgroundEffectsProps = {
 
 const BackgroundEffects = forwardRef<HTMLDivElement, BackgroundEffectsProps>(
   ({ className }, ref) => {
-    return <div ref={ref} className={cn("pointer-events-none absolute inset-0 bg-black", className)} />;
+    return (
+      <div
+        ref={ref}
+        className={cn("final-cta-effects pointer-events-none absolute inset-0 bg-black", className)}
+      />
+    );
   },
 );
 

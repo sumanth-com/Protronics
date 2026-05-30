@@ -28,8 +28,6 @@ export default function FooterLinks({
     {
       title: "Support",
       links: [
-        { label: "Warranty", href: "/warranty" },
-        { label: "FAQ", href: "/faq" },
         { label: "Help Center", href: "/support" },
         { label: "Contact", href: "/contact" },
       ],
@@ -39,7 +37,7 @@ export default function FooterLinks({
       links: [
         { label: "Why Protronics", href: "/why-protronics" },
         { label: "How It Works", href: "/how-it-works" },
-        { label: "Trade-In & Upgrade", href: "/trade-in" },
+        { label: "Hot Deals", href: "/trade-in" },
         { label: "About", href: "/about" },
         { label: "Compare", href: "/compare" },
       ],

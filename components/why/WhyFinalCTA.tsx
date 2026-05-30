@@ -40,7 +40,7 @@ export default function WhyFinalCTA() {
           >
             <CtaButton href={WHY_LINKS.shop} size="lg" fullWidth className="sm:w-auto">
               Shop Collection
-              <ArrowUpRight className="h-4 w-4 text-black/80" />
+              <ArrowUpRight className="h-4 w-4" />
             </CtaButton>
             <a
               href={WHY_LINKS.whatsapp}

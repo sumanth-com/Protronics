@@ -14,9 +14,8 @@ export default function AboutWhyExists() {
   return (
     <section
       aria-labelledby="about-why-heading"
-      className="relative overflow-hidden bg-black py-16 sm:py-20"
+      className="theme-section-a relative overflow-hidden bg-black py-16 sm:py-20"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
       <AboutAmbient />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">

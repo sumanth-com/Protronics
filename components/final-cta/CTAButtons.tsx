@@ -29,18 +29,18 @@ export default function CTAButtons({
     >
       <CtaButton href={primaryHref} size="lg" fullWidth className="sm:w-auto">
         Explore Collection
-        <ArrowUpRight className="h-4 w-4 text-black/80" />
+        <ArrowUpRight className="h-4 w-4" />
       </CtaButton>
 
       <CtaButton href={whatsappHref} size="lg" fullWidth external className="sm:w-auto">
         WhatsApp Inquiry
-        <WhatsAppIcon className="h-4 w-4 text-black/80" />
+        <WhatsAppIcon className="h-4 w-4" />
       </CtaButton>
 
       {showVideoDemo ? (
         <CtaButton href={videoDemoHref} size="lg" fullWidth className="sm:w-auto">
           Book Video Demo
-          <Video className="h-4 w-4 text-black/80" />
+          <Video className="h-4 w-4" />
         </CtaButton>
       ) : null}
     </div>

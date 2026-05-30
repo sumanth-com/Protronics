@@ -27,9 +27,6 @@ const TestimonialsSection = dynamic(
 const HowItWorks = dynamic(
   () => import("@/components/how-it-works/HowItWorks"),
 );
-const WarrantySupport = dynamic(
-  () => import("@/components/warranty-support/WarrantySupport"),
-);
 const FAQSection = dynamic(() => import("@/components/faq/FAQSection"));
 
 export const metadata: Metadata = {
@@ -82,9 +79,6 @@ export default function Home() {
           </DeferredMount>
           <DeferredMount minHeight="560px">
             <HowItWorks />
-          </DeferredMount>
-          <DeferredMount minHeight="480px">
-            <WarrantySupport />
           </DeferredMount>
           <DeferredMount minHeight="480px">
             <FAQSection />

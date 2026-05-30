@@ -6,6 +6,8 @@ export type ProductBadgeProps = {
   label: string;
   tone?: "neutral" | "premium" | "warranty";
   scheme?: "dark" | "light";
+  compact?: boolean;
+  title?: string;
   className?: string;
 };
 
@@ -13,13 +15,17 @@ export default function ProductBadge({
   label,
   tone = "neutral",
   scheme = "dark",
+  compact = false,
+  title,
   className,
 }: ProductBadgeProps) {
   return (
     <span
+      title={title ?? label}
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-1",
-        "text-[11px] font-medium tracking-wide",
+        "inline-flex shrink-0 items-center whitespace-nowrap rounded-full",
+        compact ? "px-1.5 py-0.5 text-[10px] tracking-normal" : "px-2.5 py-1 text-[11px] tracking-wide",
+        "font-medium",
         "border backdrop-blur-md",
         scheme === "dark"
           ? tone === "premium"

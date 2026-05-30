@@ -19,12 +19,12 @@ export default function SupportCTA({
     <div className={cn("mt-7 flex flex-col gap-3 sm:flex-row", className)}>
       <CtaButton href={warrantyHref} fullWidth className="sm:w-auto">
         View Warranty Details
-        <ArrowUpRight className="h-4 w-4 text-black/80" />
+        <ArrowUpRight className="h-4 w-4" />
       </CtaButton>
 
       <CtaButton href={supportHref} fullWidth className="sm:w-auto">
         Contact Support
-        <Headset className="h-4 w-4 text-black/80" />
+        <Headset className="h-4 w-4" />
       </CtaButton>
     </div>
   );

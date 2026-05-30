@@ -27,6 +27,7 @@ export default function CompareModal({ open, onClose, products }: CompareModalPr
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 16 }}
             className="fixed inset-x-4 bottom-4 top-auto z-[91] max-h-[80vh] overflow-auto rounded-2xl border border-white/[0.08] bg-[black] p-5 sm:inset-x-auto sm:left-1/2 sm:w-[min(900px,94vw)] sm:-translate-x-1/2"
+            data-lenis-prevent
           >
             <div className="mb-4 flex items-center justify-between">
               <h3 className="flex items-center gap-2 text-[18px] font-semibold text-white">
@@ -37,7 +38,7 @@ export default function CompareModal({ open, onClose, products }: CompareModalPr
                 <X className="h-5 w-5 text-white/50" />
               </button>
             </div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto" data-lenis-prevent>
               <table className="w-full min-w-[600px] text-left text-[13px]">
                 <thead>
                   <tr className="border-b border-white/10">

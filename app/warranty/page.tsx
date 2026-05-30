@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { buildBreadcrumbJsonLd } from "@/lib/faq";
 import { SITE_DESCRIPTION } from "@/lib/site";
 import WarrantySupport from "@/components/warranty-support/WarrantySupport";
-import FinalCTA from "@/components/final-cta/FinalCTA";
+
+const FinalCTA = dynamic(() => import("@/components/final-cta/FinalCTA"));
 
 export const metadata: Metadata = {
   title: "Warranty & Support | Protronics",

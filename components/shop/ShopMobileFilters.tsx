@@ -44,9 +44,9 @@ function Chip({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors",
+        "shop-category-pill rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors",
         active
-          ? "border border-white/40 bg-white/[0.08] text-white"
+          ? "shop-category-pill-active border border-white/40 bg-white/[0.08] text-white"
           : "border border-white/[0.08] bg-white/[0.04] text-white/65",
       )}
     >

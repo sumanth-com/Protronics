@@ -15,7 +15,7 @@ import CtaButton from "@/components/ui/CtaButton";
 import Logo from "@/assets/Logo.png";
 
 const footerSurface = cn(
-  "rounded-[28px] border border-white/[0.08]",
+  "footer-surface rounded-[28px] border border-white/[0.08]",
   "bg-black",
   "supports-[backdrop-filter]:bg-black supports-[backdrop-filter]:backdrop-blur-xl",
 );

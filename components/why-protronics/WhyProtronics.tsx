@@ -17,6 +17,7 @@ import {
 import FeatureCard from "@/components/why-protronics/FeatureCard";
 import SectionHeading from "@/components/why-protronics/SectionHeading";
 import { fadeUp, stagger } from "@/lib/animations";
+import { canRunGsapScroll, gsapScroller } from "@/lib/gsapScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -78,6 +79,8 @@ export default function WhyProtronics() {
   );
 
   useEffect(() => {
+    if (!canRunGsapScroll()) return;
+
     const connector = connectorRef.current;
     if (!connector) return;
 
@@ -93,6 +96,7 @@ export default function WhyProtronics() {
           duration: 1.4,
           scrollTrigger: {
             trigger: connector,
+            scroller: gsapScroller(),
             start: "top 78%",
             toggleActions: "play none none reverse",
           },
@@ -104,7 +108,7 @@ export default function WhyProtronics() {
   }, []);
 
   return (
-    <section id="why" className="relative overflow-hidden bg-black">
+    <section id="why" className="theme-section-a relative overflow-hidden bg-black">
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
@@ -144,6 +148,7 @@ export default function WhyProtronics() {
               whileInView="show"
               viewport={{ once: true, margin: "-12% 0px -10% 0px" }}
               className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              data-lenis-prevent
             >
               <div className="flex snap-x snap-mandatory gap-4">
                 {features.map((f) => (

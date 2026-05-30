@@ -54,7 +54,7 @@ export default function BestDealsSection() {
   const deals = useMemo(() => getDealsForTab(activeTab), [activeTab]);
 
   return (
-    <section id="deals" className="relative overflow-hidden bg-black">
+    <section id="deals" className="theme-section-c relative overflow-hidden bg-black">
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
@@ -149,8 +149,8 @@ export default function BestDealsSection() {
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                       quality={IMAGE_QUALITY.card}
                     />
-                    {activeTab === "limited" && (
-                      <span className="absolute left-3 top-3 rounded-full bg-black/70 px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white backdrop-blur-sm">
+                    {savingsPct > 0 && (
+                      <span className="deals-save-pill absolute left-3 top-3 z-[1]">
                         Save {savingsPct}%
                       </span>
                     )}

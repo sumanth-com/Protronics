@@ -63,12 +63,36 @@ export default function TestimonialsSection() {
         rating: 5.0,
         verified: true,
       },
+      {
+        quote:
+          "Delivery was on time and the team walked us through every check. The fridge runs whisper-quiet—exactly what we wanted.",
+        name: "Rahul D.",
+        location: "Electronic City, Bengaluru",
+        rating: 4.9,
+        verified: true,
+      },
+      {
+        quote:
+          "Pricing was fair and the quality checks were explained clearly. It genuinely feels like a premium purchase.",
+        name: "Ananya V.",
+        location: "Marathahalli, Bengaluru",
+        rating: 5.0,
+        verified: true,
+      },
+      {
+        quote:
+          "We compared multiple stores—Protronics was the only one that felt engineered, not rushed. Highly recommend.",
+        name: "Karthik M.",
+        location: "BTM Layout, Bengaluru",
+        rating: 4.8,
+        verified: true,
+      },
     ],
     [],
   );
 
   return (
-    <section id="reviews" className="relative overflow-hidden bg-black">
+    <section id="reviews" className="theme-section-a relative overflow-hidden bg-black">
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
@@ -113,36 +137,50 @@ export default function TestimonialsSection() {
           <ReviewCarousel testimonials={testimonials} />
         </div>
 
-        {/* Desktop staggered grid */}
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-15% 0px -10% 0px" }}
-          className="mt-10 hidden grid-cols-12 gap-5 md:grid"
-        >
-          {/* Left feature story */}
-          <motion.div variants={fadeUp} className="col-span-7">
-            <TestimonialCard testimonial={testimonials[0]!} />
-          </motion.div>
-
-          {/* Right column stack (fills the “empty space” with more proof) */}
+        {/* Desktop — two rows (feature left + 3 compact right each) */}
+        <div className="mt-10 hidden flex-col gap-5 md:flex">
+          {/* Row 1 */}
           <motion.div
-            variants={fadeUp}
-            className="col-span-5 grid content-start gap-5"
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-15% 0px -10% 0px" }}
+            className="grid grid-cols-12 items-stretch gap-5"
           >
-            <TestimonialCard testimonial={testimonials[1]!} />
-            <TestimonialCard testimonial={testimonials[3]!} />
+            <motion.div variants={fadeUp} className="col-span-7 min-h-0">
+              <TestimonialCard testimonial={testimonials[0]!} className="h-full" />
+            </motion.div>
+            <motion.div
+              variants={fadeUp}
+              className="testimonial-compact-stack col-span-5 flex min-h-0 flex-col gap-3"
+            >
+              <TestimonialCard testimonial={testimonials[1]!} size="compact" />
+              <TestimonialCard testimonial={testimonials[3]!} size="compact" />
+              <TestimonialCard testimonial={testimonials[4]!} size="compact" />
+            </motion.div>
           </motion.div>
 
-          {/* Second row: balanced pair */}
-          <motion.div variants={fadeUp} className="col-span-5">
-            <TestimonialCard testimonial={testimonials[2]!} />
+          {/* Row 2 — compact cards left, feature card right */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-15% 0px -10% 0px" }}
+            className="grid grid-cols-12 items-stretch gap-5"
+          >
+            <motion.div
+              variants={fadeUp}
+              className="testimonial-compact-stack col-span-5 flex min-h-0 flex-col gap-3"
+            >
+              <TestimonialCard testimonial={testimonials[5]!} size="compact" />
+              <TestimonialCard testimonial={testimonials[6]!} size="compact" />
+              <TestimonialCard testimonial={testimonials[7]!} size="compact" />
+            </motion.div>
+            <motion.div variants={fadeUp} className="col-span-7 min-h-0">
+              <TestimonialCard testimonial={testimonials[2]!} className="h-full" />
+            </motion.div>
           </motion.div>
-          <motion.div variants={fadeUp} className="col-span-7">
-            <TestimonialCard testimonial={testimonials[4]!} />
-          </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

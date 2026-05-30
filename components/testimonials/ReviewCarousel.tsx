@@ -16,6 +16,7 @@ export default function ReviewCarousel({ testimonials }: ReviewCarouselProps) {
       whileInView="show"
       viewport={{ once: true, margin: "-12% 0px -10% 0px" }}
       className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden"
+      data-lenis-prevent
     >
       <div className="flex snap-x snap-mandatory gap-4">
         {testimonials.map((t) => (

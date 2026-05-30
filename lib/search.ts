@@ -21,10 +21,9 @@ const STATIC_PAGES: SearchResult[] = [
   { id: "about", type: "page", title: "About Protronics", href: "/about" },
   { id: "how", type: "page", title: "How It Works", href: "/how-it-works" },
   { id: "warranty", type: "page", title: "Warranty & Support", href: "/warranty" },
-  { id: "faq", type: "page", title: "FAQ", href: "/faq" },
   { id: "contact", type: "page", title: "Contact", href: "/contact" },
   { id: "compare", type: "page", title: "Compare Products", href: "/compare" },
-  { id: "trade-in", type: "page", title: "Trade-In & Upgrade", href: "/trade-in" },
+  { id: "trade-in", type: "page", title: "Hot Deals", href: "/trade-in" },
 ];
 
 function productResults(): SearchResult[] {

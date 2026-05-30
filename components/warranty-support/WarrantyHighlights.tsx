@@ -21,25 +21,25 @@ export default function WarrantyHighlights({
   return (
     <div
       className={cn(
-        "rounded-3xl border border-white/12 bg-black",
+        "warranty-highlights-card rounded-3xl border border-white/12 bg-black",
         "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
         "px-6 py-6",
         className,
       )}
     >
-      <div className="text-[12px] font-medium tracking-[0.22em] text-white/55">
+      <div className="warranty-highlights-label text-[12px] font-medium tracking-[0.22em] text-white/55">
         REASSURANCE, INCLUDED
       </div>
-      <div className="mt-3 text-[16px] font-semibold tracking-tight text-white">
+      <div className="warranty-highlights-title mt-3 text-[16px] font-semibold tracking-tight text-white">
         Protection beyond purchase.
       </div>
-      <div className="mt-3 h-[2px] w-10 rounded-full bg-white/50" />
+      <div className="mt-3 h-[2px] w-10 rounded-full bg-white/50 warranty-highlights-divider" />
 
       <ul className="mt-5 space-y-3">
         {items.map((it) => (
           <li key={it} className="flex items-center gap-2.5">
-            <BadgeCheck className="h-4 w-4 text-white" />
-            <span className="text-[12.5px] leading-6 text-white/75">{it}</span>
+            <BadgeCheck className="warranty-highlights-icon h-4 w-4 text-white" />
+            <span className="warranty-highlights-item text-[12.5px] leading-6 text-white/75">{it}</span>
           </li>
         ))}
       </ul>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Lenis from "lenis";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { LenisContext, refreshScrollTriggers } from "@/hooks/useLenis";
 
 export default function SmoothScroll({
   children,
@@ -10,12 +11,17 @@ export default function SmoothScroll({
   children: React.ReactNode;
 }) {
   const reducedMotion = usePrefersReducedMotion();
+  const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
-    if (reducedMotion) return;
+    if (reducedMotion) {
+      setLenis(null);
+      return;
+    }
 
-    let lenis: Lenis | null = null;
+    let instance: Lenis | null = null;
     let cancelled = false;
+    let refreshListener: (() => void) | null = null;
 
     const init = async () => {
       const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
@@ -27,24 +33,25 @@ export default function SmoothScroll({
 
       gsap.registerPlugin(ScrollTrigger);
 
-      lenis = new Lenis({
-        lerp: 0.1,
-        wheelMultiplier: 0.85,
+      instance = new Lenis({
+        lerp: 0.12,
+        wheelMultiplier: 0.9,
         touchMultiplier: 1,
         smoothWheel: true,
         autoRaf: true,
       });
 
       document.documentElement.classList.add("lenis");
+      setLenis(instance);
 
-      lenis.on("scroll", ScrollTrigger.update);
+      instance.on("scroll", ScrollTrigger.update);
 
       ScrollTrigger.scrollerProxy(document.documentElement, {
         scrollTop(value) {
           if (typeof value === "number") {
-            lenis?.scrollTo(value, { immediate: true });
+            instance?.scrollTo(value, { immediate: true });
           }
-          return lenis?.scroll ?? 0;
+          return instance?.scroll ?? 0;
         },
         getBoundingClientRect() {
           return {
@@ -56,7 +63,8 @@ export default function SmoothScroll({
         },
       });
 
-      ScrollTrigger.addEventListener("refresh", () => lenis?.resize());
+      refreshListener = () => instance?.resize();
+      ScrollTrigger.addEventListener("refresh", refreshListener);
       ScrollTrigger.refresh();
     };
 
@@ -64,10 +72,21 @@ export default function SmoothScroll({
 
     return () => {
       cancelled = true;
+      setLenis(null);
       document.documentElement.classList.remove("lenis");
-      lenis?.destroy();
+
+      void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        if (refreshListener) {
+          ScrollTrigger.removeEventListener("refresh", refreshListener);
+        }
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+        ScrollTrigger.clearScrollMemory?.();
+      });
+
+      instance?.destroy();
+      instance = null;
     };
   }, [reducedMotion]);
 
-  return children;
+  return <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>;
 }
