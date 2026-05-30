@@ -23,7 +23,11 @@ export default function FooterLinks({
           <ul className="mt-3 space-y-2">
             {g.links.map((l) => (
               <li key={l.label}>
-                <Link href={l.href} prefetch className="footer-link text-[13px]">
+                <Link
+                  href={l.href}
+                  prefetch
+                  className="footer-link inline-flex min-h-[44px] items-center text-[13px] lg:min-h-0"
+                >
                   {l.label}
                 </Link>
               </li>

@@ -42,7 +42,7 @@ export default function HowItWorksPage() {
           <p className="text-[12px] font-medium tracking-[0.22em] text-white/55">
             Process
           </p>
-          <h1 className="mt-3 text-[34px] font-semibold tracking-tight sm:text-[44px]">
+          <h1 className="type-section-title mt-3 text-[34px] font-semibold tracking-tight sm:text-[44px]">
             How Protronics Works
           </h1>
           <p className="mt-4 max-w-2xl text-[15px] leading-7 text-white/70">

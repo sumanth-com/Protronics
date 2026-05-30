@@ -16,7 +16,10 @@ export default function ThemeToggle({ className }: { className?: string }) {
 
   if (!mounted) {
     return (
-      <div className={cn("theme-rocker inline-flex shrink-0", className)} aria-hidden>
+      <div
+        className={cn("theme-rocker inline-flex shrink-0", className)}
+        aria-hidden
+      >
         <span className="theme-rocker-well">
           <span className="theme-rocker-cavity">
             <span className="theme-rocker-paddle theme-rocker-paddle--right" />

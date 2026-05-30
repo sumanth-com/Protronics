@@ -50,7 +50,7 @@ export default function AboutHero() {
             id="about-hero-heading"
             variants={fadeUp}
             className={cn(
-              "mt-4 text-[40px] font-semibold tracking-tight text-white",
+              "type-page-hero mt-4 text-[40px] font-semibold tracking-tight text-white",
               "leading-[1.06] sm:text-[52px] lg:text-[58px]",
             )}
           >

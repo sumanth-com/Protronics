@@ -47,7 +47,7 @@ export default function ProductPageClient({ product, related }: ProductPageClien
   );
 
   return (
-    <main className="min-h-screen bg-black pb-32 text-white">
+    <main className="min-h-screen bg-black pb-36 text-white sm:pb-32">
       <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-5">
         {/* Breadcrumb */}
         <nav className="mb-3 flex items-center gap-1 overflow-hidden text-[11px] text-white/45 sm:mb-4 sm:text-[12px]">
@@ -85,7 +85,7 @@ export default function ProductPageClient({ product, related }: ProductPageClien
                 <p className="text-[12px] font-medium uppercase tracking-wide text-white/45">
                   {product.brand} · {product.capacity}
                 </p>
-                <h1 className="mt-1 text-[22px] font-semibold leading-tight text-white sm:text-[26px] lg:text-[28px]">
+                <h1 className="type-page-hero mt-1 text-[22px] font-semibold leading-tight text-white sm:text-[26px] lg:text-[28px]">
                   {product.name}
                 </h1>
                 <p className="mt-1.5 line-clamp-2 text-[13px] leading-5 text-white/55">

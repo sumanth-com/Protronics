@@ -1,15 +1,25 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Syncopate } from "next/font/google";
 import "../styles/globals.css";
 import HeroNavbar from "@/components/hero/HeroNavbar";
 import AppProviders from "@/components/providers/AppProviders";
 import Footer from "@/components/footer/Footer";
 import { THEME_BLOCKING_SCRIPT } from "@/lib/theme";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
+});
+
+/** Navbar wordmark only — bold geometric extended caps */
+const navbarBrand = Syncopate({
+  weight: "700",
+  subsets: ["latin"],
+  variable: "--font-navbar-brand",
   display: "swap",
   preload: true,
 });
@@ -52,13 +62,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} h-full antialiased overflow-x-hidden`}
+      className={`${geistSans.variable} ${navbarBrand.variable} h-full antialiased overflow-x-hidden`}
       suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_BLOCKING_SCRIPT }} />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-theme-bg text-theme-fg overflow-x-hidden">
+        <GoogleAnalytics />
         <AppProviders>
           <HeroNavbar />
           <div className="navbar-spacer" aria-hidden />

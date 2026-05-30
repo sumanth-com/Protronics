@@ -64,7 +64,7 @@ export default function CategorySection() {
           >
             <motion.h2
               variants={fadeUp}
-              className="text-center text-[28px] font-semibold tracking-tight text-white sm:text-[34px]"
+              className="type-category-title text-center text-[28px] font-semibold tracking-tight text-white sm:text-[34px]"
             >
               Shop By Category
             </motion.h2>

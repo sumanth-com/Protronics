@@ -1,3 +1,6 @@
+import { submitProductLeadForm } from "@/lib/forms/submitters/productLeadSubmitter";
+import { SHOP_PRODUCTS } from "@/lib/shop";
+
 export type LeadType = "reserve" | "callback";
 
 export type ContactPreference = "WhatsApp" | "Call";
@@ -21,6 +24,7 @@ export type LeadResponse = {
   ok: boolean;
   referenceId: string;
   error?: string;
+  message?: string;
 };
 
 export function generateReferenceId(product: {
@@ -34,15 +38,37 @@ export function generateReferenceId(product: {
 }
 
 export async function submitLead(payload: LeadPayload): Promise<LeadResponse> {
-  const res = await fetch("/api/leads", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+  const product = SHOP_PRODUCTS.find((p) => p.id === payload.productId);
+  const referenceId = generateReferenceId({
+    brand: product?.brand ?? payload.productName.split(" ")[0] ?? "PR",
+    capacity: product?.capacity ?? "",
   });
 
-  const data = (await res.json()) as LeadResponse;
-  if (!res.ok || !data.ok) {
-    throw new Error(data.error ?? "Failed to submit. Please try again.");
+  const result = await submitProductLeadForm(
+    {
+      leadType: payload.leadType,
+      productName: payload.productName,
+      productId: payload.productId,
+      price: String(payload.price),
+      name: payload.name,
+      phone: payload.phone,
+      city: payload.city ?? "",
+      contactPreference: payload.contactPreference ?? "",
+      message: payload.message ?? "",
+      preferredTime: payload.preferredTime ?? "",
+      leadSource: payload.leadSource,
+      referenceId,
+    },
+    { sourcePage: payload.pageUrl },
+  );
+
+  if (!result.success) {
+    throw new Error(result.error ?? "Failed to submit. Please try again.");
   }
-  return data;
+
+  return {
+    ok: true,
+    referenceId,
+    message: result.message,
+  };
 }

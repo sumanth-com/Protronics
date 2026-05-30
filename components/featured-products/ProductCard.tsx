@@ -156,7 +156,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
           </div>
 
           {/* specs — full labels, one row, spread across card */}
-          <ul className="product-card-specs mt-4 flex w-full items-center justify-between gap-1 sm:mt-4 sm:gap-1.5">
+          <ul className="product-card-specs mt-4 flex w-full flex-wrap items-start gap-x-2 gap-y-1.5 sm:mt-4 sm:flex-nowrap sm:items-center sm:justify-between sm:gap-1.5">
             {product.specs.slice(0, 3).map((s) => (
               <li key={s} className="flex items-center gap-1">
                 <CheckCircle2

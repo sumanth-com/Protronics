@@ -37,7 +37,7 @@ export default function SectionHeader({
         id={headingId}
         className={cn(
           eyebrow ? "mt-2 sm:mt-3" : "mt-0",
-          "font-semibold tracking-tight text-white",
+          "type-page-hero font-semibold tracking-tight text-white",
           "text-[24px] leading-[1.08] sm:text-[32px] lg:text-[36px]",
         )}
       >

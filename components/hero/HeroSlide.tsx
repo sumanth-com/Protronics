@@ -71,8 +71,8 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
               <motion.h1
                 variants={fadeUp}
                 className={cn(
-                  "mt-5 text-[36px] font-semibold leading-[1.05] tracking-tight text-white",
-                  "sm:text-[48px]",
+                  "hero-slide-title mt-5 font-semibold leading-[1.05] tracking-tight text-white",
+                  "text-[36px] sm:text-[48px]",
                 )}
               >
                 Premium Appliances.
@@ -91,7 +91,7 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
               {/* Trust mini-features */}
               <motion.div
                 variants={fadeUp}
-                className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4"
+                className="mt-5 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3"
               >
                 {[
                   { icon: BadgeCheck, t: "100+ Quality Checks" },
@@ -103,10 +103,10 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
                   return (
                     <div
                       key={x.t}
-                      className="hero-feature-card flex items-start gap-2 rounded-2xl border border-white/10 bg-black/35 px-3 py-3 supports-[backdrop-filter]:bg-black/25 supports-[backdrop-filter]:backdrop-blur-xl"
+                      className="hero-feature-card flex min-h-[44px] items-start gap-2 rounded-2xl border border-white/10 bg-black/35 px-2.5 py-2.5 supports-[backdrop-filter]:bg-black/25 supports-[backdrop-filter]:backdrop-blur-xl sm:px-3 sm:py-3"
                     >
-                      <Icon className="hero-feature-icon mt-[2px] h-4 w-4 text-white/85" strokeWidth={1.75} />
-                      <div className="text-[12px] leading-5 text-white/70">
+                      <Icon className="hero-feature-icon mt-[2px] h-4 w-4 shrink-0 text-white/85" strokeWidth={1.75} />
+                      <div className="text-[11px] leading-4 text-white/70 sm:text-[12px] sm:leading-5">
                         {x.t}
                       </div>
                     </div>
@@ -135,7 +135,7 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
         </div>
 
         {/* rating pill (bottom-right, reference-style) */}
-        <div className="absolute bottom-4 right-4">
+        <div className="hero-rating-pill-wrap absolute bottom-14 right-3 sm:bottom-4 sm:right-4">
           <div className="hero-rating-pill flex items-center gap-3 rounded-2xl border border-white/10 bg-black/55 px-3 py-2.5 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_30px_120px_rgba(0,0,0,0.70)]">
             <div className="flex -space-x-2">
               {HERO_REVIEW_AVATARS.map((avatar) => (

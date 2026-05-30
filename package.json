@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
-    "build": "next build",
+    "dev": "node scripts/write-forms-endpoint.mjs && next dev --webpack",
+    "build": "node scripts/assert-forms-env.mjs && node scripts/write-forms-endpoint.mjs && next build",
+    "forms:write-endpoint": "node scripts/write-forms-endpoint.mjs",
     "start": "next start",
     "lint": "eslint"
   },

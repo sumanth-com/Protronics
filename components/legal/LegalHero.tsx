@@ -33,7 +33,7 @@ export default function LegalHero({ eyebrow, title, subtitle, lastUpdated }: Leg
           <motion.h1
             variants={fadeUp}
             className={cn(
-              "mt-4 font-semibold tracking-tight text-white",
+              "type-page-hero mt-4 font-semibold tracking-tight text-white",
               "text-[36px] leading-[1.06] sm:text-[48px] lg:text-[56px]",
             )}
           >

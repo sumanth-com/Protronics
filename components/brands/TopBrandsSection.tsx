@@ -29,7 +29,7 @@ export default function TopBrandsSection() {
             variants={fadeUp}
             className={cn(
               "mt-3 font-semibold tracking-tight text-white",
-              "text-[34px] leading-[1.06] sm:text-[44px] sm:leading-[1.04]",
+              "type-section-title text-[34px] leading-[1.06] sm:text-[44px] sm:leading-[1.04]",
             )}
           >
             Premium Names. Professionally Renewed.

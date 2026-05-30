@@ -78,8 +78,8 @@ export default function HeroSlider() {
 
           <SliderControls />
 
-          {/* premium dots */}
-          <div className="pointer-events-none absolute bottom-5 left-1/2 z-30 -translate-x-1/2 flex items-center">
+          {/* premium dots — desktop only */}
+          <div className="pointer-events-none absolute bottom-5 left-1/2 z-30 hidden -translate-x-1/2 items-center lg:flex">
             <div className="hero-dots-pill pointer-events-auto rounded-full border border-white/10 bg-black/55 px-3 py-2 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.70)]">
               <div className="hero-dots flex items-center gap-2" />
             </div>

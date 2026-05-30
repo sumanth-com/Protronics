@@ -70,7 +70,7 @@ export default function SupportCallbackModal({
         pageUrl: typeof window !== "undefined" ? window.location.href : "/support",
         leadSource: `${context} — Request Callback`,
       });
-      setReferenceId(res.referenceId);
+      setReferenceId(res.referenceId ?? "");
       setSubmitted(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong.");

@@ -3,8 +3,21 @@ import type { NextConfig } from "next";
 /** Keep build output out of OneDrive-synced `.next` to avoid EBUSY 500s on refresh. */
 const distDir = "node_modules/.cache/next";
 
+/** Expose VITE_* from .env to the Next.js client bundle. */
+const viteFormEndpoint = process.env.VITE_FORM_ENDPOINT_URL?.trim() ?? "";
+const viteGaId = process.env.VITE_GA_MEASUREMENT_ID?.trim() ?? "";
+const viteSiteUrl = process.env.VITE_SITE_URL?.trim() ?? "";
+
 const nextConfig: NextConfig = {
   distDir,
+  env: {
+    NEXT_PUBLIC_FORM_ENDPOINT_URL:
+      viteFormEndpoint || process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL?.trim() || "",
+    NEXT_PUBLIC_GA_MEASUREMENT_ID:
+      viteGaId || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || "",
+    NEXT_PUBLIC_SITE_URL:
+      viteSiteUrl || process.env.NEXT_PUBLIC_SITE_URL?.trim() || "",
+  },
   turbopack: {
     root: __dirname,
   },

@@ -84,7 +84,7 @@ export default function SupportCenter({
               type="button"
               onClick={() => setMobilePane(pane)}
               className={cn(
-                "rounded-full px-3.5 py-1.5 text-[12px] font-medium capitalize transition-colors",
+                "support-mobile-step rounded-full px-3.5 py-1.5 text-[12px] font-medium capitalize transition-colors",
                 mobilePane === pane
                   ? "bg-white/10 text-white"
                   : "text-white/45 hover:text-white/70",

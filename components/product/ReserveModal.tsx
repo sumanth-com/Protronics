@@ -68,7 +68,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
         pageUrl: typeof window !== "undefined" ? window.location.href : "",
         leadSource: "Product Page — Reserve",
       });
-      setReferenceId(res.referenceId);
+      setReferenceId(res.referenceId ?? null);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong.");
     } finally {

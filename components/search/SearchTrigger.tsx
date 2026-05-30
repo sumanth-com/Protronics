@@ -12,11 +12,13 @@ const SearchDialog = dynamic(
 
 type SearchTriggerProps = {
   className?: string;
-  /** Compact icon-only trigger (mobile) */
+  /** Compact icon-only trigger (mobile/tablet navbar) */
   compact?: boolean;
+  /** Circular 44px icon button — pairs with theme toggle */
+  iconButton?: boolean;
 };
 
-export default function SearchTrigger({ className, compact }: SearchTriggerProps) {
+export default function SearchTrigger({ className, compact, iconButton }: SearchTriggerProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -36,15 +38,15 @@ export default function SearchTrigger({ className, compact }: SearchTriggerProps
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          compact
-            ? "inline-flex items-center justify-center rounded-xl border border-theme-border bg-theme-input-bg p-2.5 text-theme-muted transition-colors hover:border-theme-accent/30 hover:bg-theme-input-bg hover:text-theme-fg"
+          iconButton || compact
+            ? "nav-icon-btn"
             : "nav-search-trigger",
           className,
         )}
         aria-label="Open search (⌘K)"
       >
-        <Search className={compact ? "h-5 w-5" : undefined} strokeWidth={2} />
-        {!compact ? (
+        <Search className={iconButton || compact ? "h-[18px] w-[18px]" : undefined} strokeWidth={2.25} />
+        {!compact && !iconButton ? (
           <>
             <span className="nav-search-label hidden lg:inline">Search</span>
             <kbd className="nav-search-kbd">⌘K</kbd>

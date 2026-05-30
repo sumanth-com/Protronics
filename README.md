@@ -34,3 +34,14 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Form submissions (Google Sheets, static)
+
+Forms POST **directly** to Google Apps Script (no Next.js API). See **[docs/FORMS.md](docs/FORMS.md)** for full deployment, troubleshooting, and “add new form” steps.
+
+Quick start:
+
+1. Paste `scripts/google-apps-script-backend.js` into Apps Script → run `setupSheets()` → deploy Web App (**Anyone**).
+2. Set `NEXT_PUBLIC_FORM_ENDPOINT_URL` (or `VITE_FORM_ENDPOINT_URL`) to the `/exec` URL.
+3. `npm run build` — generates `public/forms-endpoint.json` and validates the URL in production.
+4. Check `window.__FORM_HEALTH__` in the browser after load.

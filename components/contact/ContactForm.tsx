@@ -1,13 +1,17 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
 import { CheckCircle2, ChevronDown, Loader2 } from "lucide-react";
+import FormAlert from "@/components/forms/FormAlert";
+import HoneypotField from "@/components/forms/HoneypotField";
 import CtaButton from "@/components/ui/CtaButton";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import ContactAmbient from "@/components/contact/ContactAmbient";
 import SectionHeader from "@/components/contact/SectionHeader";
+import { useFormSubmission } from "@/hooks/useFormSubmission";
 import { BUSINESS, FRIDGE_PRODUCTS } from "@/lib/contact";
+import { submitContactForm } from "@/lib/forms/submitters/contactSubmitter";
+import type { ContactFormValues } from "@/lib/forms/validators/contactValidator";
 import { cn } from "@/lib/utils";
 
 const ContactLocationMap = dynamic(
@@ -22,18 +26,7 @@ const ContactLocationMap = dynamic(
   },
 );
 
-type FormState = {
-  fullName: string;
-  phone: string;
-  email: string;
-  city: string;
-  product: string;
-  message: string;
-};
-
-type FormErrors = Partial<Record<keyof FormState, string>>;
-
-const initial: FormState = {
+const initial: ContactFormValues = {
   fullName: "",
   phone: "",
   email: "",
@@ -41,21 +34,6 @@ const initial: FormState = {
   product: "",
   message: "",
 };
-
-function validate(values: FormState): FormErrors {
-  const errors: FormErrors = {};
-  if (!values.fullName.trim()) errors.fullName = "Please enter your name.";
-  if (!values.phone.trim()) errors.phone = "Phone number is required.";
-  else if (!/^[\d\s+\-()]{8,16}$/.test(values.phone.trim()))
-    errors.phone = "Enter a valid phone number.";
-  if (!values.email.trim()) errors.email = "Email is required.";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim()))
-    errors.email = "Enter a valid email address.";
-  if (!values.city.trim()) errors.city = "Tell us your city for delivery.";
-  if (!values.product) errors.product = "Select a product type.";
-  if (!values.message.trim()) errors.message = "Share a few details so we can help.";
-  return errors;
-}
 
 const inputClass = (hasError: boolean) =>
   cn(
@@ -71,28 +49,22 @@ const inputClass = (hasError: boolean) =>
   );
 
 export default function ContactForm() {
-  const [values, setValues] = useState<FormState>(initial);
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
-
-  const update = (key: keyof FormState, val: string) => {
-    setValues((v) => ({ ...v, [key]: val }));
-    if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
-  };
-
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const nextErrors = validate(values);
-    if (Object.keys(nextErrors).length > 0) {
-      setErrors(nextErrors);
-      return;
-    }
-
-    setStatus("loading");
-    await new Promise((r) => setTimeout(r, 1400));
-    setStatus("success");
-    setValues(initial);
-  };
+  const {
+    values,
+    setValue,
+    honeypot,
+    setHoneypot,
+    fieldErrors,
+    submitError,
+    isSubmitting,
+    isSuccess,
+    handleSubmit,
+    reset,
+  } = useFormSubmission({
+    initialValues: initial,
+    submitter: submitContactForm,
+    sourcePage: "/contact",
+  });
 
   return (
     <section id="contact" className="relative bg-black py-12 sm:py-16 md:py-20">
@@ -116,7 +88,7 @@ export default function ContactForm() {
               "p-5 sm:p-6",
             )}
           >
-            {status === "success" ? (
+            {isSuccess ? (
               <div className="flex flex-col items-center justify-center py-8 text-center">
                 <CheckCircle2 className="h-14 w-14 text-white" />
                 <h3 className="mt-5 text-[22px] font-semibold text-white">
@@ -136,65 +108,71 @@ export default function ContactForm() {
                 </CtaButton>
                 <button
                   type="button"
-                  onClick={() => setStatus("idle")}
+                  onClick={reset}
                   className="mt-4 text-[13px] text-white/50 transition-colors duration-150 hover:text-white/80"
                 >
                   Submit another inquiry
                 </button>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="flex flex-col gap-3" noValidate>
+              <form
+                onSubmit={(e) => void handleSubmit(e)}
+                className="relative flex flex-col gap-3"
+                noValidate
+              >
+                <HoneypotField value={honeypot} onChange={setHoneypot} />
+                {submitError ? <FormAlert variant="error" message={submitError} /> : null}
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <Field label="Full Name" error={errors.fullName}>
+                  <Field label="Full Name" error={fieldErrors.fullName}>
                     <input
                       type="text"
                       autoComplete="name"
                       value={values.fullName}
-                      onChange={(e) => update("fullName", e.target.value)}
-                      className={inputClass(!!errors.fullName)}
+                      onChange={(e) => setValue("fullName", e.target.value)}
+                      className={inputClass(!!fieldErrors.fullName)}
                       placeholder="Your full name"
                     />
                   </Field>
-                  <Field label="Phone Number" error={errors.phone}>
+                  <Field label="Phone Number" error={fieldErrors.phone}>
                     <input
                       type="tel"
                       autoComplete="tel"
                       value={values.phone}
-                      onChange={(e) => update("phone", e.target.value)}
-                      className={inputClass(!!errors.phone)}
+                      onChange={(e) => setValue("phone", e.target.value)}
+                      className={inputClass(!!fieldErrors.phone)}
                       placeholder="+91 90000 00000"
                     />
                   </Field>
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <Field label="Email" error={errors.email}>
+                  <Field label="Email" error={fieldErrors.email}>
                     <input
                       type="email"
                       autoComplete="email"
                       value={values.email}
-                      onChange={(e) => update("email", e.target.value)}
-                      className={inputClass(!!errors.email)}
+                      onChange={(e) => setValue("email", e.target.value)}
+                      className={inputClass(!!fieldErrors.email)}
                       placeholder="you@email.com"
                     />
                   </Field>
-                  <Field label="City" error={errors.city}>
+                  <Field label="City" error={fieldErrors.city}>
                     <input
                       type="text"
                       value={values.city}
-                      onChange={(e) => update("city", e.target.value)}
-                      className={inputClass(!!errors.city)}
+                      onChange={(e) => setValue("city", e.target.value)}
+                      className={inputClass(!!fieldErrors.city)}
                       placeholder="Bengaluru"
                     />
                   </Field>
                 </div>
 
-                <Field label="Interested Product" error={errors.product}>
+                <Field label="Interested Product" error={fieldErrors.product}>
                   <div className="relative">
                     <select
                       value={values.product}
-                      onChange={(e) => update("product", e.target.value)}
-                      className={cn(inputClass(!!errors.product), "appearance-none pr-11")}
+                      onChange={(e) => setValue("product", e.target.value)}
+                      className={cn(inputClass(!!fieldErrors.product), "appearance-none pr-11")}
                     >
                       <option value="" className="bg-black">
                         Select refrigerator type
@@ -212,12 +190,12 @@ export default function ContactForm() {
                   </div>
                 </Field>
 
-                <Field label="Message" error={errors.message}>
+                <Field label="Message" error={fieldErrors.message}>
                   <textarea
                     value={values.message}
-                    onChange={(e) => update("message", e.target.value)}
+                    onChange={(e) => setValue("message", e.target.value)}
                     rows={4}
-                    className={cn(inputClass(!!errors.message), "block resize-y min-h-[96px]")}
+                    className={cn(inputClass(!!fieldErrors.message), "block resize-y min-h-[96px]")}
                     placeholder="Budget, size, delivery timeline, or any questions…"
                   />
                 </Field>
@@ -226,10 +204,10 @@ export default function ContactForm() {
                   type="submit"
                   size="lg"
                   fullWidth
-                  disabled={status === "loading"}
+                  disabled={isSubmitting}
                   className="mt-1 disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  {status === "loading" ? (
+                  {isSubmitting ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin text-black/80" />
                       Sending…

@@ -8,6 +8,7 @@ import { ShoppingBag, Tags } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import NavCtaIcon from "@/components/ui/NavCtaIcon";
 import SearchTrigger from "@/components/search/SearchTrigger";
+import MobileNav from "@/components/layout/MobileNav";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
@@ -42,40 +43,50 @@ export default function HeroNavbar() {
 
         <div
           className={cn(
-            "relative mx-auto flex w-full max-w-[1520px] items-center",
-            "gap-4 py-3 pl-3 pr-4",
-            "sm:gap-5 sm:py-3.5 sm:pl-4 sm:pr-5",
-            "lg:gap-7 lg:pl-5 lg:pr-7",
+            "navbar-inner relative mx-auto flex w-full max-w-[1520px] items-center",
+            /* Mobile & tablet — clean icon bar */
+            "h-16 gap-2.5 px-4",
+            "min-[480px]:h-[4.5rem] min-[480px]:gap-3",
+            /* Desktop — unchanged */
+            "lg:h-auto lg:gap-7 lg:py-3.5 lg:pl-5 lg:pr-7",
             "xl:gap-8 xl:pl-6 xl:pr-8",
           )}
         >
-          {/* Brand — larger, anchored left */}
+          {/* Brand */}
           <Link
             href="/"
             prefetch
-            className="navbar-brand group relative flex shrink-0 items-center gap-3 sm:gap-3.5"
+            className="navbar-brand group relative flex min-w-0 flex-1 items-center gap-2 min-[375px]:gap-2.5 sm:gap-3.5 lg:flex-none"
             aria-label="Go to home"
           >
-            <div className="relative h-11 w-11 shrink-0 sm:h-12 sm:w-12 lg:h-[52px] lg:w-[52px]">
+            <div
+              className={cn(
+                "relative shrink-0",
+                "h-8 w-8 min-[375px]:h-9 min-[375px]:w-9",
+                "sm:h-10 sm:w-10",
+                "lg:h-[52px] lg:w-[52px]",
+              )}
+            >
               <Image
                 src={Logo}
-                alt="Protronics"
+                alt=""
                 fill
-                sizes="(max-width: 640px) 48px, 56px"
+                sizes="(max-width: 1023px) 36px, 56px"
                 className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                 quality={IMAGE_QUALITY.logo}
                 priority
+                aria-hidden
               />
             </div>
             <div className="min-w-0 leading-none">
-              <div className="navbar-brand-title">PROTRONICS</div>
-              <div className="navbar-brand-tagline hidden sm:block lg:mt-1">
+              <div className="navbar-brand-title truncate">PROTRONICS</div>
+              <div className="navbar-brand-tagline hidden lg:mt-1 lg:block">
                 Premium. Refurbished. Perfected.
               </div>
             </div>
           </Link>
 
-          {/* Search + nav — centered, roomy */}
+          {/* Desktop — search + nav links (unchanged) */}
           <nav
             className="hidden min-w-0 flex-1 items-center justify-center lg:flex"
             aria-label="Main navigation"
@@ -116,10 +127,15 @@ export default function HeroNavbar() {
             </div>
           </nav>
 
-          {/* CTAs + utilities */}
-          <div className="navbar-actions ml-auto flex items-center lg:ml-0">
-            <ThemeToggle className="hidden sm:inline-flex" />
-            <SearchTrigger compact className="lg:hidden" />
+          {/* Mobile & tablet — theme + menu (search lives in drawer) */}
+          <div className="mobile-nav-actions ml-auto flex shrink-0 items-center gap-2 min-[375px]:gap-2.5 lg:hidden">
+            <ThemeToggle className="theme-rocker--nav-compact" />
+            <MobileNav />
+          </div>
+
+          {/* Desktop — theme + CTAs (unchanged) */}
+          <div className="navbar-actions hidden items-center lg:ml-0 lg:flex">
+            <ThemeToggle />
             <CtaButton
               href="/best-deals"
               size="sm"
@@ -128,18 +144,15 @@ export default function HeroNavbar() {
               <NavCtaIcon variant="deals">
                 <Tags className="nav-cta-icon-glyph" strokeWidth={2.25} />
               </NavCtaIcon>
-              <span className="nav-cta-label hidden sm:inline">Best Deals</span>
-              <span className="nav-cta-label sm:hidden">Deals</span>
+              <span className="nav-cta-label">Best Deals</span>
             </CtaButton>
 
             <CtaButton href="/shop" size="sm" className="nav-cta-btn nav-cta-btn-shop shrink-0">
               <NavCtaIcon variant="shop">
                 <ShoppingBag className="nav-cta-icon-glyph" strokeWidth={2.25} />
               </NavCtaIcon>
-              <span className="nav-cta-label hidden sm:inline">Shop Now</span>
-              <span className="nav-cta-label sm:hidden">Shop</span>
+              <span className="nav-cta-label">Shop Now</span>
             </CtaButton>
-            <ThemeToggle className="sm:hidden" />
           </div>
         </div>
       </div>

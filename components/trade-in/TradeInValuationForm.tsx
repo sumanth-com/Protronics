@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, ImagePlus, Loader2, X } from "lucide-react";
+import FormAlert from "@/components/forms/FormAlert";
 import CtaButton from "@/components/ui/CtaButton";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import TradeInSectionHeader, {
@@ -75,8 +76,9 @@ export default function TradeInValuationForm() {
   const [values, setValues] = useState<FormState>(initial);
   const [errors, setErrors] = useState<FormErrors>({});
   const [files, setFiles] = useState<File[]>([]);
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [referenceId, setReferenceId] = useState("");
+  const [submitError, setSubmitError] = useState("");
 
   const estimate = useMemo(
     () =>
@@ -113,6 +115,7 @@ export default function TradeInValuationForm() {
     }
 
     setStatus("loading");
+    setSubmitError("");
     try {
       const res = await submitTradeInLead({
         name: values.name.trim(),
@@ -138,10 +141,10 @@ export default function TradeInValuationForm() {
       setValues(initial);
       setFiles([]);
     } catch (err) {
-      setStatus("idle");
-      setErrors({
-        phone: err instanceof Error ? err.message : "Submission failed.",
-      });
+      setStatus("error");
+      setSubmitError(
+        err instanceof Error ? err.message : "Could not submit. Please try again.",
+      );
     }
   };
 
@@ -200,6 +203,7 @@ export default function TradeInValuationForm() {
                 </motion.div>
               ) : (
                 <motion.form key="form" onSubmit={onSubmit} className="space-y-5">
+                  {submitError ? <FormAlert variant="error" message={submitError} /> : null}
                   <div className="grid gap-4 sm:grid-cols-2">
                     <label className="block">
                       <span className="mb-2 block text-[12px] font-medium text-white/55">

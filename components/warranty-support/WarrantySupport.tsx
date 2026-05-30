@@ -118,7 +118,7 @@ export default function WarrantySupport() {
           <motion.h2
             variants={fadeUp}
             className={cn(
-              "mt-3 text-center font-semibold tracking-tight text-white",
+              "type-section-title mt-3 text-center font-semibold tracking-tight text-white",
               "text-[34px] leading-[1.06]",
               "sm:text-[44px] sm:leading-[1.04]",
             )}

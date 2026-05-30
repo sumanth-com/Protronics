@@ -17,7 +17,7 @@ export default function ShopHero({ productCount, categoryCount }: ShopHeroProps)
           <p className="shop-hero-eyebrow text-[12px] font-medium tracking-[0.18em] text-white/55">
             SHOP
           </p>
-          <h1 className="shop-hero-title mt-2 text-[28px] font-semibold tracking-tight text-white sm:text-[36px]">
+          <h1 className="shop-hero-title type-page-hero mt-2 text-[28px] font-semibold tracking-tight text-white sm:text-[36px]">
             Premium Renewed Appliances
           </h1>
           <p className="shop-hero-desc mt-2 max-w-xl text-[15px] leading-7 text-white/65">

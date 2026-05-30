@@ -1,3 +1,6 @@
+import { submitTradeInForm } from "@/lib/forms/submitters/tradeInSubmitter";
+import { generateTradeInReferenceId } from "@/lib/trade-in";
+
 export type TradeInLeadPayload = {
   name: string;
   phone: string;
@@ -20,20 +23,44 @@ export type TradeInLeadResponse = {
   ok: boolean;
   referenceId: string;
   error?: string;
+  message?: string;
 };
 
 export async function submitTradeInLead(
   payload: TradeInLeadPayload,
 ): Promise<TradeInLeadResponse> {
-  const res = await fetch("/api/trade-in", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  });
+  const referenceId = generateTradeInReferenceId(payload.brand);
 
-  const data = (await res.json()) as TradeInLeadResponse;
-  if (!res.ok || !data.ok) {
-    throw new Error(data.error ?? "Failed to submit. Please try again.");
+  const result = await submitTradeInForm(
+    {
+      name: payload.name,
+      phone: payload.phone,
+      city: payload.city,
+      applianceType: payload.applianceType,
+      brand: payload.brand,
+      model: payload.model,
+      age: payload.age,
+      condition: payload.condition,
+      expectedPrice: payload.expectedPrice ?? "",
+      estimatedLow:
+        payload.estimatedLow !== undefined ? String(payload.estimatedLow) : "",
+      estimatedHigh:
+        payload.estimatedHigh !== undefined ? String(payload.estimatedHigh) : "",
+      imageCount: String(payload.imageCount),
+      imageNames: payload.imageNames,
+      leadSource: payload.leadSource,
+      referenceId,
+    },
+    { sourcePage: payload.pageUrl },
+  );
+
+  if (!result.success) {
+    throw new Error(result.error ?? "Failed to submit. Please try again.");
   }
-  return data;
+
+  return {
+    ok: true,
+    referenceId,
+    message: result.message,
+  };
 }

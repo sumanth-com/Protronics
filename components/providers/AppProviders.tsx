@@ -7,6 +7,7 @@ import SmoothScroll from "@/components/layout/SmoothScroll";
 import RouteScrollReset from "@/components/layout/RouteScrollReset";
 import NavPrefetch from "@/components/layout/NavPrefetch";
 import NavigationProgress from "@/components/layout/NavigationProgress";
+import FormEndpointInit from "@/components/providers/FormEndpointInit";
 
 const CompareShell = dynamic(() => import("@/components/compare/CompareShell"), {
   ssr: false,
@@ -17,6 +18,7 @@ export default function AppProviders({ children }: { children: React.ReactNode }
     <ThemeProvider>
       <MotionProvider>
         <SmoothScroll>
+          <FormEndpointInit />
           <NavigationProgress />
           <RouteScrollReset />
           <NavPrefetch />
