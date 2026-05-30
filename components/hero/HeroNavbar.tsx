@@ -121,14 +121,14 @@ export default function HeroNavbar() {
             <ThemeToggle className="hidden sm:inline-flex" />
             <SearchTrigger compact className="lg:hidden" />
             <CtaButton
-              href="/trade-in"
+              href="/best-deals"
               size="sm"
               className="nav-cta-btn nav-cta-btn-deals shrink-0"
             >
               <NavCtaIcon variant="deals">
                 <Tags className="nav-cta-icon-glyph" strokeWidth={2.25} />
               </NavCtaIcon>
-              <span className="nav-cta-label hidden sm:inline">Hot Deals</span>
+              <span className="nav-cta-label hidden sm:inline">Best Deals</span>
               <span className="nav-cta-label sm:hidden">Deals</span>
             </CtaButton>
 

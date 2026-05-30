@@ -6,12 +6,6 @@ import type { LegalPageConfig } from "@/lib/legal/types";
 export type { LegalBlock, LegalPageConfig, LegalSection } from "@/lib/legal/types";
 export { PRIVACY_POLICY_PAGE, TERMS_OF_SERVICE_PAGE };
 
-export function getLegalPageByPath(path: string): LegalPageConfig | undefined {
-  if (path === PRIVACY_POLICY_PAGE.path) return PRIVACY_POLICY_PAGE;
-  if (path === TERMS_OF_SERVICE_PAGE.path) return TERMS_OF_SERVICE_PAGE;
-  return undefined;
-}
-
 export function buildLegalPageJsonLd(page: LegalPageConfig) {
   return {
     "@context": "https://schema.org",

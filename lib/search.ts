@@ -23,7 +23,8 @@ const STATIC_PAGES: SearchResult[] = [
   { id: "warranty", type: "page", title: "Warranty & Support", href: "/warranty" },
   { id: "contact", type: "page", title: "Contact", href: "/contact" },
   { id: "compare", type: "page", title: "Compare Products", href: "/compare" },
-  { id: "trade-in", type: "page", title: "Hot Deals", href: "/trade-in" },
+  { id: "best-deals", type: "page", title: "Best Deals", href: "/best-deals" },
+  { id: "trade-in", type: "page", title: "Trade-In", href: "/trade-in" },
 ];
 
 function productResults(): SearchResult[] {

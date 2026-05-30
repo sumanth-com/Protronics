@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/warranty",
     "/contact",
     "/compare",
+    "/best-deals",
     "/trade-in",
     "/why-protronics",
     "/support",

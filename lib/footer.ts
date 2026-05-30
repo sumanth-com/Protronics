@@ -22,7 +22,7 @@ export const FOOTER_NAV_GROUPS: FooterLinkGroup[] = [
   {
     title: "Support",
     links: [
-      { label: "Help Center", href: "/support" },
+      { label: "Support", href: "/support" },
       { label: "Warranty", href: "/warranty" },
       { label: "Contact", href: "/contact" },
     ],
@@ -30,9 +30,7 @@ export const FOOTER_NAV_GROUPS: FooterLinkGroup[] = [
   {
     title: "Company",
     links: [
-      { label: "Why Protronics", href: "/why-protronics" },
-      { label: "How It Works", href: "/how-it-works" },
-      { label: "Hot Deals", href: "/trade-in" },
+      { label: "Best Deals", href: "/best-deals" },
       { label: "About", href: "/about" },
       { label: "Compare", href: "/compare" },
     ],

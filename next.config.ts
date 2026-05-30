@@ -38,6 +38,16 @@ const nextConfig: NextConfig = {
         destination: "/terms-of-service",
         permanent: true,
       },
+      {
+        source: "/hot-deals",
+        destination: "/best-deals",
+        permanent: true,
+      },
+      {
+        source: "/deals",
+        destination: "/best-deals",
+        permanent: true,
+      },
     ];
   },
   images: {
