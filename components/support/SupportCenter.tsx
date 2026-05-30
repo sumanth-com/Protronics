@@ -1,13 +1,13 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import SupportAnswerPanel from "@/components/support/SupportAnswerPanel";
 import SupportCategories from "@/components/support/SupportCategories";
 import SupportQuestions from "@/components/support/SupportQuestions";
 import {
-  SUPPORT_CATEGORIES,
+  SUPPORT_CATEGORIES_VISIBLE,
   buildSupportPath,
   getArticle,
   getCategoryById,
@@ -26,9 +26,16 @@ export default function SupportCenter({
   initialArticleId,
 }: SupportCenterProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [categoryId, setCategoryId] = useState(initialCategoryId);
   const [articleId, setArticleId] = useState(initialArticleId);
-  const [mobilePane, setMobilePane] = useState<MobilePane>("answer");
+  const [mobilePane, setMobilePane] = useState<MobilePane>("categories");
+
+  useEffect(() => {
+    if (pathname === "/support") {
+      setMobilePane("categories");
+    }
+  }, [pathname]);
 
   const category = useMemo(() => getCategoryById(categoryId), [categoryId]);
   const article = useMemo(
@@ -112,7 +119,7 @@ export default function SupportCenter({
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 pb-3">
               <SupportCategories
-                categories={SUPPORT_CATEGORIES}
+                categories={SUPPORT_CATEGORIES_VISIBLE}
                 activeCategoryId={categoryId}
                 onSelect={selectCategory}
               />

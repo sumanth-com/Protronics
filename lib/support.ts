@@ -2,7 +2,6 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowLeftRight,
   ClipboardList,
-  MessageSquare,
   Package,
   Shield,
   ShieldCheck,
@@ -233,39 +232,12 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
       },
     ],
   },
-  {
-    id: "contact",
-    label: "Contact Support",
-    icon: MessageSquare,
-    description: "Hours, channels, and visits",
-    articles: [
-      {
-        id: "contact-hours",
-        question: "What are support hours?",
-        answer:
-          "Live support is available Monday–Saturday, 10:00 AM to 7:00 PM IST. WhatsApp messages sent after hours are answered the next business morning, usually within two hours of opening.",
-      },
-      {
-        id: "contact-fastest",
-        question: "What is the fastest way to get help?",
-        answer:
-          "WhatsApp us with your order ID and a brief description of the issue. For urgent cooling failures, call directly rather than waiting on email.",
-        links: [
-          { label: "WhatsApp", href: BUSINESS.whatsappMessage, external: true },
-          { label: "Call support", href: BUSINESS.phoneHref },
-          { label: "Visit experience hub", href: "/contact" },
-        ],
-      },
-      {
-        id: "contact-visit",
-        question: "Can I visit the experience hub?",
-        answer:
-          "Yes. Walk in during business hours at our Indiranagar hub. View units in person, compare models, and speak with an advisor on the floor.",
-        links: [{ label: "Directions & map", href: "/contact" }],
-      },
-    ],
-  },
 ];
+
+/** Help center sidebar — excludes legacy contact category (use /contact page instead). */
+export const SUPPORT_CATEGORIES_VISIBLE = SUPPORT_CATEGORIES.filter(
+  (c) => c.id !== "contact",
+);
 
 export type SupportSearchResult = {
   categoryId: string;
@@ -276,6 +248,7 @@ export type SupportSearchResult = {
 };
 
 export function getCategoryById(id: string) {
+  if (id === "contact") return undefined;
   return SUPPORT_CATEGORIES.find((c) => c.id === id);
 }
 

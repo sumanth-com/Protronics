@@ -9,12 +9,14 @@ type DeferredMountProps = {
   children: ReactNode;
   minHeight?: string;
   rootMargin?: string;
+  className?: string;
 };
 
 export default function DeferredMount({
   children,
   minHeight = "480px",
   rootMargin,
+  className,
 }: DeferredMountProps) {
   const { ref, visible } = useDeferredVisible(rootMargin);
 
@@ -29,6 +31,7 @@ export default function DeferredMount({
   return (
     <div
       ref={ref}
+      className={className}
       data-defer-section={visible ? undefined : ""}
       style={visible ? undefined : { minHeight }}
       aria-hidden={visible ? undefined : true}

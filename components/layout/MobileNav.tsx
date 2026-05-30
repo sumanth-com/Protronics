@@ -6,10 +6,12 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import dynamic from "next/dynamic";
-import { Menu, Search, ShoppingBag, Tags, X } from "lucide-react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { useIsClient } from "@/hooks/useIsClient";
 import { useLenis } from "@/hooks/useLenis";
+import { BUSINESS } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 const SearchDialog = dynamic(
@@ -17,36 +19,24 @@ const SearchDialog = dynamic(
   { ssr: false },
 );
 
-const DRAWER_SPRING = { type: "spring" as const, stiffness: 380, damping: 32, mass: 0.9 };
-const OVERLAY_TRANSITION = { duration: 0.3, ease: [0.22, 1, 0.36, 1] as const };
-const LINK_STAGGER = 0.04;
+const DRAWER_SPRING = { type: "spring" as const, stiffness: 400, damping: 34, mass: 0.85 };
+const OVERLAY_TRANSITION = { duration: 0.22, ease: [0.22, 1, 0.36, 1] as const };
 
 const drawerLinks = [
-  { label: "Support", href: "/support" },
-  { label: "Warranty", href: "/warranty" },
+  { label: "Home", href: "/" },
+  { label: "Shop", href: "/shop" },
+  { label: "Categories", href: "/shop" },
   { label: "About", href: "/about" },
+  { label: "Warranty", href: "/warranty" },
   { label: "Contact", href: "/contact" },
+  { label: "FAQ", href: "/#faq" },
 ] as const;
 
-const listVariants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: LINK_STAGGER, delayChildren: 0.06 },
-  },
-};
-
-const linkVariants = {
-  hidden: { opacity: 0, x: 16 },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: { type: "spring" as const, stiffness: 420, damping: 32 },
-  },
-};
-
 function isDrawerLinkActive(pathname: string, href: string) {
-  if (href === "/support") {
-    return pathname === "/support" || pathname.startsWith("/support/");
+  if (href === "/") return pathname === "/";
+  if (href === "/#faq") return pathname === "/" || pathname.startsWith("/faq");
+  if (href === "/shop") {
+    return pathname === "/shop" || pathname.startsWith("/shop/");
   }
   return pathname === href || pathname.startsWith(`${href}/`);
 }
@@ -118,7 +108,7 @@ export default function MobileNav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={OVERLAY_TRANSITION}
-            className="mobile-nav-backdrop fixed inset-0 z-[110] bg-black/70 backdrop-blur-[12px] lg:hidden"
+            className="mobile-nav-backdrop fixed inset-0 z-[110] bg-black/65 backdrop-blur-sm lg:hidden"
             onClick={close}
             aria-hidden
           />
@@ -133,16 +123,15 @@ export default function MobileNav() {
             exit={{ x: "100%" }}
             transition={DRAWER_SPRING}
             className={cn(
-              "mobile-nav-drawer fixed inset-y-0 right-0 z-[111] flex h-[100dvh] w-[min(380px,100vw)] flex-col",
-              "border-l border-theme-border bg-theme-bg shadow-[-32px_0_96px_rgba(0,0,0,0.55)]",
-              "supports-[backdrop-filter]:bg-theme-bg/98 supports-[backdrop-filter]:backdrop-blur-2xl",
+              "mobile-nav-drawer fixed inset-y-0 right-0 z-[111] flex h-[100dvh] w-[min(340px,100vw)] flex-col",
+              "border-l border-theme-border bg-theme-bg shadow-[-24px_0_64px_rgba(0,0,0,0.45)]",
               "lg:hidden",
             )}
             data-lenis-prevent
           >
-            {/* Close + search */}
-            <div className="mobile-nav-drawer-top shrink-0 px-5 pb-4 pt-[max(1rem,env(safe-area-inset-top))]">
-              <div className="flex justify-end">
+            <div className="mobile-nav-drawer-top shrink-0 px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))]">
+              <div className="flex items-center justify-between">
+                <p className="text-[15px] font-semibold tracking-tight text-theme-fg">Menu</p>
                 <button
                   type="button"
                   className="nav-icon-btn mobile-nav-close"
@@ -152,35 +141,15 @@ export default function MobileNav() {
                   <X className="h-[18px] w-[18px] text-theme-fg" strokeWidth={2.25} />
                 </button>
               </div>
-              <button
-                type="button"
-                className="mobile-nav-search mt-4 w-full"
-                onClick={() => {
-                  close();
-                  setSearchOpen(true);
-                }}
-              >
-                <Search className="h-[18px] w-[18px] shrink-0 text-theme-muted" strokeWidth={2.25} />
-                <span>Search products</span>
-                <kbd className="mobile-nav-search-kbd">⌘K</kbd>
-              </button>
             </div>
 
-            {/* Navigation — links visible immediately */}
-            <div className="mobile-nav-drawer-main min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-4">
-              <p className="mobile-nav-drawer-label">Navigation</p>
-
-              <motion.nav
-                aria-label="Mobile navigation"
-                variants={listVariants}
-                initial="hidden"
-                animate="show"
-              >
+            <div className="mobile-nav-drawer-main min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-4">
+              <nav aria-label="Mobile navigation">
                 <ul className="mobile-nav-drawer-list">
                   {drawerLinks.map((link) => {
                     const active = isDrawerLinkActive(pathname, link.href);
                     return (
-                      <motion.li key={link.href} variants={linkVariants}>
+                      <li key={link.label}>
                         <Link
                           href={link.href}
                           prefetch
@@ -193,20 +162,25 @@ export default function MobileNav() {
                         >
                           {link.label}
                         </Link>
-                      </motion.li>
+                      </li>
                     );
                   })}
                 </ul>
-              </motion.nav>
+              </nav>
             </div>
 
-            {/* Actions — only after navigation */}
-            <div className="mobile-nav-drawer-footer shrink-0 border-t border-theme-border px-5 py-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-              <Link href="/best-deals" className="mobile-nav-whatsapp" onClick={close}>
-                <Tags className="h-[18px] w-[18px] shrink-0 text-theme-accent" strokeWidth={2.25} />
-                Best Deals
+            <div className="mobile-nav-drawer-footer shrink-0 border-t border-theme-border px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+              <Link
+                href={BUSINESS.whatsappMessage}
+                className="mobile-nav-whatsapp"
+                onClick={close}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <WhatsAppIcon className="h-[18px] w-[18px] shrink-0" />
+                WhatsApp Inquiry
               </Link>
-              <CtaButton href="/shop" fullWidth size="lg" className="mt-3" onClick={close}>
+              <CtaButton href="/shop" fullWidth size="md" className="mt-3" onClick={close}>
                 <ShoppingBag className="h-4 w-4" strokeWidth={2.25} />
                 Shop Now
               </CtaButton>
@@ -230,19 +204,11 @@ export default function MobileNav() {
         aria-controls="mobile-nav-panel"
         onClick={() => setOpen((v) => !v)}
       >
-        <motion.span
-          className="mobile-nav-toggle-icon inline-flex"
-          animate={{ rotate: open ? 90 : 0 }}
-          transition={
-            open ? DRAWER_SPRING : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
-          }
-        >
-          {open ? (
-            <X className="h-[18px] w-[18px] text-theme-fg" strokeWidth={2.25} />
-          ) : (
-            <Menu className="h-[18px] w-[18px] text-theme-fg" strokeWidth={2.25} />
-          )}
-        </motion.span>
+        {open ? (
+          <X className="h-[18px] w-[18px] text-theme-fg" strokeWidth={2.25} />
+        ) : (
+          <Menu className="h-[18px] w-[18px] text-theme-fg" strokeWidth={2.25} />
+        )}
       </button>
 
       {mounted && typeof document !== "undefined"

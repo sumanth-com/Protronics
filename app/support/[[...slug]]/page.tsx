@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import SupportCenter from "@/components/support/SupportCenter";
 import {
   buildArticleMetadata,
@@ -59,6 +60,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function SupportPage({ params }: PageProps) {
   const { slug } = await params;
   const [categorySlug, articleSlug] = slug ?? [];
+
+  if (categorySlug === "contact" || categorySlug === "contact-support") {
+    redirect("/support");
+  }
+
   const { categoryId, articleId } = resolveSelection(categorySlug, articleSlug);
   const faqJsonLd = buildSupportFaqJsonLd();
   const article = getArticle(categoryId, articleId);

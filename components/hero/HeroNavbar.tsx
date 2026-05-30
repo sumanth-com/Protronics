@@ -41,18 +41,16 @@ export default function HeroNavbar() {
       >
         <div className="navbar-glass-gradient pointer-events-none absolute inset-x-0 top-0 h-12" />
 
+        {/* Row 1 — logo, theme, menu (mobile) / full desktop bar */}
         <div
           className={cn(
             "navbar-inner relative mx-auto flex w-full max-w-[1520px] items-center",
-            /* Mobile & tablet — clean icon bar, tighter left inset */
-            "h-16 gap-2 pl-2 pr-4",
-            "min-[375px]:gap-2.5 min-[480px]:h-[4.5rem] min-[480px]:gap-3 min-[480px]:pl-2.5",
-            /* Desktop — unchanged */
+            "h-14 gap-2 pl-2 pr-3",
+            "min-[375px]:gap-2.5 min-[480px]:h-[4.25rem] min-[480px]:gap-3 min-[480px]:pl-2.5",
             "lg:h-auto lg:gap-7 lg:py-3.5 lg:pl-5 lg:pr-7",
             "xl:gap-8 xl:pl-6 xl:pr-8",
           )}
         >
-          {/* Brand */}
           <Link
             href="/"
             prefetch
@@ -88,7 +86,6 @@ export default function HeroNavbar() {
             </div>
           </Link>
 
-          {/* Desktop — search + nav links (unchanged) */}
           <nav
             className="hidden min-w-0 flex-1 items-center justify-center lg:flex"
             aria-label="Main navigation"
@@ -129,13 +126,11 @@ export default function HeroNavbar() {
             </div>
           </nav>
 
-          {/* Mobile & tablet — theme + menu (search lives in drawer) */}
           <div className="mobile-nav-actions ml-auto flex shrink-0 items-center gap-2 min-[375px]:gap-2.5 lg:hidden">
             <ThemeToggle className="theme-rocker--nav-compact" />
             <MobileNav />
           </div>
 
-          {/* Desktop — theme + CTAs (unchanged) */}
           <div className="navbar-actions hidden items-center lg:ml-0 lg:flex">
             <ThemeToggle />
             <CtaButton
@@ -156,6 +151,11 @@ export default function HeroNavbar() {
               <span className="nav-cta-label">Shop Now</span>
             </CtaButton>
           </div>
+        </div>
+
+        {/* Row 2 — marketplace search (mobile & tablet only) */}
+        <div className="mobile-navbar-search-row lg:hidden">
+          <SearchTrigger bar className="w-full" />
         </div>
       </div>
     </header>

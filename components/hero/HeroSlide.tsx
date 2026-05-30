@@ -34,7 +34,7 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
           initial={{ scale: 1.02 }}
           animate={{ scale: 1 }}
           transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0"
+          className="absolute inset-0 max-lg:scale-100 max-lg:transition-none"
         >
           <Image
             src={slide.imageSrc}
@@ -48,11 +48,17 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
           />
         </motion.div>
 
-        {/* Cinematic overlays (keeps text readable, premium mood) */}
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,0,0.52)_38%,rgba(0,0,0,0.18)_62%,rgba(0,0,0,0)_80%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.62),rgba(0,0,0,0.10)_55%,rgba(0,0,0,0))]" />
-{/* Content overlay */}
-        <div className="relative h-full px-5 py-6 md:px-8 md:py-8 lg:px-10">
+        {/* Cinematic overlays — desktop hero copy */}
+        <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,0,0.52)_38%,rgba(0,0,0,0.18)_62%,rgba(0,0,0,0)_80%)] lg:block" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.55),rgba(0,0,0,0.08)_50%,transparent)] lg:bg-[linear-gradient(to_top,rgba(0,0,0,0.62),rgba(0,0,0,0.10)_55%,rgba(0,0,0,0))]" />
+
+        {/* Mobile — compact offer chip */}
+        <div className="hero-mobile-offer lg:hidden">
+          <span>Up to 40% off refurbished appliances</span>
+        </div>
+
+        {/* Content overlay — desktop only */}
+        <div className="relative hidden h-full px-5 py-6 md:px-8 md:py-8 lg:block lg:px-10">
           <div className="grid h-full items-center md:grid-cols-12">
             <motion.div
               variants={stagger}
@@ -134,8 +140,8 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
           </div>
         </div>
 
-        {/* rating pill (bottom-right, reference-style) */}
-        <div className="hero-rating-pill-wrap absolute bottom-14 right-3 sm:bottom-4 sm:right-4">
+        {/* rating pill — desktop */}
+        <div className="hero-rating-pill-wrap absolute bottom-14 right-3 hidden sm:bottom-4 sm:right-4 lg:block">
           <div className="hero-rating-pill flex items-center gap-3 rounded-2xl border border-white/10 bg-black/55 px-3 py-2.5 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_30px_120px_rgba(0,0,0,0.70)]">
             <div className="flex -space-x-2">
               {HERO_REVIEW_AVATARS.map((avatar) => (

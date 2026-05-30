@@ -40,7 +40,7 @@ const categories = [
 
 export default function CategorySection() {
   return (
-    <section id="shop" className="relative">
+    <section id="shop" className="relative hidden lg:block">
       <div
         className={cn(
           "relative",

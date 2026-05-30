@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/animations";
 import { buildProductPath } from "@/lib/product-detail";
@@ -9,6 +11,7 @@ import { cn } from "@/lib/utils";
 import ProductCard, {
   type FeaturedProduct,
 } from "@/components/featured-products/ProductCard";
+import MarketplaceProductCard from "@/components/featured-products/MarketplaceProductCard";
 
 export default function FeaturedProducts() {
   const products = useMemo<FeaturedProduct[]>(
@@ -30,11 +33,41 @@ export default function FeaturedProducts() {
     [],
   );
 
+  const mobileProducts = useMemo(
+    () =>
+      products.map((p, i) => ({
+        ...p,
+        warranty: "1Y Warranty",
+        rating: 4.8 - (i % 3) * 0.1,
+      })),
+    [products],
+  );
+
   return (
     <section id="featured" className="theme-section-b relative overflow-hidden bg-black">
-      <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
+      <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1)))] lg:block" />
 
-      <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
+      {/* Mobile marketplace section */}
+      <div className="mobile-section lg:hidden">
+        <div className="mobile-section-head">
+          <div>
+            <p className="mobile-section-eyebrow">Featured</p>
+            <h2 className="mobile-section-title">Top picks for you</h2>
+          </div>
+          <Link href="/shop" prefetch className="mobile-section-link">
+            View all
+            <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.25} />
+          </Link>
+        </div>
+        <div className="mobile-product-grid mt-3">
+          {mobileProducts.map((p) => (
+            <MarketplaceProductCard key={p.name} product={p} />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop — unchanged */}
+      <div className="relative mx-auto hidden w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20 lg:block">
         <motion.div
           variants={stagger}
           initial="hidden"
@@ -73,7 +106,7 @@ export default function FeaturedProducts() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-15% 0px -10% 0px" }}
-            className="hidden grid-cols-2 gap-5 md:grid lg:grid-cols-3"
+            className="grid grid-cols-2 gap-5 md:grid lg:grid-cols-3"
           >
             {products.map((p) => (
               <motion.div key={p.name} variants={fadeUp} className="h-full">
@@ -81,29 +114,6 @@ export default function FeaturedProducts() {
               </motion.div>
             ))}
           </motion.div>
-
-          <div className="md:hidden">
-            <motion.div
-              variants={stagger}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-12% 0px -10% 0px" }}
-              className="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              data-lenis-prevent
-            >
-              <div className="flex snap-x snap-mandatory gap-4">
-                {products.map((p) => (
-                  <motion.div
-                    key={p.name}
-                    variants={fadeUp}
-                    className="w-[88%] shrink-0 snap-start"
-                  >
-                    <ProductCard product={p} />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
         </div>
       </div>
     </section>

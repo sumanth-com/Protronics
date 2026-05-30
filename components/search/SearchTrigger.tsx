@@ -16,9 +16,16 @@ type SearchTriggerProps = {
   compact?: boolean;
   /** Circular 44px icon button — pairs with theme toggle */
   iconButton?: boolean;
+  /** Full-width marketplace search bar (mobile header row 2) */
+  bar?: boolean;
 };
 
-export default function SearchTrigger({ className, compact, iconButton }: SearchTriggerProps) {
+export default function SearchTrigger({
+  className,
+  compact,
+  iconButton,
+  bar,
+}: SearchTriggerProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -38,15 +45,31 @@ export default function SearchTrigger({ className, compact, iconButton }: Search
         type="button"
         onClick={() => setOpen(true)}
         className={cn(
-          iconButton || compact
-            ? "nav-icon-btn"
-            : "nav-search-trigger",
+          bar
+            ? "mobile-search-bar"
+            : iconButton || compact
+              ? "nav-icon-btn"
+              : "nav-search-trigger",
           className,
         )}
         aria-label="Open search (⌘K)"
       >
-        <Search className={iconButton || compact ? "h-[18px] w-[18px]" : undefined} strokeWidth={2.25} />
-        {!compact && !iconButton ? (
+        <Search
+          className={
+            bar
+              ? "mobile-search-bar-icon"
+              : iconButton || compact
+                ? "h-[18px] w-[18px]"
+                : undefined
+          }
+          strokeWidth={2.25}
+        />
+        {bar ? (
+          <span className="mobile-search-bar-placeholder">
+            Search refrigerators, brands…
+          </span>
+        ) : null}
+        {!compact && !iconButton && !bar ? (
           <>
             <span className="nav-search-label hidden lg:inline">Search</span>
             <kbd className="nav-search-kbd">⌘K</kbd>

@@ -47,7 +47,7 @@ export default function HeroSlider() {
       <div className="hero-slider-wrap w-full">
         <div
           className={cn(
-            "theme-preserve-dark hero-slider-shell relative overflow-hidden rounded-[28px] sm:rounded-[32px]",
+            "theme-preserve-dark hero-slider-shell relative overflow-hidden rounded-2xl sm:rounded-[32px] lg:rounded-[32px]",
             "border border-white/10 bg-white/[0.03]",
             "supports-[backdrop-filter]:bg-white/[0.04] supports-[backdrop-filter]:backdrop-blur-2xl",
             "shadow-[0_40px_160px_rgba(0,0,0,0.75)]",
@@ -78,8 +78,8 @@ export default function HeroSlider() {
 
           <SliderControls />
 
-          {/* premium dots — desktop only */}
-          <div className="pointer-events-none absolute bottom-5 left-1/2 z-30 hidden -translate-x-1/2 items-center lg:flex">
+          {/* Slider dots — mobile marketplace + desktop */}
+          <div className="pointer-events-none absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 items-center lg:bottom-5">
             <div className="hero-dots-pill pointer-events-auto rounded-full border border-white/10 bg-black/55 px-3 py-2 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.70)]">
               <div className="hero-dots flex items-center gap-2" />
             </div>

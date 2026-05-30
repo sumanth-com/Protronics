@@ -2983,3 +2983,562 @@ table {
     max-width: 1600px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Mobile marketplace UX (max-width: 1023px) — desktop lg+ unchanged
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1023px) {
+  :root {
+    --navbar-offset: 7.25rem;
+    --mobile-bottom-nav-height: 3.75rem;
+  }
+
+  @media (min-width: 480px) {
+    :root {
+      --navbar-offset: 7.5rem;
+    }
+  }
+
+  .mobile-navbar-search-row {
+    padding: 0 0.75rem 0.625rem;
+  }
+
+  @media (min-width: 480px) {
+    .mobile-navbar-search-row {
+      padding-left: 0.875rem;
+      padding-right: 0.875rem;
+      padding-bottom: 0.75rem;
+    }
+  }
+
+  .mobile-search-bar {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.625rem;
+    min-height: 44px;
+    border-radius: 0.875rem;
+    border: 1px solid var(--theme-border);
+    background: var(--theme-input-bg);
+    padding: 0 1rem;
+    text-align: left;
+    box-shadow: var(--theme-shadow-sm);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .mobile-search-bar:active {
+    transform: scale(0.995);
+  }
+
+  .mobile-search-bar-icon {
+    height: 1.125rem;
+    width: 1.125rem;
+    flex-shrink: 0;
+    color: var(--theme-fg-muted);
+  }
+
+  .mobile-search-bar-placeholder {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--theme-fg-muted);
+  }
+
+  /* Bottom navigation */
+  .has-mobile-bottom-nav {
+    padding-bottom: calc(var(--mobile-bottom-nav-height) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mobile-bottom-nav {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 90;
+    border-top: 1px solid var(--theme-border);
+    background: color-mix(in srgb, var(--theme-bg) 94%, transparent);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .mobile-bottom-nav-list {
+    display: flex;
+    margin: 0;
+    padding: 0.25rem 0.375rem;
+    list-style: none;
+    align-items: stretch;
+    justify-content: space-around;
+  }
+
+  .mobile-bottom-nav-item {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    min-height: var(--mobile-bottom-nav-height);
+    padding: 0.35rem 0.25rem;
+    border: none;
+    background: transparent;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--theme-fg-muted);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.15s ease;
+  }
+
+  .mobile-bottom-nav-item.is-active {
+    color: var(--theme-accent);
+  }
+
+  .mobile-bottom-nav-icon {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  /* Homepage flex reorder (mobile only) */
+  .mobile-home-main {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-home-order-categories {
+    order: 1;
+    padding-top: 0.5rem;
+  }
+
+  .mobile-home-order-hero {
+    order: 2;
+  }
+
+  .mobile-home-order-featured {
+    order: 3;
+  }
+
+  .mobile-home-order-brands {
+    order: 4;
+  }
+
+  .mobile-home-order-warranty {
+    order: 5;
+    padding-bottom: 0.25rem;
+  }
+
+  .mobile-home-order-faq {
+    order: 6;
+  }
+
+  /* Compact marketplace hero */
+  .hero-section {
+    height: auto;
+    max-height: none;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .hero-slider-wrap {
+    flex: none;
+    padding: 0.375rem 0.75rem 0.25rem;
+  }
+
+  .hero-slider-shell {
+    min-height: 0;
+    height: 10.5rem !important;
+    max-height: 10.5rem;
+    border-radius: 1rem !important;
+    box-shadow: var(--theme-shadow-sm) !important;
+  }
+
+  .hero-trust-zone {
+    display: none;
+  }
+
+  .hero-mobile-offer {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.625rem;
+    z-index: 20;
+    max-width: calc(100% - 5rem);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.55);
+    padding: 0.35rem 0.625rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+  }
+
+  .hero-dots-pill {
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  .hero-dot {
+    width: 6px !important;
+    height: 6px !important;
+  }
+
+  .hero-dot-active {
+    width: 18px !important;
+  }
+
+  /* Category icon strip */
+  .mobile-category-strip {
+    background: var(--theme-bg);
+  }
+
+  .mobile-category-chip {
+    display: flex;
+    width: 4.25rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-category-icon {
+    display: grid;
+    height: 3rem;
+    width: 3rem;
+    place-items: center;
+    border-radius: 9999px;
+    border: 1px solid var(--theme-border);
+    background: var(--theme-surface-card);
+    color: var(--theme-fg);
+    box-shadow: var(--theme-shadow-sm);
+    transition:
+      border-color 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .mobile-category-chip:active .mobile-category-icon {
+    transform: scale(0.96);
+  }
+
+  .mobile-category-label {
+    max-width: 4.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 0.625rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--theme-fg-secondary);
+  }
+
+  /* Section chrome */
+  .mobile-section {
+    padding: 0.75rem 0.75rem 0.25rem;
+  }
+
+  .mobile-section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0 0.125rem;
+  }
+
+  .mobile-section-eyebrow {
+    margin: 0;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--theme-fg-muted);
+  }
+
+  .mobile-section-title {
+    margin: 0.125rem 0 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--theme-fg);
+  }
+
+  .mobile-section-link {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--theme-accent);
+    text-decoration: none;
+  }
+
+  .mobile-product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  /* Marketplace product card */
+  .marketplace-product-card {
+    overflow: hidden;
+    border-radius: 0.75rem;
+    border: 1px solid var(--theme-border);
+    background: var(--theme-surface-card);
+    box-shadow: var(--theme-shadow-sm);
+  }
+
+  .marketplace-product-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--theme-bg) 88%, #fff) 0%,
+      var(--theme-bg) 100%
+    );
+  }
+
+  .marketplace-product-badge {
+    position: absolute;
+    left: 0.375rem;
+    top: 0.375rem;
+    z-index: 2;
+    border-radius: 0.25rem;
+    background: #16a34a;
+    padding: 0.125rem 0.375rem;
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .marketplace-product-body {
+    padding: 0.5rem 0.5rem 0.625rem;
+  }
+
+  .marketplace-product-name {
+    margin: 0;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--theme-fg);
+  }
+
+  .marketplace-product-rating {
+    display: flex;
+    margin-top: 0.25rem;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .marketplace-product-rating-val {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: var(--theme-fg);
+  }
+
+  .marketplace-product-price-row {
+    display: flex;
+    margin-top: 0.25rem;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+
+  .marketplace-product-price {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--theme-fg);
+  }
+
+  .marketplace-product-mrp {
+    font-size: 0.6875rem;
+    color: var(--theme-fg-muted);
+    text-decoration: line-through;
+  }
+
+  .marketplace-product-meta {
+    margin: 0.2rem 0 0;
+    font-size: 0.625rem;
+    color: var(--theme-fg-muted);
+  }
+
+  .marketplace-product-cta {
+    display: inline-flex;
+    margin-top: 0.375rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    border: 1px solid var(--theme-border);
+    background: var(--theme-input-bg);
+    padding: 0.3rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--theme-fg);
+  }
+
+  /* Homepage mobile warranty — matches /warranty page cards */
+  .mobile-warranty-home .warranty-feature-card {
+    border-radius: 1rem !important;
+    padding: 0.75rem 0.875rem !important;
+  }
+
+  .mobile-warranty-home .warranty-feature-card > div {
+    align-items: flex-start;
+    gap: 0.625rem;
+  }
+
+  .mobile-warranty-home .warranty-feature-icon-wrap {
+    height: 2.25rem !important;
+    width: 2.25rem !important;
+  }
+
+  .mobile-warranty-home .warranty-feature-icon {
+    height: 1rem !important;
+    width: 1rem !important;
+  }
+
+  .mobile-warranty-home .warranty-feature-title {
+    font-size: 0.75rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .mobile-warranty-home .warranty-feature-desc {
+    margin-top: 0.25rem !important;
+    font-size: 0.6875rem !important;
+    line-height: 1.4 !important;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .mobile-warranty-home .warranty-highlights-card {
+    border-radius: 1rem !important;
+  }
+
+  .mobile-warranty-home .warranty-highlights-label {
+    font-size: 0.625rem !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  .mobile-warranty-home .warranty-highlights-title {
+    font-size: 0.875rem !important;
+  }
+
+  .mobile-warranty-home .warranty-highlights-item {
+    font-size: 0.6875rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .mobile-warranty-home .warranty-highlights-card ul {
+    margin-top: 0.75rem !important;
+    gap: 0.5rem;
+  }
+
+  .mobile-warranty-home .warranty-highlights-card li {
+    gap: 0.5rem !important;
+  }
+
+  .mobile-warranty-home .cta-button {
+    min-height: 44px;
+    width: 100%;
+    font-size: 0.8125rem !important;
+  }
+
+  [data-theme="light"] .mobile-warranty-home {
+    background-color: var(--theme-section-c) !important;
+  }
+
+  [data-theme="light"] .mobile-warranty-home .section-seam-fade {
+    display: none;
+  }
+
+  /* Trust swipe strip */
+  .mobile-trust-strip {
+    padding: 0.25rem 0 0.5rem;
+  }
+
+  .mobile-trust-card {
+    display: flex;
+    width: 8.5rem;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--theme-border);
+    background: var(--theme-surface-card);
+    padding: 0.625rem 0.75rem;
+    box-shadow: var(--theme-shadow-sm);
+  }
+
+  .mobile-trust-card-icon {
+    display: grid;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 9999px;
+    background: color-mix(in srgb, var(--theme-accent) 12%, var(--theme-input-bg));
+    color: var(--theme-accent);
+  }
+
+  .mobile-trust-card-title {
+    margin: 0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--theme-fg);
+  }
+
+  .mobile-trust-card-desc {
+    margin: 0.1rem 0 0;
+    font-size: 0.625rem;
+    color: var(--theme-fg-muted);
+  }
+
+  /* Deals / brands — tighter mobile headings */
+  #deals .type-section-title,
+  #brands .type-section-title,
+  #deals h2,
+  #brands h2 {
+    font-size: 1.25rem !important;
+  }
+
+  #deals .mt-4,
+  #brands .mt-4 {
+    display: none;
+  }
+
+  #deals .text-\[12px\],
+  #brands .text-\[12px\] {
+    font-size: 0.6875rem;
+  }
+
+  /* Footer — shorter on mobile with bottom nav */
+  .footer-root {
+    min-height: auto;
+  }
+
+  .mobile-nav-link {
+    min-height: 48px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-home-main {
+    display: block;
+  }
+}

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Syncopate } from "next/font/google";
 import "../styles/globals.css";
 import HeroNavbar from "@/components/hero/HeroNavbar";
+import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import AppProviders from "@/components/providers/AppProviders";
 import Footer from "@/components/footer/Footer";
 import { THEME_BLOCKING_SCRIPT } from "@/lib/theme";
@@ -68,13 +69,14 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_BLOCKING_SCRIPT }} />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-theme-bg text-theme-fg overflow-x-hidden">
+      <body className="min-h-full flex flex-col font-sans bg-theme-bg text-theme-fg overflow-x-hidden has-mobile-bottom-nav">
         <GoogleAnalytics />
         <AppProviders>
           <HeroNavbar />
           <div className="navbar-spacer" aria-hidden />
           {children}
           <Footer />
+          <MobileBottomNav />
         </AppProviders>
       </body>
     </html>
