@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  HandCoins,
   Home,
   LifeBuoy,
   Phone,
   Store,
+  Tag,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -24,7 +24,7 @@ const tabs = [
     id: "trade-in",
     label: "Sell",
     href: "/trade-in",
-    icon: HandCoins,
+    icon: Tag,
     match: (p: string) => p === "/trade-in" || p.startsWith("/trade-in/"),
   },
   {
@@ -65,7 +65,7 @@ export default function MobileBottomNav() {
                 aria-current={active ? "page" : undefined}
                 aria-label={tab.label}
               >
-                <Icon className="mobile-bottom-nav-icon" strokeWidth={2} />
+                <Icon className="mobile-bottom-nav-icon" strokeWidth={1.75} />
                 <span>{tab.label}</span>
               </Link>
             </li>
