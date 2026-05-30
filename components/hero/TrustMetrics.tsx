@@ -19,16 +19,14 @@ const metrics = [
 
 export default function TrustMetrics() {
   return (
-    <div className="hero-trust-zone w-full px-4 pb-2 sm:px-6 lg:px-10 mt-2">
+    <div className="hero-trust-zone w-full px-4 sm:px-6 lg:px-10">
       <div
         className={cn(
-          "hero-trust-bar pointer-events-none select-none relative overflow-hidden rounded-3xl",
-          "border border-white/10 bg-white/[0.03]",
-          "supports-[backdrop-filter]:bg-white/[0.04] supports-[backdrop-filter]:backdrop-blur-2xl",
-          "shadow-[0_30px_120px_rgba(0,0,0,0.70)]",
+          "hero-trust-bar pointer-events-none relative overflow-hidden rounded-2xl sm:rounded-3xl",
+          "border border-theme-border bg-theme-surface-card shadow-theme-sm",
         )}
       >
-        <div className="grid grid-cols-2 gap-2 px-4 py-2 sm:grid-cols-5 sm:gap-0 sm:px-6 sm:py-3">
+        <div className="grid grid-cols-2 gap-2 px-3 py-2.5 sm:grid-cols-5 sm:gap-1 sm:px-6 sm:py-3">
           {metrics.map((m) => {
             const Icon = m.icon;
             return (
@@ -39,8 +37,8 @@ export default function TrustMetrics() {
                   "sm:px-0 sm:py-0 sm:justify-center",
                 )}
               >
-                <div className="hero-trust-icon-wrap grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/[0.03]">
-                  <Icon className="hero-trust-icon h-5 w-5" strokeWidth={1.75} />
+                <div className="hero-trust-icon-wrap grid h-9 w-9 shrink-0 place-items-center rounded-xl sm:h-10 sm:w-10 sm:rounded-2xl">
+                  <Icon className="hero-trust-icon h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.75} />
                 </div>
                 <div className="min-w-0">
                   <div className="hero-trust-title text-[13px] font-semibold">{m.title}</div>

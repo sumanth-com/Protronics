@@ -38,7 +38,7 @@ export default function AboutMetrics() {
               className={cn(
                 "rounded-3xl border border-white/12 bg-white/[0.05]",
                 "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
-                "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
+                "premium-card",
                 "px-5 py-8 text-center sm:px-6 sm:py-10",
               )}
             >

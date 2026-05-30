@@ -40,7 +40,7 @@ export default function TradeInSectionHeader({
       ) : null}
       <div
         className={cn(
-          "mt-4 h-[2px] w-14 rounded-full bg-white/50",
+          "theme-accent-line mt-4 w-14",
           align === "center" && "mx-auto",
         )}
       />

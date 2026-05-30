@@ -21,7 +21,7 @@ export default function SupportCTA({
       className={cn(
         "mt-10 rounded-3xl border border-white/12 bg-white/[0.05]",
         "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
-        "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
+        "premium-card",
         "px-6 py-6",
         className,
       )}
@@ -32,7 +32,7 @@ export default function SupportCTA({
       <div className="mt-3 text-[18px] font-semibold tracking-tight text-white">
         We’ll help you choose confidently.
       </div>
-      <div className="mt-3 h-[2px] w-10 rounded-full bg-white/40" />
+      <div className="theme-accent-line mt-3 w-10" />
       <div className="mt-4 text-[13px] leading-7 text-white/70">
         Talk to a Protronics expert—no pressure, just clarity.
       </div>

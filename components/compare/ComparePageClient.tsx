@@ -67,8 +67,8 @@ export default function ComparePageClient() {
     return (
       <main className="min-h-screen bg-black pb-32 pt-8 text-white">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-[#39ff88]/20 bg-[#39ff88]/[0.06]">
-            <Scale className="h-6 w-6 text-[#39ff88]" />
+          <div className="compare-empty-icon-wrap mx-auto flex h-14 w-14 items-center justify-center rounded-2xl">
+            <Scale className="compare-empty-icon h-6 w-6" />
           </div>
           <h1 className="mt-6 text-[28px] font-semibold tracking-tight sm:text-[34px]">
             Compare Appliances
@@ -84,10 +84,7 @@ export default function ComparePageClient() {
               onClick={handleRestore}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              className={cn(
-                "mt-8 inline-flex items-center gap-2 rounded-full border border-[#39ff88]/25",
-                "bg-[#39ff88]/[0.08] px-6 py-3 text-[13px] font-semibold text-[#39ff88]",
-              )}
+              className="compare-btn-secondary mt-8 inline-flex items-center gap-2 rounded-full px-6 py-3 text-[13px] font-semibold"
             >
               <RotateCcw className="h-4 w-4" />
               Continue Last Comparison
@@ -139,10 +136,7 @@ export default function ComparePageClient() {
               href={whatsappLink}
               target="_blank"
               rel="noreferrer"
-              className={cn(
-                "inline-flex items-center gap-2 rounded-full px-5 py-2.5",
-                "bg-[#39ff88] text-[13px] font-semibold text-black hover:opacity-90",
-              )}
+              className="compare-btn-primary inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-semibold"
             >
               <WhatsAppIcon className="h-4 w-4" />
               Get Expert Advice
@@ -285,14 +279,12 @@ export default function ComparePageClient() {
                         key={product.id}
                         className={cn(
                           "rounded-xl px-3 py-2.5 text-[13px] leading-6 transition-colors sm:text-[14px]",
-                          isWinner
-                            ? "border border-[#39ff88]/25 bg-[#39ff88]/[0.06] font-medium text-white"
-                            : "text-white/75",
+                          isWinner ? "compare-winner-cell font-medium" : "text-white/75",
                         )}
                       >
                         {row.getValue(product)}
                         {isWinner ? (
-                          <span className="mt-1 block text-[10px] font-semibold text-[#39ff88]">
+                          <span className="compare-winner-label mt-1 block text-[10px] font-semibold">
                             ★ Highlight
                           </span>
                         ) : null}
@@ -312,7 +304,7 @@ export default function ComparePageClient() {
           href={whatsappLink}
           target="_blank"
           rel="noreferrer"
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#39ff88] py-3 text-[13px] font-semibold text-black"
+          className="compare-btn-primary flex w-full items-center justify-center gap-2 rounded-full py-3 text-[13px] font-semibold"
         >
           <WhatsAppIcon className="h-4 w-4" />
           Compare &amp; Get Advice

@@ -16,7 +16,7 @@ export default function SupportProtectionTrustCard({
       className={cn(
         "rounded-2xl p-5",
         supportGlass,
-        "border-white/10 bg-black shadow-[0_24px_70px_rgba(0,0,0,0.55)]",
+        "premium-card border-white/10 bg-black",
         className,
       )}
     >

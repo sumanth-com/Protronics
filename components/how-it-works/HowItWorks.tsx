@@ -134,7 +134,7 @@ export default function HowItWorks() {
                 <div className="relative">
                   {/* node */}
                   <div className="pointer-events-none absolute -top-5 left-1/2 hidden -translate-x-1/2 md:block">
-                    <div className="relative h-3 w-3 rounded-full bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.08),0_12px_30px_rgba(0,0,0,0.55)]" />
+                    <div className="how-step-dot relative h-3 w-3 rounded-full" />
                   </div>
 
                   <ProcessStep data={s} active={activeIdx >= idx} />
@@ -154,7 +154,7 @@ export default function HowItWorks() {
             <div className="space-y-4">
               {steps.map((s, idx) => (
                 <motion.div key={s.step} variants={fadeUp} className="relative">
-                  <div className="pointer-events-none absolute left-[19px] top-8 h-3 w-3 rounded-full bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.08),0_12px_30px_rgba(0,0,0,0.55)]" />
+                  <div className="how-step-dot pointer-events-none absolute left-[19px] top-8 h-3 w-3 rounded-full" />
                   <div className="pl-12">
                     <ProcessStep data={s} active={activeIdx >= idx} />
                   </div>

@@ -43,8 +43,7 @@ export default function TestimonialCard({
       whileHover={{ y: compact ? -2 : -3 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "group relative overflow-hidden border border-white/12 bg-black",
-        "shadow-[0_26px_70px_rgba(0,0,0,0.55)] will-change-transform",
+        "premium-card testimonial-card group relative overflow-hidden border border-white/12 bg-black will-change-transform",
         compact ? "flex h-full min-h-0 flex-col rounded-2xl p-4" : "rounded-3xl p-6",
         className,
       )}

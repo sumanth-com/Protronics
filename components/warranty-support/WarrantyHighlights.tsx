@@ -21,8 +21,7 @@ export default function WarrantyHighlights({
   return (
     <div
       className={cn(
-        "warranty-highlights-card rounded-3xl border border-white/12 bg-black",
-        "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
+        "premium-card warranty-highlights-card rounded-3xl border border-white/12 bg-black",
         "px-6 py-6",
         className,
       )}
@@ -33,7 +32,7 @@ export default function WarrantyHighlights({
       <div className="warranty-highlights-title mt-3 text-[16px] font-semibold tracking-tight text-white">
         Protection beyond purchase.
       </div>
-      <div className="mt-3 h-[2px] w-10 rounded-full bg-white/50 warranty-highlights-divider" />
+      <div className="theme-accent-line warranty-highlights-divider mt-3 w-10" />
 
       <ul className="mt-5 space-y-3">
         {items.map((it) => (

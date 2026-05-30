@@ -30,7 +30,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
         "shop-product-card group relative flex h-full flex-col overflow-hidden rounded-2xl",
         "border border-white/[0.08] bg-black",
         "supports-[backdrop-filter]:backdrop-blur-xl",
-        "shadow-[0_20px_60px_rgba(0,0,0,0.45)]",
+        "premium-card",
         "transition-transform duration-150 ease-out hover:-translate-y-1",
       )}
     >

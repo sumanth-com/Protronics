@@ -52,7 +52,7 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(0,0,0,0.78),rgba(0,0,0,0.52)_38%,rgba(0,0,0,0.18)_62%,rgba(0,0,0,0)_80%)]" />
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.62),rgba(0,0,0,0.10)_55%,rgba(0,0,0,0))]" />
 {/* Content overlay */}
-        <div className="relative h-full px-6 py-7 md:px-10 md:py-9">
+        <div className="relative h-full px-5 py-6 md:px-8 md:py-8 lg:px-10">
           <div className="grid h-full items-center md:grid-cols-12">
             <motion.div
               variants={stagger}
@@ -91,7 +91,7 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
               {/* Trust mini-features */}
               <motion.div
                 variants={fadeUp}
-                className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4"
+                className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4"
               >
                 {[
                   { icon: BadgeCheck, t: "100+ Quality Checks" },

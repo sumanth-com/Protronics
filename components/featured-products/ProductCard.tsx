@@ -68,8 +68,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
     <motion.article
       className={cn(
         "group relative h-full overflow-hidden rounded-3xl",
-        "border border-white/12 bg-black",
-        "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
+        "premium-card border border-white/12 bg-black",
         "transition-transform duration-150 ease-out hover:-translate-y-1",
         className,
       )}

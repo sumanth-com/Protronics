@@ -1,75 +1,34 @@
 "use client";
 
 import Link from "next/link";
+import { FOOTER_NAV_GROUPS, type FooterLinkGroup } from "@/lib/footer";
 import { cn } from "@/lib/utils";
 
-export type FooterLinksGroup = {
-  title: string;
-  links: Array<{ label: string; href: string }>;
-};
-
 export type FooterLinksProps = {
-  groups?: FooterLinksGroup[];
+  groups?: FooterLinkGroup[];
   className?: string;
 };
 
 export default function FooterLinks({
-  groups = [
-    {
-      title: "Shop",
-      links: [
-        { label: "All Refrigerators", href: "/shop" },
-        { label: "Double Door", href: "/shop/double-door" },
-        { label: "Single Door", href: "/shop/single-door" },
-        { label: "Mini Fridges", href: "/shop/mini-fridges" },
-        { label: "Commercial", href: "/shop/commercial" },
-      ],
-    },
-    {
-      title: "Support",
-      links: [
-        { label: "Help Center", href: "/support" },
-        { label: "Contact", href: "/contact" },
-      ],
-    },
-    {
-      title: "Company",
-      links: [
-        { label: "Why Protronics", href: "/why-protronics" },
-        { label: "How It Works", href: "/how-it-works" },
-        { label: "Hot Deals", href: "/trade-in" },
-        { label: "About", href: "/about" },
-        { label: "Compare", href: "/compare" },
-      ],
-    },
-  ],
+  groups = FOOTER_NAV_GROUPS,
   className,
 }: FooterLinksProps) {
   return (
-    <div className={cn("grid grid-cols-2 gap-8 sm:grid-cols-3", className)}>
+    <div className={cn("grid grid-cols-2 gap-6 sm:grid-cols-3 sm:gap-8", className)}>
       {groups.map((g) => (
         <div key={g.title}>
-          <div className="text-[12px] font-medium tracking-[0.22em] text-white/55">
+          <div className="footer-col-title text-[11px] font-medium tracking-[0.2em] text-white/55">
             {g.title}
           </div>
-          <div className="mt-4 space-y-3">
+          <ul className="mt-3 space-y-2">
             {g.links.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                prefetch
-                className={cn(
-                  "group block text-[13px] text-white/70",
-                  "transition-colors duration-300 hover:text-white",
-                )}
-              >
-                <span className="relative">
+              <li key={l.label}>
+                <Link href={l.href} prefetch className="footer-link text-[13px]">
                   {l.label}
-                  <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 group-hover:scale-x-100" />
-                </span>
-              </Link>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       ))}
     </div>

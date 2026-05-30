@@ -44,10 +44,12 @@ export default function SupportQuestions({
                 type="button"
                 onClick={() => onSelect(article.id)}
                 className={cn(
-                  "flex w-full items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-left transition-colors",
+                  "support-article-item group flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl px-4 py-3.5 text-left",
+                  "transition-[background-color,color,transform,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                  "active:scale-[0.99]",
                   active
-                    ? "bg-white/[0.06] text-white"
-                    : "text-white/80 hover:bg-white/[0.04] hover:text-white",
+                    ? "support-article-item-active bg-white/[0.06] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.08)]"
+                    : "text-white/80 hover:translate-x-0.5 hover:bg-white/[0.05] hover:text-white hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)]",
                 )}
               >
                 <span className="text-[15px] font-medium leading-snug sm:text-[16px]">
@@ -56,8 +58,8 @@ export default function SupportQuestions({
                 <ChevronRight
                   strokeWidth={1.75}
                   className={cn(
-                    "h-5 w-5 shrink-0",
-                    active ? "text-white" : "text-white/25",
+                    "h-5 w-5 shrink-0 transition-transform duration-200",
+                    active ? "text-white" : "text-white/25 group-hover:translate-x-0.5",
                   )}
                 />
               </button>

@@ -149,7 +149,7 @@ export default function WarrantySupport() {
               ))}
             </div>
 
-            <SupportCTA className="mt-7 shrink-0" warrantyHref="/warranty" supportHref="/contact" />
+            <SupportCTA className="mt-7 shrink-0" supportHref="/contact" />
           </motion.div>
 
           {/* Right: premium visual + reassurance */}
@@ -182,7 +182,7 @@ export default function WarrantySupport() {
                   <br />
                   Always Included.
                 </div>
-                <div className="mt-3 h-[2px] w-10 rounded-full bg-white/50 warranty-visual-divider" />
+                <div className="theme-accent-line warranty-visual-divider mt-3 w-10" />
                 <div className="warranty-visual-body mt-4 text-[12.5px] leading-6 text-white/75">
                   Clear communication, careful handling, and warranty-backed
                   service—so your purchase feels secure for the long term.

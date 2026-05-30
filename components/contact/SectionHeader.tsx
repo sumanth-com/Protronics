@@ -43,12 +43,7 @@ export default function SectionHeader({
       >
         {title}
       </h2>
-      <div
-        className={cn(
-          "mt-3 h-[2px] w-12 rounded-full bg-white/50",
-          centered && "mx-auto",
-        )}
-      />
+      <div className={cn("theme-accent-line mt-3 w-12", centered && "mx-auto")} />
       {description ? (
         <p
           className={cn(

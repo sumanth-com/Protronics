@@ -12,7 +12,7 @@ export default function FAQSection() {
     <section id="faq" className="theme-section-a relative overflow-hidden bg-black">
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
-      <div className="relative mx-auto w-full max-w-4xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
+      <div className="relative mx-auto w-full max-w-4xl px-4 pt-14 pb-10 sm:px-6 sm:pt-16 sm:pb-12">
         <motion.div
           variants={stagger}
           initial="hidden"

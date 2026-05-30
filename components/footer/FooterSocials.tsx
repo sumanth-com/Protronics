@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
+import { FOOTER_SOCIAL_LINKS } from "@/lib/footer";
 import type React from "react";
 import { cn } from "@/lib/utils";
 
@@ -10,17 +11,6 @@ type Social = {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
 };
-
-export type FooterSocialsProps = {
-  className?: string;
-};
-
-const socials: Social[] = [
-  { label: "Instagram", href: "#", icon: InstagramIcon },
-  { label: "WhatsApp", href: "https://wa.me/", icon: WhatsAppIcon },
-  { label: "Facebook", href: "#", icon: FacebookIcon },
-  { label: "LinkedIn", href: "#", icon: LinkedInIcon },
-];
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -78,29 +68,41 @@ function LinkedInIcon({ className }: { className?: string }) {
   );
 }
 
+const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Instagram: InstagramIcon,
+  WhatsApp: WhatsAppIcon,
+  Facebook: FacebookIcon,
+  LinkedIn: LinkedInIcon,
+};
+
+export type FooterSocialsProps = {
+  className?: string;
+};
+
 export default function FooterSocials({ className }: FooterSocialsProps) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
-      {socials.map((s) => {
-        const Icon = s.icon;
+      {FOOTER_SOCIAL_LINKS.map((s) => {
+        const Icon = ICONS[s.label] ?? InstagramIcon;
+        const external = s.href.startsWith("http");
         return (
           <motion.a
             key={s.label}
             href={s.href}
             aria-label={s.label}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noreferrer" : undefined}
             whileHover={{ y: -2 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              "group grid h-10 w-10 place-items-center rounded-full",
+              "footer-social-btn group grid h-9 w-9 place-items-center rounded-full",
               "border border-white/[0.08] bg-black",
-              "supports-[backdrop-filter]:backdrop-blur-xl",
             )}
           >
-            <Icon className="h-4 w-4 text-white/75 transition-colors duration-300 group-hover:text-white" />
+            <Icon className="h-4 w-4 text-white/75 transition-colors duration-200 group-hover:text-white" />
           </motion.a>
         );
       })}
     </div>
   );
 }
-

@@ -56,10 +56,9 @@ export default function TopBrandsSection() {
                 href={buildBrandShopPath(brand.name)}
                 prefetch
                 className={cn(
-                  "group flex h-full flex-col items-center justify-center rounded-2xl border border-white/[0.08]",
+                  "premium-card group relative flex h-full flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/[0.08]",
                   "bg-white/[0.02] px-4 py-6 text-center",
-                  "transition-all duration-300",
-                  "hover:border-white/20 hover:bg-white/[0.05] hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)]",
+                  "transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]",
                 )}
               >
                 <span className="text-[18px] font-semibold tracking-tight text-white transition-transform duration-300 group-hover:scale-105 sm:text-[20px]">

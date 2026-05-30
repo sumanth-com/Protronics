@@ -20,7 +20,7 @@ export default function AboutPromiseCard({
     <motion.article
       variants={fadeUpCard}
       className={cn(
-        "about-promise-card group relative overflow-hidden rounded-2xl",
+        "premium-card about-promise-card group relative overflow-hidden rounded-2xl",
         "border border-white/12 bg-black",
         "px-6 py-6",
         "h-full min-h-[200px]",
@@ -34,7 +34,7 @@ export default function AboutPromiseCard({
         <h3 className="about-promise-title mt-4 text-[15px] font-semibold tracking-tight text-white">
           {title}
         </h3>
-        <div className="about-promise-accent mt-2 h-[2px] w-10 rounded-full" aria-hidden />
+        <div className="theme-accent-line about-promise-accent mt-2 w-10" aria-hidden />
         <p className="about-promise-desc mt-3 text-[13px] leading-6 text-white/65">
           {description}
         </p>

@@ -34,91 +34,99 @@ export default function HeroNavbar() {
     <header className="fixed inset-x-0 top-0 z-50">
       <div
         className={cn(
-          "relative w-full",
-          "border-b border-theme-border/80",
+          "navbar-shell relative w-full",
           "bg-theme-nav supports-[backdrop-filter]:backdrop-blur-xl",
         )}
       >
-        <div className="navbar-glass-gradient pointer-events-none absolute inset-x-0 top-0 h-10" />
+        <div className="navbar-glass-gradient pointer-events-none absolute inset-x-0 top-0 h-12" />
 
-        <div className="relative mx-auto flex w-full items-center gap-4 px-4 py-3 sm:px-6 lg:gap-6">
-          {/* Brand */}
+        <div
+          className={cn(
+            "relative mx-auto flex w-full max-w-[1520px] items-center",
+            "gap-4 py-3 pl-3 pr-4",
+            "sm:gap-5 sm:py-3.5 sm:pl-4 sm:pr-5",
+            "lg:gap-7 lg:pl-5 lg:pr-7",
+            "xl:gap-8 xl:pl-6 xl:pr-8",
+          )}
+        >
+          {/* Brand — larger, anchored left */}
           <Link
             href="/"
             prefetch
-            className="relative flex shrink-0 items-center gap-3"
+            className="navbar-brand group relative flex shrink-0 items-center gap-3 sm:gap-3.5"
             aria-label="Go to home"
           >
-            <div className="relative h-10 w-10 shrink-0">
+            <div className="relative h-11 w-11 shrink-0 sm:h-12 sm:w-12 lg:h-[52px] lg:w-[52px]">
               <Image
                 src={Logo}
                 alt="Protronics"
                 fill
-                sizes="40px"
-                className="object-contain"
+                sizes="(max-width: 640px) 48px, 56px"
+                className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                 quality={IMAGE_QUALITY.logo}
                 priority
               />
             </div>
-            <div className="leading-none">
-              <div className="text-[15px] font-semibold tracking-tight text-theme-fg">
-                PROTRONICS
-              </div>
-              <div className="mt-1 hidden text-[11px] text-theme-muted xl:block">
+            <div className="min-w-0 leading-none">
+              <div className="navbar-brand-title">PROTRONICS</div>
+              <div className="navbar-brand-tagline hidden sm:block lg:mt-1">
                 Premium. Refurbished. Perfected.
               </div>
             </div>
           </Link>
 
-          {/* Nav links — centered on large screens */}
+          {/* Search + nav — centered, roomy */}
           <nav
-            className="hidden flex-1 items-center justify-center gap-0.5 lg:flex"
+            className="hidden min-w-0 flex-1 items-center justify-center lg:flex"
             aria-label="Main navigation"
           >
-            <SearchTrigger />
-            {navLinks.map((l) => {
-              const active = isNavActive(pathname, l.href);
-              return (
-                <Link
-                  key={l.label}
-                  href={l.href}
-                  prefetch
-                  aria-current={active ? "page" : undefined}
-                  className={cn(
-                    "relative rounded-lg px-3.5 py-2 text-[13px] font-medium tracking-wide transition-colors duration-300",
-                    active
-                      ? "text-theme-fg"
-                      : "text-theme-secondary hover:bg-theme-input-bg hover:text-theme-fg",
-                  )}
-                >
-                  {l.label}
-                  {active ? (
-                    <motion.span
-                      layoutId="navbar-active-line"
-                      className="absolute inset-x-2.5 -bottom-0.5 h-0.5 rounded-full bg-theme-accent"
-                      transition={{
-                        type: "spring",
-                        stiffness: 380,
-                        damping: 32,
-                      }}
-                    />
-                  ) : null}
-                </Link>
-              );
-            })}
+            <div className="navbar-center-cluster">
+              <SearchTrigger />
+              <div className="navbar-nav-group" role="list">
+                {navLinks.map((l) => {
+                  const active = isNavActive(pathname, l.href);
+                  return (
+                    <Link
+                      key={l.label}
+                      href={l.href}
+                      prefetch
+                      role="listitem"
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "navbar-nav-link",
+                        active && "navbar-nav-link--active",
+                      )}
+                    >
+                      {l.label}
+                      {active ? (
+                        <motion.span
+                          layoutId="navbar-active-line"
+                          className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-theme-accent"
+                          transition={{
+                            type: "spring",
+                            stiffness: 380,
+                            damping: 32,
+                          }}
+                        />
+                      ) : null}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
           </nav>
 
-          {/* CTAs */}
-          <div className="navbar-actions ml-auto flex items-center gap-1.5 sm:gap-2 lg:ml-0">
+          {/* CTAs + utilities */}
+          <div className="navbar-actions ml-auto flex items-center lg:ml-0">
             <ThemeToggle className="hidden sm:inline-flex" />
-            <SearchTrigger className="lg:hidden" />
+            <SearchTrigger compact className="lg:hidden" />
             <CtaButton
               href="/trade-in"
               size="sm"
               className="nav-cta-btn nav-cta-btn-deals shrink-0"
             >
               <NavCtaIcon variant="deals">
-                <Tags className="nav-cta-icon-glyph" strokeWidth={2} />
+                <Tags className="nav-cta-icon-glyph" strokeWidth={2.25} />
               </NavCtaIcon>
               <span className="nav-cta-label hidden sm:inline">Hot Deals</span>
               <span className="nav-cta-label sm:hidden">Deals</span>
@@ -126,7 +134,7 @@ export default function HeroNavbar() {
 
             <CtaButton href="/shop" size="sm" className="nav-cta-btn nav-cta-btn-shop shrink-0">
               <NavCtaIcon variant="shop">
-                <ShoppingBag className="nav-cta-icon-glyph" strokeWidth={2} />
+                <ShoppingBag className="nav-cta-icon-glyph" strokeWidth={2.25} />
               </NavCtaIcon>
               <span className="nav-cta-label hidden sm:inline">Shop Now</span>
               <span className="nav-cta-label sm:hidden">Shop</span>

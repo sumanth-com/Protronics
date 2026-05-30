@@ -68,7 +68,7 @@ export default function SupportAnswerPanel({
                     <button
                       type="button"
                       onClick={() => onSelectArticle(item.id)}
-                      className="w-full rounded-lg px-2 py-2.5 text-left text-[15px] text-white/75 transition-colors hover:bg-white/[0.04] hover:text-white"
+                      className="support-related-item w-full cursor-pointer rounded-lg px-2 py-2.5 text-left text-[15px] text-white/75 transition-[background-color,color,transform] duration-200 hover:translate-x-0.5 hover:bg-white/[0.05] hover:text-white active:scale-[0.99]"
                     >
                       {item.question}
                     </button>
@@ -91,13 +91,9 @@ export default function SupportAnswerPanel({
                 href={BUSINESS.whatsappMessage}
                 target="_blank"
                 rel="noreferrer"
-                className={cn(
-                  "inline-flex flex-1 items-center justify-center gap-2 rounded-full",
-                  "bg-white px-5 py-2.5 text-[14px] font-semibold text-black",
-                  "transition-opacity hover:opacity-90",
-                )}
+                className="support-whatsapp-cta inline-flex flex-1 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-semibold"
               >
-                <WhatsAppIcon className="h-4 w-4 text-black/85" />
+                <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
                 WhatsApp Support
               </a>
               <button
@@ -130,23 +126,15 @@ export default function SupportAnswerPanel({
                 href={BUSINESS.whatsappMessage}
                 target="_blank"
                 rel="noreferrer"
-                className={cn(
-                  "inline-flex shrink-0 items-center justify-center gap-2 rounded-full",
-                  "border border-white/45 bg-transparent px-5 py-2.5",
-                  "text-[15px] font-semibold text-white",
-                  "transition-colors hover:bg-white/[0.06]",
-                )}
+                className="support-whatsapp-cta inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[14px] font-semibold sm:text-[15px]"
               >
+                <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
                 Chat with us
-                <WhatsAppIcon className="h-4 w-4" />
               </a>
             </div>
-            <p className="mt-3 text-[14px] leading-6 text-white/55 sm:text-[15px]">
+            <p className="support-contact-note mt-3 text-[14px] leading-6 sm:text-[15px]">
               For detailed inquiries, send us an email at{" "}
-              <a
-                href={BUSINESS.emailHref}
-                className="font-medium text-white transition-opacity hover:opacity-80"
-              >
+              <a href={BUSINESS.emailHref} className="support-contact-email">
                 {BUSINESS.email}
               </a>
               .

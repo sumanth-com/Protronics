@@ -61,7 +61,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans bg-theme-bg text-theme-fg overflow-x-hidden">
         <AppProviders>
           <HeroNavbar />
-          <div className="h-[60px] sm:h-[64px]" aria-hidden />
+          <div className="navbar-spacer" aria-hidden />
           {children}
           <Footer />
         </AppProviders>

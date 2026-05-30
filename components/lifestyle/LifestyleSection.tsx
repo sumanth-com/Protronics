@@ -52,7 +52,7 @@ export default function LifestyleSection() {
                   <br />
                   A smarter home.
                 </div>
-                <div className="mt-3 h-[2px] w-10 rounded-full bg-white/50" />
+                <div className="theme-accent-line mt-3 w-10" />
                 <div className="mt-4 text-[12.5px] leading-6 text-white/70">
                   Premium appliances shouldn&apos;t be out of reach. Get the modern look
                   and confident performance—restored with professional standards.

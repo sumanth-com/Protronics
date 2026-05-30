@@ -25,10 +25,9 @@ export default function FAQItem({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-3xl",
+        "premium-card group relative overflow-hidden rounded-3xl",
         "border border-white/12 bg-white/[0.05]",
         "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
-        "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
         className,
       )}
     >

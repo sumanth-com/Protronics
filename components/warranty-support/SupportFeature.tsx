@@ -20,9 +20,8 @@ export default function SupportFeature({ data, className }: SupportFeatureProps)
   return (
     <div
       className={cn(
-        "warranty-feature-card group relative overflow-hidden rounded-3xl",
+        "premium-card warranty-feature-card group relative overflow-hidden rounded-3xl",
         "border border-white/12 bg-black",
-        "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
         "px-5 py-5",
         className,
       )}

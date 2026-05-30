@@ -29,9 +29,8 @@ export default function ProcessStep({
       whileHover={{ y: -2 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "group relative h-full overflow-hidden rounded-3xl",
+        "premium-card group relative h-full overflow-hidden rounded-3xl",
         "border border-white/12 bg-black",
-        "shadow-[0_26px_70px_rgba(0,0,0,0.55)]",
         "px-6 py-6",
         "will-change-transform",
         className,
@@ -61,7 +60,7 @@ export default function ProcessStep({
           {data.title}
         </div>
 
-        <div className="mt-3 h-[2px] w-10 rounded-full bg-white/50" />
+        <div className="theme-accent-line mt-3 w-10" />
 
         <div className="mt-4 text-[12.5px] leading-6 text-white/70">
           {data.description}

@@ -18,9 +18,8 @@ function PillarCard({ icon: Icon, title, description }: {
       variants={fadeUp}
       whileHover={{ y: -2 }}
       className={cn(
-        "group relative overflow-hidden rounded-2xl px-6 py-6",
+        "premium-card group relative overflow-hidden rounded-2xl px-6 py-6",
         whyGlass,
-        "transition-colors hover:border-white/18",
       )}
     >
 <Icon className="relative h-6 w-6 text-white" strokeWidth={1.75} />

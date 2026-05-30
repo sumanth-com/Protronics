@@ -15,12 +15,12 @@ export default function CompareWinnerBadge({ label, className }: CompareWinnerBa
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       className={cn(
-        "inline-flex items-center gap-1 rounded-full border border-[#39ff88]/30 bg-[#39ff88]/[0.08] px-2.5 py-1",
-        "text-[10px] font-semibold tracking-wide text-[#39ff88]",
+        "compare-winner-badge inline-flex items-center gap-1 rounded-full px-2.5 py-1",
+        "text-[10px] font-semibold tracking-wide",
         className,
       )}
     >
-      <Star className="h-3 w-3 fill-[#39ff88]/40" />
+      <Star className="h-3 w-3" />
       {label}
     </motion.span>
   );

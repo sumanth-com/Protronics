@@ -20,9 +20,8 @@ export default function FeatureCard({
   return (
     <motion.div
       className={cn(
-        "group relative overflow-hidden rounded-2xl",
+        "premium-card group relative overflow-hidden rounded-2xl",
         "border border-white/12 bg-black",
-        "shadow-[0_22px_60px_rgba(0,0,0,0.45)]",
         "px-6 py-6",
         "h-[206px] sm:h-[214px] lg:h-[224px]",
         "transition-transform duration-150 ease-out hover:-translate-y-0.5",
@@ -48,7 +47,7 @@ export default function FeatureCard({
           {title}
         </div>
 
-        <div className="mt-3 h-[2px] w-10 rounded-full bg-white/50" />
+        <div className="theme-accent-line mt-3 w-10" />
 
         <div
           className={cn(

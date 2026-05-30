@@ -2,7 +2,8 @@ import { BUSINESS } from "@/lib/contact";
 import { enrichProductDetail, type ProductDetail } from "@/lib/product-detail";
 import { SHOP_PRODUCTS, type ShopProduct } from "@/lib/shop";
 
-export const COMPARE_ACCENT = "#39ff88";
+/** Brand CTA gold — matches shop buttons & theme accent in light mode */
+export const COMPARE_ACCENT = "#b88a44";
 
 export type CompareWinnerKey =
   | "bestCapacity"

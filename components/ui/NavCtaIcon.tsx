@@ -12,12 +12,12 @@ type NavCtaIconProps = {
 
 const shopMotion = {
   animate: {
-    y: [0, -2.5, 0],
-    rotate: [0, -3, 3, 0],
-    scale: [1, 1.06, 1],
+    y: [0, -2, 0],
+    rotate: [0, -4, 4, 0],
+    scale: [1, 1.1, 1],
   },
   transition: {
-    duration: 2.4,
+    duration: 2.2,
     repeat: Infinity,
     ease: "easeInOut" as const,
   },
@@ -25,32 +25,30 @@ const shopMotion = {
 
 const dealsMotion = {
   animate: {
-    y: [0, -2, 0],
-    rotate: [0, -8, 8, 0],
-    scale: [1, 1.08, 1],
+    y: [0, -1.5, 0],
+    rotate: [0, -10, 10, 0],
+    scale: [1, 1.12, 1],
   },
   transition: {
-    duration: 2.8,
+    duration: 2.6,
     repeat: Infinity,
     ease: "easeInOut" as const,
   },
 };
 
-/** Animated icon bubble on navbar CTAs — high contrast, subtle glow. */
+/** Animated icon on navbar CTAs — sits flush on the button, no inner pill. */
 export default function NavCtaIcon({ children, variant, className }: NavCtaIconProps) {
   const reduced = useReducedMotion();
+  const wrapClass = cn(
+    "nav-cta-icon-wrap inline-flex shrink-0 items-center justify-center",
+    variant === "deals" && "nav-cta-icon-deals",
+    variant === "shop" && "nav-cta-icon-shop",
+    className,
+  );
 
   if (reduced) {
     return (
-      <span
-        className={cn(
-          "nav-cta-icon-bubble inline-flex shrink-0 items-center justify-center",
-          variant === "deals" && "nav-cta-icon-bubble-deals",
-          variant === "shop" && "nav-cta-icon-bubble-shop",
-          className,
-        )}
-        aria-hidden
-      >
+      <span className={wrapClass} aria-hidden>
         {children}
       </span>
     );
@@ -60,12 +58,7 @@ export default function NavCtaIcon({ children, variant, className }: NavCtaIconP
 
   return (
     <motion.span
-      className={cn(
-        "nav-cta-icon-bubble inline-flex shrink-0 items-center justify-center",
-        variant === "deals" && "nav-cta-icon-bubble-deals",
-        variant === "shop" && "nav-cta-icon-bubble-shop",
-        className,
-      )}
+      className={wrapClass}
       animate={motionProps.animate}
       transition={motionProps.transition}
       aria-hidden

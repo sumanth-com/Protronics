@@ -53,7 +53,7 @@ export default function CategoryMenu() {
                   />
                   {label}
                   {isActive ? (
-                    <span className="pointer-events-none absolute left-3 right-3 -bottom-1 h-[2px] rounded-full bg-white/80 shadow-[0_0_0_6px_rgba(255,255,255,0.04)]" />
+                    <span className="theme-accent-line category-menu-active-line pointer-events-none absolute left-3 right-3 -bottom-1 shadow-[0_0_0_6px_rgba(255,255,255,0.04)]" />
                   ) : null}
                 </button>
               );

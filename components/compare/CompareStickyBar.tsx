@@ -27,16 +27,15 @@ export default function CompareStickyBar() {
         >
           <div
             className={cn(
-              "mx-auto flex max-w-3xl flex-col gap-3 rounded-2xl border border-[#39ff88]/20",
-              "bg-black/85 px-4 py-3.5 shadow-[0_24px_80px_rgba(0,0,0,0.75),0_0_50px_rgba(57,255,136,0.06)]",
-              "supports-[backdrop-filter]:bg-black/75 supports-[backdrop-filter]:backdrop-blur-xl",
+              "compare-sticky-shell mx-auto flex max-w-3xl flex-col gap-3 rounded-2xl px-4 py-3.5",
+              "supports-[backdrop-filter]:backdrop-blur-xl",
               "sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:py-3",
             )}
           >
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <Scale className="h-4 w-4 shrink-0 text-[#39ff88]" />
-                <p className="text-[13px] font-semibold text-white">
+                <Scale className="compare-sticky-icon h-4 w-4 shrink-0" />
+                <p className="compare-sticky-title text-[13px] font-semibold">
                   Compare ({count} {count === 1 ? "Product" : "Products"})
                 </p>
               </div>
@@ -44,13 +43,13 @@ export default function CompareStickyBar() {
                 {products.map((p) => (
                   <span
                     key={p.id}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] text-white/75"
+                    className="compare-sticky-chip inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px]"
                   >
                     {shortProductLabel(p)}
                     <button
                       type="button"
                       onClick={() => remove(p.id)}
-                      className="text-white/40 hover:text-white"
+                      className="compare-sticky-chip-remove transition-colors"
                       aria-label={`Remove ${p.name}`}
                     >
                       <X className="h-3 w-3" />
@@ -64,16 +63,13 @@ export default function CompareStickyBar() {
               <button
                 type="button"
                 onClick={clear}
-                className="rounded-full px-3 py-2 text-[12px] font-medium text-white/50 hover:text-white"
+                className="compare-sticky-clear rounded-full px-3 py-2 text-[12px] font-medium transition-colors"
               >
                 Clear
               </button>
               <Link
                 href="/compare"
-                className={cn(
-                  "inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-2.5",
-                  "bg-[#39ff88] text-[13px] font-semibold text-black transition-opacity hover:opacity-90",
-                )}
+                className="compare-btn-primary inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-2.5 text-[13px] font-semibold"
               >
                 Compare Now
                 <ArrowUpRight className="h-4 w-4" />

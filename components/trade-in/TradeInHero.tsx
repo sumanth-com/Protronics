@@ -114,7 +114,7 @@ export default function TradeInHero() {
           <div
             ref={mediaRef}
             className={cn(
-              "relative overflow-hidden rounded-[32px]",
+              "theme-preserve-dark trade-in-hero-media relative overflow-hidden rounded-[32px]",
               "border border-white/10 bg-black",
               "shadow-[0_40px_120px_rgba(0,0,0,0.75)]",
             )}

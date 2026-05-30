@@ -27,24 +27,17 @@ export default function CategoryCard({
     <a
       href={href}
       className={cn(
-        "group block select-none cursor-pointer",
-        "rounded-2xl border",
+        "category-card group relative block cursor-pointer overflow-hidden rounded-2xl border p-3",
+        "transition-[transform,box-shadow,border-color] duration-200 ease-out hover:-translate-y-0.5",
         tone === "dark"
-          ? "border-white/12 bg-white/[0.06] supports-[backdrop-filter]:backdrop-blur-md"
-          : "border-black/10 bg-white",
-        "p-3",
-        tone === "dark"
-          ? "shadow-[0_18px_50px_rgba(0,0,0,0.35)]"
-          : "shadow-[0_10px_28px_rgba(0,0,0,0.06)]",
-        "transition-transform duration-150 ease-out hover:-translate-y-1",
+          ? "border-white/12 bg-[#111111] hover:border-white/20 hover:shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          : "border-black/10 bg-white hover:shadow-[0_12px_28px_rgba(0,0,0,0.08)]",
       )}
     >
       <div
         ref={imgRef}
         className={cn(
-          "relative overflow-hidden rounded-xl",
-          tone === "dark" ? "bg-white/[0.06]" : "bg-[#f2f2f2]",
-          "aspect-[4/3]",
+          "category-card-image relative overflow-hidden rounded-xl aspect-[4/3]",
         )}
       >
         <Image

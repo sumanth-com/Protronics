@@ -100,13 +100,13 @@ export default function BestDealsSection() {
                   aria-selected={active}
                   onClick={() => setActiveTab(tab.id)}
                   className={cn(
-                    "inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12px] font-medium transition-all duration-300",
+                    "deals-tab inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[12px] font-medium transition-all duration-300",
                     active
-                      ? "bg-white text-black"
+                      ? "deals-tab-active bg-theme-accent text-theme-accent-fg shadow-theme-sm"
                       : "border border-white/10 text-white/60 hover:border-white/20 hover:text-white",
                   )}
                 >
-                  <Icon className="h-3.5 w-3.5" />
+                  <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden />
                   {tab.label}
                 </button>
               );
@@ -136,7 +136,7 @@ export default function BestDealsSection() {
                   href={buildProductPath(product.id)}
                   prefetch
                   className={cn(
-                    "group overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02]",
+                    "premium-card group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02]",
                     "transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04]",
                   )}
                 >

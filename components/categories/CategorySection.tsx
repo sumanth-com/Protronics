@@ -41,9 +41,6 @@ const categories = [
 export default function CategorySection() {
   return (
     <section id="shop" className="relative">
-      {/* Seamless transition from hero */}
-      <div className="category-hero-fade pointer-events-none absolute inset-x-0 -top-24 h-24 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
-
       <div
         className={cn(
           "relative",
@@ -51,6 +48,11 @@ export default function CategorySection() {
           "pt-10 pb-16 sm:pt-12 sm:pb-20",
         )}
       >
+        {/* Fade stays inside this section only — does not cover hero trust bar */}
+        <div
+          className="category-hero-fade pointer-events-none absolute inset-x-0 top-0 h-10 sm:h-12"
+          aria-hidden
+        />
         {/* categories grid */}
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
           <motion.div
@@ -69,7 +71,7 @@ export default function CategorySection() {
 
             <motion.div
               variants={fadeUp}
-              className="mt-2.5 h-[2px] w-14 rounded-full bg-white"
+              className="theme-accent-line mt-2.5 w-14"
             />
           </motion.div>
 

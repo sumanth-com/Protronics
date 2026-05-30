@@ -27,8 +27,8 @@ export default function CompareToast() {
           className="pointer-events-none fixed bottom-28 left-1/2 z-[60] w-[min(92vw,380px)] -translate-x-1/2 sm:bottom-24"
           role="status"
         >
-          <div className="rounded-2xl border border-[#39ff88]/25 bg-black/90 px-4 py-3.5 text-center shadow-[0_24px_80px_rgba(0,0,0,0.65),0_0_40px_rgba(57,255,136,0.08)] backdrop-blur-xl">
-            <p className="text-[13px] font-medium text-white">
+          <div className="compare-toast-shell rounded-2xl px-4 py-3.5 text-center backdrop-blur-xl">
+            <p className="compare-toast-text text-[13px] font-medium">
               You can compare up to 3 appliances.
             </p>
           </div>

@@ -42,21 +42,15 @@ export default function HeroSlider() {
 
   return (
     <section
-      className={cn(
-        "hero-section relative overflow-hidden bg-black",
-        "min-h-[calc(100svh-64px)] sm:min-h-[calc(100svh-68px)]",
-        "flex flex-col",
-      )}
+      className="hero-section relative overflow-hidden bg-black"
     >
-      {/* slider — cinematic dark zone (background image preserved) */}
-      <div className="w-full px-4 pt-5 sm:px-6 lg:px-10">
+      <div className="hero-slider-wrap w-full">
         <div
           className={cn(
-            "theme-preserve-dark hero-slider-shell relative overflow-hidden rounded-[34px]",
+            "theme-preserve-dark hero-slider-shell relative overflow-hidden rounded-[28px] sm:rounded-[32px]",
             "border border-white/10 bg-white/[0.03]",
             "supports-[backdrop-filter]:bg-white/[0.04] supports-[backdrop-filter]:backdrop-blur-2xl",
             "shadow-[0_40px_160px_rgba(0,0,0,0.75)]",
-            "h-[460px] sm:h-[500px] lg:h-[540px]",
           )}
         >
           <Swiper

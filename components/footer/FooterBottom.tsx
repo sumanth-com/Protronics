@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { FOOTER_LEGAL_LINKS } from "@/lib/footer";
 import { cn } from "@/lib/utils";
 
 export type FooterBottomProps = {
@@ -11,24 +12,22 @@ export default function FooterBottom({ className }: FooterBottomProps) {
   return (
     <div
       className={cn(
-        "mt-10 flex flex-col gap-4 border-t border-white/10 pt-6",
+        "mt-0 flex flex-col gap-3 pt-0",
         "sm:flex-row sm:items-center sm:justify-between",
         className,
       )}
     >
-      <div className="text-[12px] text-white/55">
+      <div className="footer-bottom-copy text-[12px] text-white/55">
         © {new Date().getFullYear()} Protronics. All rights reserved.
       </div>
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-white/55">
-        <Link href="/contact" prefetch className="transition-colors hover:text-white/80">
-          Privacy Policy
-        </Link>
-        <Link href="/contact" prefetch className="transition-colors hover:text-white/80">
-          Terms
-        </Link>
-        <span className="text-white/35">Designed by Protronics</span>
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px]">
+        {FOOTER_LEGAL_LINKS.map((l) => (
+          <Link key={l.label} href={l.href} prefetch className="footer-link text-[12px]">
+            {l.label}
+          </Link>
+        ))}
+        <span className="footer-bottom-copy text-white/35">Designed by Protronics</span>
       </div>
     </div>
   );
 }
-
