@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, ChevronDown, Refrigerator, type LucideIcon } from "lucide-react";
+import { ArrowRight, ChevronDown, Refrigerator } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import { cn } from "@/lib/utils";
 

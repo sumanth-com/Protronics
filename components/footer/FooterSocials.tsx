@@ -3,14 +3,7 @@
 import { motion } from "framer-motion";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { FOOTER_SOCIAL_LINKS } from "@/lib/footer";
-import type React from "react";
 import { cn } from "@/lib/utils";
-
-type Social = {
-  label: string;
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-};
 
 function InstagramIcon({ className }: { className?: string }) {
   return (

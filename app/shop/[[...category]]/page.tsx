@@ -55,7 +55,11 @@ export default async function ShopPage({ params, searchParams }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ShopPageClient initialCategory={validCategory} initialBrand={brand} />
+      <ShopPageClient
+        key={`${validCategory ?? "all"}-${brand ?? ""}`}
+        initialCategory={validCategory}
+        initialBrand={brand}
+      />
     </>
   );
 }

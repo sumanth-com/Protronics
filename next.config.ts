@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
+/** Keep build output out of OneDrive-synced `.next` to avoid EBUSY 500s on refresh. */
+const distDir = "node_modules/.cache/next";
+
 const nextConfig: NextConfig = {
+  distDir,
   turbopack: {
     root: __dirname,
   },
@@ -27,6 +31,11 @@ const nextConfig: NextConfig = {
       {
         source: "/shop/product/:id",
         destination: "/product/:id",
+        permanent: true,
+      },
+      {
+        source: "/terms-and-conditions",
+        destination: "/terms-of-service",
         permanent: true,
       },
     ];

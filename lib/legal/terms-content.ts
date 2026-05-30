@@ -1,14 +1,14 @@
 import type { LegalPageConfig } from "@/lib/legal/types";
 
-export const TERMS_AND_CONDITIONS_PAGE: LegalPageConfig = {
-  path: "/terms-and-conditions",
+export const TERMS_OF_SERVICE_PAGE: LegalPageConfig = {
+  path: "/terms-of-service",
   eyebrow: "LEGAL · PURCHASE & USE",
-  title: "Terms & Conditions",
+  title: "Terms of Service",
   subtitle:
     "Understand the terms governing the use of Protronics products, services, and this website.",
   lastUpdated: "30 May 2026",
   seo: {
-    title: "Terms & Conditions | Protronics",
+    title: "Terms of Service | Protronics",
     description:
       "Review the terms governing purchases and use of Protronics services.",
     keywords: [
@@ -25,7 +25,7 @@ export const TERMS_AND_CONDITIONS_PAGE: LegalPageConfig = {
       blocks: [
         {
           type: "paragraph",
-          text: "By accessing the Protronics website, placing an enquiry, or purchasing a product, you agree to these Terms & Conditions and our Privacy Policy. If you do not agree, please do not use our services.",
+          text: "By accessing the Protronics website, placing an enquiry, or purchasing a product, you agree to these Terms of Service and our Privacy Policy. If you do not agree, please do not use our services.",
         },
         {
           type: "paragraph",
@@ -189,7 +189,7 @@ export const TERMS_AND_CONDITIONS_PAGE: LegalPageConfig = {
       blocks: [
         {
           type: "paragraph",
-          text: "For questions about these Terms & Conditions, orders, warranty, or support:",
+          text: "For questions about these Terms of Service, orders, warranty, or support:",
         },
         {
           type: "list",

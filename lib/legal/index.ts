@@ -1,14 +1,14 @@
 import { absoluteUrl, SITE_NAME } from "@/lib/site";
 import { PRIVACY_POLICY_PAGE } from "@/lib/legal/privacy-content";
-import { TERMS_AND_CONDITIONS_PAGE } from "@/lib/legal/terms-content";
+import { TERMS_OF_SERVICE_PAGE } from "@/lib/legal/terms-content";
 import type { LegalPageConfig } from "@/lib/legal/types";
 
 export type { LegalBlock, LegalPageConfig, LegalSection } from "@/lib/legal/types";
-export { PRIVACY_POLICY_PAGE, TERMS_AND_CONDITIONS_PAGE };
+export { PRIVACY_POLICY_PAGE, TERMS_OF_SERVICE_PAGE };
 
 export function getLegalPageByPath(path: string): LegalPageConfig | undefined {
   if (path === PRIVACY_POLICY_PAGE.path) return PRIVACY_POLICY_PAGE;
-  if (path === TERMS_AND_CONDITIONS_PAGE.path) return TERMS_AND_CONDITIONS_PAGE;
+  if (path === TERMS_OF_SERVICE_PAGE.path) return TERMS_OF_SERVICE_PAGE;
   return undefined;
 }
 

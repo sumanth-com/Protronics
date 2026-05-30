@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, RotateCcw, Scale, Star, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useIsClient } from "@/hooks/useIsClient";
 import CompareWinnerBadge from "@/components/compare/CompareWinnerBadge";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { useCompare } from "@/hooks/useProductStore";
@@ -30,19 +31,17 @@ const ROW_WINNER: Partial<Record<string, CompareWinnerKey>> = {
 
 export default function ComparePageClient() {
   const { ids, remove, clear, restoreLastCompare } = useCompare();
-  const [mounted, setMounted] = useState(false);
-  const [lastAvailable, setLastAvailable] = useState(false);
+  const mounted = useIsClient();
 
-  useEffect(() => {
-    setMounted(true);
+  const lastAvailable = useMemo(() => {
+    if (!mounted) return false;
     try {
       const last = JSON.parse(localStorage.getItem("protronics-compare-last") ?? "[]") as string[];
-      const current = JSON.parse(localStorage.getItem("protronics-compare") ?? "[]") as string[];
-      setLastAvailable(last.length >= 1 && current.length === 0);
+      return last.length >= 1 && ids.length === 0;
     } catch {
-      setLastAvailable(false);
+      return false;
     }
-  }, [ids]);
+  }, [mounted, ids]);
 
   const products = useMemo(() => getCompareProducts(ids), [ids]);
   const winners = useMemo(() => computeCompareWinners(products), [products]);
@@ -56,7 +55,6 @@ export default function ComparePageClient() {
 
   const handleRestore = () => {
     restoreLastCompare();
-    setLastAvailable(false);
   };
 
   if (!mounted) {

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Lenis from "lenis";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { LenisContext, refreshScrollTriggers } from "@/hooks/useLenis";
+import { LenisContext } from "@/hooks/useLenis";
 
 export default function SmoothScroll({
   children,
@@ -15,7 +15,7 @@ export default function SmoothScroll({
 
   useEffect(() => {
     if (reducedMotion) {
-      setLenis(null);
+      queueMicrotask(() => setLenis(null));
       return;
     }
 
@@ -72,7 +72,7 @@ export default function SmoothScroll({
 
     return () => {
       cancelled = true;
-      setLenis(null);
+      queueMicrotask(() => setLenis(null));
       document.documentElement.classList.remove("lenis");
 
       void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {

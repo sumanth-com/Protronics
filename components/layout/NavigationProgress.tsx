@@ -10,9 +10,15 @@ export default function NavigationProgress() {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    setActive(true);
-    const done = window.setTimeout(() => setActive(false), 220);
-    return () => window.clearTimeout(done);
+    let done: number | undefined;
+    const raf = requestAnimationFrame(() => {
+      setActive(true);
+      done = window.setTimeout(() => setActive(false), 220);
+    });
+    return () => {
+      cancelAnimationFrame(raf);
+      if (done !== undefined) window.clearTimeout(done);
+    };
   }, [pathname]);
 
   return (

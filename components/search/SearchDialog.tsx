@@ -44,11 +44,12 @@ export default function SearchDialog({ open, onClose }: SearchDialogProps) {
   const suggestions = getDefaultSuggestions();
 
   useEffect(() => {
-    if (open) {
+    if (!open) return;
+    queueMicrotask(() => {
       setQuery("");
       setRecent(loadRecent());
-      requestAnimationFrame(() => inputRef.current?.focus());
-    }
+    });
+    requestAnimationFrame(() => inputRef.current?.focus());
   }, [open]);
 
   useEffect(() => {

@@ -17,7 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/why-protronics",
     "/support",
     "/privacy-policy",
-    "/terms-and-conditions",
+    "/terms-of-service",
   ].map((path) => ({
     url: `${SITE_URL}${path}`,
     lastModified: now,

@@ -1,18 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useAppTheme } from "@/hooks/useAppTheme";
+import { useIsClient } from "@/hooks/useIsClient";
 import { cn } from "@/lib/utils";
 
 const ROCK_SPRING = { type: "spring" as const, stiffness: 480, damping: 30, mass: 0.75 };
 
 export default function ThemeToggle({ className }: { className?: string }) {
   const { theme, toggleTheme } = useAppTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsClient();
   const reduced = useReducedMotion();
-
-  useEffect(() => setMounted(true), []);
 
   const isLight = theme === "light";
 

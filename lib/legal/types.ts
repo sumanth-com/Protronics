@@ -11,7 +11,7 @@ export type LegalSection = {
 };
 
 export type LegalPageConfig = {
-  path: "/privacy-policy" | "/terms-and-conditions";
+  path: "/privacy-policy" | "/terms-of-service";
   eyebrow: string;
   title: string;
   subtitle: string;

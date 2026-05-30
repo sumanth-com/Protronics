@@ -36,7 +36,9 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "../../../AppData/Local/Temp/pro-next/types/**/*.ts",
-    "../../../AppData/Local/Temp/pro-next/dev/types/**/*.ts"
+    "../../../AppData/Local/Temp/pro-next/dev/types/**/*.ts",
+    "node_modules/.cache/next/types/**/*.ts",
+    "node_modules/.cache/next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
