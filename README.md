@@ -43,5 +43,6 @@ Quick start:
 
 1. Paste `scripts/google-apps-script-backend.js` into Apps Script → run `setupSheets()` → deploy Web App (**Anyone**).
 2. Set `NEXT_PUBLIC_FORM_ENDPOINT_URL` (or `VITE_FORM_ENDPOINT_URL`) to the `/exec` URL.
-3. `npm run build` — generates `public/forms-endpoint.json` and validates the URL in production.
+3. `npm run build` — lint, then generates `public/forms-endpoint.json` (missing/invalid form URL warns but does not block deploy).
+4. On **Vercel**, set `NEXT_PUBLIC_FORM_ENDPOINT_URL` to your Apps Script `/exec` URL under Project → Settings → Environment Variables.
 4. Check `window.__FORM_HEALTH__` in the browser after load.

@@ -38,12 +38,20 @@ if (!url) {
 }
 
 if (!SCRIPT_RE.test(url)) {
-  console.error(
-    `[forms] BUILD FAILED: Invalid endpoint URL.\n` +
-      `Expected https://script.google.com/macros/s/.../exec\n` +
-      `Got: ${url}`,
+  const message =
+    `Invalid form endpoint URL (expected https://script.google.com/macros/s/.../exec). Got: ${url}`;
+
+  if (requireEndpoint) {
+    console.error(`[forms] BUILD FAILED: ${message}`);
+    process.exit(1);
+  }
+
+  console.warn(
+    `[forms] ${message}\n` +
+      "Fix NEXT_PUBLIC_FORM_ENDPOINT_URL in Vercel → Settings → Environment Variables. " +
+      "Build will continue; forms will not submit until the URL is valid.",
   );
-  process.exit(1);
+  process.exit(0);
 }
 
 console.info("[forms] Endpoint URL validated for production build.");

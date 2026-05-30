@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
-/** Keep build output out of OneDrive-synced `.next` to avoid EBUSY 500s on refresh. */
-const distDir = "node_modules/.cache/next";
+/**
+ * OneDrive locks `.next` on Windows — use a cache path locally only.
+ * Vercel/CI must use the default `.next` or deployment packaging breaks.
+ */
+const distDir =
+  process.env.VERCEL === "1" || process.env.CI === "true"
+    ? ".next"
+    : "node_modules/.cache/next";
 
 /** Expose VITE_* from .env to the Next.js client bundle. */
 const viteFormEndpoint = process.env.VITE_FORM_ENDPOINT_URL?.trim() ?? "";

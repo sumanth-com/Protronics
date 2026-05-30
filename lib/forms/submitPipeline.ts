@@ -50,7 +50,8 @@ export async function runSubmitPipeline<T extends Record<string, unknown>>(
     return { success: true, message: "Submitted Successfully" };
   }
 
-  const { _honeypot: _, ...rest } = input.raw;
+  const rest = { ...input.raw };
+  delete rest._honeypot;
   const validation = input.validate(rest as T & { _honeypot?: string });
   if (!validation.success) {
     return {

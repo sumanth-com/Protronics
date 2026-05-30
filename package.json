@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/write-forms-endpoint.mjs && next dev --webpack",
-    "build": "node scripts/assert-forms-env.mjs && node scripts/write-forms-endpoint.mjs && next build",
+    "build": "npm run lint && node scripts/assert-forms-env.mjs && node scripts/write-forms-endpoint.mjs && next build",
     "forms:write-endpoint": "node scripts/write-forms-endpoint.mjs",
     "start": "next start",
     "lint": "eslint"

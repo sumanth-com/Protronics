@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Apps Script source — deployed to Google, not bundled by Next.js
+    "scripts/google-apps-script-backend.js",
+    "scripts/google-sheets-webhook.gs",
   ]),
 ]);
 
