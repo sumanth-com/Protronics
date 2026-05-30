@@ -2,10 +2,8 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowLeftRight,
   ClipboardList,
-  CreditCard,
   MessageSquare,
   Package,
-  Receipt,
   Shield,
   ShieldCheck,
 } from "lucide-react";
@@ -95,14 +93,11 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
     label: "Protronics Protection",
     icon: ShieldCheck,
     description: "Warranty, coverage & peace of mind",
-    protectionCta: true,
     trustCard: {
       title: "Protronics Protection Promise",
       items: [
         "100+ Point Tested",
         "Sanitized & Verified",
-        "Warranty Protection",
-        "Expert Support",
         "Safe Delivery",
         "Dedicated Assistance",
       ],
@@ -135,24 +130,6 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
           { label: "WhatsApp support", href: BUSINESS.whatsappMessage, external: true },
           { label: "Call support", href: BUSINESS.phoneHref },
         ],
-      },
-      {
-        id: "protection-response-time",
-        question: "How quickly does Protronics respond?",
-        answer:
-          "WhatsApp and phone inquiries during business hours are typically answered within a few hours. Urgent cooling or performance issues are prioritized. After-hours messages are handled first thing the next business day.",
-      },
-      {
-        id: "protection-after-delivery",
-        question: "Do I get support after delivery?",
-        answer:
-          "Yes. Our support team remains available even after delivery for assistance related to installation guidance, warranty questions, and product support.",
-      },
-      {
-        id: "protection-fault",
-        question: "What happens if a product develops a fault?",
-        answer:
-          "Report the issue with your order details and a short video if possible. We diagnose the problem, confirm warranty eligibility, and arrange repair or resolution according to our service policy—you are not left dealing with it alone.",
       },
       {
         id: "protection-installation",
@@ -253,58 +230,6 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
         question: "How long do refunds take?",
         answer:
           "Approved refunds return to your original payment method within 5–7 business days. UPI is often faster; card timelines depend on your bank.",
-      },
-    ],
-  },
-  {
-    id: "payment",
-    label: "Payment & Billing",
-    icon: CreditCard,
-    description: "Methods, invoices, and EMI",
-    articles: [
-      {
-        id: "payment-methods",
-        question: "What payment methods do you accept?",
-        answer:
-          "We accept UPI, credit and debit cards, net banking, and select EMI options. Full payment confirms your delivery slot at booking.",
-      },
-      {
-        id: "payment-emi",
-        question: "Is EMI available?",
-        answer:
-          "EMI is available through eligible card programs at checkout. Your bank shows terms and interest before you confirm. Protronics does not add separate financing charges.",
-      },
-      {
-        id: "payment-invoice",
-        question: "Will I receive a tax invoice?",
-        answer:
-          "Yes. A GST invoice is emailed after delivery with serial number, warranty start date, and itemized pricing.",
-      },
-    ],
-  },
-  {
-    id: "account",
-    label: "Account & Orders",
-    icon: Receipt,
-    description: "Orders, updates, and changes",
-    articles: [
-      {
-        id: "account-track-order",
-        question: "How do I track my order?",
-        answer:
-          "Order updates go to your WhatsApp and SMS—no account login required. Share your order ID anytime for a live status check.",
-      },
-      {
-        id: "account-change-address",
-        question: "Can I change my delivery address?",
-        answer:
-          "Address changes are free before dispatch. After dispatch, changes may require a re-routing fee depending on distance—contact us as soon as possible.",
-      },
-      {
-        id: "account-cancel",
-        question: "Can I cancel my order?",
-        answer:
-          "Cancellation is free before the unit is prepared for dispatch. After dispatch, cancellation is handled under our returns policy.",
       },
     ],
   },

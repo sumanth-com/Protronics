@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export type FooterLinksGroup = {
@@ -17,27 +18,30 @@ export default function FooterLinks({
     {
       title: "Shop",
       links: [
-        { label: "Refrigerators", href: "/shop" },
-        { label: "Premium Collection", href: "/shop/premium-hubs" },
-        { label: "Best Sellers", href: "/shop" },
+        { label: "All Refrigerators", href: "/shop" },
+        { label: "Double Door", href: "/shop/double-door" },
+        { label: "Single Door", href: "/shop/single-door" },
+        { label: "Mini Fridges", href: "/shop/mini-fridges" },
+        { label: "Commercial", href: "/shop/commercial" },
       ],
     },
     {
       title: "Support",
       links: [
-        { label: "Warranty", href: "#warranty" },
+        { label: "Warranty", href: "/warranty" },
+        { label: "FAQ", href: "/faq" },
         { label: "Help Center", href: "/support" },
-        { label: "Delivery Support", href: "/contact" },
+        { label: "Contact", href: "/contact" },
       ],
     },
     {
       title: "Company",
       links: [
         { label: "Why Protronics", href: "/why-protronics" },
+        { label: "How It Works", href: "/how-it-works" },
         { label: "Trade-In & Upgrade", href: "/trade-in" },
         { label: "About", href: "/about" },
-        { label: "Contact", href: "/contact" },
-        { label: "How It Works", href: "#how" },
+        { label: "Compare", href: "/compare" },
       ],
     },
   ],
@@ -52,9 +56,10 @@ export default function FooterLinks({
           </div>
           <div className="mt-4 space-y-3">
             {g.links.map((l) => (
-              <a
+              <Link
                 key={l.label}
                 href={l.href}
+                prefetch
                 className={cn(
                   "group block text-[13px] text-white/70",
                   "transition-colors duration-300 hover:text-white",
@@ -64,7 +69,7 @@ export default function FooterLinks({
                   {l.label}
                   <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-white/50 transition-transform duration-300 group-hover:scale-x-100" />
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -72,4 +77,3 @@ export default function FooterLinks({
     </div>
   );
 }
-

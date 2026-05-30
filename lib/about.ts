@@ -98,8 +98,8 @@ export const ABOUT_METRICS: AboutMetric[] = [
 ];
 
 export const ABOUT_LINKS = {
-  shop: "/#shop",
-  collection: "/#shop",
+  shop: "/shop",
+  collection: "/shop",
   whatsapp: BUSINESS.whatsappMessage,
 } as const;
 

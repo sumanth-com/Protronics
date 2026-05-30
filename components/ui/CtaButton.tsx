@@ -63,14 +63,14 @@ export default function CtaButton({
       );
     }
     return (
-      <Link href={href} className={classes} onClick={onClick} aria-label={ariaLabel}>
+      <Link href={href} prefetch className={classes} onClick={onClick} aria-label={ariaLabel}>
         {children}
       </Link>
     );
   }
 
   return (
-    <button type={type} className={classes} {...buttonProps}>
+    <button type={type} className={classes} onClick={onClick} aria-label={ariaLabel} {...buttonProps}>
       {children}
     </button>
   );

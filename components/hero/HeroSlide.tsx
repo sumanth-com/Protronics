@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { fadeUp, stagger } from "@/lib/animations";
 import { IMAGE_QUALITY } from "@/lib/images";
+import { BUSINESS } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 import CtaButton from "@/components/ui/CtaButton";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
@@ -122,7 +123,7 @@ export default function HeroSlide({ slide, priority = false }: HeroSlideProps) {
                   Explore Collection →
                 </CtaButton>
                 <CtaButton
-                  href="https://wa.me/"
+                  href={BUSINESS.whatsappMessage}
                   size="lg"
                   fullWidth
                   external

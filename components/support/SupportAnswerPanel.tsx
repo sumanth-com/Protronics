@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
-import Link from "next/link";
 import { Phone } from "lucide-react";
 import SupportCallbackModal from "@/components/support/SupportCallbackModal";
 import SupportProtectionTrustCard from "@/components/support/SupportProtectionTrustCard";
@@ -57,28 +56,6 @@ export default function SupportAnswerPanel({
           <p className="max-w-2xl text-[16px] leading-8 text-white/78 sm:text-[17px]">
             {article.answer}
           </p>
-
-          {article.links && article.links.length > 0 ? (
-            <div className="mt-8 max-w-2xl">
-              <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-white/45">
-                Useful links
-              </p>
-              <ul className="mt-3 space-y-2.5">
-                {article.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      target={link.external ? "_blank" : undefined}
-                      rel={link.external ? "noreferrer" : undefined}
-                      className="inline-flex text-[15px] font-medium text-white transition-opacity hover:opacity-80"
-                    >
-                      {link.label} →
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
 
           {related.length > 0 ? (
             <div className="mt-10 max-w-2xl">

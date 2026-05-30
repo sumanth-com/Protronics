@@ -114,9 +114,8 @@ export default function CategoriesDropdown() {
             </div>
 
             <CtaButton
-              href="#shop"
+              href="/shop"
               size="sm"
-              fullWidth
               className="mt-3"
               onClick={() => setOpen(false)}
             >

@@ -101,7 +101,7 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden bg-black">
+    <section id="how" ref={sectionRef} className="relative overflow-hidden bg-black">
       {/* seamless continuation */}
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 

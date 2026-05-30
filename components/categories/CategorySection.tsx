@@ -40,7 +40,7 @@ const categories = [
 
 export default function CategorySection() {
   return (
-    <section className="relative">
+    <section id="shop" className="relative">
       {/* Seamless transition from hero */}
       <div className="pointer-events-none absolute inset-x-0 -top-24 h-24 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
@@ -64,7 +64,7 @@ export default function CategorySection() {
               variants={fadeUp}
               className="text-center text-[28px] font-semibold tracking-tight text-white sm:text-[34px]"
             >
-              Shop Refrigerators
+              Shop By Category
             </motion.h2>
 
             <motion.div

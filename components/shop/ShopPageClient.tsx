@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import ShopEmptyState from "@/components/shop/ShopEmptyState";
 import ShopHero from "@/components/shop/ShopHero";
@@ -28,15 +28,29 @@ const ShopFilterDrawer = dynamic(
 
 type ShopPageProps = {
   initialCategory?: string;
+  initialBrand?: string;
 };
 
-export default function ShopPageClient({ initialCategory }: ShopPageProps) {
+export default function ShopPageClient({
+  initialCategory,
+  initialBrand,
+}: ShopPageProps) {
   const router = useRouter();
-  const [filters, setFilters] = useState<ShopFilterState>(DEFAULT_FILTERS);
+  const [filters, setFilters] = useState<ShopFilterState>(() =>
+    initialBrand
+      ? { ...DEFAULT_FILTERS, brands: [initialBrand] }
+      : DEFAULT_FILTERS,
+  );
   const [sort, setSort] = useState<ShopSortId>("popular");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const categorySlug = initialCategory;
+
+  useEffect(() => {
+    if (initialBrand) {
+      setFilters((prev) => ({ ...prev, brands: [initialBrand] }));
+    }
+  }, [initialBrand]);
 
   const filtered = useMemo(
     () => sortProducts(filterProducts(SHOP_PRODUCTS, categorySlug, filters), sort),

@@ -1,30 +1,34 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { RefreshCw, ShoppingBag } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+import { HandCoins, ShoppingBag } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
+import SearchTrigger from "@/components/search/SearchTrigger";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import Logo from "@/assets/Logo.png";
 
-const CategoriesDropdown = dynamic(
-  () => import("@/components/hero/CategoriesDropdown"),
-  { ssr: false },
-);
-
 const navLinks = [
-  { label: "Why Protronics", href: "/why-protronics" },
   { label: "Support", href: "/support" },
+  { label: "Warranty", href: "/warranty" },
   { label: "About", href: "/about" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
-const navLinkClass =
-  "rounded-lg px-3.5 py-2 text-[13px] font-medium tracking-wide text-white/75 transition-colors hover:bg-white/[0.06] hover:text-white";
+function isNavActive(pathname: string, href: string) {
+  if (href === "/support") {
+    return pathname === "/support" || pathname.startsWith("/support/");
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export default function HeroNavbar() {
+  const pathname = usePathname();
+
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div
@@ -70,20 +74,46 @@ export default function HeroNavbar() {
             className="hidden flex-1 items-center justify-center gap-0.5 lg:flex"
             aria-label="Main navigation"
           >
-            <CategoriesDropdown />
-            {navLinks.map((l) => (
-              <Link key={l.label} href={l.href} prefetch className={navLinkClass}>
-                {l.label}
-              </Link>
-            ))}
+            <SearchTrigger />
+            {navLinks.map((l) => {
+              const active = isNavActive(pathname, l.href);
+              return (
+                <Link
+                  key={l.label}
+                  href={l.href}
+                  prefetch
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "relative rounded-lg px-3.5 py-2 text-[13px] font-medium tracking-wide transition-colors duration-200",
+                    active
+                      ? "text-white"
+                      : "text-white/75 hover:bg-white/[0.06] hover:text-white",
+                  )}
+                >
+                  {l.label}
+                  {active ? (
+                    <motion.span
+                      layoutId="navbar-active-line"
+                      className="absolute inset-x-2.5 -bottom-0.5 h-0.5 rounded-full bg-white"
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 32,
+                      }}
+                    />
+                  ) : null}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* CTAs */}
           <div className="ml-auto flex items-center gap-2.5 sm:gap-3 lg:ml-0">
+            <SearchTrigger className="lg:hidden" />
             <CtaButton href="/trade-in" size="sm" className="shrink-0">
-              <RefreshCw className="h-4 w-4 text-black/80" />
-              <span className="hidden sm:inline">Trade-In & Upgrade</span>
-              <span className="sm:hidden">Trade-In</span>
+              <HandCoins className="h-4 w-4 text-black/80" />
+              <span className="hidden sm:inline">Trade-In</span>
+              <span className="sm:hidden">Sell</span>
             </CtaButton>
 
             <CtaButton href="/shop" size="sm" className="shrink-0">

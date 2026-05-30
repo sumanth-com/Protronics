@@ -16,7 +16,7 @@ export const whyGlass = [
 ].join(" ");
 
 export const WHY_LINKS = {
-  shop: "/#shop",
+  shop: "/shop",
   whatsapp: BUSINESS.whatsappMessage,
   contact: "/contact",
 } as const;

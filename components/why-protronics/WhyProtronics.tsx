@@ -104,12 +104,12 @@ export default function WhyProtronics() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-black">
+    <section id="why" className="relative overflow-hidden bg-black">
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1))]" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 pt-14 pb-16 sm:px-6 sm:pt-16 sm:pb-20">
         <SectionHeading
-          eyebrow="Why Buy From Protronics?"
+          eyebrow="Why Customers Choose Us"
           title="Engineered for Trust."
           description="Rigorously restored appliances with premium standards—designed to remove doubt and make refurbished feel first‑class."
         />

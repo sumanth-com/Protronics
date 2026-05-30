@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export type FooterBottomProps = {
@@ -19,12 +20,12 @@ export default function FooterBottom({ className }: FooterBottomProps) {
         © {new Date().getFullYear()} Protronics. All rights reserved.
       </div>
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] text-white/55">
-        <a href="#privacy" className="transition-colors hover:text-white/80">
+        <Link href="/contact" prefetch className="transition-colors hover:text-white/80">
           Privacy Policy
-        </a>
-        <a href="#terms" className="transition-colors hover:text-white/80">
+        </Link>
+        <Link href="/contact" prefetch className="transition-colors hover:text-white/80">
           Terms
-        </a>
+        </Link>
         <span className="text-white/35">Designed by Protronics</span>
       </div>
     </div>

@@ -104,7 +104,11 @@ export function getProductById(id: string): ProductDetail | null {
   return enrichProductDetail(base);
 }
 
-export function getAllProductIds() {
+export function getProductBySlug(slug: string): ProductDetail | null {
+  return getProductById(slug);
+}
+
+export function getAllProductSlugs() {
   return SHOP_PRODUCTS.map((p) => p.id);
 }
 
@@ -124,7 +128,7 @@ export function getRelatedProducts(productId: string, limit = 4): ShopProduct[] 
 }
 
 export function buildProductPath(id: string) {
-  return `/shop/product/${id}`;
+  return `/product/${id}`;
 }
 
 export function getWhatsAppInquiryLink(productName: string, productId: string) {
@@ -173,14 +177,16 @@ export function getProductJsonLd(product: ProductDetail) {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
+    sku: product.id,
     brand: { "@type": "Brand", name: product.brand },
     description: product.description,
-    image: product.images[0],
+    image: product.images,
     offers: {
       "@type": "Offer",
       price: product.price,
       priceCurrency: "INR",
       availability: "https://schema.org/InStock",
+      url: `${process.env.NEXT_PUBLIC_SITE_URL ?? "https://protronics.in"}/product/${product.id}`,
       seller: { "@type": "Organization", name: "Protronics" },
     },
   };
