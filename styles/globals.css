@@ -2702,9 +2702,11 @@ html.lenis body {
   flex-shrink: 0;
 }
 
-.mobile-nav-toggle--open {
+.mobile-nav-toggle--open,
+.mobile-nav-about--active {
   border-color: color-mix(in srgb, var(--theme-accent) 40%, var(--theme-border));
   background: color-mix(in srgb, var(--theme-accent) 8%, var(--theme-input-bg));
+  color: var(--theme-accent);
 }
 
 .mobile-nav-toggle-icon {
@@ -2991,7 +2993,7 @@ table {
 @media (max-width: 1023px) {
   :root {
     --navbar-offset: 7.25rem;
-    --mobile-bottom-nav-height: 3.75rem;
+    --mobile-bottom-nav-height: 4.125rem;
   }
 
   @media (min-width: 480px) {
@@ -3060,21 +3062,22 @@ table {
     position: fixed;
     inset-inline: 0;
     bottom: 0;
-    z-index: 90;
+    z-index: 100;
+    isolation: isolate;
     border-top: 1px solid var(--theme-border);
-    background: color-mix(in srgb, var(--theme-bg) 94%, transparent);
+    background: var(--theme-bg);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.06);
     padding-bottom: env(safe-area-inset-bottom, 0px);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
   }
 
   .mobile-bottom-nav-list {
     display: flex;
     margin: 0;
-    padding: 0.25rem 0.375rem;
+    padding: 0.5rem 0.375rem 0.125rem;
     list-style: none;
-    align-items: stretch;
+    align-items: flex-end;
     justify-content: space-around;
+    min-height: var(--mobile-bottom-nav-height);
   }
 
   .mobile-bottom-nav-item {
@@ -3082,10 +3085,10 @@ table {
     flex: 1;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.2rem;
-    min-height: var(--mobile-bottom-nav-height);
-    padding: 0.35rem 0.25rem;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    min-height: calc(var(--mobile-bottom-nav-height) - 0.375rem);
+    padding: 0.125rem 0.25rem 0.2rem;
     border: none;
     background: transparent;
     font-size: 0.625rem;

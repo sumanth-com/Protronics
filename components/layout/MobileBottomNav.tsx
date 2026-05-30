@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Headset,
+  HandCoins,
   Home,
+  LifeBuoy,
   Phone,
-  RefreshCw,
-  ShoppingBag,
+  Store,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -17,21 +17,21 @@ const tabs = [
     id: "shop",
     label: "Shop",
     href: "/shop",
-    icon: ShoppingBag,
+    icon: Store,
     match: (p: string) => p.startsWith("/shop"),
   },
   {
     id: "trade-in",
-    label: "Trade In",
+    label: "Sell",
     href: "/trade-in",
-    icon: RefreshCw,
+    icon: HandCoins,
     match: (p: string) => p === "/trade-in" || p.startsWith("/trade-in/"),
   },
   {
     id: "support",
     label: "Support",
     href: "/support",
-    icon: Headset,
+    icon: LifeBuoy,
     match: (p: string) => p === "/support" || p.startsWith("/support/"),
   },
   {

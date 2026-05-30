@@ -4,11 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { ShoppingBag, Tags } from "lucide-react";
+import { Building2, ShoppingBag, Tags } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import NavCtaIcon from "@/components/ui/NavCtaIcon";
 import SearchTrigger from "@/components/search/SearchTrigger";
-import MobileNav from "@/components/layout/MobileNav";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
@@ -41,7 +40,7 @@ export default function HeroNavbar() {
       >
         <div className="navbar-glass-gradient pointer-events-none absolute inset-x-0 top-0 h-12" />
 
-        {/* Row 1 — logo, theme, menu (mobile) / full desktop bar */}
+        {/* Row 1 — logo, theme, about (mobile) / full desktop bar */}
         <div
           className={cn(
             "navbar-inner relative mx-auto flex w-full max-w-[1520px] items-center",
@@ -128,7 +127,18 @@ export default function HeroNavbar() {
 
           <div className="mobile-nav-actions ml-auto flex shrink-0 items-center gap-2 min-[375px]:gap-2.5 lg:hidden">
             <ThemeToggle className="theme-rocker--nav-compact" />
-            <MobileNav />
+            <Link
+              href="/about"
+              prefetch
+              className={cn(
+                "nav-icon-btn mobile-nav-about",
+                isNavActive(pathname, "/about") && "mobile-nav-about--active",
+              )}
+              aria-label="About Protronics"
+              aria-current={isNavActive(pathname, "/about") ? "page" : undefined}
+            >
+              <Building2 className="h-[18px] w-[18px]" strokeWidth={2.25} aria-hidden />
+            </Link>
           </div>
 
           <div className="navbar-actions hidden items-center lg:ml-0 lg:flex">
