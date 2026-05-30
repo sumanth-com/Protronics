@@ -76,8 +76,10 @@ export default function MobileNav() {
   const close = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
-    close();
-  }, [pathname, close]);
+    const onPopState = () => close();
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [close]);
 
   useEffect(() => {
     if (!open) return;
