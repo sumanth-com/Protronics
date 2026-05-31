@@ -6,6 +6,7 @@ import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import AppProviders from "@/components/providers/AppProviders";
 import Footer from "@/components/footer/Footer";
 import { THEME_BLOCKING_SCRIPT } from "@/lib/theme";
+import { SPLASH_BLOCKING_SCRIPT } from "@/lib/splash";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
@@ -68,6 +69,7 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_BLOCKING_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: SPLASH_BLOCKING_SCRIPT }} />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-theme-bg text-theme-fg overflow-x-hidden has-mobile-bottom-nav">
         <GoogleAnalytics />

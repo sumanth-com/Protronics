@@ -32,6 +32,9 @@ const MobileTestimonialsMarquee = dynamic(
 const MobileWarrantySection = dynamic(
   () => import("@/components/mobile/MobileWarrantySection"),
 );
+const MobileWhyChooseSection = dynamic(
+  () => import("@/components/mobile/MobileWhyChooseSection"),
+);
 
 export const metadata: Metadata = {
   title: `${SITE_NAME} | Premium Refurbished Refrigerators & Appliances`,
@@ -97,6 +100,10 @@ export default function Home() {
 
           <DeferredMount minHeight="520px" className="mobile-home-order-warranty">
             <MobileWarrantySection />
+          </DeferredMount>
+
+          <DeferredMount minHeight="420px" className="mobile-home-order-why-choose">
+            <MobileWhyChooseSection />
           </DeferredMount>
 
           <DeferredMount minHeight="280px" className="mobile-home-order-testimonials">

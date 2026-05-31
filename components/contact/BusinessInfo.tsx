@@ -17,8 +17,10 @@ import { cn } from "@/lib/utils";
 const items = [
   {
     icon: MapPin,
-    label: "Business Address",
+    label: "Location",
     value: BUSINESS.address,
+    href: BUSINESS.mapDirectionsUrl,
+    external: true,
   },
   {
     icon: Phone,
@@ -98,7 +100,12 @@ export default function BusinessInfo() {
                   className={cn(contactGlass, "p-5 transition-colors hover:border-white/18")}
                 >
                   {"href" in item && item.href ? (
-                    <a href={item.href} className="block transition-opacity hover:opacity-90">
+                    <a
+                      href={item.href}
+                      target={"external" in item && item.external ? "_blank" : undefined}
+                      rel={"external" in item && item.external ? "noreferrer" : undefined}
+                      className="block transition-opacity hover:opacity-90"
+                    >
                       {content}
                     </a>
                   ) : (

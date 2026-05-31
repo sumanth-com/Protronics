@@ -7,11 +7,11 @@ export const BUSINESS = {
   whatsappMessage:
     "https://wa.me/919000000000?text=Hi%20Protronics%2C%20I%27d%20like%20help%20choosing%20a%20refurbished%20refrigerator.",
   whatsappChannel: "https://whatsapp.com/channel/0029VaExampleChannelId",
-  address: "Protronics Experience Hub, Indiranagar, Bengaluru, Karnataka 560038",
+  address: "Bangalore",
   mapEmbedUrl:
-    "https://maps.google.com/maps?q=Indiranagar%2C+Bengaluru%2C+Karnataka&hl=en&z=14&output=embed",
+    "https://maps.google.com/maps?q=Bengaluru%2C+Karnataka&hl=en&z=11&output=embed",
   mapDirectionsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Indiranagar+Bengaluru+Karnataka",
+    "https://www.google.com/maps/search/?api=1&query=Bengaluru+Karnataka",
   hours: "Mon–Sat · 10:00 AM – 7:00 PM",
   serviceAreas: "Bengaluru, Whitefield, Electronic City, Mysore Road & surrounding districts",
   delivery: "Metro Bengaluru + select tier‑2 cities with white‑glove setup",

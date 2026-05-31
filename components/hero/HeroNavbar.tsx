@@ -125,8 +125,8 @@ export default function HeroNavbar() {
             </div>
           </nav>
 
-          <div className="mobile-nav-actions ml-auto flex shrink-0 items-center gap-2 min-[375px]:gap-2.5 lg:hidden">
-            <ThemeToggle className="theme-rocker--nav-compact" />
+          <div className="mobile-nav-actions ml-auto flex shrink-0 items-center min-[375px]:gap-2 lg:hidden">
+            <ThemeToggle />
             <Link
               href="/about"
               prefetch

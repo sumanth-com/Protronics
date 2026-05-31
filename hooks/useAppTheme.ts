@@ -1,29 +1,36 @@
 "use client";
 
 import { useCallback } from "react";
+import { flushSync } from "react-dom";
 import { useTheme as useNextTheme } from "next-themes";
-
-function pulseThemeTransition() {
-  const root = document.documentElement;
-  root.classList.add("theme-transition");
-  window.setTimeout(() => root.classList.remove("theme-transition"), 450);
-}
+import {
+  runThemeSpreadTransition,
+  type ThemeTransitionOrigin,
+} from "@/lib/theme-transition";
 
 export function useAppTheme() {
   const { theme, setTheme, resolvedTheme, systemTheme } = useNextTheme();
 
-  const toggleTheme = useCallback(() => {
-    const current = resolvedTheme === "light" ? "light" : "dark";
-    setTheme(current === "light" ? "dark" : "light");
-    pulseThemeTransition();
-  }, [resolvedTheme, setTheme]);
+  const toggleTheme = useCallback(
+    (origin?: ThemeTransitionOrigin) => {
+      const current = resolvedTheme === "light" ? "light" : "dark";
+      const next = current === "light" ? "dark" : "light";
+      runThemeSpreadTransition(next, () => flushSync(() => setTheme(next)), origin);
+    },
+    [resolvedTheme, setTheme],
+  );
 
   const setPreference = useCallback(
     (pref: "light" | "dark" | "system") => {
-      setTheme(pref);
-      pulseThemeTransition();
+      if (pref === "system") {
+        setTheme("system");
+        return;
+      }
+      const current = resolvedTheme === "light" ? "light" : "dark";
+      if (pref === current) return;
+      runThemeSpreadTransition(pref, () => flushSync(() => setTheme(pref)));
     },
-    [setTheme],
+    [resolvedTheme, setTheme],
   );
 
   return {

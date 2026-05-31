@@ -35,7 +35,7 @@ export default function FeaturedProducts() {
 
   const mobileProducts = useMemo(
     () =>
-      products.map((p, i) => ({
+      products.slice(0, 4).map((p, i) => ({
         ...p,
         warranty: "1Y Warranty",
         rating: 4.8 - (i % 3) * 0.1,
@@ -48,22 +48,22 @@ export default function FeaturedProducts() {
       <div className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-[linear-gradient(to_bottom,rgba(0,0,0,0),rgba(0,0,0,1)))] lg:block" />
 
       {/* Mobile marketplace section */}
-      <div className="mobile-section lg:hidden">
-        <div className="mobile-section-head">
+      <div className="mobile-section mobile-featured-section lg:hidden">
+        <div className="mobile-section-head mobile-featured-head">
           <div>
             <p className="mobile-section-eyebrow">Featured</p>
             <h2 className="mobile-section-title">Top picks for you</h2>
           </div>
-          <Link href="/shop" prefetch className="mobile-section-link">
-            View all
-            <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.25} />
-          </Link>
         </div>
         <div className="mobile-product-grid mt-3">
           {mobileProducts.map((p) => (
             <MarketplaceProductCard key={p.name} product={p} />
           ))}
         </div>
+        <Link href="/shop" prefetch className="mobile-featured-see-more">
+          See more
+          <ArrowRight className="h-4 w-4" strokeWidth={2.25} />
+        </Link>
       </div>
 
       {/* Desktop — unchanged */}

@@ -13,10 +13,15 @@ const CompareShell = dynamic(() => import("@/components/compare/CompareShell"), 
   ssr: false,
 });
 
+const SplashScreen = dynamic(() => import("@/components/splash/SplashScreen"), {
+  ssr: false,
+});
+
 export default function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider>
       <MotionProvider>
+        <SplashScreen />
         <SmoothScroll>
           <FormEndpointInit />
           <NavigationProgress />
