@@ -5,6 +5,14 @@ import Lenis from "lenis";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { LenisContext } from "@/hooks/useLenis";
 
+function isMobileScroll() {
+  if (typeof window === "undefined") return false;
+  return (
+    window.matchMedia("(max-width: 1023px)").matches ||
+    window.matchMedia("(pointer: coarse)").matches
+  );
+}
+
 export default function SmoothScroll({
   children,
 }: {
@@ -33,15 +41,20 @@ export default function SmoothScroll({
 
       gsap.registerPlugin(ScrollTrigger);
 
-      const mobileScroll =
-        window.matchMedia("(max-width: 1023px)").matches ||
-        window.matchMedia("(pointer: coarse)").matches;
+      const mobileScroll = isMobileScroll();
+
+      if (mobileScroll) {
+        refreshListener = () => undefined;
+        ScrollTrigger.refresh();
+        setLenis(null);
+        return;
+      }
 
       instance = new Lenis({
-        lerp: mobileScroll ? 1 : 0.12,
+        lerp: 0.12,
         wheelMultiplier: 0.9,
-        touchMultiplier: mobileScroll ? 1.2 : 1,
-        smoothWheel: !mobileScroll,
+        touchMultiplier: 1,
+        smoothWheel: true,
         syncTouch: false,
         autoRaf: true,
       });
@@ -88,8 +101,10 @@ export default function SmoothScroll({
         ScrollTrigger.clearScrollMemory?.();
       });
 
-      instance?.destroy();
-      instance = null;
+      if (instance) {
+        instance.destroy();
+        instance = null;
+      }
     };
   }, [reducedMotion]);
 

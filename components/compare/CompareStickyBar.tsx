@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 import { ArrowUpRight, Scale, X } from "lucide-react";
 import { useCompare } from "@/hooks/useProductStore";
 import { getCompareProducts, shortProductLabel } from "@/lib/compare";
@@ -12,6 +13,19 @@ export default function CompareStickyBar() {
   const pathname = usePathname();
   const { ids, count, remove, clear } = useCompare();
   const products = getCompareProducts(ids);
+  const isProductPage = pathname.startsWith("/product/");
+
+  useEffect(() => {
+    if (!isProductPage) return;
+    if (count > 0) {
+      document.body.classList.add("has-compare-sticky");
+    } else {
+      document.body.classList.remove("has-compare-sticky");
+    }
+    return () => {
+      document.body.classList.remove("has-compare-sticky");
+    };
+  }, [count, isProductPage]);
 
   if (pathname === "/compare") return null;
 
@@ -22,8 +36,13 @@ export default function CompareStickyBar() {
           initial={{ opacity: 0, y: 48 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 32 }}
-          transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-x-0 bottom-0 z-[55] px-3 pb-3 pt-2 sm:bottom-6 sm:px-4 sm:pb-0"
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className={cn(
+            "fixed inset-x-0 z-[85] px-3 pb-2 pt-2 sm:bottom-6 sm:px-4 sm:pb-0",
+            isProductPage
+              ? "bottom-[calc(var(--product-sticky-bar-height)+env(safe-area-inset-bottom,0px))] sm:bottom-6"
+              : "bottom-[calc(var(--mobile-bottom-nav-height)+env(safe-area-inset-bottom,0px))] lg:bottom-6",
+          )}
         >
           <div
             className={cn(
@@ -49,7 +68,7 @@ export default function CompareStickyBar() {
                     <button
                       type="button"
                       onClick={() => remove(p.id)}
-                      className="compare-sticky-chip-remove transition-colors"
+                      className="compare-sticky-chip-remove transition-colors touch-manipulation"
                       aria-label={`Remove ${p.name}`}
                     >
                       <X className="h-3 w-3" />
@@ -63,13 +82,13 @@ export default function CompareStickyBar() {
               <button
                 type="button"
                 onClick={clear}
-                className="compare-sticky-clear rounded-full px-3 py-2 text-[12px] font-medium transition-colors"
+                className="compare-sticky-clear rounded-full px-3 py-2 text-[12px] font-medium transition-colors touch-manipulation"
               >
                 Clear
               </button>
               <Link
                 href="/compare"
-                className="compare-btn-primary inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-2.5 text-[13px] font-semibold"
+                className="compare-btn-primary inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-2.5 text-[13px] font-semibold touch-manipulation"
               >
                 Compare Now
                 <ArrowUpRight className="h-4 w-4" />

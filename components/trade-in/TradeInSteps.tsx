@@ -12,7 +12,7 @@ export default function TradeInSteps() {
   const listMotion = useTradeInListMotion();
 
   return (
-    <section id="how-it-works" className="relative bg-black py-14 sm:py-20">
+    <section id="how-it-works" className="relative border-b border-theme-border bg-theme-bg py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <TradeInReveal>
           <TradeInSectionHeader
@@ -40,12 +40,12 @@ export default function TradeInSteps() {
               )}
             >
               <span
-                className="trade-in-timeline-line absolute left-[18px] top-10 bottom-0 w-px bg-white/15 lg:hidden"
+                className="trade-in-timeline-line absolute left-[18px] top-10 bottom-0 w-px bg-theme-border lg:hidden"
                 aria-hidden
               />
               {index < TRADE_IN_STEPS.length - 1 ? (
                 <span
-                  className="trade-in-timeline-line-lg pointer-events-none absolute top-6 left-[calc(50%+28px)] hidden h-px w-[calc(100%-56px)] bg-white/15 lg:block"
+                  className="trade-in-timeline-line-lg pointer-events-none absolute top-6 left-[calc(50%+28px)] hidden h-px w-[calc(100%-56px)] bg-theme-border lg:block"
                   aria-hidden
                 />
               ) : null}
@@ -53,7 +53,7 @@ export default function TradeInSteps() {
               <div
                 className={cn(
                   "absolute left-0 top-0 flex h-9 w-9 items-center justify-center rounded-full",
-                  "border border-white/20 bg-white/[0.06] text-[13px] font-bold text-white",
+                  "border border-theme-border bg-theme-surface-card text-[13px] font-bold text-theme-fg",
                   "lg:relative lg:mx-auto lg:mb-4",
                 )}
               >
@@ -61,10 +61,10 @@ export default function TradeInSteps() {
               </div>
 
               <div className="lg:text-center">
-                <h3 className="text-[15px] font-semibold text-white sm:text-[16px]">
+                <h3 className="text-[15px] font-semibold text-theme-fg sm:text-[16px]">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-[13px] leading-6 text-white/60">
+                <p className="mt-2 text-[13px] leading-6 text-theme-fg-muted">
                   {item.description}
                 </p>
               </div>

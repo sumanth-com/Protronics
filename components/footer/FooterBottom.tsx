@@ -17,7 +17,7 @@ export default function FooterBottom({ className }: FooterBottomProps) {
         className,
       )}
     >
-      <div className="footer-bottom-copy text-[12px] text-white/55">
+      <div className="footer-bottom-copy text-[12px] text-theme-fg-muted">
         © {new Date().getFullYear()} Protronics. All rights reserved.
       </div>
       <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px]">
@@ -26,7 +26,7 @@ export default function FooterBottom({ className }: FooterBottomProps) {
             {l.label}
           </Link>
         ))}
-        <span className="footer-bottom-copy text-white/35">Designed by Protronics</span>
+        <span className="footer-bottom-copy text-theme-fg-faint">Designed by Protronics</span>
       </div>
     </div>
   );

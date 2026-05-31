@@ -74,7 +74,7 @@ export default function RootLayout({
         <AppProviders>
           <HeroNavbar />
           <div className="navbar-spacer" aria-hidden />
-          {children}
+          <div className="site-main flex flex-1 flex-col">{children}</div>
           <Footer />
           <MobileBottomNav />
         </AppProviders>

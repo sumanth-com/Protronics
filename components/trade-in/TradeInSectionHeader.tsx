@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useMobileLiteMotion } from "@/hooks/useMobileLiteMotion";
 import { cn } from "@/lib/utils";
 
 type TradeInSectionHeaderProps = {
@@ -27,15 +25,15 @@ export default function TradeInSectionHeader({
       )}
     >
       {eyebrow ? (
-        <p className="text-[12px] font-medium tracking-[0.22em] text-white/50">
+        <p className="text-[12px] font-medium tracking-[0.22em] text-theme-fg-faint">
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="mt-2 text-[28px] font-semibold tracking-tight text-white sm:text-[34px]">
+      <h2 className="mt-2 text-[26px] font-semibold tracking-tight text-theme-fg sm:text-[34px]">
         {title}
       </h2>
       {description ? (
-        <p className="mt-3 text-[14px] leading-7 text-white/65 sm:text-[15px]">
+        <p className="mt-3 text-[14px] leading-7 text-theme-fg-muted sm:text-[15px]">
           {description}
         </p>
       ) : null}
@@ -52,27 +50,10 @@ export default function TradeInSectionHeader({
 export function TradeInReveal({
   children,
   className,
-  delay = 0,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
 }) {
-  const lite = useMobileLiteMotion();
-
-  if (lite) {
-    return <div className={className}>{children}</div>;
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px 0px -8% 0px" }}
-      transition={{ duration: 0.4, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className={className}>{children}</div>;
 }

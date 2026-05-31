@@ -3,33 +3,50 @@ import {
   AirVent,
   CircleDollarSign,
   ClipboardCheck,
+  Clock,
   Leaf,
   Microwave,
+  Package,
   Refrigerator,
   ShieldCheck,
+  Sparkles,
   Truck,
   WashingMachine,
+  Zap,
 } from "lucide-react";
 import { BUSINESS } from "@/lib/contact";
 
+export const SELL_PAGE_PATH = "/sell" as const;
+
 export const tradeInGlass = [
-  "rounded-3xl border border-white/12 bg-black",
-  "shadow-[0_30px_100px_rgba(0,0,0,0.55)]",
+  "rounded-2xl border border-theme-border bg-theme-surface-card",
+  "shadow-theme-sm",
 ].join(" ");
 
+export const tradeInSection = "bg-theme-bg text-theme-fg";
+
 export const TRADE_IN_LINKS = {
-  valuation: "#trade-in-form",
+  valuation: "#sell-form",
   estimator: "#estimator",
   whatsapp: BUSINESS.whatsappMessage,
   shop: "/shop",
 } as const;
+
+export const TRADE_IN_TRUST_STATS = [
+  { label: "500+ Trade-Ins Completed", icon: Sparkles },
+  { label: "Free Evaluation", icon: ClipboardCheck },
+  { label: "Fair Market Pricing", icon: CircleDollarSign },
+  { label: "Pickup Assistance", icon: Truck },
+  { label: "Fast Response", icon: Clock },
+] as const;
 
 export type ApplianceTypeId =
   | "refrigerator"
   | "washing-machine"
   | "air-conditioner"
   | "microwave"
-  | "dishwasher";
+  | "dishwasher"
+  | "small-appliance";
 
 export type ApplianceCategory = {
   id: ApplianceTypeId;
@@ -75,6 +92,13 @@ export const APPLIANCE_CATEGORIES: ApplianceCategory[] = [
     baseValue: 7000,
     image: "/featured/featured-5.jpg",
   },
+  {
+    id: "small-appliance",
+    label: "Small Appliances",
+    icon: Package,
+    baseValue: 1800,
+    image: "/featured/featured-2.jpg",
+  },
 ];
 
 export const ACCEPTED_BRANDS = [
@@ -110,6 +134,16 @@ export const WORKING_STATUS_OPTIONS = [
   "Not working",
 ] as const;
 
+export const LOCATION_OPTIONS = [
+  "Bengaluru",
+  "Hyderabad",
+  "Chennai",
+  "Mumbai",
+  "Pune",
+  "Other",
+] as const;
+
+export type LocationOption = (typeof LOCATION_OPTIONS)[number];
 export type AgeOption = (typeof AGE_OPTIONS)[number];
 export type ConditionOption = (typeof CONDITION_OPTIONS)[number];
 export type WorkingStatusOption = (typeof WORKING_STATUS_OPTIONS)[number];
@@ -182,51 +216,61 @@ export function formatInrRange(low: number, high: number) {
 export const TRADE_IN_STEPS = [
   {
     step: 1,
-    title: "Share Appliance Details",
-    description: "Tell us the brand, model, age, condition, and working status.",
+    title: "Submit Appliance Details",
+    description: "Share brand, model, age, and condition—takes under two minutes.",
   },
   {
     step: 2,
-    title: "Get Estimated Value",
-    description: "See an instant indicative range—final value confirmed after inspection.",
+    title: "Receive Estimated Value",
+    description: "Get an instant trade-in range online, then a detailed offer from our team.",
   },
   {
     step: 3,
-    title: "Schedule Inspection",
-    description: "We arrange a convenient doorstep evaluation at no extra hassle.",
+    title: "Schedule Verification",
+    description: "Book a convenient doorstep check—free, with no obligation.",
   },
   {
     step: 4,
-    title: "Upgrade & Save",
-    description: "Apply trade-in credit toward a premium refurbished Protronics appliance.",
+    title: "Get Paid or Upgrade",
+    description: "Accept cash value or apply credit toward a premium Protronics appliance.",
   },
 ] as const;
 
 export const TRADE_IN_BENEFITS = [
   {
     icon: CircleDollarSign,
-    title: "Get Better Value",
-    description: "Fair market-aligned offers—not scrap-yard pricing.",
+    title: "Fair Pricing",
+    description: "Market-aligned valuations—not scrap-yard quotes.",
   },
   {
-    icon: ClipboardCheck,
-    title: "Free Evaluation",
-    description: "Professional assessment with zero obligation to trade.",
-  },
-  {
-    icon: Truck,
-    title: "Hassle-Free Pickup",
-    description: "Doorstep collection handled carefully by our team.",
+    icon: Zap,
+    title: "Fast Response",
+    description: "Team replies within hours on WhatsApp and phone.",
   },
   {
     icon: ShieldCheck,
-    title: "Upgrade Affordably",
-    description: "Apply trade-in credit toward certified renewed appliances.",
+    title: "Trusted Process",
+    description: "Transparent steps from estimate to pickup or upgrade.",
+  },
+  {
+    icon: Sparkles,
+    title: "Upgrade Options",
+    description: "Apply trade-in credit toward certified refurbished stock.",
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Easy Evaluation",
+    description: "Upload photos online—no dealer visits required to start.",
   },
   {
     icon: Leaf,
-    title: "Eco-Friendly Disposal",
-    description: "Responsible recycling when your old unit reaches end of life.",
+    title: "Safe Handling",
+    description: "Responsible recycling when units reach end of life.",
+  },
+  {
+    icon: Truck,
+    title: "Professional Pickup",
+    description: "Doorstep collection handled carefully by our crew.",
   },
 ] as const;
 
@@ -235,58 +279,53 @@ export const TRADE_IN_WHY = TRADE_IN_BENEFITS;
 
 export const TRADE_IN_STORIES = [
   {
+    appliance: "LG Refrigerator",
+    soldFor: "₹7,500",
+    outcome: "Upgraded to Double Door Model",
     name: "Priya M.",
     location: "Indiranagar, Bengaluru",
-    traded: "Old LG single-door refrigerator",
-    saved: "₹8,000",
-    outcome: "Upgraded to a certified double-door Samsung—same-day guidance on WhatsApp.",
   },
   {
+    appliance: "Samsung Refrigerator",
+    soldFor: "₹5,000",
+    outcome: "Used trade-in credit toward upgrade",
     name: "Rahul K.",
-    location: "Whitefield",
-    traded: "Samsung 280L fridge",
-    saved: "₹6,500",
-    outcome: "Traded in and picked up a premium LG unit with 1-year warranty included.",
+    location: "Whitefield, Bengaluru",
   },
   {
+    appliance: "Whirlpool Single Door",
+    soldFor: "₹4,200",
+    outcome: "Non-working unit still received fair value after verification",
     name: "Anita S.",
-    location: "Electronic City",
-    traded: "8-year Whirlpool refrigerator",
-    saved: "₹4,200",
-    outcome: "Non-working unit still received fair credit after inspection.",
+    location: "Electronic City, Bengaluru",
   },
 ] as const;
 
 export const TRADE_IN_FAQS = [
   {
-    question: "How is trade-in value calculated?",
+    question: "How is value calculated?",
     answer:
-      "We combine appliance category, brand, age, cosmetic condition, and working status with current market demand. You see an instant indicative range online; the final offer is confirmed after physical inspection.",
+      "We combine appliance type, brand, age, condition, and working status with current market demand. You see an instant range online; the final offer is confirmed after verification.",
   },
   {
-    question: "Do you collect old appliances?",
+    question: "Do you provide pickup?",
     answer:
-      "Yes. Once you accept the offer, we schedule hassle-free pickup in serviceable areas. Our team handles safe removal so you do not need classified ads or scrap dealers.",
+      "Yes. Once you accept the offer, we schedule hassle-free pickup in serviceable areas. Our team handles safe removal.",
   },
   {
-    question: "Can non-working appliances be traded?",
+    question: "Can I sell without buying?",
     answer:
-      "Often yes. Non-working units may receive a lower offer, but many refrigerators and appliances still hold parts and recovery value. Share photos and details—we will advise honestly.",
+      "Yes. You can sell outright for cash value. Trade-in credit toward a Protronics upgrade is optional—not required.",
+  },
+  {
+    question: "Can I trade non-working appliances?",
+    answer:
+      "Often yes. Non-working units may receive a lower offer, but many still hold recovery value. Share photos and we will advise honestly.",
   },
   {
     question: "How long does evaluation take?",
     answer:
-      "Online estimates are instant. After you submit the form, our team typically responds within a few business hours. Doorstep inspection slots are usually available within 24–48 hours in Bengaluru metro.",
-  },
-  {
-    question: "Can I trade without buying?",
-    answer:
-      "Trade-in credit is designed to offset your upgrade to a Protronics refurbished appliance. If you only want to sell outright, contact us on WhatsApp—we will suggest the best option.",
-  },
-  {
-    question: "Do I need the original bill?",
-    answer:
-      "Original purchase proof helps but is not always required. Model label photos, age, and condition photos are usually enough for a fair preliminary valuation.",
+      "Online estimates are instant. After you submit the form, our team typically responds within a few business hours.",
   },
 ] as const;
 
@@ -302,10 +341,10 @@ export const tradeInPageJsonLd = {
   "@graph": [
     {
       "@type": "WebPage",
-      name: "Trade-In Old Appliances | Protronics",
+      name: "Sell Old Appliances | Trade-In Program | Protronics",
       description:
-        "Exchange your old refrigerator or appliance and upgrade to professionally restored premium appliances with Protronics Trade-In.",
-      url: "https://protronics.in/trade-in",
+        "Trade in or sell your old refrigerator and appliances. Get a fair valuation, upgrade affordably, and enjoy a hassle-free experience with Protronics.",
+      url: "https://protronics.in/sell",
     },
     {
       "@type": "FAQPage",

@@ -66,7 +66,7 @@ export default function ShopPageClient({
   }, [handleCategoryChange]);
 
   return (
-    <main className="shop-page theme-section-a min-h-screen bg-black text-white">
+    <main className="shop-page theme-section-a flex-1 bg-theme-bg text-theme-fg">
       <ShopHero productCount={SHOP_PRODUCTS.length} categoryCount={5} />
 
       <ShopStickyFilterBar

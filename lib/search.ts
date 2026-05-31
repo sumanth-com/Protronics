@@ -24,7 +24,7 @@ const STATIC_PAGES: SearchResult[] = [
   { id: "contact", type: "page", title: "Contact", href: "/contact" },
   { id: "compare", type: "page", title: "Compare Products", href: "/compare" },
   { id: "best-deals", type: "page", title: "Best Deals", href: "/best-deals" },
-  { id: "trade-in", type: "page", title: "Sell", href: "/trade-in" },
+  { id: "sell", type: "page", title: "Sell", href: "/sell" },
 ];
 
 function productResults(): SearchResult[] {

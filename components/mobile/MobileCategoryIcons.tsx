@@ -2,14 +2,11 @@
 
 import Link from "next/link";
 import {
-  AirVent,
   Box,
   Building2,
   DoorClosed,
   DoorOpen,
   Refrigerator,
-  Shirt,
-  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -19,9 +16,6 @@ const categories = [
   { label: "Single Door", href: "/shop/single-door", icon: DoorClosed },
   { label: "Mini Fridges", href: "/shop/mini-fridges", icon: Box },
   { label: "Commercial", href: "/shop/commercial", icon: Building2 },
-  { label: "Washing", href: "/shop", icon: Shirt },
-  { label: "ACs", href: "/shop", icon: AirVent },
-  { label: "Appliances", href: "/shop", icon: Sparkles },
 ] as const;
 
 export default function MobileCategoryIcons({ className }: { className?: string }) {

@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  HandCoins,
   Home,
   LifeBuoy,
   Phone,
   Store,
-  Tag,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,11 +21,11 @@ const tabs = [
     match: (p: string) => p.startsWith("/shop"),
   },
   {
-    id: "trade-in",
+    id: "sell",
     label: "Sell",
-    href: "/trade-in",
-    icon: Tag,
-    match: (p: string) => p === "/trade-in" || p.startsWith("/trade-in/"),
+    href: "/sell",
+    icon: HandCoins,
+    match: (p: string) => p === "/sell" || p.startsWith("/sell/"),
   },
   {
     id: "support",
@@ -45,6 +45,8 @@ const tabs = [
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
+
+  if (pathname.startsWith("/product/")) return null;
 
   return (
     <nav

@@ -77,7 +77,7 @@ export default function HowItWorks() {
             scrub: true,
             onUpdate: (self) => {
               const idx = Math.min(3, Math.max(0, Math.floor(self.progress * 4)));
-              setActiveIdx(idx);
+              setActiveIdx((prev) => (prev === idx ? prev : idx));
             },
           },
         },

@@ -1,25 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
 import TradeInSectionHeader, {
   TradeInReveal,
 } from "@/components/trade-in/TradeInSectionHeader";
 import { useTradeInListMotion } from "@/components/trade-in/useTradeInListMotion";
-import { TRADE_IN_STORIES, tradeInGlass } from "@/lib/trade-in";
+import { TRADE_IN_STORIES, tradeInGlass, tradeInSection } from "@/lib/trade-in";
 import { cn } from "@/lib/utils";
 
 export default function CustomerStories() {
   const listMotion = useTradeInListMotion();
 
   return (
-    <section id="stories" className="relative bg-black py-14 sm:py-20">
+    <section id="stories" className={cn("relative py-12 sm:py-20", tradeInSection)}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <TradeInReveal>
           <TradeInSectionHeader
-            eyebrow="CUSTOMER STORIES"
-            title="Real Upgrades, Real Savings"
-            description="Customers who traded in and upgraded through Protronics—not a scrap dealer or classifieds."
+            eyebrow="RECENT TRADE-INS"
+            title="Real Trade-Ins, Real Value"
+            description="Customers who sold or traded in through Protronics—not classifieds or scrap dealers."
             align="center"
           />
         </TradeInReveal>
@@ -34,24 +33,23 @@ export default function CustomerStories() {
         >
           {TRADE_IN_STORIES.map((story) => (
             <motion.article
-              key={story.name}
+              key={`${story.appliance}-${story.name}`}
               variants={listMotion.child}
               className={cn(
                 "trade-in-story-card w-[min(300px,85vw)] shrink-0 p-5 sm:w-auto sm:p-6",
                 tradeInGlass,
               )}
             >
-              <Quote className="h-5 w-5 text-white/40" aria-hidden />
-              <p className="mt-3 text-[14px] font-semibold leading-snug text-white">
-                Traded {story.traded.toLowerCase()}
+              <p className="text-[12px] font-medium uppercase tracking-wide text-theme-fg-faint">
+                {story.appliance}
               </p>
-              <p className="mt-2 text-[22px] font-semibold tracking-tight text-theme-accent">
-                Saved {story.saved}
+              <p className="mt-2 text-[26px] font-semibold tracking-tight text-theme-accent">
+                Sold for {story.soldFor}
               </p>
-              <p className="mt-3 text-[13px] leading-6 text-white/65">{story.outcome}</p>
-              <footer className="mt-4 border-t border-white/10 pt-3">
-                <p className="text-[13px] font-medium text-white">{story.name}</p>
-                <p className="text-[12px] text-white/45">{story.location}</p>
+              <p className="mt-3 text-[14px] leading-6 text-theme-fg">{story.outcome}</p>
+              <footer className="mt-4 border-t border-theme-border pt-3">
+                <p className="text-[13px] font-medium text-theme-fg">{story.name}</p>
+                <p className="text-[12px] text-theme-fg-faint">{story.location}</p>
               </footer>
             </motion.article>
           ))}

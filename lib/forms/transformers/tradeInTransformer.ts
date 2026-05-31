@@ -8,7 +8,7 @@ export function transformTradeIn(
 ): StandardFormPayload {
   return buildStandardPayload({
     formType: FORM_TYPES.TRADE_IN,
-    sourcePage: ctx.sourcePage ?? "/trade-in",
+    sourcePage: ctx.sourcePage ?? "/sell",
     data: {
       referenceId: data.referenceId,
       name: data.name,

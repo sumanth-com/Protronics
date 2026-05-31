@@ -10,16 +10,16 @@ export type FooterNewsletterProps = {
 
 export default function FooterNewsletter({ className }: FooterNewsletterProps) {
   return (
-    <div className={cn("px-5 py-4 sm:px-6 sm:py-5", className)}>
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+    <div className={cn("px-4 py-4 sm:px-6 sm:py-5", className)}>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
         <div className="min-w-0 max-w-xl">
-          <div className="text-[11px] font-medium tracking-[0.2em] text-white/55">
+          <div className="text-[11px] font-medium tracking-[0.2em] text-theme-fg-faint">
             WHATSAPP CHANNEL
           </div>
-          <div className="mt-2 text-[17px] font-semibold tracking-tight text-white sm:text-[18px]">
+          <div className="mt-1.5 text-[16px] font-semibold tracking-tight text-theme-fg sm:text-[18px]">
             Stay Updated with Premium Deals
           </div>
-          <p className="mt-1.5 text-[13px] leading-6 text-white/65">
+          <p className="mt-1 text-[13px] leading-6 text-theme-fg-muted">
             Curated drops, restocks, and offers—only when it&apos;s worth your attention.
           </p>
         </div>
@@ -30,8 +30,8 @@ export default function FooterNewsletter({ className }: FooterNewsletterProps) {
           rel="noreferrer"
           className={cn(
             "footer-whatsapp-btn inline-flex shrink-0 items-center justify-center gap-2 rounded-full",
-            "border border-white/25 bg-white/[0.06] px-5 py-3",
-            "text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.1]",
+            "border border-theme-border bg-theme-input-bg px-5 py-2.5",
+            "text-[13px] font-semibold text-theme-fg transition-colors hover:bg-theme-accent/10",
           )}
         >
           Join WhatsApp Channel

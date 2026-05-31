@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Building2, ShoppingBag, Tags } from "lucide-react";
+import { Building2, HandCoins, ShoppingBag } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import NavCtaIcon from "@/components/ui/NavCtaIcon";
 import SearchTrigger from "@/components/search/SearchTrigger";
@@ -143,15 +143,11 @@ export default function HeroNavbar() {
 
           <div className="navbar-actions hidden items-center lg:ml-0 lg:flex">
             <ThemeToggle />
-            <CtaButton
-              href="/best-deals"
-              size="sm"
-              className="nav-cta-btn nav-cta-btn-deals shrink-0"
-            >
+            <CtaButton href="/sell" size="sm" className="nav-cta-btn nav-cta-btn-deals shrink-0">
               <NavCtaIcon variant="deals">
-                <Tags className="nav-cta-icon-glyph" strokeWidth={2.25} />
+                <HandCoins className="nav-cta-icon-glyph" strokeWidth={2.25} />
               </NavCtaIcon>
-              <span className="nav-cta-label">Best Deals</span>
+              <span className="nav-cta-label">Sell</span>
             </CtaButton>
 
             <CtaButton href="/shop" size="sm" className="nav-cta-btn nav-cta-btn-shop shrink-0">

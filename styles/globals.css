@@ -603,15 +603,15 @@ html.theme-transition *::after {
   box-shadow: var(--theme-shadow-sm);
 }
 
-/* Footer — one unified panel; fills viewport when scrolled to end */
+/* Footer — natural height at page end; no viewport centering */
 .footer-root {
   flex-shrink: 0;
-  min-height: calc(100svh - var(--navbar-offset));
+  margin-top: auto;
   scroll-margin-top: var(--navbar-offset);
 }
 
 .footer-root-inner {
-  min-height: inherit;
+  width: 100%;
 }
 
 [data-theme="light"] .footer-card.footer-surface,
@@ -626,7 +626,7 @@ html.theme-transition *::after {
 .footer-link {
   position: relative;
   display: inline-block;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--theme-fg-secondary);
   text-decoration: none;
   transition: color 0.22s ease;
 }
@@ -647,7 +647,7 @@ html.theme-transition *::after {
 
 .footer-link:hover,
 .footer-link:focus-visible {
-  color: #ffffff;
+  color: var(--theme-fg);
 }
 
 .footer-link:hover::after,
@@ -2957,10 +2957,157 @@ body.mobile-nav-scroll-lock {
   }
 }
 
-/* Product sticky bar — safe area */
+/* Product page — mobile sticky CTA + safe scroll clearance */
+:root {
+  --product-sticky-bar-height: 3.75rem;
+  --compare-sticky-bar-height: 5.5rem;
+}
+
+.trust-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+@media (max-width: 1023px) {
+  body.has-mobile-bottom-nav.product-page-active {
+    padding-bottom: calc(
+      var(--product-sticky-bar-height) + env(safe-area-inset-bottom, 0px)
+    );
+  }
+
+  body.product-page-active.has-compare-sticky .product-page-main {
+    padding-bottom: calc(
+      var(--product-sticky-bar-height) +
+        var(--compare-sticky-bar-height) +
+        1.5rem +
+        env(safe-area-inset-bottom, 0px)
+    );
+  }
+
+  .product-page-main {
+    padding-bottom: calc(
+      var(--product-sticky-bar-height) + 1.5rem + env(safe-area-inset-bottom, 0px)
+    );
+  }
+
+  .product-sticky-bar {
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    min-height: var(--product-sticky-bar-height);
+    max-height: calc(var(--product-sticky-bar-height) + env(safe-area-inset-bottom, 0px));
+    padding-block: 0.5rem;
+  }
+
+  .product-sticky-bar .product-lead-actions-mobile {
+    width: 100%;
+  }
+
+  .product-lead-actions-mobile .product-cta-btn {
+    min-height: 2.75rem;
+    max-height: 2.75rem;
+    padding-block: 0.5rem;
+    font-size: 0.75rem;
+    touch-action: manipulation;
+  }
+
+  /* Mobile marketplace PDP */
+  .pdp-mobile-section {
+    padding-top: 0.25rem;
+  }
+
+  .pdp-mobile-section-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--theme-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .pdp-gallery-swiper .swiper-pagination {
+    bottom: 0.375rem !important;
+  }
+
+  .pdp-gallery-swiper .swiper-pagination-bullet {
+    width: 0.375rem;
+    height: 0.375rem;
+    margin: 0 0.1875rem !important;
+    background: color-mix(in srgb, var(--theme-fg) 35%, transparent);
+    opacity: 1;
+  }
+
+  .pdp-gallery-swiper .swiper-pagination-bullet-active {
+    width: 1rem;
+    border-radius: 9999px;
+    background: var(--theme-accent);
+  }
+
+  [data-theme="dark"] .pdp-mobile .text-emerald-700,
+  html:not([data-theme="light"]) .pdp-mobile .text-emerald-700 {
+    color: #34d399;
+  }
+
+  [data-theme="dark"] .pdp-mobile .text-sky-700,
+  html:not([data-theme="light"]) .pdp-mobile .text-sky-700 {
+    color: #38bdf8;
+  }
+
+  [data-theme="dark"] .pdp-mobile .text-red-700,
+  html:not([data-theme="light"]) .pdp-mobile .text-red-700 {
+    color: #f87171;
+  }
+
+  .trust-badge-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.375rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .product-gallery-mobile .swiper-pagination-bullet {
+    background: rgb(255 255 255 / 0.35);
+    opacity: 1;
+  }
+
+  .product-gallery-mobile .swiper-pagination-bullet-active {
+    background: rgb(255 255 255 / 0.95);
+  }
+
+  .trust-badge-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trust-badge-row .trust-badge-item {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+@keyframes product-sticky-in {
+  from {
+    opacity: 0;
+    transform: translateY(5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Product sticky bar — safe area (desktop keeps generous padding) */
 @supports (padding: max(0px)) {
   .product-sticky-bar {
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 1023px) {
+    .product-sticky-bar {
+      padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    }
   }
 }
 
@@ -3542,9 +3689,14 @@ table {
     font-size: 0.6875rem;
   }
 
-  /* Footer — shorter on mobile with bottom nav */
-  .footer-root {
-    min-height: auto;
+  /* Footer — compact mobile layout */
+  .footer-grid {
+    gap: 1.25rem;
+  }
+
+  .footer-link {
+    min-height: 0;
+    padding-block: 0.375rem;
   }
 
   .mobile-nav-link {
@@ -3557,6 +3709,71 @@ table {
 @media (min-width: 1024px) {
   .mobile-home-main {
     display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .trade-in-hero-visual--vertical {
+    min-height: 100%;
+  }
+
+  .trade-in-hero-visual--vertical > div {
+    min-height: 320px;
+  }
+}
+
+/* Trade-in hero — falling coins animation (all viewports) */
+@keyframes trade-in-coin-fall {
+  0% {
+    transform: translateY(-130%) scale(0.55);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(145%) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.trade-in-falling-coin {
+  position: absolute;
+  top: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--theme-accent) 88%, white);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--theme-accent) 40%, transparent),
+    0 1px 2px color-mix(in srgb, var(--theme-accent) 25%, transparent);
+  animation-name: trade-in-coin-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.trade-in-coins-rain {
+  z-index: 0;
+}
+
+.trade-in-coins-stage .trade-in-falling-coin:nth-child(odd) {
+  width: 6px;
+  height: 6px;
+}
+
+.trade-in-coins-stage .trade-in-falling-coin:nth-child(3n) {
+  width: 5px;
+  height: 5px;
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trade-in-falling-coin {
+    animation: none;
+    display: none;
   }
 }
 
@@ -3585,6 +3802,52 @@ table {
 
   .trade-in-hero {
     transform: none;
+  }
+
+  .trade-in-hero-fullscreen {
+    min-height: calc(
+      100svh - var(--navbar-offset) - var(--mobile-bottom-nav-height) -
+        env(safe-area-inset-bottom, 0px)
+    );
+    max-height: calc(
+      100svh - var(--navbar-offset) - var(--mobile-bottom-nav-height) -
+        env(safe-area-inset-bottom, 0px)
+    );
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .trade-in-hero-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    min-height: 0;
+  }
+
+  @keyframes trade-in-hero-dot {
+    0%,
+    100% {
+      opacity: 0.45;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+
+  .trade-in-hero-dot {
+    animation: trade-in-hero-dot 2.2s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trade-in-hero-dot {
+      animation: none;
+    }
   }
 
   .trade-in-hero [class*="will-change"],

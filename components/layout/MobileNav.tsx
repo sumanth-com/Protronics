@@ -10,7 +10,8 @@ import { Menu, ShoppingBag, X } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { useIsClient } from "@/hooks/useIsClient";
-import { useLenis } from "@/hooks/useLenis";
+import type Lenis from "lenis";
+import { useLenis, scrollToTarget } from "@/hooks/useLenis";
 import { BUSINESS } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
@@ -49,11 +50,11 @@ function lockBodyScroll() {
   return scrollY;
 }
 
-function unlockBodyScroll(scrollY: number) {
+function unlockBodyScroll(scrollY: number, lenis: Lenis | null) {
   document.documentElement.classList.remove("mobile-nav-scroll-lock");
   document.body.classList.remove("mobile-nav-scroll-lock");
   document.body.style.top = "";
-  window.scrollTo(0, scrollY);
+  scrollToTarget(lenis, scrollY, { immediate: true });
 }
 
 export default function MobileNav() {
@@ -85,7 +86,7 @@ export default function MobileNav() {
 
     return () => {
       lenis?.start();
-      unlockBodyScroll(scrollY);
+      unlockBodyScroll(scrollY, lenis);
     };
   }, [open, lenis]);
 

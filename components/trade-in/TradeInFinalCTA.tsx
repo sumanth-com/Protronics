@@ -5,14 +5,14 @@ import { ArrowUpRight } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import { useTradeInListMotion } from "@/components/trade-in/useTradeInListMotion";
-import { TRADE_IN_LINKS, tradeInGlass } from "@/lib/trade-in";
+import { TRADE_IN_LINKS, tradeInGlass, tradeInSection } from "@/lib/trade-in";
 import { cn } from "@/lib/utils";
 
 export default function TradeInFinalCTA() {
   const { child, viewport } = useTradeInListMotion();
 
   return (
-    <section className="relative overflow-hidden bg-black py-16 sm:py-24">
+    <section className={cn("relative overflow-hidden py-14 sm:py-24", tradeInSection)}>
       <motion.div
         initial="hidden"
         whileInView="show"
@@ -21,21 +21,20 @@ export default function TradeInFinalCTA() {
         className="relative mx-auto max-w-4xl px-4 text-center sm:px-6"
       >
         <div className={cn("px-6 py-10 sm:px-10 sm:py-14", tradeInGlass)}>
-          <p className="text-[12px] font-medium tracking-[0.22em] text-white/50">
-            START YOUR UPGRADE
+          <p className="text-[12px] font-medium tracking-[0.22em] text-theme-fg-faint">
+            START TODAY
           </p>
-          <h2 className="mt-3 text-[28px] font-semibold tracking-tight text-white sm:text-[40px]">
+          <h2 className="mt-3 text-[28px] font-semibold tracking-tight text-theme-fg sm:text-[40px]">
             Your Old Appliance Still Has Value.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-[14px] leading-7 text-white/65 sm:text-[15px]">
-            You don&apos;t need to sell separately on classifieds. Trade in, get
-            credit, and upgrade to a premium refurbished appliance through one
-            trusted partner.
+          <p className="mx-auto mt-4 max-w-xl text-[14px] leading-7 text-theme-fg-muted sm:text-[15px]">
+            Get a free estimate today. Sell outright or apply trade-in credit toward a premium
+            refurbished upgrade.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <CtaButton href={TRADE_IN_LINKS.estimator} size="lg">
-              Get Trade-In Estimate
+            <CtaButton href={TRADE_IN_LINKS.valuation} size="lg">
+              Get Valuation
               <ArrowUpRight className="h-4 w-4" />
             </CtaButton>
             <a
@@ -43,12 +42,12 @@ export default function TradeInFinalCTA() {
               target="_blank"
               rel="noreferrer"
               className={cn(
-                "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 py-3.5",
-                "border border-white/15 bg-white/[0.04] text-[13px] font-semibold text-white",
-                "transition-colors hover:border-white/30 hover:bg-white/[0.08]",
+                "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl px-6 py-3.5",
+                "border border-theme-border bg-theme-surface-card text-[13px] font-semibold text-theme-fg",
+                "transition-colors hover:border-theme-accent/40 hover:bg-theme-input-bg",
               )}
             >
-              <WhatsAppIcon className="h-4 w-4 text-white/85" />
+              <WhatsAppIcon className="h-4 w-4 text-theme-accent" />
               Chat on WhatsApp
             </a>
           </div>

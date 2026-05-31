@@ -6,5 +6,5 @@ import { validateTradeIn } from "@/lib/forms/validators/tradeInValidator";
 export const submitTradeInForm = createFormSubmitter<TradeInFormValues>({
   validate: validateTradeIn,
   transform: transformTradeIn,
-  defaultSourcePage: "/trade-in",
+  defaultSourcePage: "/sell",
 });

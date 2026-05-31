@@ -132,7 +132,6 @@ export default function ShopStickyFilterBar({
             ? "shop-filter-bar-pinned fixed inset-x-0 top-[60px] sm:top-[64px]"
             : "relative",
         )}
-        data-lenis-prevent={pinned ? "" : undefined}
       >
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
         {/* Desktop */}

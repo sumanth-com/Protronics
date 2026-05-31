@@ -38,6 +38,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/trade-in",
+        destination: "/sell",
+        permanent: true,
+      },
+      {
         source: "/faq",
         destination: "/support",
         permanent: true,

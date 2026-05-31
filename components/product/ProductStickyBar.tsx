@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import type { ProductDetail } from "@/lib/product-detail";
 import { ProductLeadActions } from "@/components/product/ProductLeadActions";
 
@@ -16,19 +15,14 @@ export default function ProductStickyBar({
   onCallback,
 }: ProductStickyBarProps) {
   return (
-    <motion.div
-      initial={{ y: 80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ delay: 0.4, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="product-sticky-bar fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-black/95 px-4 py-3 backdrop-blur-xl sm:px-6"
-    >
-      <div className="mx-auto max-w-7xl">
+    <div className="product-sticky-bar fixed inset-x-0 bottom-0 z-40 border-t border-theme-border bg-theme-bg/95 px-4 backdrop-blur-xl sm:px-6 lg:animate-[product-sticky-in_0.5s_ease-out_0.4s_both]">
+      <div className="mx-auto w-full max-w-7xl lg:py-3">
         <ProductLeadActions
           product={product}
           onReserve={onReserve}
           onCallback={onCallback}
         />
       </div>
-    </motion.div>
+    </div>
   );
 }
