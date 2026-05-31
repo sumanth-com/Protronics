@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { ShoppingCart, Star } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -89,7 +89,10 @@ export default function MarketplaceProductCard({ product, className }: Props) {
             <p className="marketplace-product-meta">{product.warranty}</p>
           ) : null}
 
-          <span className="marketplace-product-cta">View</span>
+          <span className="marketplace-product-cta">
+            <ShoppingCart className="marketplace-product-cta-icon" aria-hidden />
+            View Product
+          </span>
         </div>
       </Link>
     </article>

@@ -29,34 +29,10 @@ function FacebookIcon({ className }: { className?: string }) {
     <svg
       viewBox="0 0 24 24"
       className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      fill="currentColor"
       aria-hidden="true"
     >
-      <path d="M14 8h2V5h-2c-2.21 0-4 1.79-4 4v3H8v3h2v6h3v-6h2.2l.8-3H13V9c0-.55.45-1 1-1Z" />
-    </svg>
-  );
-}
-
-function LinkedInIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M6 9v12" />
-      <path d="M6 5.5h.01" />
-      <path d="M10 9v12" />
-      <path d="M10 13c0-2.2 1.8-4 4-4s4 1.8 4 4v8" />
+      <path d="M14.5 7H17V4h-2.5C12.57 4 11 5.57 11 7.5V10H8v3h3v8h3v-8h2.9l.6-3H14v-2.5c0-.55.45-1 1-1z" />
     </svg>
   );
 }
@@ -65,7 +41,6 @@ const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
   Instagram: InstagramIcon,
   WhatsApp: WhatsAppIcon,
   Facebook: FacebookIcon,
-  LinkedIn: LinkedInIcon,
 };
 
 export type FooterSocialsProps = {
@@ -92,7 +67,12 @@ export default function FooterSocials({ className }: FooterSocialsProps) {
               "border border-white/[0.08] bg-black",
             )}
           >
-            <Icon className="h-4 w-4 text-white/75 transition-colors duration-200 group-hover:text-white" />
+            <Icon
+              className={cn(
+                "text-white/75 transition-colors duration-200 group-hover:text-white",
+                s.label === "Facebook" ? "h-[18px] w-[18px]" : "h-4 w-4",
+              )}
+            />
           </motion.a>
         );
       })}

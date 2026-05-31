@@ -6,9 +6,6 @@ const ContactOptions = dynamic(
   () => import("@/components/contact/ContactOptions"),
 );
 const ContactFAQ = dynamic(() => import("@/components/contact/ContactFAQ"));
-const StickyWhatsApp = dynamic(
-  () => import("@/components/contact/StickyWhatsApp"),
-);
 
 export const metadata: Metadata = {
   title: "Contact | Protronics",
@@ -23,7 +20,6 @@ export default function Contact() {
         <ContactForm />
         <ContactOptions />
         <ContactFAQ />
-        <StickyWhatsApp />
       </main>
     </div>
   );

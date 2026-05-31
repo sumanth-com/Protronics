@@ -3,7 +3,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, ShieldCheck, X } from "lucide-react";
 import { useEffect, type WheelEvent } from "react";
-import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import { useLenis } from "@/hooks/useLenis";
 import { BUSINESS } from "@/lib/contact";
@@ -63,7 +62,7 @@ export default function WarrantyDetailsModal({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/65 backdrop-blur-sm"
+            className="fixed inset-0 z-[120] bg-black/65 backdrop-blur-sm"
             onClick={onClose}
             onWheel={blockBackdropScroll}
             data-lenis-prevent
@@ -75,7 +74,7 @@ export default function WarrantyDetailsModal({
             exit={{ opacity: 0, y: 14, scale: 0.98 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              "warranty-details-modal fixed left-1/2 top-1/2 z-[61] flex max-h-[min(90vh,720px)] w-[min(100%-1.5rem,520px)] -translate-x-1/2 -translate-y-1/2 flex-col",
+              "warranty-details-modal fixed left-1/2 top-1/2 z-[121] flex max-h-[min(calc(100dvh-2rem),720px)] w-[min(100%-1.5rem,520px)] -translate-x-1/2 -translate-y-1/2 flex-col",
               "overflow-hidden rounded-3xl border border-white/12 bg-black shadow-[0_40px_120px_rgba(0,0,0,0.75)]",
             )}
             role="dialog"
@@ -167,14 +166,13 @@ export default function WarrantyDetailsModal({
               <p className="mt-5 text-[12px] leading-6 text-white/50">{WARRANTY_SUMMARY.note}</p>
             </div>
 
-            <div className="flex shrink-0 flex-col gap-2 border-t border-white/10 px-5 py-4 sm:flex-row sm:px-6">
+            <div className="flex shrink-0 flex-col gap-2 border-t border-white/10 px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:flex-row sm:px-6">
               <a
                 href={BUSINESS.whatsappMessage}
                 target="_blank"
                 rel="noreferrer"
-                className="support-whatsapp-cta inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-[13px] font-semibold"
+                className="inline-flex flex-1 items-center justify-center rounded-full border border-theme-border bg-white px-4 py-2.5 text-[13px] font-semibold text-theme-fg transition-opacity hover:opacity-90 active:opacity-80"
               >
-                <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
                 WhatsApp support
               </a>
               <CtaButton href="/support/warranty" className="flex-1" size="sm" onClick={onClose}>

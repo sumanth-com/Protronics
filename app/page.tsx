@@ -26,6 +26,9 @@ const HowItWorks = dynamic(
   () => import("@/components/how-it-works/HowItWorks"),
 );
 const FAQSection = dynamic(() => import("@/components/faq/FAQSection"));
+const MobileTestimonialsMarquee = dynamic(
+  () => import("@/components/testimonials/MobileTestimonialsMarquee"),
+);
 const MobileWarrantySection = dynamic(
   () => import("@/components/mobile/MobileWarrantySection"),
 );
@@ -94,6 +97,10 @@ export default function Home() {
 
           <DeferredMount minHeight="520px" className="mobile-home-order-warranty">
             <MobileWarrantySection />
+          </DeferredMount>
+
+          <DeferredMount minHeight="280px" className="mobile-home-order-testimonials">
+            <MobileTestimonialsMarquee />
           </DeferredMount>
 
           <DeferredMount minHeight="480px" className="mobile-home-order-faq">

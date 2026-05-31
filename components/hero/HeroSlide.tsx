@@ -26,7 +26,7 @@ export type HeroSlideProps = {
   variant?: "mobile" | "desktop";
 };
 
-/** Mobile/tablet — image only: sharp, no text, no blur overlays, no motion scale. */
+/** Mobile/tablet — full-width banner, sharp, no overlays. */
 function HeroSlideImageOnly({
   slide,
   priority,
@@ -34,10 +34,29 @@ function HeroSlideImageOnly({
   slide: Slide;
   priority: boolean;
 }) {
-  return (
-    <div className="relative h-full w-full overflow-hidden bg-black">
+  const src = slide.imageSrc;
+
+  if (typeof src === "object" && "width" in src && "height" in src) {
+    return (
       <Image
-        src={slide.imageSrc}
+        src={src}
+        alt=""
+        width={src.width}
+        height={src.height}
+        sizes="100vw"
+        className="block h-auto w-full max-w-full object-cover object-center"
+        quality={IMAGE_QUALITY.hero}
+        priority={priority}
+        loading={priority ? undefined : "lazy"}
+        draggable={false}
+      />
+    );
+  }
+
+  return (
+    <div className="relative aspect-[1717/916] w-full overflow-hidden bg-[#f9f9f9]">
+      <Image
+        src={src}
         alt=""
         fill
         sizes="100vw"
@@ -57,11 +76,7 @@ export default function HeroSlide({
   variant = "desktop",
 }: HeroSlideProps) {
   if (variant === "mobile") {
-    return (
-      <div className="h-full">
-        <HeroSlideImageOnly slide={slide} priority={priority} />
-      </div>
-    );
+    return <HeroSlideImageOnly slide={slide} priority={priority} />;
   }
 
   return (

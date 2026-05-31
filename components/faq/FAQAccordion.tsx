@@ -25,7 +25,7 @@ export default function FAQAccordion({
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-15% 0px -10% 0px" }}
-      className="space-y-3 sm:space-y-4"
+      className="faq-accordion space-y-3 sm:space-y-4"
     >
       {rows.map((f, idx) => (
         <motion.div key={f.question} variants={fadeUp}>

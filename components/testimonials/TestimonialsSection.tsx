@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import TrustMetrics from "@/components/testimonials/TrustMetrics";
+import { CUSTOMER_TESTIMONIALS } from "@/lib/testimonials";
 import TestimonialCard, { type Testimonial } from "@/components/testimonials/TestimonialCard";
 import ReviewCarousel from "@/components/testimonials/ReviewCarousel";
 
@@ -19,77 +20,7 @@ export default function TestimonialsSection() {
     [],
   );
 
-  const testimonials = useMemo<Testimonial[]>(
-    () => [
-      {
-        quote:
-          "Honestly felt like buying a brand‑new refrigerator. Clean finish, quiet operation, and the delivery team handled everything professionally.",
-        name: "Akhila R.",
-        location: "Indiranagar, Bengaluru",
-        rating: 4.9,
-        verified: true,
-        homeImageSrc: "/testimonials/home-1.webp",
-      },
-      {
-        quote:
-          "The sanitization was next‑level—no smell, no doubts. The appliance looks premium in our kitchen and the warranty gave us complete confidence.",
-        name: "Sandeep K.",
-        location: "Koramangala, Bengaluru",
-        rating: 5.0,
-        verified: true,
-      },
-      {
-        quote:
-          "Transparent process, timely updates, and the unit performs flawlessly. This is not ‘used’—it feels professionally restored.",
-        name: "Nandini S.",
-        location: "HSR Layout, Bengaluru",
-        rating: 4.8,
-        verified: true,
-        homeImageSrc: "/testimonials/home-2.webp",
-      },
-      {
-        quote:
-          "Setup was smooth and the refrigerator looked spotless. We saved a lot without compromising the premium feel.",
-        name: "Vikram P.",
-        location: "Whitefield, Bengaluru",
-        rating: 4.9,
-        verified: true,
-      },
-      {
-        quote:
-          "Support was responsive and confident. They answered everything like an engineering team—not a random reseller.",
-        name: "Meghana T.",
-        location: "Jayanagar, Bengaluru",
-        rating: 5.0,
-        verified: true,
-      },
-      {
-        quote:
-          "Delivery was on time and the team walked us through every check. The fridge runs whisper-quiet—exactly what we wanted.",
-        name: "Rahul D.",
-        location: "Electronic City, Bengaluru",
-        rating: 4.9,
-        verified: true,
-      },
-      {
-        quote:
-          "Pricing was fair and the quality checks were explained clearly. It genuinely feels like a premium purchase.",
-        name: "Ananya V.",
-        location: "Marathahalli, Bengaluru",
-        rating: 5.0,
-        verified: true,
-      },
-      {
-        quote:
-          "We compared multiple stores—Protronics was the only one that felt engineered, not rushed. Highly recommend.",
-        name: "Karthik M.",
-        location: "BTM Layout, Bengaluru",
-        rating: 4.8,
-        verified: true,
-      },
-    ],
-    [],
-  );
+  const testimonials = useMemo<Testimonial[]>(() => CUSTOMER_TESTIMONIALS, []);
 
   return (
     <section id="reviews" className="theme-section-a relative overflow-hidden bg-black">

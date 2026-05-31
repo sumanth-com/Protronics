@@ -25,7 +25,7 @@ export default function FAQItem({
   return (
     <div
       className={cn(
-        "premium-card group relative overflow-hidden rounded-3xl",
+        "faq-item premium-card group relative overflow-hidden rounded-3xl",
         "border border-white/12 bg-white/[0.05]",
         "supports-[backdrop-filter]:bg-white/[0.055] supports-[backdrop-filter]:backdrop-blur-xl",
         className,
@@ -35,13 +35,13 @@ export default function FAQItem({
         type="button"
         onClick={onToggle}
         className={cn(
-          "relative flex w-full items-center justify-between gap-4",
+          "faq-item-trigger relative flex w-full items-center justify-between gap-4",
           "px-6 py-5 text-left",
         )}
         aria-expanded={isOpen}
       >
         <div className="min-w-0">
-          <div className="text-[14px] font-semibold leading-snug tracking-tight text-white sm:text-[15px]">
+          <div className="faq-item-question text-[14px] font-semibold leading-snug tracking-tight text-white sm:text-[15px]">
             {item.question}
           </div>
         </div>
@@ -50,7 +50,7 @@ export default function FAQItem({
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            "grid h-10 w-10 shrink-0 place-items-center rounded-full",
+            "faq-item-chevron grid h-10 w-10 shrink-0 place-items-center rounded-full",
             "border border-white/12 bg-white/[0.06]",
           )}
         >
@@ -70,9 +70,9 @@ export default function FAQItem({
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-6">
+            <div className="faq-item-answer-body px-6 pb-6">
               <div className="h-px w-full bg-white/10" />
-              <div className="mt-4 text-[13px] leading-7 text-white/70">
+              <div className="faq-item-answer mt-4 text-[13px] leading-7 text-white/70">
                 {item.answer}
               </div>
             </div>

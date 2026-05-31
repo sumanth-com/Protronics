@@ -33,8 +33,11 @@ export default function Footer() {
           viewport={{ once: true, margin: "-5% 0px" }}
           className="footer-grid mt-5 grid gap-6 sm:mt-6 md:grid-cols-12 md:gap-8"
         >
-          <motion.div variants={fadeUp} className="md:col-span-4">
-            <Link href="/" prefetch className="inline-flex items-center gap-2.5">
+          <motion.div
+            variants={fadeUp}
+            className="footer-brand-block flex flex-col md:col-span-4"
+          >
+            <Link href="/" prefetch className="inline-flex items-center gap-2.5 self-start">
               <div className="relative h-9 w-9 shrink-0">
                 <Image
                   src={Logo}
@@ -50,19 +53,25 @@ export default function Footer() {
               </div>
             </Link>
 
-            <p className="footer-brand-desc mt-2.5 max-w-sm text-[13px] leading-6 text-theme-fg-muted">
+            <p className="footer-brand-desc mx-auto mt-2.5 max-w-sm text-center text-[13px] leading-6 text-theme-fg-muted md:mx-0 md:text-left">
               Premium renewed appliances—restored with confidence, backed by warranty.
             </p>
 
-            <FooterSocials className="mt-3.5" />
+            <FooterSocials className="mx-auto mt-3.5 justify-center md:mx-0 md:justify-start" />
           </motion.div>
 
-          <motion.div variants={fadeUp} className="md:col-span-5">
+          <motion.div variants={fadeUp} className="footer-links-wrap md:col-span-5">
             <FooterLinks />
           </motion.div>
 
           <motion.div variants={fadeUp} className="md:col-span-3">
-            <div className={cn("footer-support-panel", footerCard, "px-4 py-4 md:px-5 md:py-5")}>
+            <div
+              className={cn(
+                "footer-support-panel text-center md:text-left",
+                footerCard,
+                "px-4 py-4 md:px-5 md:py-5",
+              )}
+            >
               <div className="text-[11px] font-medium tracking-[0.2em] text-theme-fg-faint">
                 SUPPORT
               </div>
@@ -76,14 +85,14 @@ export default function Footer() {
               <div className="mt-3 space-y-1.5">
                 <a
                   href={BUSINESS.phoneHref}
-                  className="footer-support-line flex items-center gap-2 text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg"
+                  className="footer-support-line flex items-center justify-center gap-2 text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg md:justify-start"
                 >
                   <Phone className="h-4 w-4 shrink-0 text-theme-fg-faint" />
                   {BUSINESS.phone}
                 </a>
                 <a
                   href={BUSINESS.emailHref}
-                  className="footer-support-line flex items-center gap-2 text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg"
+                  className="footer-support-line flex items-center justify-center gap-2 text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg md:justify-start"
                 >
                   <Mail className="h-4 w-4 shrink-0 text-theme-fg-faint" />
                   {BUSINESS.email}

@@ -5,7 +5,6 @@ import { fadeUp, stagger } from "@/lib/animations";
 import { HOMEPAGE_FAQS } from "@/lib/faq";
 import { cn } from "@/lib/utils";
 import FAQAccordion from "@/components/faq/FAQAccordion";
-import SupportCTA from "@/components/faq/SupportCTA";
 
 export default function FAQSection() {
   return (
@@ -45,9 +44,8 @@ export default function FAQSection() {
           </motion.p>
         </motion.div>
 
-        <div className="mt-10 sm:mt-12">
+        <div className="faq-section-body mt-10 sm:mt-12">
           <FAQAccordion faqs={HOMEPAGE_FAQS} defaultOpenIndex={0} />
-          <SupportCTA />
         </div>
       </div>
     </section>

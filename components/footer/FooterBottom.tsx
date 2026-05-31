@@ -12,15 +12,15 @@ export default function FooterBottom({ className }: FooterBottomProps) {
   return (
     <div
       className={cn(
-        "mt-0 flex flex-col gap-3 pt-0",
-        "sm:flex-row sm:items-center sm:justify-between",
+        "footer-bottom flex flex-col items-center gap-3 pt-0 text-center",
+        "sm:flex-row sm:items-center sm:justify-between sm:text-left",
         className,
       )}
     >
       <div className="footer-bottom-copy text-[12px] text-theme-fg-muted">
         © {new Date().getFullYear()} Protronics. All rights reserved.
       </div>
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px]">
+      <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] sm:justify-end">
         {FOOTER_LEGAL_LINKS.map((l) => (
           <Link key={l.label} href={l.href} prefetch className="footer-link text-[12px]">
             {l.label}

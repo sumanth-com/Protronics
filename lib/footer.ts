@@ -23,14 +23,13 @@ export const FOOTER_NAV_GROUPS: FooterLinkGroup[] = [
     title: "Support",
     links: [
       { label: "Support", href: "/support" },
-      { label: "Warranty", href: "/warranty" },
       { label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Best Deals", href: "/best-deals" },
+      { label: "Sell", href: "/sell" },
       { label: "About", href: "/about" },
       { label: "Compare", href: "/compare" },
     ],
@@ -54,9 +53,5 @@ export const FOOTER_SOCIAL_LINKS = [
   {
     label: "Facebook",
     href: "https://www.facebook.com/",
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/",
   },
 ] as const;
