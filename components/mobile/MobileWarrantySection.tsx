@@ -40,9 +40,9 @@ const features: SupportFeatureData[] = [
 export default function MobileWarrantySection({ className }: { className?: string }) {
   return (
     <section
-      id="warranty-home"
+      id="warranty"
       className={cn(
-        "mobile-warranty-home theme-section-c relative overflow-hidden bg-black lg:hidden",
+        "mobile-warranty-home theme-section-c relative overflow-hidden bg-black",
         className,
       )}
       aria-labelledby="mobile-warranty-heading"

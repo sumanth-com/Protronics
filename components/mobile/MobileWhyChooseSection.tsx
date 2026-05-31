@@ -14,7 +14,7 @@ export default function MobileWhyChooseSection({ className }: MobileWhyChooseSec
     <section
       id="why-choose"
       className={cn(
-        "mobile-why-choose-home theme-section-b relative overflow-hidden bg-black lg:hidden",
+        "mobile-why-choose-home theme-section-b relative overflow-hidden bg-black",
         className,
       )}
       aria-labelledby="mobile-why-choose-heading"

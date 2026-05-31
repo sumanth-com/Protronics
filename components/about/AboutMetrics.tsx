@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 export default function AboutMetrics() {
   return (
     <section
+      id="trust"
       aria-labelledby="about-metrics-heading"
       className="theme-section-c relative overflow-hidden bg-black py-16 sm:py-24"
     >
@@ -21,6 +22,7 @@ export default function AboutMetrics() {
           headingId="about-metrics-heading"
           eyebrow="NUMBERS THAT MATTER"
           title="Credibility You Can See."
+          description="Trusted by thousands of households looking for premium refurbished appliances—with standards that stay consistent order after order."
           align="center"
         />
 

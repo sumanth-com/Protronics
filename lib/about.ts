@@ -3,16 +3,15 @@ import {
   BadgeCheck,
   ClipboardCheck,
   Headset,
+  Leaf,
+  Recycle,
   ShieldCheck,
   Sparkles,
   Truck,
+  Wrench,
 } from "lucide-react";
 import { BUSINESS } from "@/lib/contact";
-
-export const aboutGlass = [
-  "rounded-3xl border border-white/12 bg-black",
-  "shadow-[0_30px_100px_rgba(0,0,0,0.55)]",
-].join(" ");
+import { absoluteUrl } from "@/lib/site";
 
 export type AboutPromiseItem = {
   icon: LucideIcon;
@@ -20,6 +19,78 @@ export type AboutPromiseItem = {
   description: string;
 };
 
+export type AboutWhyPoint = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+export type AboutProcessStep = {
+  step: string;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+export type AboutMetric = {
+  value: number;
+  suffix?: string;
+  display?: string;
+  label: string;
+  animate?: boolean;
+};
+
+export type AboutFaq = {
+  question: string;
+  answer: string;
+};
+
+export const ABOUT_WHY_POINTS: AboutWhyPoint[] = [
+  {
+    icon: Recycle,
+    title: "Built to last longer",
+    description:
+      "Quality appliances are often replaced long before their useful life ends—we change that.",
+  },
+  {
+    icon: Sparkles,
+    title: "Restored the right way",
+    description:
+      "Every unit is inspected, sanitized, restored, and certified—not sold as-is.",
+  },
+  {
+    icon: Leaf,
+    title: "Value without compromise",
+    description:
+      "Premium performance and finish at a smarter price, without cutting corners.",
+  },
+];
+
+export const ABOUT_PROCESS: AboutProcessStep[] = [
+  {
+    step: "01",
+    icon: ClipboardCheck,
+    title: "Inspect & test",
+    description:
+      "100+ checks on cooling, seals, sensors, hygiene, and safety before any unit moves forward.",
+  },
+  {
+    step: "02",
+    icon: Sparkles,
+    title: "Restore & certify",
+    description:
+      "Deep sanitization, cosmetic refinement, and performance certification to Protronics standards.",
+  },
+  {
+    step: "03",
+    icon: Truck,
+    title: "Deliver & support",
+    description:
+      "Careful delivery, setup guidance, and 1-year warranty with real human support when you need it.",
+  },
+];
+
+/** Legacy export — kept for any remaining imports */
 export const ABOUT_PROMISE: AboutPromiseItem[] = [
   {
     icon: ClipboardCheck,
@@ -59,31 +130,58 @@ export const ABOUT_PROMISE: AboutPromiseItem[] = [
   },
 ];
 
-export const ABOUT_WHY_POINTS = [
+export const ABOUT_WARRANTY_FEATURES: AboutPromiseItem[] = [
   {
-    title: "Built to last longer",
-    description:
-      "Quality appliances are often discarded long before their useful life ends.",
+    icon: ShieldCheck,
+    title: "1-Year Warranty",
+    description: "Coverage starts on delivery—service-backed, no guesswork.",
   },
   {
-    title: "Restored the right way",
-    description:
-      "We restore, test, sanitize, and certify every unit to premium standards.",
+    icon: Wrench,
+    title: "Free Repairs",
+    description: "Compressor, cooling, and electrical faults handled by our team.",
   },
   {
-    title: "Value without compromise",
-    description:
-      "Enjoy premium performance and finish—without premium showroom pricing.",
+    icon: BadgeCheck,
+    title: "100+ Quality Checks",
+    description: "Safety, hygiene, and performance verified before dispatch.",
   },
-] as const;
+  {
+    icon: Headset,
+    title: "Expert Support",
+    description: "WhatsApp or phone—real advisors, claims in 24–48 hours.",
+  },
+];
 
-export type AboutMetric = {
-  value: number;
-  suffix?: string;
-  display?: string;
-  label: string;
-  animate?: boolean;
-};
+export const ABOUT_WHY_CHOOSE: AboutPromiseItem[] = [
+  {
+    icon: ClipboardCheck,
+    title: "100+ Point Testing",
+    description: "Cooling, seals, sensors, and safety verified before dispatch.",
+  },
+  {
+    icon: Sparkles,
+    title: "Deep Sanitization",
+    description: "Professional cleaning inside, outside, and through airflow paths.",
+  },
+  {
+    icon: BadgeCheck,
+    title: "Verified Appliances",
+    description: "Authentic models with documented inspection standards.",
+  },
+  {
+    icon: Truck,
+    title: "Delivery & Setup",
+    description: "Careful handling with placement so it's ready the same day.",
+  },
+];
+
+export const ABOUT_WARRANTY_HIGHLIGHTS = [
+  "Certified testing",
+  "Warranty included",
+  "Expert support",
+  "Safe delivery",
+] as const;
 
 export const ABOUT_METRICS: AboutMetric[] = [
   { value: 5000, suffix: "+", label: "Happy Customers", animate: true },
@@ -97,9 +195,39 @@ export const ABOUT_METRICS: AboutMetric[] = [
   },
 ];
 
+export const ABOUT_FAQS: AboutFaq[] = [
+  {
+    question: "What does Protronics specialize in?",
+    answer:
+      "Protronics specializes in premium refurbished refrigerators and appliances. Every unit is restored, tested, sanitized, and certified for modern homes—so you get showroom-quality results at a smarter price.",
+  },
+  {
+    question: "Is there a warranty on refurbished appliances?",
+    answer:
+      "Yes. Every Protronics appliance includes a 1-year warranty from your delivery date, covering functional defects identified during our restoration process. Claims are handled directly by our team via WhatsApp or phone.",
+  },
+  {
+    question: "How is a refurbished appliance different from used?",
+    answer:
+      "Used appliances are sold as-is. Protronics units go through 100+ quality checks, deep sanitization, cosmetic restoration, and performance certification before they reach you—with warranty and support included.",
+  },
+  {
+    question: "Do you deliver and help with setup?",
+    answer:
+      "Yes. We offer careful delivery with placement guidance so your appliance is ready to use the same day. Installation specifics depend on your location—contact us on WhatsApp for details in your area.",
+  },
+  {
+    question: "Where can I get help after purchase?",
+    answer:
+      "Visit our Help Center for warranty, delivery, and returns answers, or reach us on WhatsApp for fast support. Most warranty claims are diagnosed within 24–48 hours in Bengaluru metro.",
+  },
+];
+
 export const ABOUT_LINKS = {
   shop: "/shop",
   collection: "/shop",
+  support: "/support",
+  warranty: "/about#warranty",
   whatsapp: BUSINESS.whatsappMessage,
 } as const;
 
@@ -108,9 +236,9 @@ export const aboutPageJsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      "@id": "https://protronics.in/#organization",
+      "@id": `${absoluteUrl("/")}#organization`,
       name: "Protronics",
-      url: "https://protronics.in",
+      url: absoluteUrl("/"),
       description:
         "Premium refurbished refrigerators and appliances—professionally restored, quality certified, and warranty backed.",
       areaServed: "IN",
@@ -124,38 +252,25 @@ export const aboutPageJsonLd = {
     },
     {
       "@type": "WebPage",
-      "@id": "https://protronics.in/about#webpage",
-      url: "https://protronics.in/about",
+      "@id": `${absoluteUrl("/about")}#webpage`,
+      url: absoluteUrl("/about"),
       name: "About Protronics | Premium Refurbished Appliances",
       description:
         "Protronics delivers premium refurbished refrigerators through rigorous testing, deep sanitization, performance certification, and 1-year warranty support.",
-      isPartOf: { "@id": "https://protronics.in/#website" },
-      about: { "@id": "https://protronics.in/#organization" },
-      primaryImageOfPage: {
-        "@type": "ImageObject",
-        url: "https://protronics.in/og-about.jpg",
-      },
+      isPartOf: { "@id": `${absoluteUrl("/")}#website` },
+      about: { "@id": `${absoluteUrl("/")}#organization` },
     },
     {
       "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "What does Protronics specialize in?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Protronics specializes in premium refurbished refrigerators and appliances—restored, tested, sanitized, and certified for modern homes.",
-          },
+      "@id": `${absoluteUrl("/about")}#faq`,
+      mainEntity: ABOUT_FAQS.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
         },
-        {
-          "@type": "Question",
-          name: "Is there a warranty on refurbished appliances?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Yes. Protronics includes a 1-year warranty on refurbished appliances, backed by expert support.",
-          },
-        },
-      ],
+      })),
     },
   ],
 };

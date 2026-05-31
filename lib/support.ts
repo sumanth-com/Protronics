@@ -59,7 +59,7 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
         answer:
           "Every Protronics refrigerator includes a 1-year warranty from your delivery date. It covers functional defects identified during our restoration process. Normal cosmetic wear after delivery is not covered.",
         links: [
-          { label: "Warranty details on homepage", href: "/#warranty" },
+          { label: "Warranty details on about page", href: "/about#warranty" },
           { label: "Contact support", href: "/contact" },
         ],
       },
@@ -286,6 +286,36 @@ export function buildSupportPath(categoryId: string, articleId: string) {
   return `/support/${categoryId}/${articleId}`;
 }
 
+/** High-intent articles surfaced on mobile help home */
+export const POPULAR_SUPPORT_ARTICLES = [
+  { categoryId: "warranty", articleId: "warranty-duration" },
+  { categoryId: "warranty", articleId: "warranty-claim" },
+  { categoryId: "delivery", articleId: "delivery-time" },
+  { categoryId: "returns", articleId: "returns-policy" },
+  { categoryId: "product-condition", articleId: "condition-refurbished" },
+  { categoryId: "protronics-protection", articleId: "protection-included" },
+] as const;
+
+export function getPopularSupportArticles() {
+  return POPULAR_SUPPORT_ARTICLES.flatMap(({ categoryId, articleId }) => {
+    const article = getArticle(categoryId, articleId);
+    const category = getCategoryById(categoryId);
+    if (!article || !category) return [];
+    return [{ categoryId, articleId, article, categoryLabel: category.label }];
+  });
+}
+
+export function getSupportScreenFromPath(pathname: string): "home" | "category" | "article" {
+  const parts = pathname.split("/").filter(Boolean);
+  if (parts.length >= 3) return "article";
+  if (parts.length === 2) return "category";
+  return "home";
+}
+
+export function buildSupportCategoryPath(categoryId: string) {
+  return `/support/${categoryId}`;
+}
+
 export function searchSupportArticles(query: string, limit = 8): SupportSearchResult[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
@@ -345,6 +375,15 @@ export function buildSupportFaqJsonLd() {
         },
       })),
     ),
+  };
+}
+
+export function buildSupportHubMetadata() {
+  return {
+    title: "Support | Protronics Help Center",
+    description:
+      "Get answers on warranty, delivery, product condition, and returns for premium refurbished refrigerators and appliances in India.",
+    path: "/support",
   };
 }
 

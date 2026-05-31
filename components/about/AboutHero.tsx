@@ -17,6 +17,13 @@ const HERO_TAGS = [
   "1-Year Warranty",
 ] as const;
 
+const HERO_NAV = [
+  { label: "Our mission", href: "#story" },
+  { label: "How we work", href: "#process" },
+  { label: "Warranty", href: "#warranty" },
+  { label: "FAQ", href: "#faq" },
+] as const;
+
 export default function AboutHero() {
   return (
     <section
@@ -66,6 +73,26 @@ export default function AboutHero() {
             Protronics brings high-quality refurbished appliances back to life
             through rigorous testing, restoration, and certification.
           </motion.p>
+
+          <motion.nav
+            variants={fadeUp}
+            aria-label="About page sections"
+            className="mt-6 flex flex-wrap gap-2"
+          >
+            {HERO_NAV.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={cn(
+                  "rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5",
+                  "text-[12px] font-medium text-white/75 transition-colors",
+                  "hover:border-white/22 hover:bg-white/[0.08] hover:text-white",
+                )}
+              >
+                {link.label}
+              </a>
+            ))}
+          </motion.nav>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
             <CtaButton href={ABOUT_LINKS.collection} size="lg" fullWidth className="sm:w-auto">

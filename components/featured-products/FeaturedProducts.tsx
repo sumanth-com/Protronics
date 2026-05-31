@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import CtaButton from "@/components/ui/CtaButton";
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/animations";
 import { buildProductPath } from "@/lib/product-detail";
@@ -35,7 +35,7 @@ export default function FeaturedProducts() {
 
   const mobileProducts = useMemo(
     () =>
-      products.slice(0, 4).map((p, i) => ({
+      products.slice(0, 6).map((p, i) => ({
         ...p,
         warranty: "1Y Warranty",
         rating: 4.8 - (i % 3) * 0.1,
@@ -60,10 +60,10 @@ export default function FeaturedProducts() {
             <MarketplaceProductCard key={p.name} product={p} />
           ))}
         </div>
-        <Link href="/shop" prefetch className="mobile-featured-see-more">
+        <CtaButton href="/shop" fullWidth className="mt-3.5">
           See more
-          <ArrowRight className="h-4 w-4" strokeWidth={2.25} />
-        </Link>
+          <ArrowUpRight className="h-4 w-4" />
+        </CtaButton>
       </div>
 
       {/* Desktop — unchanged */}

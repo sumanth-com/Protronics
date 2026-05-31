@@ -34,9 +34,9 @@ export default function WarrantyHighlights({
       </div>
       <div className="theme-accent-line warranty-highlights-divider mt-3 w-10" />
 
-      <ul className="mt-5 space-y-3">
+      <ul className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3">
         {items.map((it) => (
-          <li key={it} className="flex items-center gap-2.5">
+          <li key={it} className="flex min-w-0 items-start gap-2.5">
             <BadgeCheck className="warranty-highlights-icon h-4 w-4 text-white" />
             <span className="warranty-highlights-item text-[12.5px] leading-6 text-white/75">{it}</span>
           </li>

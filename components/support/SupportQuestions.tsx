@@ -11,6 +11,7 @@ type SupportQuestionsProps = {
   activeArticleId: string;
   onSelect: (articleId: string) => void;
   trustCard?: SupportTrustCard;
+  compact?: boolean;
 };
 
 export default function SupportQuestions({
@@ -19,9 +20,10 @@ export default function SupportQuestions({
   activeArticleId,
   onSelect,
   trustCard,
+  compact = false,
 }: SupportQuestionsProps) {
   return (
-    <div className="flex h-full min-h-0 flex-col">
+    <div className={cn("flex h-full min-h-0 flex-col", compact && "support-questions-compact")}>
       <div className="shrink-0 px-5 py-4">
         <p className="text-[12px] font-medium uppercase tracking-[0.14em] text-white/45">
           {categoryLabel}
@@ -29,7 +31,7 @@ export default function SupportQuestions({
         <p className="mt-1 text-[15px] text-white/60">{articles.length} articles</p>
       </div>
 
-      {trustCard ? (
+      {trustCard && !compact ? (
         <div className="shrink-0 px-4 pb-3">
           <SupportProtectionTrustCard trustCard={trustCard} />
         </div>

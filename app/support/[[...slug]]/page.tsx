@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import SupportCenter from "@/components/support/SupportCenter";
+import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME } from "@/lib/site";
 import {
   buildArticleMetadata,
   buildSupportFaqJsonLd,
+  buildSupportHubMetadata,
   getAllArticlePaths,
   getArticle,
   resolveSelection,
@@ -27,33 +29,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const [categorySlug, articleSlug] = slug ?? [];
   const { categoryId, articleId } = resolveSelection(categorySlug, articleSlug);
   const articleMeta = buildArticleMetadata(categoryId, articleId);
+  const hubMeta = buildSupportHubMetadata();
 
-  if (!articleMeta) {
-    return {
-      title: "Support | Protronics Help Center",
-      description:
-        "Premium help center for refurbished refrigerators—warranty, delivery, returns, and expert support.",
-    };
-  }
+  const meta = !slug?.length ? hubMeta : articleMeta ?? hubMeta;
 
   return {
-    title: articleMeta.title,
-    description: articleMeta.description,
+    title: meta.title,
+    description: meta.description,
     alternates: {
-      canonical: articleMeta.path,
+      canonical: meta.path,
     },
     openGraph: {
-      title: articleMeta.title,
-      description: articleMeta.description,
-      type: "article",
+      title: meta.title,
+      description: meta.description,
+      type: slug?.length === 2 ? "article" : "website",
+      url: absoluteUrl(meta.path),
+      images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_NAME }],
     },
-    keywords: [
-      "refurbished refrigerators support",
-      "appliance warranty",
-      "refurbished appliances help",
-      articleMeta.categoryLabel,
-      articleMeta.question,
-    ],
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.description,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 
@@ -68,6 +66,35 @@ export default async function SupportPage({ params }: PageProps) {
   const { categoryId, articleId } = resolveSelection(categorySlug, articleSlug);
   const faqJsonLd = buildSupportFaqJsonLd();
   const article = getArticle(categoryId, articleId);
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: absoluteUrl("/"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Support",
+        item: absoluteUrl("/support"),
+      },
+      ...(article
+        ? [
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: article.question,
+              item: absoluteUrl(`/support/${categoryId}/${articleId}`),
+            },
+          ]
+        : []),
+    ],
+  };
 
   const articleJsonLd = article
     ? {
@@ -91,6 +118,10 @@ export default async function SupportPage({ params }: PageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {articleJsonLd ? (
         <script
