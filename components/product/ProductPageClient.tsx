@@ -58,7 +58,7 @@ export default function ProductPageClient({ product, related }: ProductPageClien
     <>
       {/* Mobile — marketplace PDP */}
       <div className="product-page-main lg:hidden">
-        <ProductPageMobile product={product} related={related} category={category} />
+        <ProductPageMobile product={product} related={related} category={category ?? undefined} />
       </div>
 
       {/* Desktop — approved layout (unchanged) */}
