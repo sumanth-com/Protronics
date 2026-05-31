@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const FALLBACK = "/featured/featured-1.jpg";
+const FALLBACK = "/featured/featured-1.webp";
 
 type ProductRelatedProps = {
   products: ShopProduct[];

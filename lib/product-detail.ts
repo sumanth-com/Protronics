@@ -29,10 +29,10 @@ export type ProductDetail = ShopProduct & {
 };
 
 const IMAGE_ANGLES = [
-  "/featured/featured-1.jpg",
-  "/featured/featured-2.jpg",
-  "/featured/featured-3.jpg",
-  "/featured/featured-4.jpg",
+  "/featured/featured-1.webp",
+  "/featured/featured-2.webp",
+  "/featured/featured-3.webp",
+  "/featured/featured-4.webp",
 ];
 
 function hashIndex(id: string, max: number) {

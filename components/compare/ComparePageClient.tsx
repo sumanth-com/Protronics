@@ -20,7 +20,7 @@ import {
 import { buildProductPath, getWhatsAppInquiryLink } from "@/lib/product-detail";
 import { cn } from "@/lib/utils";
 
-const FALLBACK = "/featured/featured-1.jpg";
+const FALLBACK = "/featured/featured-1.webp";
 
 const ROW_WINNER: Partial<Record<string, CompareWinnerKey>> = {
   capacity: "bestCapacity",

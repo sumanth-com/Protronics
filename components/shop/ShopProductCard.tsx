@@ -12,7 +12,7 @@ import type { ShopProduct } from "@/lib/shop";
 import { getWhatsAppProductLink } from "@/lib/shop";
 import { cn } from "@/lib/utils";
 
-const FALLBACK = "/featured/featured-1.jpg";
+const FALLBACK = "/featured/featured-1.webp";
 const TRUST_BADGES = ["Tested", "Sanitized", "Warranty Included"] as const;
 
 type ShopProductCardProps = {

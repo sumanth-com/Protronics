@@ -28,7 +28,7 @@ export default function TestimonialsSection() {
         location: "Indiranagar, Bengaluru",
         rating: 4.9,
         verified: true,
-        homeImageSrc: "/testimonials/home-1.jpg",
+        homeImageSrc: "/testimonials/home-1.webp",
       },
       {
         quote:
@@ -45,7 +45,7 @@ export default function TestimonialsSection() {
         location: "HSR Layout, Bengaluru",
         rating: 4.8,
         verified: true,
-        homeImageSrc: "/testimonials/home-2.jpg",
+        homeImageSrc: "/testimonials/home-2.webp",
       },
       {
         quote:

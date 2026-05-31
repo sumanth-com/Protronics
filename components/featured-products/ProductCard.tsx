@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import ProductBadge from "@/components/featured-products/ProductBadge";
 import ProductCTA from "@/components/featured-products/ProductCTA";
 
-const FALLBACK_IMAGE = "/featured/featured-1.jpg";
+const FALLBACK_IMAGE = "/featured/featured-1.webp";
 
 /** Shorter pill copy so badges stay on one row inside narrow cards */
 function badgeDisplayLabel(label: string): string {

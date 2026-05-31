@@ -9,103 +9,115 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import { cn } from "@/lib/utils";
+import { DESKTOP_HERO_SLIDES, MOBILE_HERO_SLIDES } from "@/lib/hero-slides";
 import TrustMetrics from "@/components/hero/TrustMetrics";
 import SliderControls from "@/components/hero/SliderControls";
 import HeroSlide, { type Slide } from "@/components/hero/HeroSlide";
-import Slide1 from "@/assets/1.png";
-import Slide2 from "@/assets/2.png";
-import Slide3 from "@/assets/3.png";
-import Slide4 from "@/assets/4.png";
-import Slide5 from "@/assets/5.png";
+
+const HERO_DOTS_STYLE = `
+  .swiper,
+  .swiper-wrapper,
+  .swiper-slide {
+    height: 100%;
+  }
+  .hero-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.22);
+    transition: width 280ms cubic-bezier(0.22, 1, 0.36, 1), background 280ms ease;
+    display: inline-block;
+  }
+  .hero-dot-active {
+    width: 28px;
+    background: rgba(255, 255, 255, 0.88);
+  }
+`;
+
+function toSlides(images: typeof MOBILE_HERO_SLIDES): Slide[] {
+  return images.map((imageSrc) => ({ imageSrc }));
+}
 
 export default function HeroSlider() {
-  const slides = useMemo<Slide[]>(
-    () => [
-      {
-        imageSrc: Slide1,
-      },
-      {
-        imageSrc: Slide2,
-      },
-      {
-        imageSrc: Slide3,
-      },
-      {
-        imageSrc: Slide4,
-      },
-      {
-        imageSrc: Slide5,
-      },
-    ],
-    [],
-  );
+  const mobileSlides = useMemo(() => toSlides(MOBILE_HERO_SLIDES), []);
+  const desktopSlides = useMemo(() => toSlides(DESKTOP_HERO_SLIDES), []);
 
   return (
-    <section
-      className="hero-section relative overflow-hidden bg-black"
-    >
+    <section className="hero-section relative overflow-hidden bg-black">
       <div className="hero-slider-wrap w-full">
         <div
           className={cn(
             "theme-preserve-dark hero-slider-shell relative overflow-hidden rounded-2xl sm:rounded-[32px] lg:rounded-[32px]",
-            "border border-white/10 bg-white/[0.03]",
-            "supports-[backdrop-filter]:bg-white/[0.04] supports-[backdrop-filter]:backdrop-blur-2xl",
-            "shadow-[0_40px_160px_rgba(0,0,0,0.75)]",
+            "border border-white/10 bg-black",
+            "max-lg:shadow-[var(--theme-shadow-sm)]",
+            "lg:border-white/10 lg:bg-white/[0.03] lg:shadow-[0_40px_160px_rgba(0,0,0,0.75)]",
           )}
         >
-          <Swiper
-            modules={[Autoplay, EffectFade, Navigation, Pagination]}
-            effect="fade"
-            fadeEffect={{ crossFade: true }}
-            navigation={{ nextEl: ".hero-next", prevEl: ".hero-prev" }}
-            pagination={{
-              el: ".hero-dots",
-              clickable: true,
-              bulletClass: "hero-dot",
-              bulletActiveClass: "hero-dot-active",
-            }}
-            autoplay={{ delay: 5200, disableOnInteraction: false }}
-            speed={900}
-            loop
-            className="w-full h-full"
-          >
-            {slides.map((s, i) => (
-              <SwiperSlide key={i}>
-                <HeroSlide slide={s} priority={i === 0} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {/* Mobile + tablet — sharp slides, no fade blur */}
+          <div className="absolute inset-0 lg:hidden">
+            <Swiper
+              modules={[Autoplay, Pagination]}
+              autoplay={{ delay: 4500, disableOnInteraction: false }}
+              speed={400}
+              loop
+              className="h-full w-full"
+              pagination={{
+                el: ".hero-dots-mobile",
+                clickable: true,
+                bulletClass: "hero-dot",
+                bulletActiveClass: "hero-dot-active",
+              }}
+            >
+              {mobileSlides.map((s, i) => (
+                <SwiperSlide key={`m-${i}`}>
+                  <HeroSlide slide={s} priority={i === 0} variant="mobile" />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
 
-          <SliderControls />
+          {/* Desktop */}
+          <div className="absolute inset-0 hidden lg:block">
+            <Swiper
+              modules={[Autoplay, EffectFade, Navigation, Pagination]}
+              effect="fade"
+              fadeEffect={{ crossFade: true }}
+              navigation={{ nextEl: ".hero-next", prevEl: ".hero-prev" }}
+              pagination={{
+                el: ".hero-dots",
+                clickable: true,
+                bulletClass: "hero-dot",
+                bulletActiveClass: "hero-dot-active",
+              }}
+              autoplay={{ delay: 5200, disableOnInteraction: false }}
+              speed={700}
+              loop
+              className="h-full w-full"
+            >
+              {desktopSlides.map((s, i) => (
+                <SwiperSlide key={`d-${i}`}>
+                  <HeroSlide slide={s} priority={i === 0} variant="desktop" />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            <SliderControls />
+          </div>
 
-          {/* Slider dots — mobile marketplace + desktop */}
-          <div className="pointer-events-none absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 items-center lg:bottom-5">
-            <div className="hero-dots-pill pointer-events-auto rounded-full border border-white/10 bg-black/55 px-3 py-2 supports-[backdrop-filter]:bg-black/35 supports-[backdrop-filter]:backdrop-blur-xl shadow-[0_24px_70px_rgba(0,0,0,0.70)]">
+          <div className="pointer-events-none absolute bottom-3 left-1/2 z-30 flex -translate-x-1/2 items-center lg:hidden">
+            <div className="hero-dots-pill pointer-events-auto rounded-full border border-white/15 bg-black/70 px-3 py-2">
+              <div className="hero-dots-mobile flex items-center gap-2" />
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute bottom-3 left-1/2 z-30 hidden -translate-x-1/2 items-center lg:bottom-5 lg:flex">
+            <div className="hero-dots-pill pointer-events-auto rounded-full border border-white/10 bg-black/55 px-3 py-2">
               <div className="hero-dots flex items-center gap-2" />
             </div>
           </div>
 
-          {/* Swiper bullet styling */}
-          <style jsx global>{`
-            .swiper,
-            .swiper-wrapper,
-            .swiper-slide {
-              height: 100%;
-            }
-            .hero-dot {
-              width: 8px;
-              height: 8px;
-              border-radius: 9999px;
-              background: rgba(255, 255, 255, 0.22);
-              transition: all 280ms cubic-bezier(0.22, 1, 0.36, 1);
-              display: inline-block;
-            }
-            .hero-dot-active {
-              width: 28px;
-              background: rgba(255, 255, 255, 0.88);
-              box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.12);
-            }
-          `}</style>
+          <style jsx global>
+            {HERO_DOTS_STYLE}
+          </style>
         </div>
       </div>
 
@@ -113,4 +125,3 @@ export default function HeroSlider() {
     </section>
   );
 }
-

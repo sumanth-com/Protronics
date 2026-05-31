@@ -13,7 +13,7 @@ import FooterNewsletter from "@/components/footer/FooterNewsletter";
 import FooterSocials from "@/components/footer/FooterSocials";
 import FooterBottom from "@/components/footer/FooterBottom";
 import CtaButton from "@/components/ui/CtaButton";
-import Logo from "@/assets/Logo.png";
+import Logo from "@/assets/Logo.webp";
 
 const footerCard = cn(
   "footer-card footer-surface rounded-2xl border border-theme-border sm:rounded-[24px]",

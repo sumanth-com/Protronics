@@ -9,7 +9,7 @@ import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import AboutAmbient from "@/components/about/AboutAmbient";
 import CtaButton from "@/components/ui/CtaButton";
-import HeroImage from "@/assets/3.png";
+import HeroImage from "@/assets/3.webp";
 import { WHY_LINKS } from "@/lib/why";
 import { fadeUp, stagger } from "@/lib/animations";
 import { canRunGsapScroll, gsapScroller } from "@/lib/gsapScroll";

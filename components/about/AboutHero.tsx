@@ -6,7 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import AboutAmbient from "@/components/about/AboutAmbient";
 import CtaButton from "@/components/ui/CtaButton";
-import HeroImage from "@/assets/About.png";
+import HeroImage from "@/assets/About.webp";
 import { ABOUT_LINKS } from "@/lib/about";
 import { fadeUp, stagger } from "@/lib/animations";
 import { cn } from "@/lib/utils";

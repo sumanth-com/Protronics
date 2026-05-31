@@ -1,6 +1,6 @@
 /** Default Next/Image quality — balances sharpness and payload size. */
 export const IMAGE_QUALITY = {
-  hero: 82,
+  hero: 90,
   product: 80,
   card: 75,
   logo: 85,
@@ -11,7 +11,7 @@ export const IMAGE_QUALITY = {
 export const SECTION_IMAGES = {
   finalCta:
     "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=2000&q=80",
-  warrantySupport: "/warranty/support-visual.jpg",
+  warrantySupport: "/warranty/support-visual.webp",
 } as const;
 
 /** Hero rating pill — overlapping customer avatars. */

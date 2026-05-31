@@ -11,7 +11,7 @@ import SearchTrigger from "@/components/search/SearchTrigger";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
-import Logo from "@/assets/Logo.png";
+import Logo from "@/assets/Logo.webp";
 
 const navLinks = [
   { label: "Support", href: "/support" },

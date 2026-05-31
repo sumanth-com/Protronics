@@ -6,7 +6,7 @@ import { Star } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-const FALLBACK_IMAGE = "/featured/featured-1.jpg";
+const FALLBACK_IMAGE = "/featured/featured-1.webp";
 
 export type MarketplaceProduct = {
   name: string;

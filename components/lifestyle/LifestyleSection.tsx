@@ -25,14 +25,14 @@ export default function LifestyleSection() {
 
           <motion.div variants={fadeUp} className="md:col-span-7">
             <LifestyleImage
-              src="/lifestyle/lifestyle-1.jpg"
+              src="/lifestyle/lifestyle-1.webp"
               alt="Modern premium kitchen interior"
               className="aspect-[5/4] md:aspect-[16/10]"
             />
 
             <div className="mt-4 hidden grid-cols-2 gap-4 md:grid">
               <LifestyleImage
-                src="/lifestyle/lifestyle-2.jpg"
+                src="/lifestyle/lifestyle-2.webp"
                 alt="Warm luxury home interior"
                 className="aspect-[4/3]"
               />
