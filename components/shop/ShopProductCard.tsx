@@ -37,7 +37,7 @@ function ShopProductCardImage({ image, alt }: { image: string; alt: string }) {
       src={src}
       alt={alt}
       fill
-      sizes="120px"
+      sizes="(min-width: 1024px) 156px, (min-width: 640px) 136px, 116px"
       className={cn(
         "object-contain p-2 transition-opacity duration-300",
         loaded ? "opacity-100" : "opacity-0",

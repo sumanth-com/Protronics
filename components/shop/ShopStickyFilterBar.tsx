@@ -120,7 +120,7 @@ export default function ShopStickyFilterBar({
   return (
     <div className="shop-filter-shell">
       <div className="shop-filter-bar relative border-0 bg-transparent lg:border-b lg:border-theme-border lg:bg-theme-surface-card">
-        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:max-w-[84rem]">
           <div className="mb-2.5 flex items-baseline justify-between gap-3 lg:hidden">
             <h1 className="truncate text-base font-bold text-theme-fg">{listTitle}</h1>
             <p className="shrink-0 text-xs font-medium text-theme-fg-muted">

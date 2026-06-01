@@ -16,6 +16,7 @@ import {
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CompareButton from "@/components/compare/CompareButton";
+import ProductShareButton from "@/components/product/ProductShareButton";
 import ProductMobileGallery from "@/components/product/mobile/ProductMobileGallery";
 import {
   useRecentlyViewedProducts,
@@ -216,7 +217,16 @@ export default function ProductPageMobile({
           </span>
         ) : null}
 
-        <h1 className="text-[17px] font-semibold leading-snug text-theme-fg">{product.name}</h1>
+        <div className="flex items-start justify-between gap-2">
+          <h1 className="min-w-0 flex-1 text-[17px] font-semibold leading-snug text-theme-fg">
+            {product.name}
+          </h1>
+          <ProductShareButton
+            productId={product.id}
+            productName={product.name}
+            variant="icon"
+          />
+        </div>
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <div className="flex items-center gap-1">
@@ -381,7 +391,17 @@ export default function ProductPageMobile({
           <p className="mb-2.5 text-[12px] text-theme-fg-muted">
             Add to compare with up to 2 other appliances
           </p>
-          <CompareButton productId={product.id} className="w-full justify-center py-2.5 text-[13px]" />
+          <div className="flex gap-2">
+            <CompareButton
+              productId={product.id}
+              className="min-w-0 flex-1 justify-center py-2.5 text-[13px]"
+            />
+            <ProductShareButton
+              productId={product.id}
+              productName={product.name}
+              className="min-w-0 flex-1 justify-center py-2.5 text-[13px]"
+            />
+          </div>
         </section>
 
         <ProductCarousel title="Related Products" products={related} />

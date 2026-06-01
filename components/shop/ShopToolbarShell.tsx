@@ -7,7 +7,7 @@ type Props = {
   children: ReactNode;
 };
 
-/** Fixed filter block on mobile; products start below via --shop-header-pad. */
+/** Fixed filter bar under navbar; products start below via --shop-header-pad. */
 export default function ShopToolbarShell({ children }: Props) {
   const toolbarRef = useRef<HTMLDivElement>(null);
   const [navHeight, setNavHeight] = useState(0);
@@ -45,11 +45,9 @@ export default function ShopToolbarShell({ children }: Props) {
   return (
     <div
       ref={toolbarRef}
-      style={topPx != null ? { top: topPx } : undefined}
+      style={topPx != null ? { top: topPx } : { top: "var(--navbar-offset)" }}
       className={cn(
-        "shop-sticky-toolbar z-40 border-b border-theme-border bg-theme-bg",
-        "max-lg:fixed max-lg:inset-x-0",
-        "lg:sticky lg:top-[var(--navbar-offset)] lg:z-[49]",
+        "shop-sticky-toolbar fixed inset-x-0 z-[49] border-b border-theme-border bg-theme-bg",
       )}
     >
       {children}

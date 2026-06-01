@@ -3,6 +3,7 @@
 import { Phone } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CompareButton from "@/components/compare/CompareButton";
+import ProductShareButton from "@/components/product/ProductShareButton";
 import { getWhatsAppInquiryLink, type ProductDetail } from "@/lib/product-detail";
 
 type ProductLeadActionsProps = {
@@ -52,7 +53,7 @@ export function ProductLeadActions({
           Reserve This Appliance
         </button>
 
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-4 gap-2">
           <a
             href={whatsappHref}
             target="_blank"
@@ -66,6 +67,13 @@ export function ProductLeadActions({
 
           <CompareButton
             productId={product.id}
+            size="sm"
+            className="min-w-0 px-2 text-[10px] sm:px-3 sm:text-[11px]"
+          />
+
+          <ProductShareButton
+            productId={product.id}
+            productName={product.name}
             size="sm"
             className="min-w-0 px-2 text-[10px] sm:px-3 sm:text-[11px]"
           />

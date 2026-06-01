@@ -77,19 +77,61 @@ export default function RootLayout({
                 <svg
                   className="splash-fridge-svg"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="80"
-                  height="80"
-                  viewBox="0 0 24 24"
+                  viewBox="0 0 56 72"
                   fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                  aria-hidden
                 >
-                  <path d="M5 6c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6Z" />
-                  <path d="M5 10h14" />
-                  <path d="M9 16v-4" />
-                  <path d="M15 16v-4" />
+                  <rect
+                    x="9"
+                    y="3"
+                    width="38"
+                    height="66"
+                    rx="4"
+                    fill="#ebe4db"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                  />
+                  <rect
+                    x="11.5"
+                    y="6"
+                    width="33"
+                    height="21"
+                    rx="2"
+                    fill="#ffffff"
+                    stroke="currentColor"
+                    strokeWidth="1.25"
+                  />
+                  <rect
+                    x="11.5"
+                    y="29.5"
+                    width="33"
+                    height="35.5"
+                    rx="2"
+                    fill="#ffffff"
+                    stroke="currentColor"
+                    strokeWidth="1.25"
+                  />
+                  <line
+                    x1="11.5"
+                    y1="28"
+                    x2="44.5"
+                    y2="28"
+                    stroke="currentColor"
+                    strokeWidth="1.25"
+                  />
+                  <rect x="40" y="11" width="2.75" height="11" rx="1.25" fill="currentColor" />
+                  <rect x="40" y="38" width="2.75" height="15" rx="1.25" fill="currentColor" />
+                  <rect
+                    x="15"
+                    y="58"
+                    width="27"
+                    height="3.5"
+                    rx="1"
+                    fill="currentColor"
+                    opacity="0.12"
+                  />
+                  <rect x="13" y="67" width="5.5" height="2.5" rx="1" fill="currentColor" />
+                  <rect x="37.5" y="67" width="5.5" height="2.5" rx="1" fill="currentColor" />
                 </svg>
               </div>
             </div>

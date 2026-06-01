@@ -154,7 +154,7 @@ export default function HeroNavbar() {
               <NavCtaIcon variant="shop">
                 <ShoppingBag className="nav-cta-icon-glyph" strokeWidth={2.25} />
               </NavCtaIcon>
-              <span className="nav-cta-label">Shop Now</span>
+              <span className="nav-cta-label">Shop</span>
             </CtaButton>
           </div>
         </div>

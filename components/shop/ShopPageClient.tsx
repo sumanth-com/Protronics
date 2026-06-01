@@ -86,7 +86,7 @@ export default function ShopPageClient({
         />
       </ShopToolbarShell>
 
-      <div className="shop-products-area relative z-0 mx-auto max-w-7xl px-4 pb-3 pt-2 sm:px-6 sm:pb-5 max-lg:pt-[var(--shop-header-pad)] lg:pt-5">
+      <div className="shop-products-area relative z-0 mx-auto max-w-7xl px-4 pb-3 pt-[var(--shop-header-pad,9.25rem)] sm:px-6 sm:pb-5 lg:max-w-[84rem]">
         <ShopOffersCarousel />
         {filtered.length > 0 ? (
           <div className="shop-product-list mt-3">

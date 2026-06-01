@@ -13,6 +13,7 @@ import {
 } from "@/components/product/ProductSections";
 import ProductStickyBar from "@/components/product/ProductStickyBar";
 import CompareButton from "@/components/compare/CompareButton";
+import ProductShareButton from "@/components/product/ProductShareButton";
 import ProductPageMobile from "@/components/product/mobile/ProductPageMobile";
 import {
   TRUST_BADGES,
@@ -144,7 +145,14 @@ export default function ProductPageClient({ product, related }: ProductPageClien
                   ))}
                 </ul>
 
-                <CompareButton productId={product.id} className="mt-1" />
+                <div className="mt-1 flex flex-wrap items-center gap-2">
+                  <CompareButton productId={product.id} />
+                  <ProductShareButton
+                    productId={product.id}
+                    productName={product.name}
+                    variant="ghost"
+                  />
+                </div>
               </div>
             </div>
           </div>

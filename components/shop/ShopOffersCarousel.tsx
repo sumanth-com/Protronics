@@ -44,21 +44,21 @@ export default function ShopOffersCarousel() {
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
-        className="shop-offers-swiper !h-[3.25rem] !overflow-hidden rounded-lg"
+        className="shop-offers-swiper !overflow-hidden rounded-lg"
         aria-label="Shop offers"
       >
         {OFFERS.map((offer) => (
-          <SwiperSlide key={offer.id} className="!h-[3.25rem]">
+          <SwiperSlide key={offer.id} className="shop-offers-slide">
             <div
               className={cn(
-                "shop-offer-slide flex h-[3.25rem] flex-col justify-center rounded-lg px-3 py-1.5",
+                "shop-offer-slide flex flex-col justify-center rounded-lg px-3 py-1.5",
                 offer.tone === "primary" ? "shop-offer-slide--primary" : "shop-offer-slide--dark",
               )}
             >
-              <p className="shop-offer-title text-[13px] font-bold leading-tight">
+              <p className="shop-offer-title font-bold leading-tight">
                 {offer.title}
               </p>
-              <p className="shop-offer-sub mt-0.5 truncate text-[10px] leading-tight opacity-90">
+              <p className="shop-offer-sub mt-0.5 truncate leading-tight opacity-90">
                 {offer.subtitle}
               </p>
             </div>
