@@ -1,9 +1,9 @@
 export const SPLASH_SESSION_KEY = "protronics-splash-seen";
 export const SPLASH_START_KEY = "protronics-splash-start";
 
-/** Full splash hold 3s, then fade (~0.65s), then app is live */
+/** Full splash hold 3s, then cinematic fade (~0.75s), then app is live */
 export const SPLASH_EXIT_AT_MS = 3000;
-export const SPLASH_HIDE_AT_MS = 3650;
+export const SPLASH_HIDE_AT_MS = 3750;
 export const SPLASH_DURATION_MS = SPLASH_HIDE_AT_MS;
 
 export const SPLASH_TAGLINE = "Premium. Refurbished. Perfected.";

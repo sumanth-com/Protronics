@@ -41,8 +41,16 @@ export default function RootLayout({
         <GlobalJsonLd />
         {/* Instant splash before JS — shown only when html.splash-active (see lib/splash.ts) */}
         <div id="splash-static" className="splash-screen splash-static" aria-hidden="true">
+          <div className="splash-ambient" aria-hidden>
+            <span className="splash-orb splash-orb--a" />
+            <span className="splash-orb splash-orb--b" />
+            <span className="splash-orb splash-orb--c" />
+            <span className="splash-shimmer" />
+          </div>
           <div className="splash-screen-content">
             <div className="splash-reveal-stage">
+              <span className="splash-logo-ring" aria-hidden />
+              <span className="splash-logo-glow" aria-hidden />
               <div className="splash-logo-layer">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -116,7 +124,17 @@ export default function RootLayout({
               </div>
             </div>
             <p className="splash-tagline">
-              <span className="splash-tagline-text">{SPLASH_TAGLINE}</span>
+              <span className="splash-tagline-text">
+                <span className="splash-tagline-part" style={{ ["--splash-i" as string]: 0 }}>
+                  Premium.
+                </span>{" "}
+                <span className="splash-tagline-part" style={{ ["--splash-i" as string]: 1 }}>
+                  Refurbished.
+                </span>{" "}
+                <span className="splash-tagline-part" style={{ ["--splash-i" as string]: 2 }}>
+                  Perfected.
+                </span>
+              </span>
             </p>
           </div>
           <div className="splash-progress" aria-hidden>
