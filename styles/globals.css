@@ -137,8 +137,8 @@ html.splash-reveal #site-shell {
   pointer-events: auto;
   transform: translateY(0);
   transition:
-    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.05s,
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
 }
 
 #splash-static {
@@ -147,6 +147,13 @@ html.splash-reveal #site-shell {
 
 html.splash-active #splash-static {
   display: flex;
+  opacity: 1;
+}
+
+html.splash-active:not(.splash-exiting) #site-shell {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 .splash-screen {
@@ -169,7 +176,7 @@ html.splash-active #splash-static {
   pointer-events: all;
   touch-action: none;
   opacity: 1;
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 [data-theme="light"] .splash-screen {
@@ -322,7 +329,7 @@ html.splash-exiting #splash-static,
   width: 0;
   border-radius: inherit;
   background: var(--splash-progress-fill);
-  animation: splash-progress-fill 2.85s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+  animation: splash-progress-fill 3s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
 }
 
 @keyframes splash-logo-pop {

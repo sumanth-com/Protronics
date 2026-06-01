@@ -1,8 +1,10 @@
 export const SPLASH_SESSION_KEY = "protronics-splash-seen";
+export const SPLASH_START_KEY = "protronics-splash-start";
 
-/** Total splash duration — 3.0s (fade begins at 2.4s) */
-export const SPLASH_EXIT_AT_MS = 2400;
-export const SPLASH_HIDE_AT_MS = 3000;
+/** Full splash hold 3s, then fade (~0.65s), then app is live */
+export const SPLASH_EXIT_AT_MS = 3000;
+export const SPLASH_HIDE_AT_MS = 3650;
+export const SPLASH_DURATION_MS = SPLASH_HIDE_AT_MS;
 
 export const SPLASH_TAGLINE = "Premium. Refurbished. Perfected.";
 
@@ -10,4 +12,4 @@ export const SPLASH_TAGLINE = "Premium. Refurbished. Perfected.";
  * Runs before paint on first session visit — sets page bg to match splash
  * so there is no white flash before React hydrates.
  */
-export const SPLASH_BLOCKING_SCRIPT = `(function(){try{if(sessionStorage.getItem(${JSON.stringify(SPLASH_SESSION_KEY)}))return;document.documentElement.classList.add("splash-active");var t=document.documentElement.getAttribute("data-theme");var bg=t==="light"?"#f7f3ed":"#0a0a0a";document.documentElement.style.backgroundColor=bg;document.documentElement.style.colorScheme=t==="light"?"light":"dark";}catch(e){}})();`;
+export const SPLASH_BLOCKING_SCRIPT = `(function(){try{if(sessionStorage.getItem(${JSON.stringify(SPLASH_SESSION_KEY)}))return;sessionStorage.setItem(${JSON.stringify(SPLASH_START_KEY)},String(Date.now()));document.documentElement.classList.add("splash-active");var t=document.documentElement.getAttribute("data-theme");var bg=t==="light"?"#f7f3ed":"#0a0a0a";document.documentElement.style.backgroundColor=bg;document.documentElement.style.colorScheme=t==="light"?"light":"dark";}catch(e){}})();`;
