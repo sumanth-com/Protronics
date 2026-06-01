@@ -25,7 +25,7 @@ export default function TradeInAccepted() {
         <TradeInReveal>
           <TradeInSectionHeader
             eyebrow="ELIGIBLE APPLIANCES"
-            title="What You Can Trade In"
+            title="What You Can Sell"
             description="Leading brands across major home appliance categories—we evaluate fairly, not like a scrap dealer."
           />
         </TradeInReveal>

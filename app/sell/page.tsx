@@ -1,36 +1,14 @@
 import type { Metadata } from "next";
 import TradeInPage from "@/components/trade-in/TradeInPage";
 import { tradeInPageJsonLd } from "@/lib/trade-in";
+import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Sell Old Appliances | Trade-In Program | Protronics",
-  description:
-    "Trade in or sell your old refrigerator and appliances. Get a fair valuation, upgrade affordably, and enjoy a hassle-free experience with Protronics.",
-  keywords: [
-    "sell old refrigerator",
-    "trade in fridge",
-    "appliance exchange",
-    "sell old appliance",
-    "refrigerator trade in",
-    "appliance trade-in",
-    "Protronics trade-in",
-  ],
-  alternates: {
-    canonical: "/sell",
-  },
-  openGraph: {
-    title: "Sell Old Appliances | Trade-In Program | Protronics",
-    description:
-      "Trade in or sell your old refrigerator and appliances. Get a fair valuation and upgrade affordably.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary",
-    title: "Sell Old Appliances | Trade-In Program | Protronics",
-    description:
-      "Fair appliance trade-in valuations with hassle-free pickup and upgrade options.",
-  },
-};
+export const metadata: Metadata = buildPageMetadata({
+  title: PAGE_SEO.sell.title,
+  description: PAGE_SEO.sell.description,
+  path: PAGE_SEO.sell.path,
+  keywords: [...PAGE_SEO.sell.keywords],
+});
 
 export default function SellPage() {
   return (

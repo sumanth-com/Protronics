@@ -415,14 +415,14 @@ export function buildCategoryMetadata(slug?: string) {
   const category = getCategoryBySlug(slug);
   if (!category) {
     return {
-      title: "Shop Premium Renewed Appliances | Protronics",
+      title: "Shop Refurbished Refrigerators | Protronics",
       description:
-        "Browse professionally restored refrigerators—tested, sanitized, and warranty protected. Single door, double door, mini, premium & commercial.",
+        "Browse certified refurbished refrigerators from trusted brands. Quality tested, sanitized, warranty included, and ready for delivery.",
     };
   }
   return {
-    title: `${category.label} Refrigerators | Protronics Shop`,
-    description: `Shop premium renewed ${category.label.toLowerCase()} refrigerators—100+ checks, sanitization, warranty included. ${category.description}.`,
+    title: `${category.label} Refurbished Refrigerators | Protronics`,
+    description: `Shop certified refurbished ${category.label.toLowerCase()} refrigerators—100+ quality checks, sanitization, warranty included. ${category.description}.`,
   };
 }
 

@@ -126,7 +126,7 @@ export default function TradeInForm() {
         estimatedLow: estimate?.low,
         estimatedHigh: estimate?.high,
         pageUrl: typeof window !== "undefined" ? window.location.href : "/sell",
-        leadSource: "Trade-In Form",
+        leadSource: "Sell Form",
       });
       setReferenceId(res.referenceId);
       setStatus("success");

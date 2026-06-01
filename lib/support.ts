@@ -380,9 +380,9 @@ export function buildSupportFaqJsonLd() {
 
 export function buildSupportHubMetadata() {
   return {
-    title: "Support | Protronics",
+    title: "Frequently Asked Questions | Protronics",
     description:
-      "Get answers on warranty, delivery, product condition, and returns for premium refurbished refrigerators and appliances in India.",
+      "Find answers about refurbished appliances, warranties, delivery, trade-ins, quality testing, and support.",
     path: "/support",
   };
 }

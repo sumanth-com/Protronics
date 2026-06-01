@@ -5,10 +5,11 @@ import HeroNavbar from "@/components/hero/HeroNavbar";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import AppProviders from "@/components/providers/AppProviders";
 import Footer from "@/components/footer/Footer";
+import GlobalJsonLd from "@/components/seo/GlobalJsonLd";
 import { THEME_BLOCKING_SCRIPT } from "@/lib/theme";
 import { SPLASH_BLOCKING_SCRIPT, SPLASH_TAGLINE } from "@/lib/splash";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { buildRootMetadata } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,35 +18,7 @@ const geistSans = Geist({
   preload: true,
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: `${SITE_NAME} | Premium Refurbished Appliances`,
-    template: `%s | ${SITE_NAME}`,
-  },
-  description: SITE_DESCRIPTION,
-  metadataBase: new URL(SITE_URL),
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
-    siteName: SITE_NAME,
-    title: `${SITE_NAME} | Premium Refurbished Appliances`,
-    description: SITE_DESCRIPTION,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${SITE_NAME} | Premium Refurbished Appliances`,
-    description: SITE_DESCRIPTION,
-  },
-  icons: {
-    icon: [
-      { url: "/logo.webp", type: "image/webp" },
-      { url: "/icon.png", type: "image/png" },
-    ],
-    shortcut: "/logo.webp",
-    apple: "/icon.png",
-  },
-};
+export const metadata: Metadata = buildRootMetadata();
 
 export default function RootLayout({
   children,
@@ -54,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-IN"
       className={`${geistSans.variable} h-full antialiased overflow-x-hidden`}
       suppressHydrationWarning
     >
@@ -65,13 +38,20 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col font-sans bg-theme-bg text-theme-fg overflow-x-hidden has-mobile-bottom-nav">
         <GoogleAnalytics />
+        <GlobalJsonLd />
         {/* Instant splash before JS — shown only when html.splash-active (see lib/splash.ts) */}
         <div id="splash-static" className="splash-screen splash-static" aria-hidden="true">
           <div className="splash-screen-content">
             <div className="splash-reveal-stage">
               <div className="splash-logo-layer">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.webp" alt="" width={80} height={80} className="splash-logo-image" />
+                <img
+                  src="/logo.webp"
+                  alt="Protronics logo"
+                  width={80}
+                  height={80}
+                  className="splash-logo-image"
+                />
               </div>
               <div className="splash-fridge-layer" aria-hidden>
                 <svg

@@ -22,8 +22,8 @@ const footerCard = cn(
 
 export default function Footer() {
   return (
-    <footer className="footer-root relative overflow-hidden border-t border-theme-border bg-theme-bg">
-      <div className="footer-root-inner relative mx-auto flex w-full max-w-7xl flex-col px-4 py-6 sm:px-6 sm:py-8">
+    <footer className="footer-root relative w-full overflow-hidden border-t border-theme-border bg-theme-bg">
+      <div className="footer-root-inner relative mx-auto flex w-full max-w-7xl flex-col px-4 py-6 sm:px-6 sm:py-8 lg:max-w-[84rem] lg:px-8 lg:py-10">
         <FooterNewsletter className={footerCard} />
 
         <motion.div
@@ -122,7 +122,12 @@ export default function Footer() {
           </motion.div>
         </motion.div>
 
-        <FooterBottom className="mt-5 border-t border-theme-border-subtle pt-4 sm:mt-6" />
+      </div>
+
+      <div className="footer-bottom-band w-full border-t border-theme-border-subtle bg-theme-bg-secondary">
+        <div className="footer-bottom-inner mx-auto w-full max-w-7xl px-4 sm:px-6 lg:max-w-[84rem] lg:px-8">
+          <FooterBottom />
+        </div>
       </div>
     </footer>
   );

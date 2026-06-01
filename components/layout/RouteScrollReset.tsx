@@ -16,21 +16,13 @@ export default function RouteScrollReset() {
   }, []);
 
   useLayoutEffect(() => {
-    const run = () => resetScrollToTop(lenis);
-
-    run();
+    resetScrollToTop(lenis);
 
     const raf = requestAnimationFrame(() => {
-      run();
       void refreshScrollTriggers();
     });
 
-    const t = window.setTimeout(run, 0);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.clearTimeout(t);
-    };
+    return () => cancelAnimationFrame(raf);
   }, [pathname, lenis]);
 
   return null;

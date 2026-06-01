@@ -3,6 +3,7 @@ const SCRIPT_RE = /^https:\/\/script\.google\.com\/macros\/s\/[a-zA-Z0-9_-]+\/ex
 const url = (
   process.env.VITE_FORM_ENDPOINT_URL ||
   process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL ||
+  process.env.NEXT_PUBLIC_FORM_ENDPOINT ||
   process.env.NEXT_PUBLIC_VITE_FORM_ENDPOINT_URL ||
   process.env.GOOGLE_SHEETS_WEBHOOK_URL ||
   ""
@@ -23,7 +24,7 @@ if (skipAssert) {
 if (!url) {
   const message =
     "[forms] No form endpoint URL set. Forms will not submit until you set " +
-    "VITE_FORM_ENDPOINT_URL or NEXT_PUBLIC_FORM_ENDPOINT_URL (Apps Script /exec URL).";
+    "NEXT_PUBLIC_FORM_ENDPOINT or NEXT_PUBLIC_FORM_ENDPOINT_URL (Apps Script /exec URL).";
 
   if (requireEndpoint) {
     console.error(

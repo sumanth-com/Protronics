@@ -16,9 +16,9 @@ export default function CustomerStories() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <TradeInReveal>
           <TradeInSectionHeader
-            eyebrow="RECENT TRADE-INS"
-            title="Real Trade-Ins, Real Value"
-            description="Customers who sold or traded in through Protronics—not classifieds or scrap dealers."
+            eyebrow="RECENT SELLS"
+            title="Real Sales, Real Value"
+            description="Customers who sold through Protronics—not classifieds or scrap dealers."
             align="center"
           />
         </TradeInReveal>

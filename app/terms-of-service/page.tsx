@@ -1,27 +1,16 @@
 import type { Metadata } from "next";
 import LegalPage from "@/components/legal/LegalPage";
 import { buildLegalPageJsonLd, TERMS_OF_SERVICE_PAGE } from "@/lib/legal";
-import { absoluteUrl } from "@/lib/site";
+import { buildPageMetadata } from "@/lib/seo";
 
 const page = TERMS_OF_SERVICE_PAGE;
 
-export const metadata: Metadata = {
-  title: page.seo.title,
+export const metadata: Metadata = buildPageMetadata({
+  absoluteTitle: page.seo.title,
   description: page.seo.description,
-  keywords: page.seo.keywords,
-  alternates: { canonical: page.path },
-  openGraph: {
-    title: page.seo.title,
-    description: page.seo.description,
-    type: "website",
-    url: absoluteUrl(page.path),
-  },
-  twitter: {
-    card: "summary",
-    title: page.seo.title,
-    description: page.seo.description,
-  },
-};
+  path: page.path,
+  keywords: [...page.seo.keywords],
+});
 
 export default function TermsOfServicePage() {
   const jsonLd = buildLegalPageJsonLd(page);

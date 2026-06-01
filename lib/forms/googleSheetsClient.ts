@@ -21,7 +21,10 @@ let cachedUrl: string | null = null;
 let resolvePromise: Promise<string> | null = null;
 
 function readEnvEndpoint(): string | null {
-  const url = process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL ?? "";
+  const url =
+    process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL ??
+    process.env.NEXT_PUBLIC_FORM_ENDPOINT ??
+    "";
   const trimmed = url.trim();
   return trimmed || null;
 }
@@ -49,7 +52,7 @@ export async function resolveFormEndpointUrl(): Promise<string> {
           ready: false,
           url: null,
           source: "env",
-          error: "Invalid NEXT_PUBLIC_FORM_ENDPOINT_URL format.",
+          error: "Invalid form endpoint URL format (NEXT_PUBLIC_FORM_ENDPOINT).",
         };
         setFormHealth(health);
         throw new Error(health.error);

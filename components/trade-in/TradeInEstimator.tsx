@@ -48,7 +48,7 @@ export default function TradeInEstimator() {
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
         <header className="text-center">
           <h2 className="text-[20px] font-semibold text-theme-fg sm:text-[22px]">
-            Trade-In Estimator
+            Sell Value Estimator
           </h2>
           <p className="mx-auto mt-1 max-w-md text-[14px] leading-relaxed text-theme-fg-muted">
             Select your appliance details for an instant indicative range.
@@ -136,7 +136,7 @@ export default function TradeInEstimator() {
           </div>
 
           <div className="mt-5 rounded-xl border border-theme-border bg-theme-input-bg px-4 py-4">
-            <p className="text-[12px] font-medium text-theme-fg-muted">Estimated Trade-In Range</p>
+            <p className="text-[12px] font-medium text-theme-fg-muted">Estimated Sell Value</p>
             <p className="mt-1 text-[26px] font-bold tracking-tight text-theme-fg sm:text-[30px]">
               {estimate ? formatInrRange(estimate.low, estimate.high) : "—"}
             </p>

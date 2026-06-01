@@ -38,7 +38,7 @@ export const FOOTER_NAV_GROUPS: FooterLinkGroup[] = [
 
 export const FOOTER_LEGAL_LINKS: FooterLink[] = [
   { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms of Service", href: "/terms-of-service" },
+  { label: "Terms & Conditions", href: "/terms-of-service" },
 ];
 
 export const FOOTER_SOCIAL_LINKS = [

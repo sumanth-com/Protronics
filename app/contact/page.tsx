@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import ContactForm from "@/components/contact/ContactForm";
+import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
 
 const ContactOptions = dynamic(
   () => import("@/components/contact/ContactOptions"),
 );
 const ContactFAQ = dynamic(() => import("@/components/contact/ContactFAQ"));
 
-export const metadata: Metadata = {
-  title: "Contact | Protronics",
-  description:
-    "Connect with Protronics experts for premium refurbished refrigerators—WhatsApp, phone, video demo, and personalized guidance.",
-};
+export const metadata: Metadata = buildPageMetadata({
+  absoluteTitle: PAGE_SEO.contact.absoluteTitle,
+  description: PAGE_SEO.contact.description,
+  path: PAGE_SEO.contact.path,
+});
 
 export default function Contact() {
   return (

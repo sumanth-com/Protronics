@@ -1,4 +1,4 @@
 /**
- * @deprecated Use scripts/google-apps-script-backend.js instead.
- * Copy that file into Apps Script and deploy as Web App (Anyone).
+ * @deprecated Use scripts/Code.gs (production) or scripts/google-apps-script-backend.js.
+ * Copy into Apps Script → Deploy → Web app (Anyone).
  */

@@ -8,9 +8,9 @@ export const TERMS_OF_SERVICE_PAGE: LegalPageConfig = {
     "Understand the terms governing the use of Protronics products, services, and this website.",
   lastUpdated: "30 May 2026",
   seo: {
-    title: "Terms of Service | Protronics",
+    title: "Terms & Conditions | Protronics",
     description:
-      "Review the terms governing purchases and use of Protronics services.",
+      "Review the terms governing purchases, warranties, trade-ins, and services provided by Protronics.",
     keywords: [
       "Protronics terms",
       "purchase terms",

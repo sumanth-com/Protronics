@@ -24,7 +24,15 @@ const nextConfig: NextConfig = {
   distDir,
   env: {
     NEXT_PUBLIC_FORM_ENDPOINT_URL:
-      viteFormEndpoint || process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL?.trim() || "",
+      viteFormEndpoint ||
+      process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL?.trim() ||
+      process.env.NEXT_PUBLIC_FORM_ENDPOINT?.trim() ||
+      "",
+    NEXT_PUBLIC_FORM_ENDPOINT:
+      viteFormEndpoint ||
+      process.env.NEXT_PUBLIC_FORM_ENDPOINT?.trim() ||
+      process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL?.trim() ||
+      "",
     NEXT_PUBLIC_GA_MEASUREMENT_ID:
       viteGaId || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || "",
     NEXT_PUBLIC_SITE_URL: siteUrl,

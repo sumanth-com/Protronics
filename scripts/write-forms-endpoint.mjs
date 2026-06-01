@@ -9,6 +9,7 @@ const outPath = join(root, "public", "forms-endpoint.json");
 const url = (
   process.env.VITE_FORM_ENDPOINT_URL ||
   process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL ||
+  process.env.NEXT_PUBLIC_FORM_ENDPOINT ||
   process.env.NEXT_PUBLIC_VITE_FORM_ENDPOINT_URL ||
   process.env.GOOGLE_SHEETS_WEBHOOK_URL ||
   ""

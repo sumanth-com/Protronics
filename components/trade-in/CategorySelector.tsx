@@ -16,7 +16,7 @@ export default function CategorySelector() {
         <TradeInReveal>
           <TradeInSectionHeader
             eyebrow="APPLIANCE CATEGORIES"
-            title="What Can You Trade In?"
+            title="What Can You Sell?"
             description="Select your category when estimating value—we accept all major home appliance types."
           />
         </TradeInReveal>

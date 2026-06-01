@@ -14,7 +14,7 @@ const HERO_PILLS = [
 function TradeInHeroShowcase({ className }: { className?: string }) {
   return (
     <div
-      className={cn("trade-in-hero-showcase relative mx-auto w-full max-w-[340px]", className)}
+      className={cn("trade-in-hero-showcase relative mx-auto w-full max-w-[340px] lg:max-w-none", className)}
       aria-hidden
     >
       <div className="trade-in-hero-showcase-card relative overflow-hidden rounded-2xl border border-theme-border bg-theme-surface-card shadow-theme-sm">
@@ -22,14 +22,14 @@ function TradeInHeroShowcase({ className }: { className?: string }) {
 
         <div className="relative px-5 pb-4 pt-5 sm:px-6 sm:pt-6">
           <p className="text-center text-[11px] font-semibold uppercase tracking-[0.16em] text-theme-fg-faint">
-            Trade-in made simple
+            Selling made simple
           </p>
 
           <div className="mx-auto mt-4 flex justify-center">
             <TradeInApplianceIcon
               variant="hero"
-              boxClass="h-[7.5rem] w-[7.5rem] sm:h-32 sm:w-32"
-              iconClass="h-[4.5rem] w-auto sm:h-[5.25rem]"
+              boxClass="h-[7.5rem] w-[7.5rem] sm:h-32 sm:w-32 lg:h-36 lg:w-36"
+              iconClass="h-[4.5rem] w-auto sm:h-[5.25rem] lg:h-24"
             />
           </div>
 
@@ -64,18 +64,18 @@ export default function TradeInHero() {
         tradeInSection,
       )}
     >
-      <div className="trade-in-hero-inner mx-auto flex w-full max-w-3xl flex-col px-4 sm:px-6 lg:max-w-6xl lg:py-12 xl:py-14">
-        <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-2 lg:items-center lg:gap-10 xl:gap-12">
+      <div className="trade-in-hero-inner mx-auto flex w-full max-w-3xl flex-col px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="flex min-h-0 flex-1 flex-col lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-12 xl:gap-16">
           <div className="trade-in-hero-column flex min-h-0 flex-1 flex-col items-center justify-center text-center lg:items-start lg:text-left">
-            <div className="w-full max-w-[22rem] shrink-0 sm:max-w-md lg:max-w-lg">
+            <div className="w-full max-w-[22rem] shrink-0 sm:max-w-md lg:max-w-xl">
               <h1
                 id="trade-in-hero-heading"
-                className="text-[26px] font-semibold leading-[1.12] tracking-tight text-theme-fg sm:text-[32px] lg:text-[40px] xl:text-[44px]"
+                className="text-[26px] font-semibold leading-[1.12] tracking-tight text-theme-fg sm:text-[32px] lg:text-[44px] xl:text-[52px]"
               >
                 Sell Your Appliance. Get Instant Value.
               </h1>
 
-              <p className="mx-auto mt-2 max-w-md text-[14px] leading-relaxed text-theme-fg-muted sm:mt-3 sm:text-[15px] lg:mx-0 lg:max-w-lg">
+              <p className="mx-auto mt-2 max-w-md text-[14px] leading-relaxed text-theme-fg-muted sm:mt-3 sm:text-[15px] lg:mx-0 lg:mt-4 lg:max-w-lg lg:text-[17px] lg:leading-relaxed">
                 Free valuation, fair pricing, and easy upgrade to premium refurbished appliances.
               </p>
             </div>
@@ -83,8 +83,8 @@ export default function TradeInHero() {
             <TradeInHeroShowcase className="mt-6 w-full shrink-0 lg:hidden" />
           </div>
 
-          <div className="hidden lg:flex lg:justify-end">
-            <TradeInHeroShowcase className="max-w-[380px]" />
+          <div className="hidden min-h-0 lg:flex lg:items-center lg:justify-center lg:pr-2 xl:pr-6">
+            <TradeInHeroShowcase className="w-full max-w-[420px] xl:max-w-[460px]" />
           </div>
         </div>
       </div>

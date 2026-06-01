@@ -16,7 +16,7 @@ export default function TradeInSteps() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <TradeInReveal>
           <TradeInSectionHeader
-            eyebrow="HOW TRADE-IN WORKS"
+            eyebrow="HOW SELLING WORKS"
             title="Four Simple Steps"
             description="From sharing details to upgrading—designed like a premium exchange program, not a classified ad."
             align="center"

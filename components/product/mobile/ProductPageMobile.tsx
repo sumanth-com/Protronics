@@ -316,12 +316,12 @@ export default function ProductPageMobile({
               <p className="text-[13px] font-semibold text-theme-fg">
                 Have an old {tradeInLabel}?
               </p>
-              <p className="mt-0.5 text-[11px] text-theme-fg-muted">Get instant trade-in value</p>
+              <p className="mt-0.5 text-[11px] text-theme-fg-muted">Get an instant sell estimate</p>
               <Link
                 href="/sell"
                 className="mt-2 inline-flex rounded-lg bg-theme-accent px-3 py-2 text-[11px] font-semibold text-theme-accent-fg touch-manipulation active:opacity-90"
               >
-                Check Trade-In Value
+                Check Sell Value
               </Link>
             </div>
           </div>

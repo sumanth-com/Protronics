@@ -24,7 +24,7 @@ export const FORM_REGISTRY: FormRegistryEntry[] = [
   },
   {
     id: FORM_TYPES.TRADE_IN,
-    label: "Trade-In Valuation",
+    label: "Sell / Valuation Form",
     formType: FORM_TYPES.TRADE_IN,
     sheetTab: SHEET_TABS["trade-in"],
     sourcePage: "/sell",

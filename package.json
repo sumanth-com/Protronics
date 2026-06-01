@@ -10,6 +10,7 @@
     "images:webp": "node scripts/convert-images-to-webp.mjs",
     "images:products": "node scripts/fetch-product-images.mjs",
     "images:refrigerators": "node scripts/convert-refrigerator-images.mjs",
+    "seo:assets": "node scripts/generate-favicons.mjs",
     "start": "next start",
     "lint": "eslint"
   },

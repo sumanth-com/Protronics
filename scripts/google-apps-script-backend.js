@@ -57,7 +57,18 @@ var SHEET_HEADERS = {
   Warranty: ["name", "phone", "email", "serialNumber", "purchaseDate", "model"],
 };
 
-var STANDARD_HEADERS = ["Timestamp", "Form Type", "Source Page", "Submitted At"];
+var STANDARD_HEADERS = [
+  "Timestamp",
+  "Form Type",
+  "Source Page",
+  "Submitted At",
+  "Name",
+  "Phone",
+  "Email",
+  "City",
+  "Message",
+  "Source",
+];
 
 function doGet() {
   return jsonResponse_(true, "Form webhook healthy", {
@@ -98,7 +109,8 @@ function doPost(e) {
 
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName(sheetTab) || ss.insertSheet(sheetTab);
-    var row = prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt);
+    var metadata = body.metadata && typeof body.metadata === "object" ? body.metadata : {};
+    var row = prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, metadata);
     ensureSheetHeaders_(sheet, sheetTab);
     sheet.appendRow(row);
 
@@ -171,9 +183,48 @@ function parseUrlEncoded_(raw) {
   return out;
 }
 
+function extractCommonFields_(data, sourcePage, metadata) {
+  var name = data.name || data.fullName || data.full_name || "";
+  var phone = data.phone || "";
+  var email = data.email || "";
+  var city = data.city || "";
+  var message = data.message || data.issue || data.notes || "";
+  var page =
+    sourcePage ||
+    (metadata && metadata.path ? String(metadata.path) : "") ||
+    (metadata && metadata.page_url ? String(metadata.page_url) : "");
+  var source =
+    (metadata && metadata.referrer ? String(metadata.referrer) : "") ||
+    data.leadSource ||
+    data.source ||
+    "";
+  return {
+    name: String(name),
+    phone: String(phone),
+    email: String(email),
+    city: String(city),
+    message: String(message),
+    page: String(page),
+    source: String(source),
+  };
+}
+
 function prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt) {
+  var metadata = arguments[5] || {};
+  var common = extractCommonFields_(data, sourcePage, metadata);
   var headers = getDataHeaders_(sheetTab);
-  var row = [new Date().toISOString(), formType, sourcePage, submittedAt];
+  var row = [
+    new Date().toISOString(),
+    formType,
+    sourcePage,
+    submittedAt,
+    common.name,
+    common.phone,
+    common.email,
+    common.city,
+    common.message,
+    common.source,
+  ];
   for (var i = 0; i < headers.length; i++) {
     var key = headers[i];
     var val = data[key];

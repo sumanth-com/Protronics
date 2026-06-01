@@ -9,6 +9,8 @@ import {
   getProductJsonLd,
   getRelatedProducts,
 } from "@/lib/product-detail";
+import { absoluteUrl } from "@/lib/site";
+import { buildPageMetadata } from "@/lib/seo";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -24,23 +26,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!product) return { title: "Product Not Found | Protronics" };
 
   const meta = buildProductMetadata(product);
-  return {
-    title: meta.title,
+  const ogImage = product.images[0]
+    ? product.images[0].startsWith("http")
+      ? product.images[0]
+      : absoluteUrl(product.images[0])
+    : undefined;
+
+  return buildPageMetadata({
+    absoluteTitle: meta.title,
     description: meta.description,
-    alternates: { canonical: `/product/${slug}` },
-    openGraph: {
-      title: meta.title,
-      description: meta.description,
-      type: "website",
-      images: product.images[0] ? [{ url: product.images[0] }] : undefined,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: meta.title,
-      description: meta.description,
-      images: product.images[0] ? [product.images[0]] : undefined,
-    },
-  };
+    path: `/product/${slug}`,
+    ogImage,
+  });
 }
 
 export default async function ProductPage({ params }: PageProps) {

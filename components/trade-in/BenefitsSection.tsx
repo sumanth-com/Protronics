@@ -12,13 +12,13 @@ export default function BenefitsSection() {
   const listMotion = useTradeInListMotion();
 
   return (
-    <section id="why-trade-in" className={cn("relative py-12 sm:py-20", tradeInSection)}>
+    <section id="why-sell" className={cn("relative py-12 sm:py-20", tradeInSection)}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <TradeInReveal>
           <TradeInSectionHeader
             eyebrow="WHY SELL TO PROTRONICS"
             title="Premium Exchange, Not Classifieds"
-            description="Fair pricing, fast response, and upgrade options—like major brand trade-in programs."
+            description="Fair pricing, fast response, and upgrade options—without classifieds hassle."
             align="center"
           />
         </TradeInReveal>

@@ -15,8 +15,13 @@ import {
   Zap,
 } from "lucide-react";
 import { BUSINESS } from "@/lib/contact";
+import { absoluteUrl, SITE_NAME } from "@/lib/site";
 
+/** Canonical sell page route (`/trade-in` redirects here). */
 export const SELL_PAGE_PATH = "/sell" as const;
+
+/** @deprecated Use SELL_PAGE_PATH */
+export const TRADE_IN_PAGE_PATH = SELL_PAGE_PATH;
 
 export const tradeInGlass = [
   "rounded-2xl border border-theme-border bg-theme-surface-card",
@@ -33,7 +38,7 @@ export const TRADE_IN_LINKS = {
 } as const;
 
 export const TRADE_IN_TRUST_STATS = [
-  { label: "500+ Trade-Ins Completed", icon: Sparkles },
+  { label: "500+ Appliances Sold", icon: Sparkles },
   { label: "Free Evaluation", icon: ClipboardCheck },
   { label: "Fair Market Pricing", icon: CircleDollarSign },
   { label: "Pickup Assistance", icon: Truck },
@@ -222,7 +227,7 @@ export const TRADE_IN_STEPS = [
   {
     step: 2,
     title: "Receive Estimated Value",
-    description: "Get an instant trade-in range online, then a detailed offer from our team.",
+    description: "Get an instant sell-value range online, then a detailed offer from our team.",
   },
   {
     step: 3,
@@ -255,7 +260,7 @@ export const TRADE_IN_BENEFITS = [
   {
     icon: Sparkles,
     title: "Upgrade Options",
-    description: "Apply trade-in credit toward certified refurbished stock.",
+    description: "Apply sell credit toward certified refurbished stock when you upgrade.",
   },
   {
     icon: ClipboardCheck,
@@ -288,7 +293,7 @@ export const TRADE_IN_STORIES = [
   {
     appliance: "Samsung Refrigerator",
     soldFor: "₹5,000",
-    outcome: "Used trade-in credit toward upgrade",
+    outcome: "Used sell credit toward upgrade",
     name: "Rahul K.",
     location: "Whitefield, Bengaluru",
   },
@@ -315,10 +320,10 @@ export const TRADE_IN_FAQS = [
   {
     question: "Can I sell without buying?",
     answer:
-      "Yes. You can sell outright for cash value. Trade-in credit toward a Protronics upgrade is optional—not required.",
+      "Yes. You can sell outright for cash value. Credit toward a Protronics upgrade is optional—not required.",
   },
   {
-    question: "Can I trade non-working appliances?",
+    question: "Can I sell non-working appliances?",
     answer:
       "Often yes. Non-working units may receive a lower offer, but many still hold recovery value. Share photos and we will advise honestly.",
   },
@@ -341,10 +346,10 @@ export const tradeInPageJsonLd = {
   "@graph": [
     {
       "@type": "WebPage",
-      name: "Sell Old Appliances | Trade-In Program | Protronics",
+      name: `Trade In Your Old Refrigerator | ${SITE_NAME}`,
       description:
-        "Trade in or sell your old refrigerator and appliances. Get a fair valuation, upgrade affordably, and enjoy a hassle-free experience with Protronics.",
-      url: "https://protronics.in/sell",
+        "Exchange your old refrigerator and upgrade to a premium refurbished appliance. Get a fair valuation and hassle-free trade-in experience with Protronics.",
+      url: absoluteUrl(SELL_PAGE_PATH),
     },
     {
       "@type": "FAQPage",

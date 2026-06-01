@@ -28,8 +28,8 @@ export default function TradeInFinalCTA() {
             Your Old Appliance Still Has Value.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[14px] leading-7 text-theme-fg-muted sm:text-[15px]">
-            Get a free estimate today. Sell outright or apply trade-in credit toward a premium
-            refurbished upgrade.
+            Get a free estimate today. Sell outright or apply credit toward a premium refurbished
+            upgrade.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">

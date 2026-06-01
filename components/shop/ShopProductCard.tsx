@@ -10,6 +10,7 @@ import { getCategoryBySlug, type ShopProduct } from "@/lib/shop";
 import { cn } from "@/lib/utils";
 
 import { DEFAULT_PRODUCT_IMAGE } from "@/lib/product-images";
+import { IMAGE_BLUR_DATA_URL } from "@/lib/images";
 
 const FALLBACK = DEFAULT_PRODUCT_IMAGE;
 
@@ -38,6 +39,9 @@ function ShopProductCardImage({ image, alt }: { image: string; alt: string }) {
       alt={alt}
       fill
       sizes="(min-width: 1024px) 156px, (min-width: 640px) 136px, 116px"
+      placeholder="blur"
+      blurDataURL={IMAGE_BLUR_DATA_URL}
+      loading="lazy"
       className={cn(
         "object-contain p-2 transition-opacity duration-300",
         loaded ? "opacity-100" : "opacity-0",

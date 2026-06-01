@@ -12,22 +12,30 @@ export default function FooterBottom({ className }: FooterBottomProps) {
   return (
     <div
       className={cn(
-        "footer-bottom flex flex-col items-center gap-3 pt-0 text-center",
-        "sm:flex-row sm:items-center sm:justify-between sm:text-left",
+        "footer-bottom flex w-full flex-col items-center gap-3 py-4 text-center",
+        "lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:py-5 lg:text-left",
         className,
       )}
     >
-      <div className="footer-bottom-copy text-[12px] text-theme-fg-muted">
+      <p className="footer-bottom-copy order-2 text-[12px] text-theme-fg-muted lg:order-1">
         © {new Date().getFullYear()} Protronics. All rights reserved.
-      </div>
-      <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] sm:justify-end">
+      </p>
+
+      <nav
+        className="footer-legal-row order-1 flex w-full flex-wrap items-center justify-center gap-x-6 gap-y-1 lg:order-2 lg:w-auto lg:justify-end"
+        aria-label="Legal"
+      >
         {FOOTER_LEGAL_LINKS.map((l) => (
-          <Link key={l.label} href={l.href} prefetch className="footer-link text-[12px]">
+          <Link
+            key={l.label}
+            href={l.href}
+            prefetch
+            className="footer-link footer-legal-link inline-flex min-h-[44px] items-center text-[12px] font-medium lg:min-h-0"
+          >
             {l.label}
           </Link>
         ))}
-        <span className="footer-bottom-copy text-theme-fg-faint">Designed by Protronics</span>
-      </div>
+      </nav>
     </div>
   );
 }

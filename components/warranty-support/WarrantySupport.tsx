@@ -3,8 +3,6 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef } from "react";
 import { motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   BadgeCheck,
   ClipboardCheck,
@@ -22,8 +20,6 @@ import SupportFeature, {
 } from "@/components/warranty-support/SupportFeature";
 import WarrantyHighlights from "@/components/warranty-support/WarrantyHighlights";
 import SupportCTA from "@/components/warranty-support/SupportCTA";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function WarrantySupport() {
   const visualRef = useRef<HTMLDivElement | null>(null);
@@ -76,25 +72,40 @@ export default function WarrantySupport() {
     const visual = visualRef.current;
     if (!visual) return;
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        visual,
-        { y: -8 },
-        {
-          y: 12,
-          ease: "none",
-          scrollTrigger: {
-            trigger: visual,
-            scroller: gsapScroller(),
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        },
-      );
-    }, visual);
+    let cancelled = false;
+    let ctx: { revert: () => void } | undefined;
 
-    return () => ctx.revert();
+    void (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          visual,
+          { y: -8 },
+          {
+            y: 12,
+            ease: "none",
+            scrollTrigger: {
+              trigger: visual,
+              scroller: gsapScroller(),
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          },
+        );
+      }, visual);
+    })();
+
+    return () => {
+      cancelled = true;
+      ctx?.revert();
+    };
   }, []);
 
   return (

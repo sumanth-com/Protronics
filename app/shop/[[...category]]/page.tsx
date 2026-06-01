@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ShopPageClient from "@/components/shop/ShopPageClient";
+import { buildPageMetadata } from "@/lib/seo";
 import {
   SHOP_CATEGORIES,
   buildCategoryMetadata,
@@ -25,16 +26,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const slug = category?.[0];
   const meta = buildCategoryMetadata(slug);
 
-  return {
-    title: meta.title,
+  return buildPageMetadata({
+    absoluteTitle: meta.title,
     description: meta.description,
-    alternates: slug ? { canonical: `/shop/${slug}` } : { canonical: "/shop" },
-    openGraph: {
-      title: meta.title,
-      description: meta.description,
-      type: "website",
-    },
-  };
+    path: slug ? `/shop/${slug}` : "/shop",
+  });
 }
 
 export default async function ShopPage({ params, searchParams }: PageProps) {

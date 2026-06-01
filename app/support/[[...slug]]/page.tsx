@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import SupportCenter from "@/components/support/SupportCenter";
-import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME } from "@/lib/site";
+import { buildPageMetadata } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 import {
   buildArticleMetadata,
   buildSupportFaqJsonLd,
@@ -33,26 +34,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const meta = !slug?.length ? hubMeta : articleMeta ?? hubMeta;
 
-  return {
-    title: meta.title,
+  return buildPageMetadata({
+    absoluteTitle: meta.title,
     description: meta.description,
-    alternates: {
-      canonical: meta.path,
-    },
-    openGraph: {
-      title: meta.title,
-      description: meta.description,
-      type: slug?.length === 2 ? "article" : "website",
-      url: absoluteUrl(meta.path),
-      images: [{ url: DEFAULT_OG_IMAGE, alt: SITE_NAME }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: meta.title,
-      description: meta.description,
-      images: [DEFAULT_OG_IMAGE],
-    },
-  };
+    path: meta.path,
+    ogType: slug?.length === 2 ? "article" : "website",
+  });
 }
 
 export default async function SupportPage({ params }: PageProps) {
