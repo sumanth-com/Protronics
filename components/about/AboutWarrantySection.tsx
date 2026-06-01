@@ -17,7 +17,7 @@ export default function AboutWarrantySection() {
     <section
       id="warranty"
       aria-labelledby="about-warranty-heading"
-      className="about-warranty-home mobile-warranty-home theme-section-c relative overflow-hidden bg-black py-16 sm:py-20"
+      className="about-page-section about-warranty-home mobile-warranty-home theme-section-c relative overflow-hidden bg-black"
     >
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
         <SectionHeader
@@ -28,7 +28,7 @@ export default function AboutWarrantySection() {
           align="center"
         />
 
-        <ul className="mt-10 grid list-none grid-cols-2 gap-3 p-0 sm:gap-4 lg:grid-cols-4">
+        <ul className="about-page-grid mt-6 grid list-none grid-cols-2 gap-2.5 p-0 sm:gap-3 lg:grid-cols-4">
           {ABOUT_WARRANTY_FEATURES.map((feature) => (
             <li key={feature.title} className="min-w-0">
               <SupportFeature data={feature} className="h-full !rounded-2xl" />
@@ -41,7 +41,7 @@ export default function AboutWarrantySection() {
           items={[...ABOUT_WARRANTY_HIGHLIGHTS]}
         />
 
-        <div className={cn("mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center")}>
+        <div className={cn("mt-4 flex flex-col gap-2.5 sm:flex-row sm:justify-center")}>
           <CtaButton href={ABOUT_LINKS.support} fullWidth className="sm:w-auto">
             Browse Help Center
             <ArrowUpRight className="h-4 w-4" />

@@ -12,7 +12,7 @@ export default function AboutProcess() {
     <section
       id="process"
       aria-labelledby="about-process-heading"
-      className="theme-section-b relative overflow-hidden bg-black py-16 sm:py-20"
+      className="about-page-section theme-section-b relative overflow-hidden bg-black"
     >
       <AboutAmbient />
 
@@ -30,7 +30,7 @@ export default function AboutProcess() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-12% 0px" }}
-          className="mt-12 grid list-none gap-4 p-0 lg:grid-cols-3 lg:gap-5"
+          className="about-page-grid mt-7 grid list-none gap-3 p-0 lg:grid-cols-3 lg:gap-4"
         >
           {ABOUT_PROCESS.map((item, idx) => {
             const Icon = item.icon;

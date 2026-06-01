@@ -13,7 +13,10 @@ const AboutAmbient = forwardRef<HTMLDivElement, AboutAmbientProps>(
     return (
       <div
         ref={ref}
-        className={cn("pointer-events-none absolute inset-0 overflow-hidden bg-black", className)}
+        className={cn(
+          "about-ambient pointer-events-none absolute inset-0 overflow-hidden bg-black",
+          className,
+        )}
       />
     );
   },

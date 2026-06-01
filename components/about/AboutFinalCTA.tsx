@@ -12,7 +12,7 @@ export default function AboutFinalCTA() {
   return (
     <section
       aria-labelledby="about-final-cta-heading"
-      className="theme-section-c relative overflow-hidden bg-black py-16 sm:py-20"
+      className="about-page-section theme-section-c relative overflow-hidden bg-black"
     >
       <div className="relative mx-auto w-full max-w-4xl px-4 text-center sm:px-6">
         <motion.div

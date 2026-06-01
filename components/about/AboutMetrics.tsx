@@ -13,7 +13,7 @@ export default function AboutMetrics() {
     <section
       id="trust"
       aria-labelledby="about-metrics-heading"
-      className="theme-section-c relative overflow-hidden bg-black py-16 sm:py-24"
+      className="about-page-section theme-section-c relative overflow-hidden bg-black"
     >
       <AboutAmbient variant="section" />
 
@@ -31,7 +31,7 @@ export default function AboutMetrics() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-15% 0px" }}
-          className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5"
+          className="about-page-grid mt-7 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4"
         >
           {ABOUT_METRICS.map((metric) => (
             <motion.div

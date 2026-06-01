@@ -143,10 +143,12 @@ export default function TradeInForm() {
   return (
     <section id="sell-form" className={cn("py-8 sm:py-10", tradeInSection)}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <h2 className="text-[20px] font-semibold text-theme-fg sm:text-[22px]">Sell Your Appliance</h2>
-        <p className="mt-1 text-[14px] text-theme-fg-muted">
-          Submit details and photos—we&apos;ll respond with your valuation.
-        </p>
+        <header className="text-center">
+          <h2 className="text-[20px] font-semibold text-theme-fg sm:text-[22px]">Sell Your Appliance</h2>
+          <p className="mx-auto mt-1 max-w-md text-[14px] leading-relaxed text-theme-fg-muted">
+            Submit details and photos—we&apos;ll respond with your valuation.
+          </p>
+        </header>
 
         <div className={cn("mt-5 p-4 sm:p-6", tradeInGlass)}>
           {status === "success" ? (

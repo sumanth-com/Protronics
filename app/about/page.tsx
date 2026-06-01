@@ -48,7 +48,7 @@ export default function About() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageJsonLd) }}
       />
-      <div className="min-h-screen bg-black text-white">
+      <div className="about-page min-h-screen bg-black text-white">
         <main>
           <AboutHero />
           <AboutWhyExists />

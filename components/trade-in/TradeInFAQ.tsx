@@ -8,7 +8,12 @@ export default function TradeInFAQ() {
   return (
     <section id="trade-in-faq" className={cn("border-t border-theme-border py-8 sm:py-10", tradeInSection)}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <h2 className="text-[20px] font-semibold text-theme-fg sm:text-[22px]">FAQ</h2>
+        <header className="text-center">
+          <h2 className="text-[20px] font-semibold text-theme-fg sm:text-[22px]">FAQ</h2>
+          <p className="mx-auto mt-1 max-w-sm text-[14px] leading-relaxed text-theme-fg-muted">
+            Answers about selling, trade-in, and pickup with Protronics.
+          </p>
+        </header>
         <div className="mt-4">
           <FAQAccordion faqs={[...TRADE_IN_FAQS]} defaultOpenIndex={-1} />
         </div>

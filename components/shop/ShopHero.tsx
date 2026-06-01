@@ -12,19 +12,20 @@ type ShopHeroProps = {
 export default function ShopHero({ productCount, categoryCount }: ShopHeroProps) {
   return (
     <section className="shop-hero relative border-b border-white/[0.06] bg-black">
-      <div className="relative mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 sm:flex-row sm:items-end sm:justify-between sm:px-6 sm:py-10">
-        <div>
+      <div className="relative mx-auto flex max-w-7xl flex-col gap-5 px-4 py-8 sm:px-6 sm:py-10 lg:flex-row lg:items-end lg:justify-between lg:gap-4">
+        <div className="mx-auto max-w-xl text-center lg:mx-0 lg:max-w-none lg:text-left">
           <p className="shop-hero-eyebrow text-[12px] font-medium tracking-[0.18em] text-white/55">
             SHOP
           </p>
           <h1 className="shop-hero-title type-page-hero mt-2 text-[28px] font-semibold tracking-tight text-white sm:text-[36px]">
             Premium Renewed Appliances
           </h1>
-          <p className="shop-hero-desc mt-2 max-w-xl text-[15px] leading-7 text-white/65">
+          <div className="theme-accent-line mx-auto mt-3 w-12 lg:mx-0" />
+          <p className="shop-hero-desc mx-auto mt-3 max-w-md text-[15px] leading-7 text-white/65 lg:mx-0 lg:mt-2 lg:max-w-xl">
             Professionally restored, tested, sanitized and warranty protected.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-3 lg:justify-end">
           <div className="shop-stat-card rounded-xl px-4 py-2.5 border border-white/[0.08] bg-black">
             <p className="shop-stat-value text-[18px] font-semibold text-white">{productCount}</p>
             <p className="shop-stat-label text-[11px] text-white/45">Products</p>

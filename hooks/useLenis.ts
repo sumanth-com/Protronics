@@ -9,6 +9,19 @@ export function useLenis() {
   return useContext(LenisContext);
 }
 
+/** Force viewport to top — Lenis (desktop), window, and document roots (mobile). */
+export function resetScrollToTop(lenis: Lenis | null) {
+  if (typeof window === "undefined") return;
+
+  if (lenis) {
+    lenis.scrollTo(0, { immediate: true, force: true });
+  }
+
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 /** Scroll to element or top — works with or without Lenis. */
 export function scrollToTarget(
   lenis: Lenis | null,

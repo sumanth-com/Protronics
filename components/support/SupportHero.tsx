@@ -2,7 +2,7 @@ export default function SupportHero() {
   return (
     <header className="support-hero shrink-0 lg:pb-2">
       <p className="text-[12px] font-medium tracking-[0.22em] text-white/50 lg:text-[10px] lg:tracking-[0.18em]">
-        PROTRONICS HELP CENTER
+        PROTRONICS SUPPORT
       </p>
       <h1 className="mt-3 text-[28px] font-semibold leading-tight tracking-tight text-white sm:text-[34px] lg:mt-1 lg:text-[1.35rem]">
         How can we help?

@@ -12,7 +12,7 @@ export default function AboutFAQ() {
     <section
       id="faq"
       aria-labelledby="about-faq-heading"
-      className="theme-section-a relative overflow-hidden bg-black py-16 sm:py-20"
+      className="about-page-section theme-section-a relative overflow-hidden bg-black"
     >
       <div className="relative mx-auto w-full max-w-3xl px-4 sm:px-6">
         <motion.div variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}>
@@ -26,7 +26,7 @@ export default function AboutFAQ() {
             />
           </motion.div>
 
-          <motion.div variants={fadeUp} className="mt-10">
+          <motion.div variants={fadeUp} className="mt-6">
             <FAQAccordion faqs={ABOUT_FAQS} defaultOpenIndex={0} />
           </motion.div>
 

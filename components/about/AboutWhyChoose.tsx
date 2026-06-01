@@ -11,7 +11,7 @@ export default function AboutWhyChoose() {
     <section
       id="why-choose"
       aria-labelledby="about-why-choose-heading"
-      className="about-why-choose-home mobile-why-choose-home theme-section-b relative overflow-hidden bg-black py-16 sm:py-20"
+      className="about-page-section about-why-choose-home mobile-why-choose-home theme-section-b relative overflow-hidden bg-black"
     >
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
         <SectionHeader
@@ -27,7 +27,7 @@ export default function AboutWhyChoose() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-12% 0px" }}
-          className="mt-10 grid list-none grid-cols-2 gap-3 p-0 sm:gap-4 lg:grid-cols-4"
+          className="about-page-grid mt-6 grid list-none grid-cols-2 gap-2.5 p-0 sm:gap-3 lg:grid-cols-4"
         >
           {ABOUT_WHY_CHOOSE.map((item) => (
             <motion.li key={item.title} variants={fadeUp} className="min-w-0">

@@ -46,12 +46,14 @@ export default function TradeInEstimator() {
   return (
     <section id="estimator" className={cn("py-8 sm:py-10", tradeInSection)}>
       <div className="mx-auto max-w-3xl px-4 sm:px-6">
-        <h2 className="text-[20px] font-semibold text-theme-fg sm:text-[22px]">
-          Trade-In Estimator
-        </h2>
-        <p className="mt-1 text-[14px] text-theme-fg-muted">
-          Select your appliance details for an instant indicative range.
-        </p>
+        <header className="text-center">
+          <h2 className="text-[20px] font-semibold text-theme-fg sm:text-[22px]">
+            Trade-In Estimator
+          </h2>
+          <p className="mx-auto mt-1 max-w-md text-[14px] leading-relaxed text-theme-fg-muted">
+            Select your appliance details for an instant indicative range.
+          </p>
+        </header>
 
         <div className={cn("mt-5 p-4 sm:p-6", tradeInGlass)}>
           <div className="grid gap-3 sm:grid-cols-2">

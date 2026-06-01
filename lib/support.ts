@@ -234,7 +234,7 @@ export const SUPPORT_CATEGORIES: SupportCategory[] = [
   },
 ];
 
-/** Help center sidebar — excludes legacy contact category (use /contact page instead). */
+/** Support sidebar — excludes legacy contact category (use /contact page instead). */
 export const SUPPORT_CATEGORIES_VISIBLE = SUPPORT_CATEGORIES.filter(
   (c) => c.id !== "contact",
 );
@@ -380,7 +380,7 @@ export function buildSupportFaqJsonLd() {
 
 export function buildSupportHubMetadata() {
   return {
-    title: "Support | Protronics Help Center",
+    title: "Support | Protronics",
     description:
       "Get answers on warranty, delivery, product condition, and returns for premium refurbished refrigerators and appliances in India.",
     path: "/support",

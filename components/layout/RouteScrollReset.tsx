@@ -1,21 +1,40 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { refreshScrollTriggers, scrollToTarget, useLenis } from "@/hooks/useLenis";
+import { refreshScrollTriggers, resetScrollToTop, useLenis } from "@/hooks/useLenis";
 
-/** Reset scroll position on route change — synced with Lenis. */
+/** Reset scroll to top on every route change (before paint + after layout). */
 export default function RouteScrollReset() {
   const pathname = usePathname();
   const lenis = useLenis();
+  const lenisRef = useRef(lenis);
+
+  lenisRef.current = lenis;
 
   useEffect(() => {
-    scrollToTarget(lenis, 0, { immediate: true });
-    const id = requestAnimationFrame(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    const run = () => resetScrollToTop(lenisRef.current);
+
+    run();
+
+    const raf = requestAnimationFrame(() => {
+      run();
       void refreshScrollTriggers();
     });
-    return () => cancelAnimationFrame(id);
-  }, [pathname, lenis]);
+
+    const t = window.setTimeout(run, 0);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(t);
+    };
+  }, [pathname]);
 
   return null;
 }

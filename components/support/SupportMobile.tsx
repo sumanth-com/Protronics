@@ -8,13 +8,13 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
-  Headset,
   Phone,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import SupportCallbackModal from "@/components/support/SupportCallbackModal";
 import SupportProtectionTrustCard from "@/components/support/SupportProtectionTrustCard";
+import { resetScrollToTop } from "@/hooks/useLenis";
 import { BUSINESS } from "@/lib/contact";
 import {
   SUPPORT_CATEGORIES_VISIBLE,
@@ -49,7 +49,7 @@ export default function SupportMobile({
   const [callbackOpen, setCallbackOpen] = useState(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    resetScrollToTop(null);
   }, [screen, articleId]);
 
   const category = useMemo(() => getCategoryById(categoryId), [categoryId]);
@@ -84,7 +84,7 @@ export default function SupportMobile({
       {screen === "home" ? (
         <div className="support-mobile-home">
           <header className="support-mobile-header">
-            <p className="support-mobile-eyebrow">Help Center</p>
+            <p className="support-mobile-eyebrow">Support</p>
             <h1 className="support-mobile-title">How can we help?</h1>
             <p className="support-mobile-subtitle">
               Warranty, delivery, returns, and product quality—answers for refurbished appliance buyers.
@@ -96,10 +96,16 @@ export default function SupportMobile({
               Browse by topic
             </h2>
             <ul className="support-mobile-topic-grid">
-              {SUPPORT_CATEGORIES_VISIBLE.map((cat) => {
+              {SUPPORT_CATEGORIES_VISIBLE.map((cat, index) => {
                 const Icon = cat.icon;
+                const isSoloLast =
+                  index === SUPPORT_CATEGORIES_VISIBLE.length - 1 &&
+                  SUPPORT_CATEGORIES_VISIBLE.length % 2 === 1;
                 return (
-                  <li key={cat.id}>
+                  <li
+                    key={cat.id}
+                    className={isSoloLast ? "support-mobile-topic-grid__solo" : undefined}
+                  >
                     <button
                       type="button"
                       onClick={() => openCategory(cat.id)}
@@ -138,28 +144,6 @@ export default function SupportMobile({
                 </li>
               ))}
             </ul>
-          </section>
-
-          <section className="support-mobile-contact-card" aria-label="Contact options">
-            <p className="support-mobile-contact-title">Need help right now?</p>
-            <p className="support-mobile-contact-desc">
-              WhatsApp is fastest for warranty claims—keep your order ID handy.
-            </p>
-            <div className="support-mobile-contact-actions">
-              <a
-                href={BUSINESS.whatsappMessage}
-                target="_blank"
-                rel="noreferrer"
-                className="support-mobile-whatsapp-btn"
-              >
-                <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
-                WhatsApp
-              </a>
-              <Link href="/contact" className="support-mobile-secondary-btn">
-                <Headset className="h-4 w-4" />
-                Contact
-              </Link>
-            </div>
           </section>
         </div>
       ) : null}
@@ -290,7 +274,7 @@ function CategoryView({
     <div className="support-mobile-category">
       <button type="button" onClick={onBack} className="support-mobile-back">
         <ChevronLeft className="h-4 w-4" />
-        Help Center
+        Support
       </button>
 
       <header className="support-mobile-category-head">

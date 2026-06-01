@@ -12,7 +12,7 @@ export default function AboutWhyExists() {
     <section
       id="story"
       aria-labelledby="about-why-heading"
-      className="theme-section-a relative overflow-hidden bg-black py-16 sm:py-20"
+      className="about-page-section theme-section-a relative overflow-hidden bg-black"
     >
       <AboutAmbient />
 
@@ -30,7 +30,7 @@ export default function AboutWhyExists() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-15% 0px" }}
-          className="mt-12 grid gap-4 sm:grid-cols-3 sm:gap-5"
+          className="about-page-grid mt-7 grid gap-3 sm:grid-cols-3 sm:gap-4"
         >
           {ABOUT_WHY_POINTS.map((point) => {
             const Icon = point.icon;
@@ -39,12 +39,12 @@ export default function AboutWhyExists() {
                 key={point.title}
                 variants={fadeUp}
                 className={cn(
-                  "list-none rounded-2xl border border-white/12 bg-white/[0.04]",
-                  "px-6 py-6 text-center sm:text-left",
+                  "about-mission-card list-none rounded-2xl border border-white/12 bg-white/[0.04]",
+                  "px-5 py-5 text-center sm:px-6 sm:py-6 sm:text-left",
                 )}
               >
-                <div className="mx-auto grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-white/[0.06] sm:mx-0">
-                  <Icon className="h-5 w-5 text-white" strokeWidth={1.75} />
+                <div className="about-mission-icon-wrap mx-auto grid h-11 w-11 place-items-center rounded-xl border border-white/10 bg-white/[0.08] sm:mx-0">
+                  <Icon className="about-mission-icon h-5 w-5 text-white" strokeWidth={1.75} />
                 </div>
                 <h3 className="mt-4 text-[15px] font-semibold text-white">{point.title}</h3>
                 <p className="mt-2 text-[13px] leading-6 text-white/65">{point.description}</p>
