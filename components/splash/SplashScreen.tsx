@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -14,9 +14,9 @@ import Logo from "@/assets/Logo.webp";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-type SplashPhase = "show" | "exit" | "hidden";
-
 const SPLASH_STATIC_ID = "splash-static";
+
+const noopSubscribe = () => () => {};
 
 function dismissStaticSplash() {
   document.getElementById(SPLASH_STATIC_ID)?.classList.add("splash-static-dismissed");
@@ -28,53 +28,54 @@ function clearSplashActive() {
   dismissStaticSplash();
 }
 
-function resolveInitialPhase(): SplashPhase {
+function readShouldShowSplash(): boolean {
   if (sessionStorage.getItem(SPLASH_SESSION_KEY) === "1") {
-    return "hidden";
+    return false;
   }
 
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     sessionStorage.setItem(SPLASH_SESSION_KEY, "1");
-    return "hidden";
+    return false;
   }
 
-  return "show";
+  return true;
 }
 
 export default function SplashScreen() {
-  /** null until client resolves sessionStorage (SSR-safe; static HTML splash covers first paint) */
-  const [phase, setPhase] = useState<SplashPhase | null>(null);
+  const shouldShow = useSyncExternalStore(
+    noopSubscribe,
+    readShouldShowSplash,
+    () => false,
+  );
+
+  const [exiting, setExiting] = useState(false);
+  const [finished, setFinished] = useState(false);
 
   useLayoutEffect(() => {
-    setPhase(resolveInitialPhase());
-  }, []);
-
-  useLayoutEffect(() => {
-    if (phase === null) return;
-    if (phase === "hidden") {
+    if (!shouldShow || finished) {
       clearSplashActive();
       return;
     }
     dismissStaticSplash();
-  }, [phase]);
+  }, [shouldShow, finished]);
 
   useEffect(() => {
-    if (phase !== "show") return;
+    if (!shouldShow || finished) return;
 
-    const exitTimer = window.setTimeout(() => setPhase("exit"), SPLASH_EXIT_AT_MS);
+    const exitTimer = window.setTimeout(() => setExiting(true), SPLASH_EXIT_AT_MS);
     const hideTimer = window.setTimeout(() => {
       sessionStorage.setItem(SPLASH_SESSION_KEY, "1");
       clearSplashActive();
-      setPhase("hidden");
+      setFinished(true);
     }, SPLASH_HIDE_AT_MS);
 
     return () => {
       window.clearTimeout(exitTimer);
       window.clearTimeout(hideTimer);
     };
-  }, [phase]);
+  }, [shouldShow, finished]);
 
-  if (phase === null || phase === "hidden") {
+  if (!shouldShow || finished) {
     return null;
   }
 
@@ -86,10 +87,10 @@ export default function SplashScreen() {
         role="presentation"
         aria-hidden="true"
         initial={false}
-        animate={{ opacity: phase === "exit" ? 0 : 1 }}
+        animate={{ opacity: exiting ? 0 : 1 }}
         exit={{ opacity: 0 }}
         transition={{
-          duration: phase === "exit" ? 0.4 : 0.35,
+          duration: exiting ? 0.4 : 0.35,
           ease: EASE,
         }}
       >

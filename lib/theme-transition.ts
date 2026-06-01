@@ -10,8 +10,9 @@ function prefersReducedMotion(): boolean {
 export function runThemeSpreadTransition(
   _nextTheme: "light" | "dark",
   applyTheme: () => void,
-  _origin?: ThemeTransitionOrigin,
+  origin?: ThemeTransitionOrigin,
 ): void {
+  void origin;
   if (typeof document === "undefined") {
     applyTheme();
     return;
