@@ -20,30 +20,59 @@ const sizes = [
   { name: "app/apple-icon.png", size: 180, out: join(root, "app", "apple-icon.png") },
 ];
 
+/**
+ * Portrait logos were letterboxed into square favicons with dark side bars.
+ * Cover-crop fills the square from the centre (no side stripes).
+ */
+async function faviconPng(logoBuffer, size) {
+  return sharp(logoBuffer)
+    .ensureAlpha()
+    .resize(size, size, {
+      fit: "cover",
+      position: "centre",
+    })
+    .png()
+    .toBuffer();
+}
+
+async function squareLogoForOg(logoBuffer, dimension) {
+  const meta = await sharp(logoBuffer).metadata();
+  const width = meta.width ?? 0;
+  const height = meta.height ?? 0;
+  const side = Math.min(width, height);
+
+  if (!side || side <= 0) {
+    return sharp(logoBuffer).resize(dimension, dimension, { fit: "cover", position: "centre" }).png().toBuffer();
+  }
+
+  const left = Math.max(0, Math.floor((width - side) / 2));
+  const top = Math.max(0, Math.floor((height - side) / 2));
+
+  return sharp(logoBuffer)
+    .extract({ left, top, width: side, height: side })
+    .resize(dimension, dimension, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png()
+    .toBuffer();
+}
+
 async function main() {
   const logo = await readFile(logoPath);
   await mkdir(ogDir, { recursive: true });
 
   for (const { size, out } of sizes) {
-    const buf = await sharp(logo)
-      .resize(size, size, { fit: "contain", background: { r: 10, g: 10, b: 10, alpha: 1 } })
-      .png()
-      .toBuffer();
+    const buf = await faviconPng(logo, size);
     await writeFile(out, buf);
     console.info(`Wrote ${out}`);
   }
 
-  const favicon32 = await sharp(logo)
-    .resize(32, 32, { fit: "contain", background: { r: 10, g: 10, b: 10, alpha: 1 } })
-    .png()
-    .toBuffer();
+  const favicon32 = await faviconPng(logo, 32);
   await writeFile(join(root, "public", "favicon.ico"), favicon32);
   await writeFile(join(root, "app", "favicon.ico"), favicon32);
   console.info("Wrote favicon.ico (32px PNG format)");
 
   const ogWidth = 1200;
   const ogHeight = 630;
-  const logoOg = await sharp(logo).resize(280, 280, { fit: "contain" }).png().toBuffer();
+  const logoOg = await squareLogoForOg(logo, 280);
 
   const og = await sharp({
     create: {

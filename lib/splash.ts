@@ -1,9 +1,11 @@
 export const SPLASH_SESSION_KEY = "protronics-splash-seen";
 export const SPLASH_START_KEY = "protronics-splash-start";
 
-/** Full splash hold 3s, then cinematic fade (~0.75s), then app is live */
-export const SPLASH_EXIT_AT_MS = 3000;
-export const SPLASH_HIDE_AT_MS = 3750;
+/** Fridge beat 2s → logo beat 2s → exit fade (~0.75s) */
+export const SPLASH_FRIDGE_MS = 2000;
+export const SPLASH_LOGO_MS = 2000;
+export const SPLASH_EXIT_AT_MS = SPLASH_FRIDGE_MS + SPLASH_LOGO_MS;
+export const SPLASH_HIDE_AT_MS = SPLASH_EXIT_AT_MS + 750;
 export const SPLASH_DURATION_MS = SPLASH_HIDE_AT_MS;
 
 export const SPLASH_TAGLINE = "Premium. Refurbished. Perfected.";
