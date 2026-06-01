@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/write-forms-endpoint.mjs && next dev --webpack",
-    "build": "npm run lint && node scripts/assert-forms-env.mjs && node scripts/write-forms-endpoint.mjs && next build",
+    "build": "npm run lint && node scripts/assert-forms-env.mjs && node scripts/write-forms-endpoint.mjs && next build --webpack",
+    "build:check": "npm run lint && tsc --noEmit",
     "forms:write-endpoint": "node scripts/write-forms-endpoint.mjs",
     "images:webp": "node scripts/convert-images-to-webp.mjs",
     "start": "next start",

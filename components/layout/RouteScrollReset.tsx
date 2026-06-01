@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
 import { refreshScrollTriggers, resetScrollToTop, useLenis } from "@/hooks/useLenis";
 
@@ -8,9 +8,6 @@ import { refreshScrollTriggers, resetScrollToTop, useLenis } from "@/hooks/useLe
 export default function RouteScrollReset() {
   const pathname = usePathname();
   const lenis = useLenis();
-  const lenisRef = useRef(lenis);
-
-  lenisRef.current = lenis;
 
   useEffect(() => {
     if ("scrollRestoration" in history) {
@@ -19,7 +16,7 @@ export default function RouteScrollReset() {
   }, []);
 
   useLayoutEffect(() => {
-    const run = () => resetScrollToTop(lenisRef.current);
+    const run = () => resetScrollToTop(lenis);
 
     run();
 
@@ -34,7 +31,7 @@ export default function RouteScrollReset() {
       cancelAnimationFrame(raf);
       window.clearTimeout(t);
     };
-  }, [pathname]);
+  }, [pathname, lenis]);
 
   return null;
 }
