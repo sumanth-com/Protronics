@@ -1,4 +1,5 @@
 import { BUSINESS } from "@/lib/contact";
+import { PRODUCT_GALLERY } from "@/lib/product-images";
 import {
   SHOP_PRODUCTS,
   getCategoryBySlug,
@@ -28,27 +29,15 @@ export type ProductDetail = ShopProduct & {
   installationSupport: string;
 };
 
-const IMAGE_ANGLES = [
-  "/featured/featured-1.webp",
-  "/featured/featured-2.webp",
-  "/featured/featured-3.webp",
-  "/featured/featured-4.webp",
-];
-
-function hashIndex(id: string, max: number) {
-  let h = 0;
-  for (let i = 0; i < id.length; i++) h = (h + id.charCodeAt(i)) % max;
-  return h;
-}
-
 export function enrichProductDetail(product: ShopProduct): ProductDetail {
-  const idx = hashIndex(product.id, IMAGE_ANGLES.length);
-  const images = [
-    product.image,
-    IMAGE_ANGLES[(idx + 1) % IMAGE_ANGLES.length]!,
-    IMAGE_ANGLES[(idx + 2) % IMAGE_ANGLES.length]!,
-    IMAGE_ANGLES[(idx + 3) % IMAGE_ANGLES.length]!,
-  ];
+  const customGallery = PRODUCT_GALLERY[product.id];
+  const categoryPeers = SHOP_PRODUCTS.filter(
+    (p) => p.categoryId === product.categoryId && p.id !== product.id,
+  ).map((p) => p.image);
+
+  const images = customGallery
+    ? customGallery
+    : Array.from(new Set([product.image, ...categoryPeers])).slice(0, 4);
 
   return {
     ...product,

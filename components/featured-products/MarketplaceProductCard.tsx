@@ -3,10 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, Star } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-const FALLBACK_IMAGE = "/featured/featured-1.webp";
+import { DEFAULT_PRODUCT_IMAGE } from "@/lib/product-images";
+
+const FALLBACK_IMAGE = DEFAULT_PRODUCT_IMAGE;
 
 export type MarketplaceProduct = {
   name: string;
@@ -29,6 +31,11 @@ export default function MarketplaceProductCard({ product, className }: Props) {
   const [loaded, setLoaded] = useState(false);
   const [src, setSrc] = useState(product.image);
 
+  useEffect(() => {
+    setSrc(product.image);
+    setLoaded(false);
+  }, [product.image]);
+
   const discount =
     product.discountPercent ??
     (product.originalPrice
@@ -45,6 +52,7 @@ export default function MarketplaceProductCard({ product, className }: Props) {
             <span className="marketplace-product-badge">{discount}% off</span>
           ) : null}
           <Image
+            key={product.image}
             src={src}
             alt={product.name}
             fill

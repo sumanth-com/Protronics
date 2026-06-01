@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Mail, Phone } from "lucide-react";
+import { Clock, Mail, Phone } from "lucide-react";
 import { fadeUp, stagger } from "@/lib/animations";
 import { BUSINESS } from "@/lib/contact";
 import { IMAGE_QUALITY } from "@/lib/images";
@@ -82,23 +82,38 @@ export default function Footer() {
                 Talk to an expert for quick, confident guidance.
               </p>
 
-              <div className="mt-3 space-y-1.5">
-                <a
-                  href={BUSINESS.phoneHref}
-                  className="footer-support-line flex items-center justify-center gap-2 text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg md:justify-start"
-                >
-                  <Phone className="h-4 w-4 shrink-0 text-theme-fg-faint" />
-                  {BUSINESS.phone}
-                </a>
-                <a
-                  href={BUSINESS.emailHref}
-                  className="footer-support-line flex items-center justify-center gap-2 text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg md:justify-start"
-                >
-                  <Mail className="h-4 w-4 shrink-0 text-theme-fg-faint" />
-                  {BUSINESS.email}
-                </a>
-                <p className="text-[12px] text-theme-fg-faint">{BUSINESS.hours}</p>
-              </div>
+              <ul className="footer-support-contact mx-auto mt-3 w-fit space-y-1.5 md:mx-0">
+                <li>
+                  <a
+                    href={BUSINESS.phoneHref}
+                    className="footer-support-line text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg"
+                  >
+                    <span className="footer-support-icon" aria-hidden>
+                      <Phone className="h-4 w-4 text-theme-fg-faint" />
+                    </span>
+                    <span>{BUSINESS.phone}</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={BUSINESS.emailHref}
+                    className="footer-support-line text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg"
+                  >
+                    <span className="footer-support-icon" aria-hidden>
+                      <Mail className="h-4 w-4 text-theme-fg-faint" />
+                    </span>
+                    <span>{BUSINESS.email}</span>
+                  </a>
+                </li>
+                <li>
+                  <p className="footer-support-line text-[12px] text-theme-fg-faint">
+                    <span className="footer-support-icon" aria-hidden>
+                      <Clock className="h-4 w-4 text-theme-fg-faint" />
+                    </span>
+                    <span>{BUSINESS.hours}</span>
+                  </p>
+                </li>
+              </ul>
 
               <CtaButton href="/contact" fullWidth className="mt-4">
                 Talk to an Expert

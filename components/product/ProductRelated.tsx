@@ -12,7 +12,9 @@ import { cn } from "@/lib/utils";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const FALLBACK = "/featured/featured-1.webp";
+import { DEFAULT_PRODUCT_IMAGE } from "@/lib/product-images";
+
+const FALLBACK = DEFAULT_PRODUCT_IMAGE;
 
 type ProductRelatedProps = {
   products: ShopProduct[];

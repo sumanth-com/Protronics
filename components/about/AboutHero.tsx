@@ -29,12 +29,6 @@ const navLinkClass = cn(
   "text-[11px] font-medium text-white/75 sm:px-3.5 sm:py-1.5 sm:text-[12px]",
 );
 
-const whatsappCtaClass = cn(
-  "about-hero-whatsapp-btn inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl",
-  "border border-white/15 bg-white/[0.06] px-4 py-3",
-  "text-[12px] font-semibold text-white md:rounded-full md:px-6 md:py-3.5 md:text-[13px]",
-);
-
 export default function AboutHero() {
   return (
     <section
@@ -145,15 +139,16 @@ export default function AboutHero() {
               <ArrowUpRight className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
             </CtaButton>
 
-            <a
+            <CtaButton
               href={ABOUT_LINKS.whatsapp}
-              target="_blank"
-              rel="noreferrer"
-              className={whatsappCtaClass}
+              external
+              size="md"
+              fullWidth
+              className="min-h-[48px] text-[12px] sm:w-auto sm:text-[13px]"
             >
-              <WhatsAppIcon className="h-4 w-4 shrink-0 text-white" />
+              <WhatsAppIcon className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
               <span className="truncate">WhatsApp</span>
-            </a>
+            </CtaButton>
           </motion.div>
         </motion.div>
       </div>

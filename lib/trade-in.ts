@@ -62,7 +62,7 @@ export const APPLIANCE_CATEGORIES: ApplianceCategory[] = [
     label: "Refrigerators",
     icon: Refrigerator,
     baseValue: 14000,
-    image: "/featured/featured-1.webp",
+    image: "/images/refrigerators/lg-smart-inverter-single-door-320l.webp",
   },
   {
     id: "washing-machine",

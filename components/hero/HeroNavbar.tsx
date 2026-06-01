@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Building2, HandCoins, ShoppingBag } from "lucide-react";
+import { BadgeCheck, HandCoins, ShoppingBag } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
 import NavCtaIcon from "@/components/ui/NavCtaIcon";
 import SearchTrigger from "@/components/search/SearchTrigger";
@@ -29,16 +29,19 @@ function isNavActive(pathname: string, href: string) {
 
 export default function HeroNavbar() {
   const pathname = usePathname();
+  const isShop = pathname.startsWith("/shop");
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header className={cn("fixed inset-x-0 top-0 z-50", isShop && "shop-route-header")}>
       <div
         className={cn(
           "navbar-shell relative w-full",
-          "bg-theme-nav supports-[backdrop-filter]:backdrop-blur-xl",
+          isShop ? "bg-theme-bg" : "bg-theme-nav supports-[backdrop-filter]:backdrop-blur-xl",
         )}
       >
-        <div className="navbar-glass-gradient pointer-events-none absolute inset-x-0 top-0 h-12" />
+        {!isShop ? (
+          <div className="navbar-glass-gradient pointer-events-none absolute inset-x-0 top-0 h-12" />
+        ) : null}
 
         {/* Row 1 — logo, theme, about (mobile) / full desktop bar */}
         <div
@@ -53,32 +56,29 @@ export default function HeroNavbar() {
           <Link
             href="/"
             prefetch
-            className="navbar-brand group relative flex min-w-0 flex-1 items-center gap-2 min-[375px]:gap-2.5 sm:gap-3.5 lg:flex-none"
+            className="navbar-brand group relative flex min-w-0 flex-1 items-center gap-1 min-[375px]:gap-1.5 sm:gap-2 lg:flex-none"
             aria-label="Go to home"
           >
             <div
               className={cn(
-                "navbar-logo-pill relative flex shrink-0 items-center justify-center overflow-hidden",
-                "h-9 w-9 rounded-full border border-theme-border bg-theme-elevated shadow-theme-sm",
-                "min-[375px]:h-10 min-[375px]:w-10",
-                "lg:h-[52px] lg:w-[52px] lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none",
+                "navbar-logo-mark relative shrink-0",
+                "h-9 w-9 min-[375px]:h-10 min-[375px]:w-10",
+                "lg:h-[52px] lg:w-[52px]",
               )}
             >
-              <div className="relative h-[58%] w-[58%] lg:h-full lg:w-full">
-                <Image
-                  src={Logo}
-                  alt=""
-                  fill
-                  sizes="(max-width: 1023px) 36px, 56px"
-                  className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
-                  quality={IMAGE_QUALITY.logo}
-                  priority
-                  aria-hidden
-                />
-              </div>
+              <Image
+                src={Logo}
+                alt=""
+                fill
+                sizes="(max-width: 1023px) 40px, 56px"
+                className="object-contain object-left transition-transform duration-300 group-hover:scale-[1.03]"
+                quality={IMAGE_QUALITY.logo}
+                priority
+                aria-hidden
+              />
             </div>
             <div className="min-w-0 leading-none">
-              <div className="navbar-brand-title truncate">PROTRONICS</div>
+              <div className="navbar-brand-title truncate">Protronics</div>
               <div className="navbar-brand-tagline hidden lg:mt-1 lg:block">
                 Premium. Refurbished. Perfected.
               </div>
@@ -137,7 +137,7 @@ export default function HeroNavbar() {
               aria-label="About Protronics"
               aria-current={isNavActive(pathname, "/about") ? "page" : undefined}
             >
-              <Building2 className="h-[18px] w-[18px]" strokeWidth={2.25} aria-hidden />
+              <BadgeCheck className="h-[18px] w-[18px]" strokeWidth={2.25} aria-hidden />
             </Link>
           </div>
 
@@ -159,10 +159,12 @@ export default function HeroNavbar() {
           </div>
         </div>
 
-        {/* Row 2 — marketplace search (mobile & tablet only) */}
-        <div className="mobile-navbar-search-row lg:hidden">
-          <SearchTrigger bar className="w-full" />
-        </div>
+        {/* Row 2 — search hidden on shop (filters live in page toolbar) */}
+        {!isShop ? (
+          <div className="mobile-navbar-search-row lg:hidden">
+            <SearchTrigger bar className="w-full" />
+          </div>
+        ) : null}
       </div>
     </header>
   );

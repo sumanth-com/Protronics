@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ListFilter } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import ShopFilterDropdown from "@/components/shop/ShopFilterDropdown";
 import {
@@ -10,11 +10,11 @@ import {
   SHOP_BRANDS,
   SHOP_CATEGORIES,
   SHOP_SORT_OPTIONS,
+  getCategoryBySlug,
   type ShopFilterState,
   type ShopSortId,
 } from "@/lib/shop";
 import { cn } from "@/lib/utils";
-import { NAVBAR_OFFSET } from "@/lib/navigation";
 
 const CATEGORY_PILLS = [
   { slug: undefined, label: "All Products" },
@@ -71,214 +71,193 @@ export default function ShopStickyFilterBar({
   onMobileFilterOpen,
 }: ShopStickyFilterBarProps) {
   const [sortOpen, setSortOpen] = useState(false);
-  const [pinned, setPinned] = useState(false);
-  const [barHeight, setBarHeight] = useState(0);
-  const sortRef = useRef<HTMLDivElement>(null);
-  const barRef = useRef<HTMLDivElement>(null);
-  const sentinelRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setPinned(!entry.isIntersecting),
-      {
-        root: null,
-        rootMargin: `-${NAVBAR_OFFSET}px 0px 0px 0px`,
-        threshold: 0,
-      },
-    );
-
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const bar = barRef.current;
-    if (!bar) return;
-
-    const updateHeight = () => setBarHeight(bar.offsetHeight);
-    updateHeight();
-
-    const ro = new ResizeObserver(updateHeight);
-    ro.observe(bar);
-    return () => ro.disconnect();
-  }, []);
+  const sortRefDesktop = useRef<HTMLDivElement>(null);
+  const sortRefMobile = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!sortOpen) return;
     const onPointerDown = (e: MouseEvent) => {
-      if (!sortRef.current?.contains(e.target as Node)) setSortOpen(false);
+      const target = e.target as Node;
+      if (
+        sortRefDesktop.current?.contains(target) ||
+        sortRefMobile.current?.contains(target)
+      ) {
+        return;
+      }
+      setSortOpen(false);
     };
     document.addEventListener("mousedown", onPointerDown);
     return () => document.removeEventListener("mousedown", onPointerDown);
   }, [sortOpen]);
 
   const sortLabel = BAR_SORT_OPTIONS.find((o) => o.id === sort)?.label ?? "Sort";
+  const category = getCategoryBySlug(activeCategory);
+  const listTitle = category ? `${category.label}` : "All refrigerators";
+
+  const sortMenu = (
+    <>
+      {BAR_SORT_OPTIONS.map((opt) => (
+        <button
+          key={opt.id}
+          type="button"
+          onClick={() => {
+            onSortChange(opt.id);
+            setSortOpen(false);
+          }}
+          className={cn(
+            "shop-filter-menu-item w-full rounded-lg px-3 py-2.5 text-left text-[13px] font-medium transition-colors",
+            sort === opt.id
+              ? "bg-[color-mix(in_srgb,var(--theme-accent)_12%,var(--theme-surface-card))] text-theme-accent"
+              : "text-theme-fg hover:bg-theme-elevated",
+          )}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </>
+  );
 
   return (
-    <div className="shop-filter-shell">
-      <div ref={sentinelRef} className="pointer-events-none h-px w-full" aria-hidden />
-      {pinned && barHeight > 0 ? (
-        <div className="w-full" style={{ height: barHeight }} aria-hidden />
+    <div className={cn("shop-filter-shell", sortOpen && "shop-filter-shell-sort-open")}>
+      {sortOpen ? (
+        <button
+          type="button"
+          className="fixed inset-0 z-[75] bg-black/25 lg:hidden"
+          aria-label="Close sort menu"
+          onClick={() => setSortOpen(false)}
+        />
       ) : null}
-      <div
-        ref={barRef}
-        className={cn(
-          "shop-filter-bar z-[45] border-b border-white/[0.06]",
-          "bg-black/90 backdrop-blur-xl",
-          pinned
-            ? "shop-filter-bar-pinned fixed inset-x-0 top-[60px] sm:top-[64px]"
-            : "relative",
-        )}
-      >
-      <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
-        {/* Desktop */}
-        <div className="hidden items-center justify-between gap-4 lg:flex">
-          <div className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" data-lenis-prevent>
-            {CATEGORY_PILLS.map((pill) => {
-              const active = (pill.slug ?? undefined) === (activeCategory ?? undefined);
-              return (
-                <button
-                  key={pill.label}
-                  type="button"
-                  onClick={() => onCategoryChange(pill.slug)}
-                  className={cn(
-                    "shop-category-pill relative shrink-0 rounded-full px-4 py-2 text-[13px] font-medium transition-all duration-200",
-                    active
-                      ? "shop-category-pill-active border border-white/40 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] text-white shadow-[0_0_24px_rgba(255,255,255,0.05)]"
-                      : "border border-white/[0.08] bg-white/[0.04] text-white/65 hover:border-white/15 hover:text-white",
-                  )}
-                >
-                  {active ? (
-                    <motion.span
-                      layoutId="shop-category-pill"
-                      className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-white/25"
-                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                  ) : null}
-                  <span className="relative">{pill.label}</span>
-                </button>
-              );
-            })}
+      <div className="shop-filter-bar relative border-0 bg-transparent lg:border-b lg:border-theme-border lg:bg-theme-surface-card">
+        <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+          <div className="mb-2.5 flex items-baseline justify-between gap-3 lg:hidden">
+            <h1 className="truncate text-base font-bold text-theme-fg">{listTitle}</h1>
+            <p className="shrink-0 text-xs font-medium text-theme-fg-muted">
+              {resultCount} {resultCount === 1 ? "item" : "items"}
+            </p>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2">
-            <ShopFilterDropdown
-              label="Price"
-              options={PRICE_OPTIONS}
-              selected={getPriceSelected(filters)}
-              onChange={(sel) => onFiltersChange(setPriceFromSelected(filters, sel))}
-              single
-            />
-            <ShopFilterDropdown
-              label="Capacity"
-              options={CAPACITY_OPTS}
-              selected={filters.capacities}
-              onChange={(capacities) => onFiltersChange({ ...filters, capacities })}
-            />
-            <ShopFilterDropdown
-              label="Brand"
-              options={BRAND_OPTS}
-              selected={filters.brands}
-              onChange={(brands) => onFiltersChange({ ...filters, brands })}
-            />
-            <ShopFilterDropdown
-              label="Warranty"
-              options={[{ value: "1 Year", label: "1 Year" }]}
-              selected={filters.warranties}
-              onChange={(warranties) => onFiltersChange({ ...filters, warranties })}
-            />
+          {/* Desktop */}
+          <div className="hidden items-center justify-between gap-4 lg:flex">
+            <div
+              className="flex min-w-0 flex-1 items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              data-lenis-prevent
+            >
+              {CATEGORY_PILLS.map((pill) => {
+                const active = (pill.slug ?? undefined) === (activeCategory ?? undefined);
+                return (
+                  <button
+                    key={pill.label}
+                    type="button"
+                    onClick={() => onCategoryChange(pill.slug)}
+                    className={cn(
+                      "shop-category-pill relative shrink-0 rounded-full px-4 py-2 text-[13px] font-medium transition-all duration-200",
+                      active
+                        ? "shop-category-pill-active border border-white/40 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] text-white shadow-[0_0_24px_rgba(255,255,255,0.05)]"
+                        : "border border-white/[0.08] bg-white/[0.04] text-white/65 hover:border-white/15 hover:text-white",
+                    )}
+                  >
+                    {active ? (
+                      <motion.span
+                        layoutId="shop-category-pill"
+                        className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-white/25"
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                    ) : null}
+                    <span className="relative">{pill.label}</span>
+                  </button>
+                );
+              })}
+            </div>
 
-            <div ref={sortRef} className="relative">
+            <div className="flex shrink-0 items-center gap-2">
+              <ShopFilterDropdown
+                label="Price"
+                options={PRICE_OPTIONS}
+                selected={getPriceSelected(filters)}
+                onChange={(sel) => onFiltersChange(setPriceFromSelected(filters, sel))}
+                single
+              />
+              <ShopFilterDropdown
+                label="Capacity"
+                options={CAPACITY_OPTS}
+                selected={filters.capacities}
+                onChange={(capacities) => onFiltersChange({ ...filters, capacities })}
+              />
+              <ShopFilterDropdown
+                label="Brand"
+                options={BRAND_OPTS}
+                selected={filters.brands}
+                onChange={(brands) => onFiltersChange({ ...filters, brands })}
+              />
+              <ShopFilterDropdown
+                label="Warranty"
+                options={[{ value: "1 Year", label: "1 Year" }]}
+                selected={filters.warranties}
+                onChange={(warranties) => onFiltersChange({ ...filters, warranties })}
+              />
+
+              <div ref={sortRefDesktop} className="relative z-[81]">
+                <button
+                  type="button"
+                  onClick={() => setSortOpen((o) => !o)}
+                  className={cn(
+                    "shop-sort-trigger inline-flex items-center gap-1.5 rounded-full px-3.5 py-2",
+                    "border border-theme-border bg-theme-surface-card",
+                    "text-[13px] font-semibold text-theme-fg",
+                  )}
+                >
+                  {sortLabel}
+                  <ChevronDown
+                    className={cn("h-3.5 w-3.5 transition-transform", sortOpen && "rotate-180")}
+                  />
+                </button>
+                {sortOpen ? (
+                  <div className="shop-filter-menu absolute right-0 top-[calc(100%+8px)] z-[82] min-w-[200px] rounded-xl border border-theme-border bg-theme-surface-card p-2 shadow-theme">
+                    {sortMenu}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile */}
+          <div className="flex items-center justify-between gap-2 lg:hidden">
+            <button
+              type="button"
+              onClick={onMobileFilterOpen}
+              className={cn(
+                "shop-mobile-filter-btn inline-flex min-w-0 flex-1 items-center justify-center gap-2 rounded-full px-3 py-2",
+                "border border-theme-border bg-theme-surface-card text-[13px] font-semibold text-theme-fg",
+              )}
+            >
+              <ListFilter className="h-4 w-4 shrink-0" aria-hidden />
+              Filters
+            </button>
+            <div ref={sortRefMobile} className="relative z-[81] shrink-0">
               <button
                 type="button"
                 onClick={() => setSortOpen((o) => !o)}
+                aria-expanded={sortOpen}
                 className={cn(
-                  "shop-sort-trigger inline-flex items-center gap-1.5 rounded-full px-3.5 py-2",
-                  "border border-white/[0.08] bg-black",
-                  "text-[13px] font-medium text-white/75 hover:text-white",
+                  "shop-sort-trigger inline-flex items-center gap-1 rounded-full px-3 py-2",
+                  "border border-theme-border bg-theme-surface-card text-[12px] font-semibold text-theme-fg",
+                  sortOpen && "border-theme-accent",
                 )}
               >
-                {sortLabel}
-                <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", sortOpen && "rotate-180")} />
+                Sort
+                <ChevronDown
+                  className={cn("h-3 w-3 transition-transform", sortOpen && "rotate-180")}
+                />
               </button>
               {sortOpen ? (
-                <div className="shop-filter-menu absolute right-0 top-[calc(100%+8px)] z-50 min-w-[180px] rounded-xl border border-white/[0.08] bg-black/95 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.65)] backdrop-blur-xl">
-                  {BAR_SORT_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      onClick={() => {
-                        onSortChange(opt.id);
-                        setSortOpen(false);
-                      }}
-                      className={cn(
-                        "shop-filter-menu-item w-full rounded-lg px-3 py-2 text-left text-[13px] transition-colors",
-                        sort === opt.id
-                          ? "bg-white/[0.06] text-white"
-                          : "text-white/75 hover:bg-white/[0.04]",
-                      )}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
+                <div className="shop-filter-menu absolute right-0 top-[calc(100%+8px)] z-[82] min-w-[200px] rounded-xl border border-theme-border bg-theme-surface-card p-2 shadow-theme">
+                  {sortMenu}
                 </div>
               ) : null}
             </div>
           </div>
         </div>
-
-        {/* Mobile */}
-        <div className="flex items-center justify-between gap-3 lg:hidden">
-          <button
-            type="button"
-            onClick={onMobileFilterOpen}
-            className={cn(
-              "shop-mobile-filter-btn inline-flex items-center gap-2 rounded-full px-4 py-2",
-              "border border-white/[0.08] bg-black text-[13px] font-medium text-white",
-            )}
-          >
-            Filters & Categories
-          </button>
-          <p className="shop-result-count text-[12px] text-white/45">{resultCount} products</p>
-          <div ref={sortRef} className="relative">
-            <button
-              type="button"
-              onClick={() => setSortOpen((o) => !o)}
-              className={cn(
-                "inline-flex items-center gap-1 rounded-full px-3 py-2",
-                "border border-white/[0.08] bg-black text-[12px] font-medium text-white/75",
-              )}
-            >
-              Sort
-              <ChevronDown className="h-3 w-3" />
-            </button>
-            {sortOpen ? (
-              <div className="absolute right-0 top-[calc(100%+8px)] z-50 min-w-[160px] rounded-xl border border-white/[0.08] bg-black/95 p-2 shadow-xl backdrop-blur-xl">
-                {BAR_SORT_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    onClick={() => {
-                      onSortChange(opt.id);
-                      setSortOpen(false);
-                    }}
-                    className={cn(
-                      "w-full rounded-lg px-3 py-2 text-left text-[13px]",
-                      sort === opt.id ? "text-white" : "text-white/75",
-                    )}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            ) : null}
-          </div>
-        </div>
       </div>
-    </div>
     </div>
   );
 }

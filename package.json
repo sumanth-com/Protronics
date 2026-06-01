@@ -8,6 +8,8 @@
     "build:check": "npm run lint && tsc --noEmit",
     "forms:write-endpoint": "node scripts/write-forms-endpoint.mjs",
     "images:webp": "node scripts/convert-images-to-webp.mjs",
+    "images:products": "node scripts/fetch-product-images.mjs",
+    "images:refrigerators": "node scripts/convert-refrigerator-images.mjs",
     "start": "next start",
     "lint": "eslint"
   },

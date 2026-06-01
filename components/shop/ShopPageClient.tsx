@@ -4,10 +4,10 @@ import dynamic from "next/dynamic";
 import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import ShopEmptyState from "@/components/shop/ShopEmptyState";
-import ShopHero from "@/components/shop/ShopHero";
-import ShopMobileFilters from "@/components/shop/ShopMobileFilters";
 import ShopProductCard from "@/components/shop/ShopProductCard";
+import ShopOffersCarousel from "@/components/shop/ShopOffersCarousel";
 import ShopStickyFilterBar from "@/components/shop/ShopStickyFilterBar";
+import ShopToolbarShell from "@/components/shop/ShopToolbarShell";
 import {
   DEFAULT_FILTERS,
   SHOP_PRODUCTS,
@@ -19,10 +19,12 @@ import {
 } from "@/lib/shop";
 
 const ShopFilterDrawer = dynamic(
-  () =>
-    import("@/components/shop/ShopHero").then((mod) => ({
-      default: mod.ShopFilterDrawer,
-    })),
+  () => import("@/components/shop/ShopFilterDrawer"),
+  { ssr: false },
+);
+
+const ShopMobileFilters = dynamic(
+  () => import("@/components/shop/ShopMobileFilters"),
   { ssr: false },
 );
 
@@ -59,34 +61,35 @@ export default function ShopPageClient({
     [router],
   );
 
-  const handleClear = useCallback(() => {
+  const handleClearFilters = useCallback(() => {
     setFilters(DEFAULT_FILTERS);
     setSort("popular");
+  }, []);
+
+  const handleClear = useCallback(() => {
+    handleClearFilters();
     handleCategoryChange(undefined);
-  }, [handleCategoryChange]);
+  }, [handleClearFilters, handleCategoryChange]);
 
   return (
     <main className="shop-page theme-section-a flex-1 bg-theme-bg text-theme-fg">
-      <ShopHero productCount={SHOP_PRODUCTS.length} categoryCount={5} />
+      <ShopToolbarShell>
+        <ShopStickyFilterBar
+          activeCategory={categorySlug}
+          filters={filters}
+          sort={sort}
+          resultCount={filtered.length}
+          onCategoryChange={handleCategoryChange}
+          onFiltersChange={setFilters}
+          onSortChange={setSort}
+          onMobileFilterOpen={() => setDrawerOpen(true)}
+        />
+      </ShopToolbarShell>
 
-      <ShopStickyFilterBar
-        activeCategory={categorySlug}
-        filters={filters}
-        sort={sort}
-        resultCount={filtered.length}
-        onCategoryChange={handleCategoryChange}
-        onFiltersChange={setFilters}
-        onSortChange={setSort}
-        onMobileFilterOpen={() => setDrawerOpen(true)}
-      />
-
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
-        <p className="shop-result-count mb-5 hidden text-[13px] text-white/45 lg:block">
-          {filtered.length} {filtered.length === 1 ? "product" : "products"}
-        </p>
-
+      <div className="shop-products-area relative z-0 mx-auto max-w-7xl px-4 pb-3 pt-2 sm:px-6 sm:pb-5 max-lg:pt-[var(--shop-header-pad)] lg:pt-5">
+        <ShopOffersCarousel />
         {filtered.length > 0 ? (
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="shop-product-list mt-3">
             {filtered.map((product) => (
               <ShopProductCard key={product.id} product={product} />
             ))}

@@ -8,7 +8,9 @@ import { cn } from "@/lib/utils";
 import ProductBadge from "@/components/featured-products/ProductBadge";
 import ProductCTA from "@/components/featured-products/ProductCTA";
 
-const FALLBACK_IMAGE = "/featured/featured-1.webp";
+import { DEFAULT_PRODUCT_IMAGE } from "@/lib/product-images";
+
+const FALLBACK_IMAGE = DEFAULT_PRODUCT_IMAGE;
 
 /** Shorter pill copy so badges stay on one row inside narrow cards */
 function badgeDisplayLabel(label: string): string {
@@ -113,6 +115,7 @@ export default function ProductCard({ product, className }: ProductCardProps) {
         >
           <div className="absolute inset-0 transition-transform duration-300 ease-out group-hover:scale-[1.03]">
             <Image
+              key={product.image}
               src={src}
               alt={product.name}
               fill

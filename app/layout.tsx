@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Syncopate } from "next/font/google";
+import { Geist } from "next/font/google";
 import "../styles/globals.css";
 import HeroNavbar from "@/components/hero/HeroNavbar";
 import MobileBottomNav from "@/components/layout/MobileBottomNav";
@@ -13,15 +13,6 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
-  preload: true,
-});
-
-/** Navbar wordmark only — bold geometric extended caps */
-const navbarBrand = Syncopate({
-  weight: "700",
-  subsets: ["latin"],
-  variable: "--font-navbar-brand",
   display: "swap",
   preload: true,
 });
@@ -64,7 +55,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${navbarBrand.variable} h-full antialiased overflow-x-hidden`}
+      className={`${geistSans.variable} h-full antialiased overflow-x-hidden`}
       suppressHydrationWarning
     >
       <head>
@@ -76,10 +67,21 @@ export default function RootLayout({
         <GoogleAnalytics />
         {/* Instant splash before JS — shown only when html.splash-active (see lib/splash.ts) */}
         <div id="splash-static" className="splash-screen splash-static" aria-hidden="true">
+          <div className="splash-grid" aria-hidden />
           <div className="splash-screen-ambient" aria-hidden />
           <div className="splash-screen-ambient splash-screen-ambient--secondary" aria-hidden />
+          <div className="splash-particles" aria-hidden>
+            <span className="splash-particle" />
+            <span className="splash-particle" />
+            <span className="splash-particle" />
+            <span className="splash-particle" />
+            <span className="splash-particle" />
+            <span className="splash-particle" />
+          </div>
           <div className="splash-screen-content">
             <div className="splash-logo-stage">
+              <div className="splash-orbit" aria-hidden />
+              <div className="splash-logo-ring splash-logo-ring--outer" aria-hidden />
               <div className="splash-logo-ring" aria-hidden />
               <div className="splash-logo-glow" aria-hidden />
               <div className="splash-logo-wrap">
@@ -88,10 +90,13 @@ export default function RootLayout({
                 <img src="/logo.webp" alt="" width={72} height={72} className="splash-logo-image" />
               </div>
             </div>
-            <p className="splash-tagline">{SPLASH_TAGLINE}</p>
+            <p className="splash-tagline">
+              <span className="splash-tagline-text">{SPLASH_TAGLINE}</span>
+            </p>
           </div>
           <div className="splash-progress" aria-hidden>
             <span className="splash-progress-bar" />
+            <span className="splash-progress-glow" aria-hidden />
           </div>
         </div>
         <AppProviders>

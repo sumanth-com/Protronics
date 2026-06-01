@@ -21,10 +21,20 @@ type ShopMobileFiltersProps = {
   onClear: () => void;
 };
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+  last,
+}: {
+  title: string;
+  children: React.ReactNode;
+  last?: boolean;
+}) {
   return (
-    <div className="border-b border-white/[0.06] py-4">
-      <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/45">{title}</p>
+    <div className={cn("py-4", !last && "border-b border-theme-border")}>
+      <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-theme-fg-muted">
+        {title}
+      </p>
       <div className="mt-3">{children}</div>
     </div>
   );
@@ -44,10 +54,10 @@ function Chip({
       type="button"
       onClick={onClick}
       className={cn(
-        "shop-category-pill rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors",
+        "rounded-full border px-3.5 py-1.5 text-[13px] font-semibold transition-colors",
         active
-          ? "shop-category-pill-active border border-white/40 bg-white/[0.08] text-white"
-          : "border border-white/[0.08] bg-white/[0.04] text-white/65",
+          ? "border-theme-accent bg-[color-mix(in_srgb,var(--theme-accent)_12%,var(--theme-surface-card))] text-theme-accent"
+          : "border-theme-border bg-theme-surface-card text-theme-fg",
       )}
     >
       {label}
@@ -73,13 +83,13 @@ export default function ShopMobileFilters({
   };
 
   return (
-    <div>
+    <div className="pb-2">
       <div className="mb-2 flex items-center justify-between">
-        <p className="text-[15px] font-semibold text-white">Refine</p>
+        <p className="text-[15px] font-semibold text-theme-fg">Refine</p>
         <button
           type="button"
           onClick={onClear}
-          className="text-[12px] font-medium text-white/55"
+          className="text-[12px] font-semibold text-theme-accent"
         >
           Clear all
         </button>
@@ -155,7 +165,7 @@ export default function ShopMobileFilters({
         />
       </Section>
 
-      <Section title="Sort">
+      <Section title="Sort" last>
         <div className="flex flex-col gap-1">
           {SHOP_SORT_OPTIONS.filter((o) => o.id !== "best-selling").map((opt) => (
             <button
@@ -163,8 +173,10 @@ export default function ShopMobileFilters({
               type="button"
               onClick={() => onSortChange(opt.id)}
               className={cn(
-                "rounded-lg px-3 py-2.5 text-left text-[13px]",
-                sort === opt.id ? "bg-white/[0.06] text-white" : "text-white/75",
+                "rounded-lg px-3 py-2.5 text-left text-[13px] font-medium",
+                sort === opt.id
+                  ? "bg-[color-mix(in_srgb,var(--theme-accent)_12%,var(--theme-surface-card))] text-theme-accent"
+                  : "text-theme-fg",
               )}
             >
               {opt.label}

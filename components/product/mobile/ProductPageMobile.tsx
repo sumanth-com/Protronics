@@ -41,7 +41,9 @@ import { cn } from "@/lib/utils";
 
 import "swiper/css";
 
-const FALLBACK = "/featured/featured-1.webp";
+import { DEFAULT_PRODUCT_IMAGE } from "@/lib/product-images";
+
+const FALLBACK = DEFAULT_PRODUCT_IMAGE;
 
 const pdpCard =
   "rounded-xl border border-theme-border bg-theme-surface-card";

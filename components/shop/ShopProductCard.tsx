@@ -1,19 +1,27 @@
 "use client";
 
-import { ArrowUpRight, Check } from "lucide-react";
-import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import CompareButton from "@/components/compare/CompareButton";
-import CtaButton from "@/components/ui/CtaButton";
+import Link from "next/link";
+import { ArrowUpRight, Star } from "lucide-react";
+import { ctaButtonClass } from "@/components/ui/CtaButton";
+import { useEffect, useState } from "react";
 import { buildProductPath } from "@/lib/product-detail";
-import type { ShopProduct } from "@/lib/shop";
-import { getWhatsAppProductLink } from "@/lib/shop";
+import { getCategoryBySlug, type ShopProduct } from "@/lib/shop";
 import { cn } from "@/lib/utils";
 
-const FALLBACK = "/featured/featured-1.webp";
-const TRUST_BADGES = ["Tested", "Sanitized", "Warranty Included"] as const;
+import { DEFAULT_PRODUCT_IMAGE } from "@/lib/product-images";
+
+const FALLBACK = DEFAULT_PRODUCT_IMAGE;
+
+function ratingForProduct(product: ShopProduct) {
+  return Math.min(4.9, 4.2 + (product.popularity % 8) * 0.1);
+}
+
+function reviewLabel(product: ShopProduct) {
+  const n = Math.round(product.popularity * 17 + product.salesRank * 120);
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
+  return String(n);
+}
 
 type ShopProductCardProps = {
   product: ShopProduct;
@@ -22,119 +30,103 @@ type ShopProductCardProps = {
 export default function ShopProductCard({ product }: ShopProductCardProps) {
   const [loaded, setLoaded] = useState(false);
   const [src, setSrc] = useState(product.image);
-  const discount = Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100);
+  const discount = Math.round(
+    ((product.originalPrice - product.price) / product.originalPrice) * 100,
+  );
+  const category = getCategoryBySlug(product.categoryId);
+  const rating = ratingForProduct(product);
+  const reviews = reviewLabel(product);
+
+  useEffect(() => {
+    setSrc(product.image);
+    setLoaded(false);
+  }, [product.image]);
 
   return (
-    <motion.article
-      className={cn(
-        "shop-product-card group relative flex h-full flex-col overflow-hidden rounded-2xl",
-        "border border-white/[0.08] bg-black",
-        "supports-[backdrop-filter]:backdrop-blur-xl",
-        "premium-card",
-        "transition-transform duration-150 ease-out hover:-translate-y-1",
-      )}
-    >
-<div className="relative p-4 sm:p-5">
-        <div className="shop-product-stage relative aspect-[4/3] overflow-hidden rounded-xl border border-white/10 bg-white">
+    <article className="shop-list-card">
+      <Link href={buildProductPath(product.id)} prefetch className="shop-list-card-link">
+        <div className="shop-list-card-media">
           {product.tag ? (
-            <span className="shop-product-tag absolute left-3 top-3 z-10 rounded-full border border-white/10 bg-black/60 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
-              {product.tag}
-            </span>
+            <span className="shop-list-card-badge">{product.tag}</span>
           ) : null}
-          {discount > 0 ? (
-            <span className="shop-product-discount absolute right-3 top-3 z-10 rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-white">
-              {discount}% off
-            </span>
+          <Image
+            key={product.image}
+            src={src}
+            alt={product.name}
+            fill
+            sizes="120px"
+            className={cn(
+              "object-contain p-2 transition-opacity duration-300",
+              loaded ? "opacity-100" : "opacity-0",
+            )}
+            quality={85}
+            onLoad={() => setLoaded(true)}
+            onError={() => {
+              setLoaded(true);
+              if (src !== FALLBACK) setSrc(FALLBACK);
+            }}
+          />
+        </div>
+
+        <div className="shop-list-card-body">
+          <h3 className="shop-list-card-title">{product.name}</h3>
+
+          {category ? (
+            <span className="shop-list-card-pill">{category.label}</span>
           ) : null}
-          <div className="absolute inset-0 transition-transform duration-300 ease-out group-hover:scale-[1.04]">
-            <Image
-              src={src}
-              alt={product.name}
-              fill
-              sizes="(max-width: 768px) 100vw, 33vw"
-              className={cn(
-                "object-contain p-5 transition-opacity duration-500",
-                loaded ? "opacity-100" : "opacity-0",
-              )}
-              quality={90}
-              onLoad={() => setLoaded(true)}
-              onError={() => {
-                setLoaded(true);
-                if (src !== FALLBACK) setSrc(FALLBACK);
-              }}
-            />
+
+          <div className="shop-list-card-rating" aria-label={`${rating.toFixed(1)} out of 5`}>
+            <span className="shop-list-card-rating-val">{rating.toFixed(1)}</span>
+            <div className="shop-list-card-stars" aria-hidden>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star
+                  key={i}
+                  className={cn(
+                    "h-3.5 w-3.5",
+                    i < Math.round(rating)
+                      ? "shop-list-card-star shop-list-card-star--filled"
+                      : "shop-list-card-star shop-list-card-star--empty",
+                  )}
+                />
+              ))}
+            </div>
+            <span className="shop-list-card-reviews">({reviews})</span>
           </div>
-        </div>
 
-        {/* Trust badges */}
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {TRUST_BADGES.map((badge) => (
-            <span
-              key={badge}
-              className="shop-trust-pill inline-flex items-center gap-1 rounded-full border border-white/20 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white"
-            >
-              <Check className="h-2.5 w-2.5" strokeWidth={2.5} />
-              {badge}
-            </span>
-          ))}
-        </div>
-
-        {/* Info */}
-        <div className="mt-3">
-          <p className="shop-product-meta text-[11px] font-medium uppercase tracking-wide text-white/45">
-            {product.brand} · {product.capacity}
+          <p className="shop-list-card-social">
+            {product.tag === "Best Seller" ? "500+ bought in past month" : "Certified renewed · In stock"}
           </p>
-          <h3 className="shop-product-title mt-1 text-[15px] font-semibold leading-snug text-white sm:text-[16px]">
-            {product.name}
-          </h3>
-        </div>
 
-        <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className="shop-product-chip rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[10px] text-white/55">
-            {product.condition}
+          <div className="shop-list-card-price-block">
+            <span className="shop-list-card-price">
+              ₹{product.price.toLocaleString("en-IN")}
+            </span>
+            <span className="shop-list-card-mrp">
+              M.R.P.:{" "}
+              <span className="line-through">
+                ₹{product.originalPrice.toLocaleString("en-IN")}
+              </span>
+              {discount > 0 ? ` (${discount}% off)` : null}
+            </span>
+          </div>
+
+          {product.deliveryAvailable ? (
+            <p className="shop-list-card-delivery">
+              <span className="shop-list-card-delivery-free">FREE delivery</span>
+              {" · Bengaluru metro"}
+            </p>
+          ) : null}
+
+          <p className="shop-list-card-service">
+            Service: {product.warranty} warranty · {product.condition}
+          </p>
+
+          <span className={cn("shop-list-card-cta", ctaButtonClass, "text-[13px]")}>
+            View Product
+            <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden />
           </span>
-          <span className="shop-product-chip shop-product-chip-accent rounded-full border border-white/25 bg-white/[0.06] px-2 py-0.5 text-[10px] font-medium text-white">
-            {product.warranty} Warranty
-          </span>
         </div>
-
-        <div className="mt-3 flex items-end gap-2">
-          <span className="shop-product-price text-[20px] font-semibold tracking-tight text-white">
-            ₹{product.price.toLocaleString("en-IN")}
-          </span>
-          <span className="shop-product-was pb-0.5 text-[12px] text-white/40 line-through">
-            ₹{product.originalPrice.toLocaleString("en-IN")}
-          </span>
-        </div>
-
-        <ul className="mt-3 flex flex-wrap gap-x-3 gap-y-1">
-          {product.specs.slice(0, 3).map((spec) => (
-            <li key={spec} className="shop-product-spec text-[12px] text-white/55">
-              {spec}
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-3">
-          <CompareButton productId={product.id} size="sm" className="w-full" />
-        </div>
-
-        <div className="mt-3 flex gap-2">
-          <CtaButton href={buildProductPath(product.id)} size="sm" className="flex-1">
-            View Details
-            <ArrowUpRight className="h-3.5 w-3.5 text-black/80" />
-          </CtaButton>
-          <CtaButton
-            href={getWhatsAppProductLink(product.name, product.id)}
-            size="sm"
-            external
-            aria-label="WhatsApp inquiry"
-            className="shrink-0 px-3"
-          >
-            <WhatsAppIcon className="h-4 w-4 text-black/80" />
-          </CtaButton>
-        </div>
-      </div>
-    </motion.article>
+      </Link>
+    </article>
   );
 }
