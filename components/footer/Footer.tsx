@@ -124,7 +124,7 @@ export default function Footer() {
 
       </div>
 
-      <div className="footer-bottom-band w-full border-t border-theme-border-subtle bg-theme-bg-secondary lg:mt-2">
+      <div className="footer-bottom-band w-full border-t border-theme-border-subtle bg-theme-bg-secondary">
         <div className="footer-bottom-inner mx-auto w-full max-w-7xl px-4 sm:px-6 lg:max-w-[84rem] lg:px-8">
           <FooterBottom />
         </div>

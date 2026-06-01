@@ -49,27 +49,44 @@ export default function Home() {
       <div className="min-h-screen bg-black text-white">
         <main className="mobile-home-main">
           <MobileCategoryIcons className="mobile-home-order-categories" />
-          <HeroSlider />
+
+          <div className="mobile-home-order-hero">
+            <HeroSlider />
+          </div>
+
           <CategorySection />
-          <DeferredMount minHeight="520px" className="mobile-home-order-featured">
+
+          <DeferredMount minHeight="720px" className="mobile-home-order-featured">
             <FeaturedProducts />
           </DeferredMount>
-          <DeferredMount minHeight="360px" className="mobile-home-order-brands">
+
+          <DeferredMount minHeight="480px" className="mobile-home-order-brands">
             <TopBrandsSection />
           </DeferredMount>
-          <DeferredMount minHeight="400px" className="mobile-home-order-why">
-            <WhyProtronics />
-          </DeferredMount>
-          <DeferredMount minHeight="320px" className="mobile-home-order-compare">
-            <ValueCompareSection />
-          </DeferredMount>
-          <DeferredMount minHeight="380px" className="mobile-home-order-testimonials">
-            <TestimonialsSection />
+
+          {/* Desktop only — hidden on mobile */}
+          <div className="mobile-home-landing-sections hidden lg:block">
+            <DeferredMount minHeight="640px">
+              <WhyProtronics />
+            </DeferredMount>
+            <DeferredMount minHeight="520px">
+              <ValueCompareSection />
+            </DeferredMount>
+          </div>
+
+          <div className="mobile-home-landing-sections hidden lg:block">
+            <DeferredMount minHeight="560px">
+              <TestimonialsSection />
+            </DeferredMount>
+            <DeferredMount minHeight="560px">
+              <HowItWorks />
+            </DeferredMount>
+          </div>
+
+          <DeferredMount minHeight="280px" className="mobile-home-order-testimonials">
             <MobileTestimonialsMarquee />
           </DeferredMount>
-          <DeferredMount minHeight="420px" className="mobile-home-order-how">
-            <HowItWorks />
-          </DeferredMount>
+
           <DeferredMount minHeight="480px" className="mobile-home-order-faq">
             <FAQSection />
           </DeferredMount>

@@ -1,17 +1,19 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { CheckCircle2, ChevronDown, Loader2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, Loader2 } from "lucide-react";
 import FormAlert from "@/components/forms/FormAlert";
+import FormSuccessCard from "@/components/forms/FormSuccessCard";
 import HoneypotField from "@/components/forms/HoneypotField";
 import CtaButton from "@/components/ui/CtaButton";
-import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import ContactAmbient from "@/components/contact/ContactAmbient";
 import SectionHeader from "@/components/contact/SectionHeader";
 import { useFormSubmission } from "@/hooks/useFormSubmission";
-import { BUSINESS, FRIDGE_PRODUCTS } from "@/lib/contact";
+import { FRIDGE_PRODUCTS } from "@/lib/contact";
 import { submitContactForm } from "@/lib/forms/submitters/contactSubmitter";
 import type { ContactFormValues } from "@/lib/forms/validators/contactValidator";
+import { playFormSuccessSound } from "@/lib/sounds/formSuccessSound";
 import { cn } from "@/lib/utils";
 
 const ContactLocationMap = dynamic(
@@ -64,6 +66,7 @@ export default function ContactForm() {
     initialValues: initial,
     submitter: submitContactForm,
     sourcePage: "/contact",
+    onSuccess: () => playFormSuccessSound(),
   });
 
   return (
@@ -88,37 +91,26 @@ export default function ContactForm() {
               "p-5 sm:p-6",
             )}
           >
-            {isSuccess ? (
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <CheckCircle2 className="h-14 w-14 text-white" />
-                <h3 className="mt-5 text-[22px] font-semibold text-white">
-                  Request received
-                </h3>
-                <p className="mt-2 max-w-md text-[14px] leading-7 text-white/65">
-                  Our team will contact you shortly. For faster assistance,
-                  continue on WhatsApp.
-                </p>
-                <CtaButton
-                  href={BUSINESS.whatsappMessage}
-                  external
-                  className="mt-6"
-                >
-                  <WhatsAppIcon className="h-4 w-4 text-black/80" />
-                  Open WhatsApp
-                </CtaButton>
-                <button
-                  type="button"
-                  onClick={reset}
-                  className="mt-4 text-[13px] text-white/50 transition-colors duration-150 hover:text-white/80"
-                >
-                  Submit another inquiry
-                </button>
-              </div>
-            ) : (
-              <form
+            <AnimatePresence mode="wait" initial={false}>
+              {isSuccess ? (
+                <FormSuccessCard
+                  key="contact-success"
+                  variant="dark"
+                  title="Request received"
+                  description="Our team will contact you shortly with curated options, pricing, and delivery timelines."
+                  submitAnotherLabel="Submit another inquiry"
+                  onSubmitAnother={reset}
+                />
+              ) : (
+              <motion.form
+                key="contact-form"
                 onSubmit={(e) => void handleSubmit(e)}
                 className="relative flex flex-col gap-3"
                 noValidate
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               >
                 <HoneypotField value={honeypot} onChange={setHoneypot} />
                 {submitError ? <FormAlert variant="error" message={submitError} /> : null}
@@ -216,8 +208,9 @@ export default function ContactForm() {
                     "Submit Inquiry"
                   )}
                 </CtaButton>
-              </form>
-            )}
+              </motion.form>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

@@ -1,9 +1,10 @@
 import { writeFileSync } from "node:fs";
-import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
+import { loadProjectEnv, projectRoot } from "./load-env.mjs";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = join(__dirname, "..");
+loadProjectEnv();
+
+const root = projectRoot;
 const outPath = join(root, "public", "forms-endpoint.json");
 
 const url = (
