@@ -94,39 +94,52 @@ function RealisticFridgeSvg({ className }: { className?: string }) {
 export default function TradeInApplianceIcon({
   boxClass,
   iconClass,
+  calm = false,
+  variant = "default",
 }: {
   boxClass: string;
   iconClass: string;
+  /** No scan / sparkles / stamp */
+  calm?: boolean;
+  /** Sell hero card — same look, keeps valuation animation */
+  variant?: "default" | "hero";
 }) {
+  const animated = !calm;
+
   return (
     <div
       className={cn(
         "trade-in-appliance-stage relative overflow-hidden rounded-xl border border-theme-border bg-theme-input-bg",
+        variant === "hero" && "trade-in-appliance-stage--calm trade-in-appliance-stage--hero",
         boxClass,
       )}
     >
-      <div className="trade-in-valuation-scan pointer-events-none absolute inset-0 z-[2]" aria-hidden />
+      {animated ? (
+        <>
+          <div className="trade-in-valuation-scan pointer-events-none absolute inset-0 z-[2]" aria-hidden />
 
-      <div className="trade-in-sparkles pointer-events-none absolute inset-0 z-[2]" aria-hidden>
-        <span className="trade-in-sparkle trade-in-sparkle--1" />
-        <span className="trade-in-sparkle trade-in-sparkle--2" />
-        <span className="trade-in-sparkle trade-in-sparkle--3" />
-      </div>
+          <div className="trade-in-sparkles pointer-events-none absolute inset-0 z-[2]" aria-hidden>
+            <span className="trade-in-sparkle trade-in-sparkle--1" />
+            <span className="trade-in-sparkle trade-in-sparkle--2" />
+            <span className="trade-in-sparkle trade-in-sparkle--3" />
+          </div>
 
-      <div
-        className="trade-in-valuation-stamp pointer-events-none absolute right-2 top-2 z-[3] grid h-6 w-6 place-items-center rounded-full bg-theme-accent text-theme-accent-fg"
-        aria-hidden
-      >
-        <svg viewBox="0 0 12 12" className="h-3.5 w-3.5" fill="none" aria-hidden>
-          <path
-            d="M2.5 6.2 5 8.7 9.5 3.8"
-            stroke="currentColor"
-            strokeWidth="1.6"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
+          <div
+            className="trade-in-valuation-stamp pointer-events-none absolute right-2 top-2 z-[3] grid h-6 w-6 place-items-center rounded-full bg-theme-accent text-theme-accent-fg"
+            aria-hidden
+          >
+            <svg viewBox="0 0 12 12" className="h-3.5 w-3.5" fill="none" aria-hidden>
+              <path
+                d="M2.5 6.2 5 8.7 9.5 3.8"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        </>
+      ) : null}
 
       <div className="relative z-[1] grid h-full w-full place-items-center">
         <RealisticFridgeSvg className={cn("drop-shadow-sm", iconClass)} />

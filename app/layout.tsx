@@ -76,16 +76,22 @@ export default function RootLayout({
         <GoogleAnalytics />
         {/* Instant splash before JS — shown only when html.splash-active (see lib/splash.ts) */}
         <div id="splash-static" className="splash-screen splash-static" aria-hidden="true">
-          <div className="splash-screen-ambient" />
+          <div className="splash-screen-ambient" aria-hidden />
+          <div className="splash-screen-ambient splash-screen-ambient--secondary" aria-hidden />
           <div className="splash-screen-content">
             <div className="splash-logo-stage">
+              <div className="splash-logo-ring" aria-hidden />
               <div className="splash-logo-glow" aria-hidden />
               <div className="splash-logo-wrap">
+                <div className="splash-logo-sweep" aria-hidden />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/logo.webp" alt="" width={72} height={72} className="splash-logo-image" />
               </div>
             </div>
             <p className="splash-tagline">{SPLASH_TAGLINE}</p>
+          </div>
+          <div className="splash-progress" aria-hidden>
+            <span className="splash-progress-bar" />
           </div>
         </div>
         <AppProviders>

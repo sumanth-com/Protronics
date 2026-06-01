@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  ClipboardList,
+  ContactRound,
   HandCoins,
   Home,
-  LifeBuoy,
-  Phone,
   Store,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -31,14 +31,14 @@ const tabs = [
     id: "support",
     label: "Support",
     href: "/support",
-    icon: LifeBuoy,
+    icon: ClipboardList,
     match: (p: string) => p === "/support" || p.startsWith("/support/"),
   },
   {
     id: "contact",
     label: "Contact",
     href: "/contact",
-    icon: Phone,
+    icon: ContactRound,
     match: (p: string) => p === "/contact" || p.startsWith("/contact/"),
   },
 ] as const;

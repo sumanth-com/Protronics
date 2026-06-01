@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Phone } from "lucide-react";
-import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import SupportCallbackModal from "@/components/support/SupportCallbackModal";
 import type { SupportArticle, SupportCategory } from "@/lib/support";
@@ -48,36 +47,24 @@ export default function SupportAnswerPanel({
       </AnimatePresence>
 
       <div className="support-answer-foot shrink-0 border-t border-white/10 px-4 py-3">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-          <p className="text-[13px] font-semibold text-white">Still need help?</p>
-          <div className="flex flex-wrap items-center gap-2">
-            <a
-              href={BUSINESS.whatsappMessage}
-              target="_blank"
-              rel="noreferrer"
-              className="support-whatsapp-cta inline-flex items-center justify-center gap-1.5 rounded-full px-3.5 py-2 text-[12px] font-semibold"
-            >
-              <WhatsAppIcon className="h-4 w-4 text-[#25D366]" />
-              WhatsApp
-            </a>
-            <CtaButton href="/contact" size="sm" className="!px-3.5 !py-2 !text-[12px]">
-              Contact
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </CtaButton>
-            <button
-              type="button"
-              onClick={() => setCallbackOpen(true)}
-              className={cn(
-                "inline-flex items-center justify-center gap-1.5 rounded-full",
-                "border border-white/15 bg-white/[0.04] px-3.5 py-2",
-                "text-[12px] font-semibold text-white transition-colors",
-                "hover:border-white/30 hover:bg-white/[0.08]",
-              )}
-            >
-              <Phone className="h-3.5 w-3.5" />
-              Callback
-            </button>
-          </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <CtaButton href="/contact" size="sm" className="!px-3.5 !py-2 !text-[12px]">
+            Contact
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </CtaButton>
+          <button
+            type="button"
+            onClick={() => setCallbackOpen(true)}
+            className={cn(
+              "inline-flex items-center justify-center gap-1.5 rounded-full",
+              "border border-white/15 bg-white/[0.04] px-3.5 py-2",
+              "text-[12px] font-semibold text-white transition-colors",
+              "hover:border-white/30 hover:bg-white/[0.08]",
+            )}
+          >
+            <Phone className="h-3.5 w-3.5" />
+            Callback
+          </button>
         </div>
         <p className="support-contact-note mt-2 text-[12px] leading-5">
           Email{" "}

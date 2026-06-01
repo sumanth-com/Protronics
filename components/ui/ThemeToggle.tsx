@@ -51,7 +51,7 @@ export default function ThemeToggle({ className }: { className?: string }) {
         className={cn("theme-toggle-btn pointer-events-none", className)}
         aria-hidden
       >
-        <PowerIcon />
+        <PowerIcon lit={false} />
       </div>
     );
   }
@@ -66,11 +66,12 @@ export default function ThemeToggle({ className }: { className?: string }) {
       aria-label={isLight ? "Switch to dark mode" : "Switch to light mode"}
       className={cn(
         "theme-toggle-btn",
+        isLight ? "theme-toggle-btn--light-active" : "theme-toggle-btn--dark-active",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent/30 focus-visible:ring-offset-1",
         className,
       )}
     >
-      <PowerIcon lit={isLight} />
+      <PowerIcon lit />
     </button>
   );
 }

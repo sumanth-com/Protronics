@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -8,14 +8,9 @@ import {
   ChevronLeft,
   ChevronRight,
   ExternalLink,
-  Phone,
 } from "lucide-react";
-import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
-import CtaButton from "@/components/ui/CtaButton";
-import SupportCallbackModal from "@/components/support/SupportCallbackModal";
 import SupportProtectionTrustCard from "@/components/support/SupportProtectionTrustCard";
 import { resetScrollToTop } from "@/hooks/useLenis";
-import { BUSINESS } from "@/lib/contact";
 import {
   SUPPORT_CATEGORIES_VISIBLE,
   SUPPORT_ICON_PROPS,
@@ -45,8 +40,6 @@ export default function SupportMobile({
   const pathParts = pathname.split("/").filter(Boolean);
   const categoryId = pathParts[1] ?? initialCategoryId;
   const articleId = pathParts[2] ?? initialArticleId;
-
-  const [callbackOpen, setCallbackOpen] = useState(false);
 
   useEffect(() => {
     resetScrollToTop(null);
@@ -215,44 +208,6 @@ export default function SupportMobile({
               </div>
             ) : null}
           </article>
-
-          <div className="support-mobile-article-actions">
-            <p className="support-mobile-contact-title">Still need help?</p>
-            <a
-              href={BUSINESS.whatsappMessage}
-              target="_blank"
-              rel="noreferrer"
-              className="support-mobile-whatsapp-btn support-mobile-whatsapp-btn--full"
-            >
-              <WhatsAppIcon className="h-[18px] w-[18px] text-[#25D366]" />
-              WhatsApp Support
-            </a>
-            <div className="support-mobile-article-action-row">
-              <CtaButton href="/contact" fullWidth size="sm">
-                Contact page
-              </CtaButton>
-              <button
-                type="button"
-                onClick={() => setCallbackOpen(true)}
-                className="support-mobile-callback-btn"
-              >
-                <Phone className="h-4 w-4" />
-                Callback
-              </button>
-            </div>
-            <p className="support-mobile-email-note">
-              Email{" "}
-              <a href={BUSINESS.emailHref} className="support-contact-email">
-                {BUSINESS.email}
-              </a>
-            </p>
-          </div>
-
-          <SupportCallbackModal
-            open={callbackOpen}
-            onClose={() => setCallbackOpen(false)}
-            context={category.label}
-          />
         </div>
       ) : null}
     </div>
