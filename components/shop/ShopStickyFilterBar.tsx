@@ -118,15 +118,7 @@ export default function ShopStickyFilterBar({
   );
 
   return (
-    <div className={cn("shop-filter-shell", sortOpen && "shop-filter-shell-sort-open")}>
-      {sortOpen ? (
-        <button
-          type="button"
-          className="fixed inset-0 z-[75] bg-black/25 lg:hidden"
-          aria-label="Close sort menu"
-          onClick={() => setSortOpen(false)}
-        />
-      ) : null}
+    <div className="shop-filter-shell">
       <div className="shop-filter-bar relative border-0 bg-transparent lg:border-b lg:border-theme-border lg:bg-theme-surface-card">
         <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6">
           <div className="mb-2.5 flex items-baseline justify-between gap-3 lg:hidden">

@@ -12,4 +12,4 @@ export const SPLASH_TAGLINE = "Premium. Refurbished. Perfected.";
  * Runs before paint on first session visit — sets page bg to match splash
  * so there is no white flash before React hydrates.
  */
-export const SPLASH_BLOCKING_SCRIPT = `(function(){try{if(sessionStorage.getItem(${JSON.stringify(SPLASH_SESSION_KEY)}))return;sessionStorage.setItem(${JSON.stringify(SPLASH_START_KEY)},String(Date.now()));document.documentElement.classList.add("splash-active");var t=document.documentElement.getAttribute("data-theme");var bg=t==="light"?"#f7f3ed":"#0a0a0a";document.documentElement.style.backgroundColor=bg;document.documentElement.style.colorScheme=t==="light"?"light":"dark";}catch(e){}})();`;
+export const SPLASH_BLOCKING_SCRIPT = `(function(){try{if(sessionStorage.getItem(${JSON.stringify(SPLASH_SESSION_KEY)}))return;sessionStorage.setItem(${JSON.stringify(SPLASH_START_KEY)},String(Date.now()));document.documentElement.classList.add("splash-active");document.documentElement.style.backgroundColor="#f7f3ed";document.documentElement.style.colorScheme="light";}catch(e){}})();`;

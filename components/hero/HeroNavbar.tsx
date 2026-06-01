@@ -56,7 +56,7 @@ export default function HeroNavbar() {
           <Link
             href="/"
             prefetch
-            className="navbar-brand group relative flex min-w-0 flex-1 items-center gap-1 min-[375px]:gap-1.5 sm:gap-2 lg:flex-none"
+            className="navbar-brand group relative flex min-w-0 flex-1 items-center gap-0 min-[375px]:gap-0.5 sm:gap-2 lg:flex-none"
             aria-label="Go to home"
           >
             <div
@@ -77,7 +77,7 @@ export default function HeroNavbar() {
                 aria-hidden
               />
             </div>
-            <div className="min-w-0 leading-none">
+            <div className="navbar-brand-copy min-w-0 leading-none">
               <div className="navbar-brand-title truncate">Protronics</div>
               <div className="navbar-brand-tagline hidden lg:mt-1 lg:block">
                 Premium. Refurbished. Perfected.

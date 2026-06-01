@@ -67,27 +67,30 @@ export default function RootLayout({
         <GoogleAnalytics />
         {/* Instant splash before JS — shown only when html.splash-active (see lib/splash.ts) */}
         <div id="splash-static" className="splash-screen splash-static" aria-hidden="true">
-          <div className="splash-grid" aria-hidden />
-          <div className="splash-screen-ambient" aria-hidden />
-          <div className="splash-screen-ambient splash-screen-ambient--secondary" aria-hidden />
-          <div className="splash-particles" aria-hidden>
-            <span className="splash-particle" />
-            <span className="splash-particle" />
-            <span className="splash-particle" />
-            <span className="splash-particle" />
-            <span className="splash-particle" />
-            <span className="splash-particle" />
-          </div>
           <div className="splash-screen-content">
-            <div className="splash-logo-stage">
-              <div className="splash-orbit" aria-hidden />
-              <div className="splash-logo-ring splash-logo-ring--outer" aria-hidden />
-              <div className="splash-logo-ring" aria-hidden />
-              <div className="splash-logo-glow" aria-hidden />
-              <div className="splash-logo-wrap">
-                <div className="splash-logo-sweep" aria-hidden />
+            <div className="splash-reveal-stage">
+              <div className="splash-logo-layer">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.webp" alt="" width={72} height={72} className="splash-logo-image" />
+                <img src="/logo.webp" alt="" width={80} height={80} className="splash-logo-image" />
+              </div>
+              <div className="splash-fridge-layer" aria-hidden>
+                <svg
+                  className="splash-fridge-svg"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="80"
+                  height="80"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 6c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6Z" />
+                  <path d="M5 10h14" />
+                  <path d="M9 16v-4" />
+                  <path d="M15 16v-4" />
+                </svg>
               </div>
             </div>
             <p className="splash-tagline">
@@ -96,7 +99,6 @@ export default function RootLayout({
           </div>
           <div className="splash-progress" aria-hidden>
             <span className="splash-progress-bar" />
-            <span className="splash-progress-glow" aria-hidden />
           </div>
         </div>
         <AppProviders>
