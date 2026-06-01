@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -16,9 +16,16 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 type SplashPhase = "show" | "exit" | "hidden";
 
+const SPLASH_STATIC_ID = "splash-static";
+
+function dismissStaticSplash() {
+  document.getElementById(SPLASH_STATIC_ID)?.classList.add("splash-static-dismissed");
+}
+
 function clearSplashActive() {
   document.documentElement.classList.remove("splash-active");
   document.documentElement.style.removeProperty("background-color");
+  dismissStaticSplash();
 }
 
 function resolveInitialPhase(): SplashPhase {
@@ -35,13 +42,24 @@ function resolveInitialPhase(): SplashPhase {
 }
 
 export default function SplashScreen() {
-  const [phase, setPhase] = useState<SplashPhase>(resolveInitialPhase);
+  /** null until client resolves sessionStorage (SSR-safe; static HTML splash covers first paint) */
+  const [phase, setPhase] = useState<SplashPhase | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    setPhase(resolveInitialPhase());
+  }, []);
+
+  useLayoutEffect(() => {
+    if (phase === null) return;
     if (phase === "hidden") {
       clearSplashActive();
       return;
     }
+    dismissStaticSplash();
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase !== "show") return;
 
     const exitTimer = window.setTimeout(() => setPhase("exit"), SPLASH_EXIT_AT_MS);
     const hideTimer = window.setTimeout(() => {
@@ -54,11 +72,9 @@ export default function SplashScreen() {
       window.clearTimeout(exitTimer);
       window.clearTimeout(hideTimer);
     };
-    // Timers only on first mount — initial phase is resolved once from sessionStorage.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only splash sequence
-  }, []);
+  }, [phase]);
 
-  if (phase === "hidden") {
+  if (phase === null || phase === "hidden") {
     return null;
   }
 
@@ -69,7 +85,7 @@ export default function SplashScreen() {
         className="splash-screen"
         role="presentation"
         aria-hidden="true"
-        initial={{ opacity: 0 }}
+        initial={false}
         animate={{ opacity: phase === "exit" ? 0 : 1 }}
         exit={{ opacity: 0 }}
         transition={{

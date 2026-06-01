@@ -123,6 +123,24 @@ html.splash-active body {
   overflow: hidden;
 }
 
+/* Hide app chrome until splash finishes — static #splash-static covers first paint */
+html.splash-active #site-shell {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#splash-static {
+  display: none;
+}
+
+html.splash-active #splash-static {
+  display: flex;
+}
+
+#splash-static.splash-static-dismissed {
+  display: none !important;
+}
+
 .splash-screen {
   position: fixed;
   inset: 0;

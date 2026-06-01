@@ -1,8 +1,8 @@
 export const SPLASH_SESSION_KEY = "protronics-splash-seen";
 
-/** Total splash duration — 2.0s (fade begins at 1.6s) */
-export const SPLASH_EXIT_AT_MS = 1600;
-export const SPLASH_HIDE_AT_MS = 2000;
+/** Total splash duration — 3.0s (fade begins at 2.4s) */
+export const SPLASH_EXIT_AT_MS = 2400;
+export const SPLASH_HIDE_AT_MS = 3000;
 
 export const SPLASH_TAGLINE = "Premium. Refurbished. Perfected.";
 

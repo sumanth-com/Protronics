@@ -6,7 +6,7 @@ import MobileBottomNav from "@/components/layout/MobileBottomNav";
 import AppProviders from "@/components/providers/AppProviders";
 import Footer from "@/components/footer/Footer";
 import { THEME_BLOCKING_SCRIPT } from "@/lib/theme";
-import { SPLASH_BLOCKING_SCRIPT } from "@/lib/splash";
+import { SPLASH_BLOCKING_SCRIPT, SPLASH_TAGLINE } from "@/lib/splash";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 
@@ -68,17 +68,34 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="preload" href="/logo.webp" as="image" type="image/webp" />
         <script dangerouslySetInnerHTML={{ __html: THEME_BLOCKING_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: SPLASH_BLOCKING_SCRIPT }} />
       </head>
       <body className="min-h-full flex flex-col font-sans bg-theme-bg text-theme-fg overflow-x-hidden has-mobile-bottom-nav">
         <GoogleAnalytics />
+        {/* Instant splash before JS — shown only when html.splash-active (see lib/splash.ts) */}
+        <div id="splash-static" className="splash-screen splash-static" aria-hidden="true">
+          <div className="splash-screen-ambient" />
+          <div className="splash-screen-content">
+            <div className="splash-logo-stage">
+              <div className="splash-logo-glow" aria-hidden />
+              <div className="splash-logo-wrap">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/logo.webp" alt="" width={72} height={72} className="splash-logo-image" />
+              </div>
+            </div>
+            <p className="splash-tagline">{SPLASH_TAGLINE}</p>
+          </div>
+        </div>
         <AppProviders>
-          <HeroNavbar />
-          <div className="navbar-spacer" aria-hidden />
-          <div className="site-main flex flex-1 flex-col">{children}</div>
-          <Footer />
-          <MobileBottomNav />
+          <div id="site-shell" className="flex min-h-full flex-1 flex-col">
+            <HeroNavbar />
+            <div className="navbar-spacer" aria-hidden />
+            <div className="site-main flex flex-1 flex-col">{children}</div>
+            <Footer />
+            <MobileBottomNav />
+          </div>
         </AppProviders>
       </body>
     </html>

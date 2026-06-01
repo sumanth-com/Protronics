@@ -8,12 +8,9 @@ import RouteScrollReset from "@/components/layout/RouteScrollReset";
 import NavPrefetch from "@/components/layout/NavPrefetch";
 import NavigationProgress from "@/components/layout/NavigationProgress";
 import FormEndpointInit from "@/components/providers/FormEndpointInit";
+import SplashScreen from "@/components/splash/SplashScreen";
 
 const CompareShell = dynamic(() => import("@/components/compare/CompareShell"), {
-  ssr: false,
-});
-
-const SplashScreen = dynamic(() => import("@/components/splash/SplashScreen"), {
   ssr: false,
 });
 
