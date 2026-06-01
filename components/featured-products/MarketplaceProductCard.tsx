@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ShoppingCart, Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 import { DEFAULT_PRODUCT_IMAGE } from "@/lib/product-images";
@@ -27,15 +27,32 @@ type Props = {
   className?: string;
 };
 
-export default function MarketplaceProductCard({ product, className }: Props) {
+function MarketplaceProductImage({ image, alt }: { image: string; alt: string }) {
   const [loaded, setLoaded] = useState(false);
-  const [src, setSrc] = useState(product.image);
+  const [useFallback, setUseFallback] = useState(false);
+  const src = useFallback ? FALLBACK_IMAGE : image;
 
-  useEffect(() => {
-    setSrc(product.image);
-    setLoaded(false);
-  }, [product.image]);
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes="(max-width: 1023px) 46vw, 280px"
+      className={cn(
+        "object-contain p-3 transition-opacity duration-300",
+        loaded ? "opacity-100" : "opacity-0",
+      )}
+      quality={85}
+      onLoad={() => setLoaded(true)}
+      onError={() => {
+        setLoaded(true);
+        if (!useFallback) setUseFallback(true);
+      }}
+    />
+  );
+}
 
+export default function MarketplaceProductCard({ product, className }: Props) {
   const discount =
     product.discountPercent ??
     (product.originalPrice
@@ -51,23 +68,7 @@ export default function MarketplaceProductCard({ product, className }: Props) {
           {discount > 0 ? (
             <span className="marketplace-product-badge">{discount}% off</span>
           ) : null}
-          <Image
-            key={product.image}
-            src={src}
-            alt={product.name}
-            fill
-            sizes="(max-width: 1023px) 46vw, 280px"
-            className={cn(
-              "object-contain p-3 transition-opacity duration-300",
-              loaded ? "opacity-100" : "opacity-0",
-            )}
-            quality={85}
-            onLoad={() => setLoaded(true)}
-            onError={() => {
-              setLoaded(true);
-              if (src !== FALLBACK_IMAGE) setSrc(FALLBACK_IMAGE);
-            }}
-          />
+          <MarketplaceProductImage key={product.image} image={product.image} alt={product.name} />
         </div>
 
         <div className="marketplace-product-body">

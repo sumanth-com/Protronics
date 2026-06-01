@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Star } from "lucide-react";
 import { ctaButtonClass } from "@/components/ui/CtaButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { buildProductPath } from "@/lib/product-detail";
 import { getCategoryBySlug, type ShopProduct } from "@/lib/shop";
 import { cn } from "@/lib/utils";
@@ -27,20 +27,38 @@ type ShopProductCardProps = {
   product: ShopProduct;
 };
 
-export default function ShopProductCard({ product }: ShopProductCardProps) {
+function ShopProductCardImage({ image, alt }: { image: string; alt: string }) {
   const [loaded, setLoaded] = useState(false);
-  const [src, setSrc] = useState(product.image);
+  const [useFallback, setUseFallback] = useState(false);
+  const src = useFallback ? FALLBACK : image;
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes="120px"
+      className={cn(
+        "object-contain p-2 transition-opacity duration-300",
+        loaded ? "opacity-100" : "opacity-0",
+      )}
+      quality={85}
+      onLoad={() => setLoaded(true)}
+      onError={() => {
+        setLoaded(true);
+        if (!useFallback) setUseFallback(true);
+      }}
+    />
+  );
+}
+
+export default function ShopProductCard({ product }: ShopProductCardProps) {
   const discount = Math.round(
     ((product.originalPrice - product.price) / product.originalPrice) * 100,
   );
   const category = getCategoryBySlug(product.categoryId);
   const rating = ratingForProduct(product);
   const reviews = reviewLabel(product);
-
-  useEffect(() => {
-    setSrc(product.image);
-    setLoaded(false);
-  }, [product.image]);
 
   return (
     <article className="shop-list-card">
@@ -49,23 +67,7 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
           {product.tag ? (
             <span className="shop-list-card-badge">{product.tag}</span>
           ) : null}
-          <Image
-            key={product.image}
-            src={src}
-            alt={product.name}
-            fill
-            sizes="120px"
-            className={cn(
-              "object-contain p-2 transition-opacity duration-300",
-              loaded ? "opacity-100" : "opacity-0",
-            )}
-            quality={85}
-            onLoad={() => setLoaded(true)}
-            onError={() => {
-              setLoaded(true);
-              if (src !== FALLBACK) setSrc(FALLBACK);
-            }}
-          />
+          <ShopProductCardImage key={product.image} image={product.image} alt={product.name} />
         </div>
 
         <div className="shop-list-card-body">

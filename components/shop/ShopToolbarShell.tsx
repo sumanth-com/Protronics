@@ -11,7 +11,6 @@ type Props = {
 export default function ShopToolbarShell({ children }: Props) {
   const toolbarRef = useRef<HTMLDivElement>(null);
   const [navHeight, setNavHeight] = useState(0);
-  const [toolbarHeight, setToolbarHeight] = useState(0);
 
   useLayoutEffect(() => {
     const toolbar = toolbarRef.current;
@@ -21,7 +20,6 @@ export default function ShopToolbarShell({ children }: Props) {
       const nav = header ? Math.ceil(header.getBoundingClientRect().height) : 0;
       const bar = toolbar ? Math.ceil(toolbar.getBoundingClientRect().height) : 0;
       setNavHeight(nav);
-      setToolbarHeight(bar);
       const pad = nav + bar;
       if (pad > 0) {
         document.documentElement.style.setProperty("--shop-header-pad", `${pad}px`);
