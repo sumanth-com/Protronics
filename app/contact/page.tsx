@@ -12,6 +12,7 @@ export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: PAGE_SEO.contact.absoluteTitle,
   description: PAGE_SEO.contact.description,
   path: PAGE_SEO.contact.path,
+  keywords: [...PAGE_SEO.contact.keywords],
 });
 
 export default function Contact() {

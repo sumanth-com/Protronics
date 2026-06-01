@@ -1,20 +1,34 @@
+import {
+  DELIVERY_COVERAGE,
+  GOOGLE_BUSINESS_PROFILE_URL,
+  GOOGLE_MAPS_DIRECTIONS_URL,
+  GOOGLE_MAPS_EMBED_URL,
+  PROTRONICS_NAP,
+  SERVICE_AREA_SUMMARY,
+  BUSINESS_HOURS,
+} from "@/lib/local/business";
+
+/** NAP-consistent business contact (single source: lib/local/business.ts). */
 export const BUSINESS = {
-  phone: "+91 90000 00000",
-  phoneHref: "tel:+919000000000",
-  email: "support@protronics.in",
-  emailHref: "mailto:support@protronics.in",
-  whatsapp: "https://wa.me/919000000000",
-  whatsappMessage:
-    "https://wa.me/919000000000?text=Hi%20Protronics%2C%20I%27d%20like%20help%20choosing%20a%20refurbished%20refrigerator.",
+  name: PROTRONICS_NAP.name,
+  phone: PROTRONICS_NAP.telephone,
+  phoneHref: `tel:${PROTRONICS_NAP.telephoneE164}`,
+  email: PROTRONICS_NAP.email,
+  emailHref: `mailto:${PROTRONICS_NAP.email}`,
+  whatsapp: `https://wa.me/${PROTRONICS_NAP.telephoneE164.replace("+", "")}`,
+  whatsappMessage: `https://wa.me/${PROTRONICS_NAP.telephoneE164.replace("+", "")}?text=${encodeURIComponent("Hi Protronics, I'd like help choosing a refurbished refrigerator in Bengaluru.")}`,
   whatsappChannel: "https://whatsapp.com/channel/0029VaExampleChannelId",
-  address: "Bangalore",
-  mapEmbedUrl:
-    "https://maps.google.com/maps?q=Bengaluru%2C+Karnataka&hl=en&z=11&output=embed",
-  mapDirectionsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Bengaluru+Karnataka",
-  hours: "Mon–Sat · 10:00 AM – 7:00 PM",
-  serviceAreas: "Bengaluru, Whitefield, Electronic City, Mysore Road & surrounding districts",
-  delivery: "Metro Bengaluru + select tier‑2 cities with white‑glove setup",
+  address: PROTRONICS_NAP.addressDisplay,
+  streetAddress: PROTRONICS_NAP.streetAddress,
+  locality: PROTRONICS_NAP.addressLocality,
+  region: PROTRONICS_NAP.addressRegion,
+  postalCode: PROTRONICS_NAP.postalCode,
+  mapEmbedUrl: GOOGLE_MAPS_EMBED_URL,
+  mapDirectionsUrl: GOOGLE_MAPS_DIRECTIONS_URL,
+  googleBusinessProfileUrl: GOOGLE_BUSINESS_PROFILE_URL,
+  hours: BUSINESS_HOURS.label,
+  serviceAreas: SERVICE_AREA_SUMMARY,
+  delivery: DELIVERY_COVERAGE,
 } as const;
 
 export const FRIDGE_PRODUCTS = [

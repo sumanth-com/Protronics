@@ -85,6 +85,11 @@ const nextConfig: NextConfig = {
         destination: "/best-deals",
         permanent: true,
       },
+      {
+        source: "/bangalore",
+        destination: "/locations/bangalore",
+        permanent: true,
+      },
     ];
   },
   images: {

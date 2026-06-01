@@ -1,3 +1,4 @@
+import { getAllLocationSlugs } from "@/lib/local/locations";
 import { SHOP_CATEGORIES, SHOP_PRODUCTS } from "@/lib/shop";
 import { getAllArticlePaths } from "@/lib/support";
 import { SITE_URL } from "@/lib/site";
@@ -18,6 +19,7 @@ export function getIndexablePaths(): string[] {
     "/compare",
     "/best-deals",
     "/why-protronics",
+    ...getAllLocationSlugs().map((city) => `/locations/${city}`),
   ];
 
   const categoryPaths = SHOP_CATEGORIES.map((c) => `/shop/${c.slug}`);
@@ -45,6 +47,9 @@ export function getSitemapEntries() {
       changeFrequency = "daily";
     } else if (path.startsWith("/product/")) {
       priority = 0.9;
+      changeFrequency = "weekly";
+    } else if (path.startsWith("/locations/")) {
+      priority = 0.88;
       changeFrequency = "weekly";
     } else if (path.startsWith("/shop")) {
       priority = 0.85;

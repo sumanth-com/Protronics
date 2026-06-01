@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import {
+  Building2,
   Clock,
   Mail,
   MapPin,
@@ -15,6 +16,12 @@ import { BUSINESS, contactGlass } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 const items = [
+  {
+    icon: Building2,
+    label: "Business",
+    value: `${BUSINESS.name} · Refurbished Appliance Store`,
+    href: "/locations/bangalore",
+  },
   {
     icon: MapPin,
     label: "Location",

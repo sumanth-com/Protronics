@@ -34,6 +34,7 @@ export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: PAGE_SEO.home.absoluteTitle,
   description: PAGE_SEO.home.description,
   path: PAGE_SEO.home.path,
+  keywords: PAGE_SEO.home.keywords ? [...PAGE_SEO.home.keywords] : undefined,
 });
 
 export default function Home() {

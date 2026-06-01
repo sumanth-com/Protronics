@@ -128,8 +128,13 @@ export const PAGE_SEO = {
   home: {
     absoluteTitle: `${SITE_NAME} | Premium Refurbished Refrigerators & Appliances`,
     description:
-      "Discover professionally refurbished refrigerators and home appliances backed by 100+ quality checks, warranty coverage, expert support, and trusted delivery across India.",
+      "Discover professionally refurbished refrigerators and home appliances in Bangalore — 100+ quality checks, warranty, trade-in, and delivery across Bengaluru and surrounding regions.",
     path: "/",
+    keywords: [
+      "second hand fridge near me",
+      "refurbished refrigerator bangalore",
+      "used refrigerator with warranty",
+    ],
   },
   shop: {
     title: "Shop Refurbished Refrigerators",
@@ -147,6 +152,7 @@ export const PAGE_SEO = {
       "sell old fridge",
       "appliance exchange",
       "upgrade refrigerator",
+      "appliance trade in bangalore",
     ],
   },
   about: {
@@ -160,8 +166,13 @@ export const PAGE_SEO = {
     title: "Contact Protronics | Appliance Support & Inquiries",
     absoluteTitle: "Contact Protronics | Appliance Support & Inquiries",
     description:
-      "Need help choosing a refurbished appliance? Contact the Protronics team for support, product inquiries, trade-ins, and warranty assistance.",
+      "Need help choosing a refurbished appliance in Bangalore? Contact Protronics for support, product inquiries, trade-ins, warranty, and delivery across Bengaluru.",
     path: "/contact",
+    keywords: [
+      "refurbished refrigerator bangalore",
+      "second hand fridge shop near me",
+      "appliance store bengaluru",
+    ],
   },
   faq: {
     title: "Frequently Asked Questions",
@@ -191,5 +202,12 @@ export const PAGE_SEO = {
     description:
       "See how Protronics renews premium appliances through 100+ quality checks, deep sanitization, performance certification, and warranty-backed delivery.",
     path: "/how-it-works",
+  },
+  shopLocal: {
+    title: "Shop Refurbished Refrigerators",
+    description:
+      "Browse certified refurbished refrigerators in Bangalore. Quality tested, sanitized, warranty included — delivery across Bengaluru metro.",
+    path: "/shop",
+    keywords: ["refurbished refrigerator bangalore", "second hand refrigerator bangalore"],
   },
 } as const;

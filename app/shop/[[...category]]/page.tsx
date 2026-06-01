@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ShopPageClient from "@/components/shop/ShopPageClient";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
 import {
   SHOP_CATEGORIES,
   buildCategoryMetadata,
@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     absoluteTitle: meta.title,
     description: meta.description,
     path: slug ? `/shop/${slug}` : "/shop",
+    keywords: slug ? undefined : [...PAGE_SEO.shopLocal.keywords],
   });
 }
 

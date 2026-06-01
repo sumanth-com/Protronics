@@ -101,21 +101,38 @@ export default function ContactLocationMap({ className }: ContactLocationMapProp
             <p className="mt-1 text-[12px] text-white/55">{BUSINESS.hours}</p>
           </div>
         </div>
-        <a
-          href={BUSINESS.mapDirectionsUrl}
-          target="_blank"
-          rel="noreferrer"
-          className={cn(
-            "contact-location-map-directions mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full",
-            "border border-white/15 bg-white/[0.06] px-4 py-2",
-            "text-[13px] font-semibold text-white",
-            "transition-colors duration-150 hover:bg-white/[0.08] active:bg-white/[0.06]",
-            "outline-none focus-visible:ring-2 focus-visible:ring-white/30",
-          )}
-        >
-          <Navigation className="h-4 w-4 text-white" />
-          Open in Google Maps
-        </a>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          <a
+            href={BUSINESS.googleBusinessProfileUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={cn(
+              "contact-location-map-gbp inline-flex items-center justify-center gap-2 rounded-full",
+              "border border-white/15 bg-white/[0.06] px-4 py-2",
+              "text-[13px] font-semibold text-white",
+              "transition-colors duration-150 hover:bg-white/[0.08] active:bg-white/[0.06]",
+              "outline-none focus-visible:ring-2 focus-visible:ring-white/30",
+            )}
+          >
+            <ExternalLink className="h-4 w-4 text-white" aria-hidden />
+            Google Business
+          </a>
+          <a
+            href={BUSINESS.mapDirectionsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={cn(
+              "contact-location-map-directions inline-flex items-center justify-center gap-2 rounded-full",
+              "border border-white/15 bg-white/[0.06] px-4 py-2",
+              "text-[13px] font-semibold text-white",
+              "transition-colors duration-150 hover:bg-white/[0.08] active:bg-white/[0.06]",
+              "outline-none focus-visible:ring-2 focus-visible:ring-white/30",
+            )}
+          >
+            <Navigation className="h-4 w-4 text-white" />
+            Directions
+          </a>
+        </div>
       </div>
     </div>
   );

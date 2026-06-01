@@ -17,6 +17,8 @@ export const SITE_DESCRIPTION =
 export const SITE_HOME_DESCRIPTION =
   "Discover professionally refurbished refrigerators and home appliances backed by 100+ quality checks, warranty coverage, expert support, and trusted delivery across India.";
 
+import { LOCAL_SEO_KEYWORDS } from "@/lib/local/business";
+
 export const SITE_KEYWORDS = [
   "refurbished refrigerators",
   "premium refurbished appliances",
@@ -29,6 +31,7 @@ export const SITE_KEYWORDS = [
   "Protronics",
   "refurbished fridge India",
   "renewed appliances Bengaluru",
+  ...LOCAL_SEO_KEYWORDS,
 ] as const;
 
 export const DEFAULT_OG_IMAGE = "/og/protronics-og.webp";

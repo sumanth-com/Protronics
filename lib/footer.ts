@@ -30,6 +30,7 @@ export const FOOTER_NAV_GROUPS: FooterLinkGroup[] = [
     title: "Company",
     links: [
       { label: "Sell", href: "/sell" },
+      { label: "Bangalore Store", href: "/locations/bangalore" },
       { label: "About", href: "/about" },
       { label: "Compare", href: "/compare" },
     ],
