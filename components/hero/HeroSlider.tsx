@@ -54,6 +54,7 @@ export default function HeroSlider() {
         <div
           className={cn(
             "theme-preserve-dark hero-slider-shell relative overflow-hidden rounded-2xl sm:rounded-[32px] lg:rounded-[32px]",
+            "max-lg:overflow-hidden max-lg:rounded-none",
             "border border-white/10 bg-black",
             "max-lg:shadow-[var(--theme-shadow-sm)]",
             "lg:border-white/10 lg:bg-white/[0.03] lg:shadow-[0_40px_160px_rgba(0,0,0,0.75)]",

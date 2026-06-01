@@ -30,9 +30,16 @@ function isNavActive(pathname: string, href: string) {
 export default function HeroNavbar() {
   const pathname = usePathname();
   const isShop = pathname.startsWith("/shop");
+  const isHome = pathname === "/";
 
   return (
-    <header className={cn("fixed inset-x-0 top-0 z-50", isShop && "shop-route-header")}>
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50",
+        isShop && "shop-route-header",
+        isHome && "navbar-marketplace-home",
+      )}
+    >
       <div
         className={cn(
           "navbar-shell relative w-full",
@@ -56,26 +63,34 @@ export default function HeroNavbar() {
           <Link
             href="/"
             prefetch
-            className="navbar-brand group relative flex min-w-0 flex-1 items-center gap-0 min-[375px]:gap-0.5 sm:gap-2 lg:flex-none"
-            aria-label="Go to home"
+            className="navbar-brand group relative flex min-w-0 flex-1 items-center gap-2.5 min-[375px]:gap-3 lg:flex-none lg:gap-3"
+            aria-label="Protronics — home"
           >
             <div
               className={cn(
-                "navbar-logo-mark relative shrink-0",
-                "h-9 w-9 min-[375px]:h-10 min-[375px]:w-10",
-                "lg:h-[52px] lg:w-[52px]",
+                "navbar-logo-pill",
+                "h-10 w-10 min-[375px]:h-11 min-[375px]:w-11",
+                "lg:h-[3.75rem] lg:w-[3.75rem]",
               )}
             >
-              <Image
-                src={Logo}
-                alt=""
-                fill
-                sizes="(max-width: 1023px) 40px, 56px"
-                className="object-contain object-left transition-transform duration-300 group-hover:scale-[1.03]"
-                quality={IMAGE_QUALITY.logo}
-                priority
-                aria-hidden
-              />
+              <div
+                className={cn(
+                  "navbar-logo-mark relative h-full w-full",
+                  "min-h-8 min-w-8 min-[375px]:min-h-9 min-[375px]:min-w-9",
+                  "lg:min-h-[3.25rem] lg:min-w-[3.25rem]",
+                )}
+              >
+                <Image
+                  src={Logo}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1023px) 40px, 56px"
+                  className="object-contain object-center"
+                  quality={IMAGE_QUALITY.logo}
+                  priority
+                  aria-hidden
+                />
+              </div>
             </div>
             <div className="navbar-brand-copy min-w-0 leading-none">
               <div className="navbar-brand-title truncate">Protronics</div>
@@ -159,10 +174,12 @@ export default function HeroNavbar() {
           </div>
         </div>
 
-        {/* Row 2 — search hidden on shop (filters live in page toolbar) */}
+        {/* Row 2 — search only (categories scroll in page content on home) */}
         {!isShop ? (
-          <div className="mobile-navbar-search-row lg:hidden">
-            <SearchTrigger bar className="w-full" />
+          <div className="mobile-marketplace-head lg:hidden">
+            <div className="mobile-navbar-search-row">
+              <SearchTrigger bar className="w-full" />
+            </div>
           </div>
         ) : null}
       </div>
