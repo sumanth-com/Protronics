@@ -6,6 +6,12 @@ import ImageUploader from "@/components/trade-in/ImageUploader";
 import FormAlert from "@/components/forms/FormAlert";
 import CtaButton from "@/components/ui/CtaButton";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
+import {
+  isValidPhone,
+  phoneInputProps,
+  PHONE_VALIDATION_MESSAGE,
+  sanitizePhoneInput,
+} from "@/lib/forms/validation/shared";
 import { submitTradeInLead } from "@/lib/trade-in-leads";
 import {
   ACCEPTED_BRANDS,
@@ -60,8 +66,7 @@ function validate(values: FormState, fileCount: number): FormErrors {
   const errors: FormErrors = {};
   if (!values.name.trim()) errors.name = "Please enter your name.";
   if (!values.phone.trim()) errors.phone = "Phone number is required.";
-  else if (!/^[\d\s+\-()]{8,16}$/.test(values.phone.trim()))
-    errors.phone = "Enter a valid phone number.";
+  else if (!isValidPhone(values.phone)) errors.phone = PHONE_VALIDATION_MESSAGE;
   if (!values.city.trim()) errors.city = "City is required.";
   if (!values.model.trim()) errors.model = "Model is required.";
   if (fileCount === 0) errors.images = "Add at least one photo.";
@@ -200,12 +205,11 @@ export default function TradeInForm() {
                     Phone *
                   </span>
                   <input
+                    {...phoneInputProps}
                     value={values.phone}
-                    onChange={(e) => update("phone", e.target.value)}
+                    onChange={(e) => update("phone", sanitizePhoneInput(e.target.value))}
                     className={inputClass(!!errors.phone)}
-                    placeholder="+91 90000 00000"
-                    type="tel"
-                    autoComplete="tel"
+                    placeholder="10-digit mobile number"
                   />
                   {errors.phone ? (
                     <p className="mt-1 text-[12px] text-red-500">{errors.phone}</p>

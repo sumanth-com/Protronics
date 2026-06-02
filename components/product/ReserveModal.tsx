@@ -5,6 +5,12 @@ import { CheckCircle2, Star, X } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import {
+  isValidPhone,
+  phoneInputProps,
+  PHONE_VALIDATION_MESSAGE,
+  sanitizePhoneInput,
+} from "@/lib/forms/validation/shared";
 import { submitLead, type ContactPreference } from "@/lib/leads";
 import {
   getWhatsAppReserveSuccessLink,
@@ -48,8 +54,20 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
   }, [open]);
 
   const submit = async () => {
-    if (!name.trim() || !phone.trim() || !city.trim()) {
-      setError("Please fill in name, phone, and city.");
+    if (!name.trim()) {
+      setError("Please enter your name.");
+      return;
+    }
+    if (!phone.trim()) {
+      setError("Phone number is required.");
+      return;
+    }
+    if (!isValidPhone(phone)) {
+      setError(PHONE_VALIDATION_MESSAGE);
+      return;
+    }
+    if (!city.trim()) {
+      setError("Please enter your city.");
       return;
     }
     setLoading(true);
@@ -157,10 +175,10 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
                     className={inputClass}
                   />
                   <input
+                    {...phoneInputProps}
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Phone Number *"
-                    type="tel"
+                    onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))}
+                    placeholder="10-digit mobile number *"
                     className={inputClass}
                   />
                   <input

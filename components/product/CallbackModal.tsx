@@ -3,6 +3,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Phone, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import {
+  isValidPhone,
+  phoneInputProps,
+  PHONE_VALIDATION_MESSAGE,
+  sanitizePhoneInput,
+} from "@/lib/forms/validation/shared";
 import { submitLead } from "@/lib/leads";
 import type { ProductDetail } from "@/lib/product-detail";
 import { cn } from "@/lib/utils";
@@ -46,8 +52,16 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
   }, [open]);
 
   const submit = async () => {
-    if (!name.trim() || !phone.trim()) {
-      setError("Please fill in name and phone number.");
+    if (!name.trim()) {
+      setError("Please enter your name.");
+      return;
+    }
+    if (!phone.trim()) {
+      setError("Phone number is required.");
+      return;
+    }
+    if (!isValidPhone(phone)) {
+      setError(PHONE_VALIDATION_MESSAGE);
       return;
     }
     setLoading(true);
@@ -132,10 +146,10 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
                     className={inputClass}
                   />
                   <input
+                    {...phoneInputProps}
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Phone Number *"
-                    type="tel"
+                    onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))}
+                    placeholder="10-digit mobile number *"
                     className={inputClass}
                   />
                   <select

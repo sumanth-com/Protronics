@@ -4,6 +4,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Loader2, Phone, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import CtaButton from "@/components/ui/CtaButton";
+import {
+  isValidPhone,
+  phoneInputProps,
+  PHONE_VALIDATION_MESSAGE,
+  sanitizePhoneInput,
+} from "@/lib/forms/validation/shared";
 import { submitLead } from "@/lib/leads";
 import { cn } from "@/lib/utils";
 
@@ -52,8 +58,16 @@ export default function SupportCallbackModal({
   }, [open]);
 
   const submit = async () => {
-    if (!name.trim() || !phone.trim()) {
-      setError("Please fill in name and phone number.");
+    if (!name.trim()) {
+      setError("Please enter your name.");
+      return;
+    }
+    if (!phone.trim()) {
+      setError("Phone number is required.");
+      return;
+    }
+    if (!isValidPhone(phone)) {
+      setError(PHONE_VALIDATION_MESSAGE);
       return;
     }
     setLoading(true);
@@ -150,10 +164,11 @@ export default function SupportCallbackModal({
                 <label className="block">
                   <span className="mb-2 block text-[12px] font-medium text-white/55">Phone</span>
                   <input
+                    {...phoneInputProps}
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => setPhone(sanitizePhoneInput(e.target.value))}
                     className={inputClass}
-                    placeholder="+91 90000 00000"
+                    placeholder="10-digit mobile number"
                   />
                 </label>
                 <label className="block">

@@ -1,5 +1,10 @@
 import type { ValidationResult } from "@/lib/forms/types";
-import { isValidPhone, required } from "@/lib/forms/validation/shared";
+import {
+  isValidPhone,
+  normalizePhone,
+  PHONE_VALIDATION_MESSAGE,
+  required,
+} from "@/lib/forms/validation/shared";
 
 export type ProductLeadValues = {
   leadType: string;
@@ -21,14 +26,14 @@ export function validateProductLead(
 ): ValidationResult<Record<string, string>> {
   const errors: Record<string, string> = {};
   const name = String(raw.name ?? "");
-  const phone = String(raw.phone ?? "");
+  const phone = normalizePhone(String(raw.phone ?? ""));
   const productId = String(raw.productId ?? "");
   const productName = String(raw.productName ?? "");
   const leadType = String(raw.leadType ?? "");
 
   if (required(name)) errors.name = "Name is required.";
   if (required(phone, "Phone is required.")) errors.phone = "Phone is required.";
-  else if (!isValidPhone(phone)) errors.phone = "Enter a valid phone number.";
+  else if (!isValidPhone(phone)) errors.phone = PHONE_VALIDATION_MESSAGE;
   if (required(productId)) errors.productId = "Product is required.";
   if (required(productName)) errors.productName = "Product name is required.";
   if (leadType === "reserve" && required(String(raw.city ?? ""), "City is required.")) {
@@ -45,7 +50,7 @@ export function validateProductLead(
       productId,
       price: String(raw.price ?? "0"),
       name: name.trim(),
-      phone: phone.trim(),
+      phone,
       city: String(raw.city ?? "").trim(),
       contactPreference: String(raw.contactPreference ?? ""),
       message: String(raw.message ?? "").trim(),

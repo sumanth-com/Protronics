@@ -32,9 +32,7 @@ export default function LocationPageContent({ location }: LocationPageContentPro
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <CtaButton href="/shop">Browse Refrigerators</CtaButton>
-            <CtaButton href="/sell" className="bg-transparent text-theme-fg ring-theme-border hover:bg-theme-elevated">
-              Trade-In Valuation
-            </CtaButton>
+            <CtaButton href="/sell">Trade-In Valuation</CtaButton>
           </div>
         </div>
       </section>

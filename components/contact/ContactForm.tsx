@@ -12,6 +12,7 @@ import SectionHeader from "@/components/contact/SectionHeader";
 import { useFormSubmission } from "@/hooks/useFormSubmission";
 import { FRIDGE_PRODUCTS } from "@/lib/contact";
 import { submitContactForm } from "@/lib/forms/submitters/contactSubmitter";
+import { phoneInputProps, sanitizePhoneInput } from "@/lib/forms/validation/shared";
 import type { ContactFormValues } from "@/lib/forms/validators/contactValidator";
 import { playFormSuccessSound } from "@/lib/sounds/formSuccessSound";
 import { cn } from "@/lib/utils";
@@ -127,12 +128,11 @@ export default function ContactForm() {
                   </Field>
                   <Field label="Phone Number" error={fieldErrors.phone}>
                     <input
-                      type="tel"
-                      autoComplete="tel"
+                      {...phoneInputProps}
                       value={values.phone}
-                      onChange={(e) => setValue("phone", e.target.value)}
+                      onChange={(e) => setValue("phone", sanitizePhoneInput(e.target.value))}
                       className={inputClass(!!fieldErrors.phone)}
-                      placeholder="+91 90000 00000"
+                      placeholder="10-digit mobile number"
                     />
                   </Field>
                 </div>

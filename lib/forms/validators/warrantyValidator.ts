@@ -1,5 +1,11 @@
 import type { ValidationResult } from "@/lib/forms/types";
-import { isValidEmail, isValidPhone, required } from "@/lib/forms/validation/shared";
+import {
+  isValidEmail,
+  isValidPhone,
+  normalizePhone,
+  PHONE_VALIDATION_MESSAGE,
+  required,
+} from "@/lib/forms/validation/shared";
 
 export type WarrantyRegistrationValues = {
   name: string;
@@ -15,7 +21,7 @@ export function validateWarrantyRegistration(
 ): ValidationResult<Record<string, string>> {
   const errors: Record<string, string> = {};
   const name = String(raw.name ?? "");
-  const phone = String(raw.phone ?? "");
+  const phone = normalizePhone(String(raw.phone ?? ""));
   const email = String(raw.email ?? "");
   const serialNumber = String(raw.serialNumber ?? "");
   const purchaseDate = String(raw.purchaseDate ?? "");
@@ -25,7 +31,7 @@ export function validateWarrantyRegistration(
   if (e1) errors.name = e1;
   const e2 = required(phone, "Phone number is required.");
   if (e2) errors.phone = e2;
-  else if (!isValidPhone(phone)) errors.phone = "Enter a valid phone number.";
+  else if (!isValidPhone(phone)) errors.phone = PHONE_VALIDATION_MESSAGE;
   const e3 = required(email, "Email is required.");
   if (e3) errors.email = e3;
   else if (!isValidEmail(email)) errors.email = "Enter a valid email address.";
@@ -42,7 +48,7 @@ export function validateWarrantyRegistration(
     success: true,
     data: {
       name: name.trim(),
-      phone: phone.trim(),
+      phone,
       email: email.trim(),
       serialNumber: serialNumber.trim(),
       purchaseDate: purchaseDate.trim(),

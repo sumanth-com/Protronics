@@ -1,5 +1,10 @@
 import type { ValidationResult } from "@/lib/forms/types";
-import { isValidPhone, required } from "@/lib/forms/validation/shared";
+import {
+  isValidPhone,
+  normalizePhone,
+  PHONE_VALIDATION_MESSAGE,
+  required,
+} from "@/lib/forms/validation/shared";
 
 export type TradeInFormValues = {
   name: string;
@@ -42,9 +47,9 @@ export function validateTradeIn(
     if (err) errors[key] = err;
   }
 
-  const phone = String(raw.phone ?? "");
+  const phone = normalizePhone(String(raw.phone ?? ""));
   if (!errors.phone && !isValidPhone(phone)) {
-    errors.phone = "Enter a valid phone number.";
+    errors.phone = PHONE_VALIDATION_MESSAGE;
   }
 
   if (Object.keys(errors).length > 0) return { success: false, errors };
@@ -53,7 +58,7 @@ export function validateTradeIn(
     success: true,
     data: {
       name: String(raw.name).trim(),
-      phone: phone.trim(),
+      phone,
       city: String(raw.city).trim(),
       applianceType: String(raw.applianceType),
       brand: String(raw.brand),
