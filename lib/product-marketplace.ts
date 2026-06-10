@@ -101,7 +101,7 @@ export function getProductSpecGroups(product: ProductDetail): SpecGroup[] {
 }
 
 export function getTradeInCategoryLabel(product: ProductDetail): string {
+  if (product.categoryId === "washing-machines") return "washing machine";
   if (product.categoryId === "mini-fridges") return "mini fridge";
-  if (product.categoryId === "commercial") return "commercial refrigerator";
   return "refrigerator";
 }

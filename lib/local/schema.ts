@@ -41,7 +41,7 @@ export function buildOrganizationJsonLd() {
     image: absoluteUrl("/logo.webp"),
     description: SITE_DESCRIPTION,
     email: PROTRONICS_NAP.email,
-    telephone: PROTRONICS_NAP.telephone,
+    telephone: `${PROTRONICS_NAP.telephone}, ${PROTRONICS_NAP.telephoneSecondary}`,
     address: {
       "@type": "PostalAddress",
       streetAddress: PROTRONICS_NAP.streetAddress,
@@ -100,7 +100,7 @@ export function buildLocalBusinessJsonLd() {
     url: SITE_URL,
     image: [absoluteUrl("/logo.webp"), absoluteUrl("/og/protronics-og.webp")],
     logo: absoluteUrl("/logo.webp"),
-    telephone: PROTRONICS_NAP.telephone,
+    telephone: `${PROTRONICS_NAP.telephone}, ${PROTRONICS_NAP.telephoneSecondary}`,
     email: PROTRONICS_NAP.email,
     priceRange: "₹₹",
     currenciesAccepted: "INR",

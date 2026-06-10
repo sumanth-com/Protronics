@@ -9,6 +9,7 @@ export type CategoryCardProps = {
   image: StaticImageData | string;
   href?: string;
   objectPosition?: string;
+  imageFit?: "cover" | "contain";
   tone?: "light" | "dark";
 };
 
@@ -17,6 +18,7 @@ export default function CategoryCard({
   image,
   href = "#shop",
   objectPosition = "center",
+  imageFit = "cover",
   tone = "light",
 }: CategoryCardProps) {
   const imgRef = useRef<HTMLDivElement | null>(null);
@@ -38,6 +40,7 @@ export default function CategoryCard({
         ref={imgRef}
         className={cn(
           "category-card-image relative overflow-hidden rounded-xl aspect-[4/3]",
+          imageFit === "contain" && "bg-white",
         )}
       >
         <Image
@@ -48,7 +51,7 @@ export default function CategoryCard({
           placeholder={isStatic ? "blur" : "empty"}
           quality={92}
           className={cn(
-            "object-cover",
+            imageFit === "contain" ? "object-contain p-3" : "object-cover",
             "transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.045]",
             "transition-opacity duration-700",
             loaded ? "opacity-100" : "opacity-0",

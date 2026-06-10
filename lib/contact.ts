@@ -11,8 +11,14 @@ import {
 /** NAP-consistent business contact (single source: lib/local/business.ts). */
 export const BUSINESS = {
   name: PROTRONICS_NAP.name,
-  phone: PROTRONICS_NAP.telephone,
+  phone: PROTRONICS_NAP.telephoneDisplay,
   phoneHref: `tel:${PROTRONICS_NAP.telephoneE164}`,
+  phoneSecondary: PROTRONICS_NAP.telephoneSecondary,
+  phoneSecondaryHref: `tel:${PROTRONICS_NAP.telephoneSecondaryE164}`,
+  phones: [
+    { display: "8861236266", href: `tel:${PROTRONICS_NAP.telephoneE164}` },
+    { display: "8618135976", href: `tel:${PROTRONICS_NAP.telephoneSecondaryE164}` },
+  ] as const,
   email: PROTRONICS_NAP.email,
   emailHref: `mailto:${PROTRONICS_NAP.email}`,
   whatsapp: `https://wa.me/${PROTRONICS_NAP.telephoneE164.replace("+", "")}`,

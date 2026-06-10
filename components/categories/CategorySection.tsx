@@ -5,38 +5,34 @@ import CategoryCard from "@/components/categories/CategoryCard";
 import { fadeUp, stagger } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 
+import { CATEGORY_COVER_IMAGES } from "@/lib/product-images";
+
 const categories = [
   {
+    title: "Mini Fridges",
+    img: CATEGORY_COVER_IMAGES["mini-fridges"],
+    pos: "50% 50%",
+    href: "/shop/mini-fridges",
+  },
+  {
     title: "Single Door",
-    img: "https://images.unsplash.com/photo-1623092242739-5a382879cec9?auto=format&fit=crop&w=1200&q=80",
-    pos: "50% 55%",
+    img: CATEGORY_COVER_IMAGES["single-door"],
+    pos: "50% 50%",
     href: "/shop/single-door",
   },
   {
     title: "Double Door",
-    img: "https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80",
-    pos: "55% 55%",
+    img: CATEGORY_COVER_IMAGES["double-door"],
+    pos: "50% 50%",
     href: "/shop/double-door",
   },
   {
-    title: "Mini Fridges",
-    img: "https://images.unsplash.com/photo-1585338667391-5b279a0c5eb8?auto=format&fit=crop&w=1200&q=80",
-    pos: "50% 55%",
-    href: "/shop/mini-fridges",
+    title: "Washing Machines",
+    img: CATEGORY_COVER_IMAGES["washing-machines"],
+    pos: "50% 50%",
+    href: "/shop/washing-machines",
   },
-  {
-    title: "Premium Hubs",
-    img: "https://images.unsplash.com/photo-1667404202905-4335b5370d96?auto=format&fit=crop&w=1200&q=80",
-    pos: "55% 55%",
-    href: "/shop/premium-hubs",
-  },
-  {
-    title: "Commercial",
-    img: "https://images.unsplash.com/photo-1722942624429-4e179ed18ec6?auto=format&fit=crop&w=1200&q=80",
-    pos: "55% 55%",
-    href: "/shop/commercial",
-  },
-];
+] as const;
 
 export default function CategorySection() {
   return (
@@ -81,7 +77,7 @@ export default function CategorySection() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-18% 0px -10% 0px" }}
-            className="mt-8 hidden grid-cols-2 gap-5 sm:grid md:grid-cols-3 lg:grid-cols-5"
+            className="mt-8 hidden grid-cols-2 gap-5 sm:grid md:grid-cols-2 lg:grid-cols-4"
           >
             {categories.map((c) => (
               <motion.div key={c.title} variants={fadeUp}>
@@ -90,6 +86,7 @@ export default function CategorySection() {
                   image={c.img}
                   href={c.href}
                   objectPosition={c.pos}
+                  imageFit="contain"
                   tone="dark"
                 />
               </motion.div>
@@ -110,6 +107,7 @@ export default function CategorySection() {
                       image={c.img}
                       href={c.href}
                       objectPosition={c.pos}
+                      imageFit="contain"
                       tone="dark"
                     />
                   </div>

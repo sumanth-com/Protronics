@@ -11,8 +11,8 @@ export type ShopCategoryId =
   | "single-door"
   | "double-door"
   | "mini-fridges"
-  | "premium-hubs"
-  | "commercial";
+  | "washing-machines"
+  | "premium-hubs";
 
 export type ShopCategory = {
   id: ShopCategoryId;
@@ -25,8 +25,12 @@ export const SHOP_CATEGORIES: ShopCategory[] = [
   { id: "single-door", slug: "single-door", label: "Single Door", description: "Compact & efficient" },
   { id: "double-door", slug: "double-door", label: "Double Door", description: "Frost-free family size" },
   { id: "mini-fridges", slug: "mini-fridges", label: "Mini Fridges", description: "Dorms & small spaces" },
-  { id: "premium-hubs", slug: "premium-hubs", label: "Premium Hubs", description: "Side-by-side & French door" },
-  { id: "commercial", slug: "commercial", label: "Commercial", description: "High-capacity units" },
+  {
+    id: "washing-machines",
+    slug: "washing-machines",
+    label: "Washing Machines",
+    description: "Front & top load renewals",
+  },
 ];
 
 export type ShopSortId =
@@ -106,6 +110,26 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     createdAt: "2026-02-20",
   },
   {
+    id: "sf-lg-190",
+    name: "LG 190 Litre Single Door Refrigerator",
+    brand: "LG",
+    categoryId: "single-door",
+    capacity: "190L",
+    capacityLiters: 190,
+    price: 7000,
+    originalPrice: 11999,
+    condition: "Excellent",
+    warranty: "1 Year",
+    energyRating: "3 Star",
+    deliveryAvailable: true,
+    image: productImagePath("sf-lg-190"),
+    specs: ["190L", "Direct Cool", "Compact"],
+    tag: "New",
+    popularity: 87,
+    salesRank: 4,
+    createdAt: "2026-06-10",
+  },
+  {
     id: "df-samsung-340",
     name: "Samsung Digital Inverter Double Door 340L",
     brand: "Samsung",
@@ -161,7 +185,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     specs: ["Frost Free", "300L", "Energy Saver"],
     tag: "New",
     popularity: 88,
-    salesRank: 4,
+    salesRank: 6,
     createdAt: "2026-04-02",
   },
   {
@@ -180,7 +204,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     image: productImagePath("mini-haier-190"),
     specs: ["190L", "Space Optimized", "Quick Chill"],
     popularity: 82,
-    salesRank: 6,
+    salesRank: 7,
     createdAt: "2026-01-15",
   },
   {
@@ -199,8 +223,48 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     image: productImagePath("mini-lg-170"),
     specs: ["170L", "Low Power", "Dorm Ready"],
     popularity: 79,
-    salesRank: 8,
+    salesRank: 9,
     createdAt: "2026-02-10",
+  },
+  {
+    id: "wm-samsung-7kg",
+    name: "Samsung 7 kg Digital Inverter Washing Machine",
+    brand: "Samsung",
+    categoryId: "washing-machines",
+    capacity: "7 kg",
+    capacityLiters: 7,
+    price: 9500,
+    originalPrice: 14999,
+    condition: "Excellent",
+    warranty: "1 Year",
+    energyRating: "5 Star",
+    deliveryAvailable: true,
+    image: productImagePath("wm-samsung-7kg"),
+    specs: ["7 kg", "Digital Inverter", "Fully Automatic"],
+    tag: "Best Seller",
+    popularity: 92,
+    salesRank: 8,
+    createdAt: "2026-06-10",
+  },
+  {
+    id: "wm-ifb-6kg",
+    name: "IFB 6 kg Front Load Fully Automatic Washing Machine",
+    brand: "IFB",
+    categoryId: "washing-machines",
+    capacity: "6 kg",
+    capacityLiters: 6,
+    price: 9000,
+    originalPrice: 13999,
+    condition: "Like New",
+    warranty: "1 Year",
+    energyRating: "5 Star",
+    deliveryAvailable: true,
+    image: productImagePath("wm-ifb-6kg"),
+    specs: ["6 kg", "Front Load", "Fully Automatic"],
+    tag: "New",
+    popularity: 89,
+    salesRank: 10,
+    createdAt: "2026-06-10",
   },
   {
     id: "prem-samsung-580",
@@ -219,7 +283,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     specs: ["580L", "Premium Finish", "Smart Shelves"],
     tag: "Most Popular",
     popularity: 93,
-    salesRank: 7,
+    salesRank: 11,
     createdAt: "2026-03-18",
   },
   {
@@ -238,14 +302,14 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     image: productImagePath("prem-lg-650"),
     specs: ["650L", "InstaView", "Door Cooling+"],
     popularity: 90,
-    salesRank: 9,
+    salesRank: 12,
     createdAt: "2026-04-05",
   },
   {
     id: "com-whirlpool-850",
     name: "Whirlpool Commercial Cooler 850L",
     brand: "Whirlpool",
-    categoryId: "commercial",
+    categoryId: "premium-hubs",
     capacity: "850L",
     capacityLiters: 850,
     price: 48999,
@@ -257,14 +321,14 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     image: productImagePath("com-whirlpool-850"),
     specs: ["850L", "Heavy Duty", "Fast Recovery"],
     popularity: 76,
-    salesRank: 10,
+    salesRank: 13,
     createdAt: "2026-01-28",
   },
   {
     id: "com-haier-720",
     name: "Haier Display Refrigerator 720L",
     brand: "Haier",
-    categoryId: "commercial",
+    categoryId: "premium-hubs",
     capacity: "720L",
     capacityLiters: 720,
     price: 45999,
@@ -276,7 +340,7 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     image: productImagePath("com-haier-720"),
     specs: ["720L", "Display Ready", "Commercial Grade"],
     popularity: 72,
-    salesRank: 11,
+    salesRank: 14,
     createdAt: "2026-02-05",
   },
   {
@@ -294,9 +358,8 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     deliveryAvailable: true,
     image: productImagePath("sf-samsung-280"),
     specs: ["280L", "Digital Inverter", "Toughened Glass"],
-    tag: "New",
     popularity: 84,
-    salesRank: 12,
+    salesRank: 15,
     createdAt: "2026-04-08",
   },
 ];
@@ -411,18 +474,23 @@ export function sortProducts(products: ShopProduct[], sort: ShopSortId) {
   }
 }
 
+export function isWashingMachineCategory(categoryId: ShopCategoryId) {
+  return categoryId === "washing-machines";
+}
+
 export function buildCategoryMetadata(slug?: string) {
   const category = getCategoryBySlug(slug);
   if (!category) {
     return {
-      title: "Shop Refurbished Refrigerators | Protronics",
+      title: "Shop Refurbished Appliances | Protronics",
       description:
-        "Browse certified refurbished refrigerators from trusted brands. Quality tested, sanitized, warranty included, and ready for delivery.",
+        "Browse certified refurbished refrigerators and washing machines from trusted brands. Quality tested, sanitized, warranty included, and ready for delivery.",
     };
   }
+  const applianceLabel = category.id === "washing-machines" ? "washing machines" : "refrigerators";
   return {
-    title: `${category.label} Refurbished Refrigerators | Protronics`,
-    description: `Shop certified refurbished ${category.label.toLowerCase()} refrigerators—100+ quality checks, sanitization, warranty included. ${category.description}.`,
+    title: `${category.label} Refurbished ${category.id === "washing-machines" ? "Washing Machines" : "Refrigerators"} | Protronics`,
+    description: `Shop certified refurbished ${category.label.toLowerCase()} ${applianceLabel}—100+ quality checks, sanitization, warranty included. ${category.description}.`,
   };
 }
 
@@ -435,7 +503,7 @@ export function getShopJsonLd(categorySlug?: string) {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: categorySlug
-      ? `${getCategoryBySlug(categorySlug)?.label} Refrigerators`
+      ? `${getCategoryBySlug(categorySlug)?.label} Appliances`
       : "Protronics Shop",
     itemListElement: products.map((p, i) => ({
       "@type": "ListItem",

@@ -9,8 +9,7 @@ const categories = [
   "Single Door",
   "Double Door",
   "Mini Fridges",
-  "Premium Hubs",
-  "Commercial",
+  "Washing Machines",
 ] as const;
 
 export default function CategoryMenu() {

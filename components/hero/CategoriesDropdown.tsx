@@ -15,8 +15,7 @@ const fridgeTypes: FridgeType[] = [
   { label: "Single Door", description: "Compact & efficient", href: "/shop/single-door" },
   { label: "Double Door", description: "Frost-free family size", href: "/shop/double-door" },
   { label: "Mini Fridges", description: "Dorms & small spaces", href: "/shop/mini-fridges" },
-  { label: "Premium Hubs", description: "Side-by-side & French door", href: "/shop/premium-hubs" },
-  { label: "Commercial", description: "High-capacity units", href: "/shop/commercial" },
+  { label: "Washing Machines", description: "Front & top load renewals", href: "/shop/washing-machines" },
 ];
 
 const triggerClass =

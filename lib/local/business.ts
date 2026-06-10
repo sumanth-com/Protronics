@@ -7,28 +7,38 @@ export const PROTRONICS_NAP = {
   name: "Protronics",
   legalName: "Protronics",
   category: "Refurbished Appliance Store",
-  telephone: "+91 90000 00000",
-  telephoneE164: "+919000000000",
-  email: "support@protronics.in",
-  streetAddress: "Greater Bengaluru",
+  telephone: "+91 88612 36266",
+  telephoneE164: "+918861236266",
+  telephoneSecondary: "+91 86181 35976",
+  telephoneSecondaryE164: "+918618135976",
+  /** Combined display for UI (both contact numbers). */
+  telephoneDisplay: "8861236266 / 8618135976",
+  email: "Protronicspro4@gmail.com",
+  streetAddress:
+    "4/1, Amani Byrathi Kaney, Vaddarapalya, near Hosanna AG Workshop",
   addressLocality: "Bengaluru",
   addressRegion: "Karnataka",
-  postalCode: "560001",
+  postalCode: "560043",
   addressCountry: "IN",
   /** Display line for UI (consistent everywhere). */
-  addressDisplay: "Bengaluru, Karnataka, India",
-  latitude: 12.9716,
-  longitude: 77.5946,
+  addressDisplay:
+    "4/1, Amani Byrathi Kaney, Vaddarapalya, near Hosanna AG Workshop, Bengaluru 560043",
+  latitude: 13.0504,
+  longitude: 77.5074,
 } as const;
+
+const MAPS_ADDRESS_QUERY = encodeURIComponent(
+  "4/1 Amani Byrathi Kaney Vaddarapalya near Hosanna AG Workshop Bangalore 560043",
+);
 
 /** Google Business Profile / Maps listing — set in env when live. */
 export const GOOGLE_BUSINESS_PROFILE_URL =
   process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_PROFILE_URL?.trim() ||
-  "https://www.google.com/maps/search/?api=1&query=Protronics+Bengaluru+refurbished+appliances";
+  `https://www.google.com/maps/search/?api=1&query=${MAPS_ADDRESS_QUERY}`;
 
 export const GOOGLE_MAPS_EMBED_URL =
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL?.trim() ||
-  "https://maps.google.com/maps?q=Protronics+Bengaluru+Karnataka+refurbished+refrigerators&hl=en&z=12&output=embed";
+  `https://maps.google.com/maps?q=${MAPS_ADDRESS_QUERY}&hl=en&z=15&output=embed`;
 
 export const GOOGLE_MAPS_DIRECTIONS_URL =
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_DIRECTIONS_URL?.trim() ||

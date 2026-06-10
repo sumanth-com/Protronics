@@ -20,7 +20,7 @@ const CATEGORY_PILLS = [
   { slug: undefined, label: "All Products" },
   ...SHOP_CATEGORIES.map((c) => ({
     slug: c.slug as string | undefined,
-    label: c.id === "premium-hubs" ? "Premium" : c.label,
+    label: c.label,
   })),
 ];
 

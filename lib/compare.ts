@@ -35,8 +35,8 @@ export function getCoolingType(product: ShopProduct): string {
   if (product.categoryId === "double-door" || product.categoryId === "premium-hubs") {
     return "Frost Free";
   }
+  if (product.categoryId === "washing-machines") return "Fully Automatic";
   if (product.categoryId === "mini-fridges") return "Direct Cool";
-  if (product.categoryId === "commercial") return "Commercial Cooling";
   return product.specs.some((s) => s.toLowerCase().includes("inverter"))
     ? "Inverter Direct Cool"
     : "Direct Cool";

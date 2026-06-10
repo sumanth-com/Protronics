@@ -101,7 +101,7 @@ export default function ShopMobileFilters({
           {SHOP_CATEGORIES.map((cat) => (
             <Chip
               key={cat.id}
-              label={cat.id === "premium-hubs" ? "Premium" : cat.label}
+              label={cat.label}
               active={activeCategory === cat.slug}
               onClick={() => onCategoryChange(cat.slug)}
             />

@@ -4,6 +4,7 @@ import { absoluteUrl } from "@/lib/site";
 import {
   SHOP_PRODUCTS,
   getCategoryBySlug,
+  isWashingMachineCategory,
   type ShopProduct,
 } from "@/lib/shop";
 
@@ -40,11 +41,15 @@ export function enrichProductDetail(product: ShopProduct): ProductDetail {
     ? customGallery
     : Array.from(new Set([product.image, ...categoryPeers])).slice(0, 4);
 
+  const applianceType = isWashingMachineCategory(product.categoryId)
+    ? "washing machine"
+    : "refrigerator";
+
   return {
     ...product,
     images,
     availability: product.deliveryAvailable ? "In Stock" : "Enquire for Availability",
-    description: `Professionally renewed ${product.brand} ${product.capacity} unit—100+ point inspected, deep sanitized, and performance certified before listing.`,
+    description: `Professionally renewed ${product.brand} ${product.capacity} ${applianceType}—100+ point inspected, deep sanitized, and performance certified before listing.`,
     inspection: [
       { label: "Cooling Test", score: "Optimal", passed: true },
       { label: "Door Seal Test", score: "Excellent", passed: true },
@@ -82,8 +87,10 @@ export function enrichProductDetail(product: ShopProduct): ProductDetail {
 }
 
 function getIdealFor(product: ShopProduct): string[] {
+  if (product.categoryId === "washing-machines") {
+    return ["Families", "Apartments", "Rental Homes"];
+  }
   if (product.categoryId === "mini-fridges") return ["Apartments", "Office Spaces", "Rental Homes"];
-  if (product.categoryId === "commercial") return ["Office Spaces", "Rental Homes", "Families"];
   if (product.capacityLiters >= 500) return ["Families", "Premium Homes", "Office Spaces"];
   return ["Families", "Apartments", "Rental Homes"];
 }
@@ -161,10 +168,13 @@ function productRatingStats(product: ShopProduct) {
 
 export function buildProductMetadata(product: ProductDetail) {
   const category = getCategoryBySlug(product.categoryId);
+  const applianceLabel = isWashingMachineCategory(product.categoryId)
+    ? "Washing Machine"
+    : "Refrigerator";
   return {
-    title: `${product.name} | Refurbished Refrigerator | Protronics`,
-    description: `Shop the ${product.name} refurbished refrigerator. Professionally tested, sanitized, ${product.warranty} warranty included, and ready for delivery.`,
-    categoryLabel: category?.label ?? "Refrigerators",
+    title: `${product.name} | Refurbished ${applianceLabel} | Protronics`,
+    description: `Shop the ${product.name} refurbished ${applianceLabel.toLowerCase()}. Professionally tested, sanitized, ${product.warranty} warranty included, and ready for delivery.`,
+    categoryLabel: category?.label ?? applianceLabel,
   };
 }
 

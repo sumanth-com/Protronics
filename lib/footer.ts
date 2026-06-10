@@ -15,8 +15,7 @@ export const FOOTER_NAV_GROUPS: FooterLinkGroup[] = [
       { label: "Double Door", href: "/shop/double-door" },
       { label: "Single Door", href: "/shop/single-door" },
       { label: "Mini Fridges", href: "/shop/mini-fridges" },
-      { label: "Premium Hubs", href: "/shop/premium-hubs" },
-      { label: "Commercial", href: "/shop/commercial" },
+      { label: "Washing Machines", href: "/shop/washing-machines" },
     ],
   },
   {

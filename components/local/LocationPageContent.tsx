@@ -76,9 +76,13 @@ export default function LocationPageContent({ location }: LocationPageContentPro
               </li>
               <li className="flex items-start gap-2">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-theme-accent" aria-hidden />
-                <a href={BUSINESS.phoneHref} className="hover:text-theme-fg">
-                  {BUSINESS.phone}
-                </a>
+                <span className="flex flex-col gap-1">
+                  {BUSINESS.phones.map((phone) => (
+                    <a key={phone.display} href={phone.href} className="hover:text-theme-fg">
+                      {phone.display}
+                    </a>
+                  ))}
+                </span>
               </li>
             </ul>
             <div className="mt-5 flex flex-col gap-2 sm:flex-row">

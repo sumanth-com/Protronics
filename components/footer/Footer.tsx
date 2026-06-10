@@ -83,17 +83,19 @@ export default function Footer() {
               </p>
 
               <ul className="footer-support-contact mx-auto mt-3 w-fit space-y-1.5 md:mx-0">
-                <li>
-                  <a
-                    href={BUSINESS.phoneHref}
-                    className="footer-support-line text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg"
-                  >
-                    <span className="footer-support-icon" aria-hidden>
-                      <Phone className="h-4 w-4 text-theme-fg-faint" />
-                    </span>
-                    <span>{BUSINESS.phone}</span>
-                  </a>
-                </li>
+                {BUSINESS.phones.map((phone) => (
+                  <li key={phone.display}>
+                    <a
+                      href={phone.href}
+                      className="footer-support-line text-[13px] text-theme-fg-secondary transition-colors hover:text-theme-fg"
+                    >
+                      <span className="footer-support-icon" aria-hidden>
+                        <Phone className="h-4 w-4 text-theme-fg-faint" />
+                      </span>
+                      <span>{phone.display}</span>
+                    </a>
+                  </li>
+                ))}
                 <li>
                   <a
                     href={BUSINESS.emailHref}
