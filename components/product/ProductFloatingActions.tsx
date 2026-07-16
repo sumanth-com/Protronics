@@ -152,7 +152,9 @@ export default function ProductFloatingActions({
           "transition-[transform,background-color,box-shadow] duration-200",
           "hover:bg-theme-accent-hover hover:scale-[1.05] active:scale-[0.96]",
           "touch-manipulation",
-          "right-5 bottom-[calc(var(--mobile-bottom-nav-height)+1.25rem+env(safe-area-inset-bottom,0px))]",
+          /* Mobile: sit just above bottom nav — low, visible, clean */
+          "right-4 bottom-[calc(var(--mobile-bottom-nav-height)+0.5rem+env(safe-area-inset-bottom,0px))]",
+          /* Desktop: classic bottom-right corner */
           "lg:right-8 lg:bottom-8",
         )}
       >
