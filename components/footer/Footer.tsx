@@ -9,7 +9,6 @@ import { BUSINESS } from "@/lib/contact";
 import { IMAGE_QUALITY } from "@/lib/images";
 import { cn } from "@/lib/utils";
 import FooterLinks from "@/components/footer/FooterLinks";
-import FooterNewsletter from "@/components/footer/FooterNewsletter";
 import FooterSocials from "@/components/footer/FooterSocials";
 import FooterBottom from "@/components/footer/FooterBottom";
 import CtaButton from "@/components/ui/CtaButton";
@@ -24,14 +23,12 @@ export default function Footer() {
   return (
     <footer className="footer-root relative w-full overflow-hidden border-t border-theme-border bg-theme-bg">
       <div className="footer-root-inner relative mx-auto flex w-full max-w-7xl flex-col px-4 py-6 sm:px-6 sm:py-8 lg:max-w-[84rem] lg:px-8 lg:py-10">
-        <FooterNewsletter className={footerCard} />
-
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-5% 0px" }}
-          className="footer-grid mt-5 grid gap-6 sm:mt-6 md:grid-cols-12 md:gap-8"
+          className="footer-grid grid gap-6 md:grid-cols-12 md:gap-8"
         >
           <motion.div
             variants={fadeUp}

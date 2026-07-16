@@ -40,7 +40,7 @@ export default function CompareStickyBar() {
           className={cn(
             "fixed inset-x-0 z-[85] px-3 pb-2 pt-2 sm:bottom-6 sm:px-4 sm:pb-0",
             isProductPage
-              ? "bottom-[calc(var(--product-sticky-bar-height)+env(safe-area-inset-bottom,0px))] sm:bottom-6"
+              ? "bottom-[calc(var(--mobile-bottom-nav-height)+env(safe-area-inset-bottom,0px))] sm:bottom-6 lg:bottom-6"
               : "bottom-[calc(var(--mobile-bottom-nav-height)+env(safe-area-inset-bottom,0px))] lg:bottom-6",
           )}
         >

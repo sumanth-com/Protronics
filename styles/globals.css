@@ -5118,8 +5118,45 @@ body.mobile-nav-scroll-lock {
   }
 }
 :root {
-  --product-sticky-bar-height: 3.75rem;
   --compare-sticky-bar-height: 5.5rem;
+}
+
+@keyframes product-reserve-tap-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--theme-accent-fg) 22%, transparent);
+  }
+  50% {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--theme-accent-fg) 0%, transparent);
+  }
+}
+
+@keyframes product-whatsapp-fab-in {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.product-reserve-side-tap {
+  animation: product-reserve-tap-pulse 2.4s ease-in-out infinite;
+}
+
+.product-whatsapp-fab {
+  animation: product-whatsapp-fab-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-reserve-side-tap,
+  .product-whatsapp-fab {
+    animation: none;
+  }
 }
 
 .trust-badge-row {
@@ -5129,46 +5166,16 @@ body.mobile-nav-scroll-lock {
 }
 
 @media (max-width: 1023px) {
-  body.has-mobile-bottom-nav.product-page-active {
-    padding-bottom: calc(
-      var(--product-sticky-bar-height) + env(safe-area-inset-bottom, 0px)
-    );
-  }
-
   body.product-page-active.has-compare-sticky .product-page-main {
     padding-bottom: calc(
-      var(--product-sticky-bar-height) +
-        var(--compare-sticky-bar-height) +
+      var(--compare-sticky-bar-height) +
         1.5rem +
         env(safe-area-inset-bottom, 0px)
     );
   }
 
   .product-page-main {
-    padding-bottom: calc(
-      var(--product-sticky-bar-height) + 1.5rem + env(safe-area-inset-bottom, 0px)
-    );
-  }
-
-  .product-sticky-bar {
-    z-index: 90;
-    display: flex;
-    align-items: center;
-    min-height: var(--product-sticky-bar-height);
-    max-height: calc(var(--product-sticky-bar-height) + env(safe-area-inset-bottom, 0px));
-    padding-block: 0.5rem;
-  }
-
-  .product-sticky-bar .product-lead-actions-mobile {
-    width: 100%;
-  }
-
-  .product-lead-actions-mobile .product-cta-btn {
-    min-height: 2.75rem;
-    max-height: 2.75rem;
-    padding-block: 0.5rem;
-    font-size: 0.75rem;
-    touch-action: manipulation;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
   }
 
   /* Mobile marketplace PDP */
@@ -5254,19 +5261,6 @@ body.mobile-nav-scroll-lock {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Product sticky bar — safe area (desktop keeps generous padding) */
-@supports (padding: max(0px)) {
-  .product-sticky-bar {
-    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
-  }
-
-  @media (max-width: 1023px) {
-    .product-sticky-bar {
-      padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-    }
   }
 }
 

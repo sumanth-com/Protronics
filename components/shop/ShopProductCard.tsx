@@ -107,13 +107,15 @@ export default function ShopProductCard({ product }: ShopProductCardProps) {
             <span className="shop-list-card-price">
               ₹{product.price.toLocaleString("en-IN")}
             </span>
-            <span className="shop-list-card-mrp">
-              M.R.P.:{" "}
-              <span className="line-through">
-                ₹{product.originalPrice.toLocaleString("en-IN")}
+            {discount > 0 ? (
+              <span className="shop-list-card-mrp">
+                M.R.P.:{" "}
+                <span className="line-through">
+                  ₹{product.originalPrice.toLocaleString("en-IN")}
+                </span>
+                {` (${discount}% off)`}
               </span>
-              {discount > 0 ? ` (${discount}% off)` : null}
-            </span>
+            ) : null}
           </div>
 
           {product.deliveryAvailable ? (

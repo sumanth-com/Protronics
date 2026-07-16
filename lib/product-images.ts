@@ -1,23 +1,20 @@
 /** Semantic product image filenames (assets + public/images/) */
 export const REFRIGERATOR_IMAGE_FILES: Record<string, string> = {
-  "sf-luxe-320": "lg-smart-inverter-single-door-320l.webp",
   "sf-godrej-240": "godrej-edge-pro-single-door-240l.webp",
   "sf-lg-190": "lg-single-door-190l.webp",
-  "df-samsung-340": "samsung-digital-inverter-double-door-340l.webp",
-  "df-whirlpool-360": "whirlpool-protton-convertible-360l.webp",
-  "df-haier-300": "haier-bottom-mount-frost-free-300l.webp",
+  "sf-godrej-edge-190": "godrej-edge-pro-190l.webp",
+  "df-whirlpool-protton-260": "whirlpool-protton-triple-door-260l.webp",
   "mini-haier-190": "haier-compact-mini-fridge-190l.webp",
   "mini-lg-170": "lg-direct-cool-mini-170l.webp",
-  "prem-samsung-580": "samsung-family-hub-side-by-side-580l.webp",
-  "prem-lg-650": "lg-instaview-french-door-650l.webp",
-  "com-whirlpool-850": "whirlpool-commercial-cooler-850l.webp",
-  "com-haier-720": "haier-display-refrigerator-720l.webp",
-  "sf-samsung-280": "samsung-single-door-280l.webp",
 };
 
 export const WASHING_MACHINE_IMAGE_FILES: Record<string, string> = {
   "wm-samsung-7kg": "samsung-wm-7kg.webp",
   "wm-ifb-6kg": "ifb-wm-6kg.webp",
+  "wm-lg-turbodrum-6kg": "lg-turbodrum-6kg.webp",
+  "wm-lg-turbodrum-6-5kg": "lg-turbodrum-6-5kg.webp",
+  "wm-lg-smart-inverter-8kg": "lg-smart-inverter-8kg.webp",
+  "wm-samsung-wobble-6-2kg": "samsung-wobble-diamond-6-2kg.webp",
 };
 
 const IMAGE_ROOTS = {
@@ -30,7 +27,10 @@ const IMAGE_ROOTS = {
 export const CATEGORY_COVER_IMAGES = {
   "mini-fridges": imageUrl("refrigerators", "haier-compact-mini-fridge-190l.webp"),
   "single-door": imageUrl("refrigerators", REFRIGERATOR_IMAGE_FILES["sf-lg-190"]!),
-  "double-door": imageUrl("refrigerators", REFRIGERATOR_IMAGE_FILES["df-samsung-340"]!),
+  "double-door": imageUrl(
+    "refrigerators",
+    REFRIGERATOR_IMAGE_FILES["df-whirlpool-protton-260"]!,
+  ),
   "washing-machines": imageUrl("washingMachines", WASHING_MACHINE_IMAGE_FILES["wm-samsung-7kg"]!),
 } as const;
 
@@ -59,15 +59,39 @@ export function productImagePath(productId: string) {
 
 /** Product-specific detail gallery (overrides category peer fallback) */
 export const PRODUCT_GALLERY: Partial<Record<string, string[]>> = {
-  "df-samsung-340": [
-    "/products/df-samsung-340-sp1.webp",
-    "/products/df-samsung-340-sp2.webp",
-    "/products/df-samsung-340-sp3.webp",
-    "/products/df-samsung-340-sp4.webp",
-  ],
-  "sf-lg-190": galleryUrls("refrigerators", REFRIGERATOR_IMAGE_FILES["sf-lg-190"]!, 4),
+  "sf-lg-190": galleryUrls("refrigerators", REFRIGERATOR_IMAGE_FILES["sf-lg-190"]!, 5),
+  "sf-godrej-edge-190": galleryUrls(
+    "refrigerators",
+    REFRIGERATOR_IMAGE_FILES["sf-godrej-edge-190"]!,
+    5,
+  ),
+  "df-whirlpool-protton-260": galleryUrls(
+    "refrigerators",
+    REFRIGERATOR_IMAGE_FILES["df-whirlpool-protton-260"]!,
+    5,
+  ),
   "wm-samsung-7kg": galleryUrls("washingMachines", WASHING_MACHINE_IMAGE_FILES["wm-samsung-7kg"]!, 5),
   "wm-ifb-6kg": galleryUrls("washingMachines", WASHING_MACHINE_IMAGE_FILES["wm-ifb-6kg"]!, 5),
+  "wm-lg-turbodrum-6kg": galleryUrls(
+    "washingMachines",
+    WASHING_MACHINE_IMAGE_FILES["wm-lg-turbodrum-6kg"]!,
+    5,
+  ),
+  "wm-lg-turbodrum-6-5kg": galleryUrls(
+    "washingMachines",
+    WASHING_MACHINE_IMAGE_FILES["wm-lg-turbodrum-6-5kg"]!,
+    5,
+  ),
+  "wm-lg-smart-inverter-8kg": galleryUrls(
+    "washingMachines",
+    WASHING_MACHINE_IMAGE_FILES["wm-lg-smart-inverter-8kg"]!,
+    5,
+  ),
+  "wm-samsung-wobble-6-2kg": galleryUrls(
+    "washingMachines",
+    WASHING_MACHINE_IMAGE_FILES["wm-samsung-wobble-6-2kg"]!,
+    5,
+  ),
 };
 
-export const DEFAULT_PRODUCT_IMAGE = productImagePath("sf-luxe-320");
+export const DEFAULT_PRODUCT_IMAGE = productImagePath("sf-lg-190");

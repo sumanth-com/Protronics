@@ -45,11 +45,15 @@ export function enrichProductDetail(product: ShopProduct): ProductDetail {
     ? "washing machine"
     : "refrigerator";
 
+  const isLg190Inverter = product.id === "sf-lg-190";
+
   return {
     ...product,
     images,
     availability: product.deliveryAvailable ? "In Stock" : "Enquire for Availability",
-    description: `Professionally renewed ${product.brand} ${product.capacity} ${applianceType}—100+ point inspected, deep sanitized, and performance certified before listing.`,
+    description: isLg190Inverter
+      ? `LG 190 litre inverter single door refrigerator—listed at ₹9,999 (₹11,000 before discount). Includes 1-year compressor warranty, 6 months free doorstep service warranty, and free home delivery. Professionally inspected, deep sanitized, and performance certified.`
+      : `Professionally renewed ${product.brand} ${product.capacity} ${applianceType}—100+ point inspected, deep sanitized, and performance certified before listing.`,
     inspection: [
       { label: "Cooling Test", score: "Optimal", passed: true },
       { label: "Door Seal Test", score: "Excellent", passed: true },
@@ -58,27 +62,50 @@ export function enrichProductDetail(product: ShopProduct): ProductDetail {
       { label: "Interior Condition", score: "Sanitized", passed: true },
       { label: "Exterior Condition", score: product.condition, passed: true },
     ],
-    highlights: [
-      {
-        title: "Verified Performance",
-        description: "Cooling, seals, and sensors tested under load before certification.",
-      },
-      {
-        title: "Premium Restoration",
-        description: "Cosmetic refinement and professional sanitization inside and out.",
-      },
-      {
-        title: "Warranty Backed",
-        description: `${product.warranty} coverage with human support when you need it.`,
-      },
-    ],
+    highlights: isLg190Inverter
+      ? [
+          {
+            title: "Inverter Model",
+            description: "190 litre LG inverter refrigerator for efficient everyday cooling.",
+          },
+          {
+            title: "Warranty Bundle",
+            description:
+              "1-year compressor warranty plus 6 months free doorstep service warranty.",
+          },
+          {
+            title: "Free Home Delivery",
+            description: "Doorstep delivery included after confirmation in our service area.",
+          },
+        ]
+      : [
+          {
+            title: "Verified Performance",
+            description: "Cooling, seals, and sensors tested under load before certification.",
+          },
+          {
+            title: "Premium Restoration",
+            description: "Cosmetic refinement and professional sanitization inside and out.",
+          },
+          {
+            title: "Warranty Backed",
+            description: `${product.warranty} coverage with human support when you need it.`,
+          },
+        ],
     idealFor: getIdealFor(product),
-    warrantyCoverage: [
-      "Compressor & cooling system defects",
-      "Thermostat and sensor failures",
-      "Electrical faults at delivery",
-      "Service support via WhatsApp & phone",
-    ],
+    warrantyCoverage: isLg190Inverter
+      ? [
+          "1-year compressor warranty",
+          "6 months free service warranty at your doorstep",
+          "Compressor & cooling system defects",
+          "Service support via WhatsApp & phone",
+        ]
+      : [
+          "Compressor & cooling system defects",
+          "Thermostat and sensor failures",
+          "Electrical faults at delivery",
+          "Service support via WhatsApp & phone",
+        ],
     deliveryTimeline: product.deliveryAvailable
       ? "24–72 hours in Bengaluru metro after confirmation"
       : "Confirm pin code with our team",
@@ -128,21 +155,38 @@ export function buildProductPath(id: string) {
   return `/product/${id}`;
 }
 
-export function getWhatsAppInquiryLink(productName: string, productId: string) {
+export function getWhatsAppInquiryLink(
+  product: Pick<ShopProduct, "name" | "id" | "brand" | "capacity" | "price" | "warranty"> | string,
+  productId?: string,
+) {
+  // Back-compat: older call sites passed (name, id)
+  const name = typeof product === "string" ? product : product.name;
+  const id = typeof product === "string" ? (productId ?? "") : product.id;
+  const brand = typeof product === "string" ? "" : product.brand;
+  const capacity = typeof product === "string" ? "" : product.capacity;
+  const price = typeof product === "string" ? null : product.price;
+  const warranty = typeof product === "string" ? "" : product.warranty;
+
+  const details = [
+    name,
+    brand && capacity ? `${brand} · ${capacity}` : null,
+    price != null ? `Price: ₹${price.toLocaleString("en-IN")}` : null,
+    warranty ? `Warranty: ${warranty}` : null,
+    id ? `Product ID: ${id}` : null,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
   const message = `Hi Protronics,
 
-I'm interested in:
+I'm interested in this appliance:
 
-${productName}
-
-Product ID:
-${productId}
+${details}
 
 Please share:
-
 • Availability
-• Delivery Details
-• Warranty Coverage
+• Delivery details
+• Warranty coverage
 
 Thank you.`;
   return `${BUSINESS.whatsapp}?text=${encodeURIComponent(message)}`;

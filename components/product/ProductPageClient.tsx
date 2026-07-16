@@ -11,7 +11,7 @@ import {
   ProductInspectionReport,
   ProductWarrantyDelivery,
 } from "@/components/product/ProductSections";
-import ProductStickyBar from "@/components/product/ProductStickyBar";
+import ProductFloatingActions from "@/components/product/ProductFloatingActions";
 import CompareButton from "@/components/compare/CompareButton";
 import ProductShareButton from "@/components/product/ProductShareButton";
 import ProductPageMobile from "@/components/product/mobile/ProductPageMobile";
@@ -29,10 +29,6 @@ const ReserveModal = dynamic(
   () => import("@/components/product/ReserveModal"),
   { ssr: false },
 );
-const CallbackModal = dynamic(
-  () => import("@/components/product/CallbackModal"),
-  { ssr: false },
-);
 
 type ProductPageClientProps = {
   product: ProductDetail;
@@ -41,7 +37,6 @@ type ProductPageClientProps = {
 
 export default function ProductPageClient({ product, related }: ProductPageClientProps) {
   const [reserveOpen, setReserveOpen] = useState(false);
-  const [callbackOpen, setCallbackOpen] = useState(false);
 
   const category = getCategoryBySlug(product.categoryId);
   const discount = Math.round(
@@ -62,8 +57,8 @@ export default function ProductPageClient({ product, related }: ProductPageClien
         <ProductPageMobile product={product} related={related} category={category ?? undefined} />
       </div>
 
-      {/* Desktop — approved layout (unchanged) */}
-      <main className="product-page-main hidden min-h-screen bg-black text-white lg:block lg:pb-32">
+      {/* Desktop */}
+      <main className="product-page-main hidden min-h-screen bg-black text-white lg:block lg:pb-16">
         <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-5">
           <nav className="mb-3 flex items-center gap-1 overflow-hidden text-[11px] text-white/45 sm:mb-4 sm:text-[12px]">
             <Link href="/" className="shrink-0 hover:text-white">
@@ -173,23 +168,15 @@ export default function ProductPageClient({ product, related }: ProductPageClien
         </div>
       </main>
 
-      <ProductStickyBar
+      <ProductFloatingActions
         product={product}
         onReserve={() => setReserveOpen(true)}
-        onCallback={() => setCallbackOpen(true)}
       />
       {reserveOpen ? (
         <ReserveModal
           product={product}
           open={reserveOpen}
           onClose={() => setReserveOpen(false)}
-        />
-      ) : null}
-      {callbackOpen ? (
-        <CallbackModal
-          product={product}
-          open={callbackOpen}
-          onClose={() => setCallbackOpen(false)}
         />
       ) : null}
     </>
