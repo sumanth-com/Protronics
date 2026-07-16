@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import { getWhatsAppInquiryLink, type ProductDetail } from "@/lib/product-detail";
 import { cn } from "@/lib/utils";
@@ -13,42 +13,51 @@ type ProductFloatingActionsProps = {
 };
 
 const RESERVE_TAB_STORAGE_KEY = "protronics-reserve-tab-open";
+const RESERVE_TAB_EVENT = "protronics-reserve-tab";
+
+function subscribeTabOpen(onStoreChange: () => void) {
+  window.addEventListener(RESERVE_TAB_EVENT, onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+  return () => {
+    window.removeEventListener(RESERVE_TAB_EVENT, onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+  };
+}
+
+function getTabOpenSnapshot() {
+  try {
+    return sessionStorage.getItem(RESERVE_TAB_STORAGE_KEY) !== "0";
+  } catch {
+    return true;
+  }
+}
+
+function getTabOpenServerSnapshot() {
+  return true;
+}
+
+function setTabOpenStored(open: boolean) {
+  try {
+    sessionStorage.setItem(RESERVE_TAB_STORAGE_KEY, open ? "1" : "0");
+  } catch {
+    /* ignore */
+  }
+  window.dispatchEvent(new Event(RESERVE_TAB_EVENT));
+}
 
 export default function ProductFloatingActions({
   product,
   onReserve,
 }: ProductFloatingActionsProps) {
   const whatsappHref = getWhatsAppInquiryLink(product);
-  const [tabOpen, setTabOpen] = useState(true);
-  const [mounted, setMounted] = useState(false);
+  const tabOpen = useSyncExternalStore(
+    subscribeTabOpen,
+    getTabOpenSnapshot,
+    getTabOpenServerSnapshot,
+  );
 
-  useEffect(() => {
-    setMounted(true);
-    try {
-      const stored = sessionStorage.getItem(RESERVE_TAB_STORAGE_KEY);
-      if (stored === "0") setTabOpen(false);
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  const collapseTab = () => {
-    setTabOpen(false);
-    try {
-      sessionStorage.setItem(RESERVE_TAB_STORAGE_KEY, "0");
-    } catch {
-      /* ignore */
-    }
-  };
-
-  const expandTab = () => {
-    setTabOpen(true);
-    try {
-      sessionStorage.setItem(RESERVE_TAB_STORAGE_KEY, "1");
-    } catch {
-      /* ignore */
-    }
-  };
+  const collapseTab = useCallback(() => setTabOpenStored(false), []);
+  const expandTab = useCallback(() => setTabOpenStored(true), []);
 
   return (
     <>
@@ -58,7 +67,6 @@ export default function ProductFloatingActions({
           "product-reserve-side fixed right-0 top-1/2 z-[88] -translate-y-1/2",
           "pointer-events-none",
         )}
-        aria-hidden={!mounted}
       >
         <AnimatePresence mode="wait" initial={false}>
           {tabOpen ? (
@@ -144,9 +152,7 @@ export default function ProductFloatingActions({
           "transition-[transform,background-color,box-shadow] duration-200",
           "hover:bg-theme-accent-hover hover:scale-[1.05] active:scale-[0.96]",
           "touch-manipulation",
-          /* Mobile: sit above bottom nav with comfortable margin */
           "right-5 bottom-[calc(var(--mobile-bottom-nav-height)+1.25rem+env(safe-area-inset-bottom,0px))]",
-          /* Desktop: classic bottom-right corner */
           "lg:right-8 lg:bottom-8",
         )}
       >

@@ -7,7 +7,7 @@ import AppProviders from "@/components/providers/AppProviders";
 import Footer from "@/components/footer/Footer";
 import GlobalJsonLd from "@/components/seo/GlobalJsonLd";
 import { THEME_BLOCKING_SCRIPT } from "@/lib/theme";
-import { SPLASH_BLOCKING_SCRIPT, SPLASH_TAGLINE } from "@/lib/splash";
+import { SPLASH_BLOCKING_SCRIPT } from "@/lib/splash";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import { buildRootMetadata } from "@/lib/seo";
 
