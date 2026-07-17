@@ -159,7 +159,7 @@ export default function ContactForm() {
                   </Field>
                 </div>
 
-                <Field label="Interested Product" error={fieldErrors.product}>
+                <Field label="Interested Product (optional)" error={fieldErrors.product}>
                   <div className="relative">
                     <select
                       value={values.product}
@@ -182,7 +182,7 @@ export default function ContactForm() {
                   </div>
                 </Field>
 
-                <Field label="Message" error={fieldErrors.message}>
+                <Field label="Message (optional)" error={fieldErrors.message}>
                   <textarea
                     value={values.message}
                     onChange={(e) => setValue("message", e.target.value)}

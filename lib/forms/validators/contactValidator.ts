@@ -37,9 +37,6 @@ export function validateContact(
   else if (!isValidEmail(email)) errors.email = "Enter a valid email address.";
   const e4 = required(city, "Tell us your city for delivery.");
   if (e4) errors.city = e4;
-  if (!product) errors.product = "Select a product type.";
-  const e5 = required(message, "Share a few details so we can help.");
-  if (e5) errors.message = e5;
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
