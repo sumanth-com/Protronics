@@ -1,9 +1,7 @@
 "use client";
 
-import type { ComponentType } from "react";
 import { motion } from "framer-motion";
 import { Mail, Phone, type LucideIcon } from "lucide-react";
-import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import SectionHeader from "@/components/contact/SectionHeader";
 import { fadeUp, stagger } from "@/lib/animations";
@@ -11,8 +9,7 @@ import { BUSINESS } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 type Option = {
-  icon?: LucideIcon;
-  customIcon?: ComponentType<{ className?: string }>;
+  icon: LucideIcon;
   title: string;
   description: string;
   mobileDescription: string;
@@ -23,17 +20,6 @@ type Option = {
 };
 
 const options: Option[] = [
-  {
-    customIcon: WhatsAppIcon,
-    title: "WhatsApp Support",
-    description:
-      "Fastest way to get answers—share photos, models, and budget. Our team replies personally.",
-    mobileDescription: "Share photos & models—get quick personal replies.",
-    cta: "Chat on WhatsApp",
-    ctaShort: "WhatsApp",
-    href: BUSINESS.whatsappMessage,
-    external: true,
-  },
   {
     icon: Phone,
     title: "Call Us",
@@ -74,10 +60,9 @@ export default function ContactOptions() {
             description="Every channel is staffed by real experts—not bots. Pick what feels right; we'll meet you there."
           />
 
-          <div className="contact-options-grid mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-3">
+          <div className="contact-options-grid mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-2 lg:max-w-3xl lg:mx-auto">
             {options.map((opt) => {
               const Icon = opt.icon;
-              const CustomIcon = opt.customIcon;
               return (
                 <motion.div
                   key={opt.title}
@@ -99,11 +84,7 @@ export default function ContactOptions() {
                         "transition-colors group-hover:border-white/22 group-hover:bg-white/[0.08]",
                       )}
                     >
-                      {CustomIcon ? (
-                        <CustomIcon className="h-[18px] w-[18px] text-white sm:h-5 sm:w-5" />
-                      ) : Icon ? (
-                        <Icon className="h-[18px] w-[18px] text-white sm:h-5 sm:w-5" strokeWidth={1.75} />
-                      ) : null}
+                      <Icon className="h-[18px] w-[18px] text-white sm:h-5 sm:w-5" strokeWidth={1.75} />
                     </div>
 
                     <h3 className="mt-3 text-[13px] font-semibold leading-snug tracking-tight text-white sm:mt-5 sm:text-[16px]">

@@ -8,6 +8,9 @@ const ContactOptions = dynamic(
   () => import("@/components/contact/ContactOptions"),
 );
 const ContactFAQ = dynamic(() => import("@/components/contact/ContactFAQ"));
+const StickyWhatsApp = dynamic(
+  () => import("@/components/contact/StickyWhatsApp"),
+);
 
 const CONTACT_FAQS = [
   {
@@ -59,6 +62,7 @@ export default function Contact() {
           <ContactOptions />
           <ContactFAQ />
         </main>
+        <StickyWhatsApp />
       </div>
     </>
   );

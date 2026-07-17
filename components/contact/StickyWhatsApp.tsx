@@ -12,18 +12,17 @@ export default function StickyWhatsApp() {
       rel="noreferrer"
       aria-label="Chat on WhatsApp"
       className={cn(
-        "fixed bottom-5 right-4 z-40 md:bottom-6 md:right-6",
-        "inline-flex items-center gap-2 rounded-full",
-        "bg-white px-4 py-3.5 text-black",
-        "text-[13px] font-semibold tracking-wide",
-        "shadow-[0_20px_60px_rgba(0,0,0,0.55),0_0_0_1px_rgba(255,255,255,0.15)]",
-        "ring-2 ring-white/30",
-        "transition-opacity hover:opacity-90 active:opacity-80",
-        "min-h-[48px] min-w-[48px]",
+        "contact-whatsapp-fab fixed z-[89] grid place-items-center",
+        "h-14 w-14 rounded-full",
+        "bg-theme-accent text-theme-accent-fg",
+        "shadow-[0_8px_28px_color-mix(in_srgb,var(--theme-accent)_42%,transparent)]",
+        "touch-manipulation",
+        /* Sit above mobile bottom nav; flush corner on desktop */
+        "right-4 bottom-[calc(var(--mobile-bottom-nav-height,0px)+1rem+env(safe-area-inset-bottom,0px))]",
+        "lg:right-8 lg:bottom-8",
       )}
     >
-      <WhatsAppIcon className="h-5 w-5 text-black/85" />
-      <span className="hidden sm:inline">WhatsApp</span>
+      <WhatsAppIcon className="h-7 w-7" />
     </a>
   );
 }
