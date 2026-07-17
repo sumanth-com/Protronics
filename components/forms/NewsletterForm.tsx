@@ -2,6 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
+import FormSuccessCard from "@/components/forms/FormSuccessCard";
 import FormAlert from "@/components/forms/FormAlert";
 import HoneypotField from "@/components/forms/HoneypotField";
 import { useFormSubmission } from "@/hooks/useFormSubmission";
@@ -36,16 +37,14 @@ export default function NewsletterForm({ className, sourcePage }: NewsletterForm
 
   if (isSuccess) {
     return (
-      <div className={className}>
-        <FormAlert variant="success" message="You're subscribed. Thank you!" />
-        <button
-          type="button"
-          onClick={reset}
-          className="mt-3 text-[13px] text-white/50 hover:text-white/80"
-        >
-          Subscribe another email
-        </button>
-      </div>
+      <FormSuccessCard
+        className={cn("min-h-0 py-6", className)}
+        variant="dark"
+        title="You're subscribed"
+        description="Thank you — we'll keep you updated with deals and new arrivals."
+        submitAnotherLabel="Subscribe another email"
+        onSubmitAnother={reset}
+      />
     );
   }
 

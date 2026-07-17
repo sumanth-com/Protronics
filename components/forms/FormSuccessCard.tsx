@@ -20,7 +20,7 @@ const cardSpring = { type: "spring" as const, stiffness: 380, damping: 28 };
 export default function FormSuccessCard({
   title = "Request received",
   description = "Our team will contact you shortly with curated options, pricing, and delivery timelines.",
-  submitAnotherLabel = "Submit another inquiry",
+  submitAnotherLabel = "Submit another form",
   onSubmitAnother,
   className,
   variant = "dark",

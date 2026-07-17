@@ -57,6 +57,16 @@ export default function SupportCallbackModal({
     }
   }, [open]);
 
+  const resetForAnother = () => {
+    setSubmitted(false);
+    setReferenceId("");
+    setName("");
+    setPhone("");
+    setPreferredTime(TIME_OPTIONS[0]);
+    setError("");
+    setLoading(false);
+  };
+
   const submit = async () => {
     if (!name.trim()) {
       setError("Please enter your name.");
@@ -146,9 +156,18 @@ export default function SupportCallbackModal({
                 <p className="mt-2 text-[13px] leading-6 text-white/60">
                   Our team will call you at your preferred time.
                 </p>
-                <CtaButton onClick={onClose} className="mt-5" fullWidth>
-                  Done
-                </CtaButton>
+                <div className="mt-5 flex flex-col gap-2">
+                  <CtaButton onClick={resetForAnother} fullWidth>
+                    Submit another form
+                  </CtaButton>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="w-full rounded-full border border-white/20 py-3 text-[13px] font-semibold text-white"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="mt-5 space-y-4">

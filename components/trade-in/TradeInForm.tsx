@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import ImageUploader from "@/components/trade-in/ImageUploader";
 import FormAlert from "@/components/forms/FormAlert";
-import CtaButton from "@/components/ui/CtaButton";
+import CtaButton, { ctaButtonSecondaryClass } from "@/components/ui/CtaButton";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import {
   isValidPhone,
@@ -103,6 +103,15 @@ export default function TradeInForm() {
     if (errors.images) setErrors((e) => ({ ...e, images: undefined }));
   };
 
+  const resetForAnother = () => {
+    setStatus("idle");
+    setReferenceId("");
+    setSubmitError("");
+    setValues(initial);
+    setFiles([]);
+    setErrors({});
+  };
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const nextErrors = validate(values, files.length);
@@ -167,7 +176,12 @@ export default function TradeInForm() {
                 We&apos;ll contact you shortly with your valuation.
               </p>
               <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-center">
-                <CtaButton href={TRADE_IN_LINKS.shop}>Browse Upgrades</CtaButton>
+                <CtaButton type="button" onClick={resetForAnother}>
+                  Submit another form
+                </CtaButton>
+                <CtaButton href={TRADE_IN_LINKS.shop} className={ctaButtonSecondaryClass}>
+                  Browse Upgrades
+                </CtaButton>
                 <a
                   href={TRADE_IN_LINKS.whatsapp}
                   target="_blank"

@@ -53,6 +53,17 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
     }
   }, [open]);
 
+  const resetForAnother = () => {
+    setReferenceId(null);
+    setName("");
+    setPhone("");
+    setCity("");
+    setContactPreference("WhatsApp");
+    setMessage("");
+    setError("");
+    setLoading(false);
+  };
+
   const submit = async () => {
     if (!name.trim()) {
       setError("Please enter your name.");
@@ -138,7 +149,15 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
                 <p className="mt-4 text-[14px] leading-6 text-white/60">
                   Our team will contact you shortly regarding availability and delivery.
                 </p>
-                <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+                <div className="mt-6 flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={resetForAnother}
+                    className="w-full rounded-full bg-white py-3 text-[13px] font-semibold text-black"
+                  >
+                    Submit another form
+                  </button>
+                  <div className="flex flex-col gap-2 sm:flex-row">
                   <Link
                     href="/shop"
                     onClick={onClose}
@@ -155,6 +174,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
                     <WhatsAppIcon className="h-4 w-4" />
                     Chat On WhatsApp
                   </a>
+                  </div>
                 </div>
               </div>
             ) : (

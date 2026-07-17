@@ -99,7 +99,7 @@ export default function ContactForm() {
                   variant="dark"
                   title="Request received"
                   description="Our team will contact you shortly with curated options, pricing, and delivery timelines."
-                  submitAnotherLabel="Submit another inquiry"
+                  submitAnotherLabel="Submit another form"
                   onSubmitAnother={reset}
                 />
               ) : (

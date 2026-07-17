@@ -51,6 +51,15 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
     }
   }, [open]);
 
+  const resetForAnother = () => {
+    setSubmitted(false);
+    setName("");
+    setPhone("");
+    setPreferredTime(TIME_OPTIONS[0]);
+    setError("");
+    setLoading(false);
+  };
+
   const submit = async () => {
     if (!name.trim()) {
       setError("Please enter your name.");
@@ -122,13 +131,22 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
                 <p className="mt-2 text-[13px] leading-5 text-white/60">
                   Our team will call you at your preferred time.
                 </p>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="mt-5 w-full rounded-full bg-white py-2.5 text-[13px] font-semibold text-black"
-                >
-                  Done
-                </button>
+                <div className="mt-5 flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={resetForAnother}
+                    className="w-full rounded-full bg-white py-2.5 text-[13px] font-semibold text-black"
+                  >
+                    Submit another form
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="w-full rounded-full border border-white/20 py-2.5 text-[13px] font-semibold text-white"
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
             ) : (
               <>
