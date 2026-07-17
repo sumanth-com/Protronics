@@ -204,12 +204,6 @@ Please confirm availability and delivery details.`;
   return `${BUSINESS.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
-function productRatingStats(product: ShopProduct) {
-  const ratingValue = Math.min(4.9, 4.2 + (product.popularity % 8) * 0.1);
-  const reviewCount = Math.round(product.popularity * 17 + product.salesRank * 120);
-  return { ratingValue, reviewCount };
-}
-
 export function buildProductMetadata(product: ProductDetail) {
   const category = getCategoryBySlug(product.categoryId);
   const applianceLabel = isWashingMachineCategory(product.categoryId)
@@ -217,14 +211,15 @@ export function buildProductMetadata(product: ProductDetail) {
     : "Refrigerator";
   return {
     title: `${product.name} | Refurbished ${applianceLabel} | Protronics`,
-    description: `Shop the ${product.name} refurbished ${applianceLabel.toLowerCase()}. Professionally tested, sanitized, ${product.warranty} warranty included, and ready for delivery.`,
+    description: `Buy the ${product.name} refurbished ${applianceLabel.toLowerCase()} from Protronics. Professionally tested, sanitized, ${product.warranty} warranty included, and ready for delivery in Bengaluru.`,
     categoryLabel: category?.label ?? applianceLabel,
   };
 }
 
 export function getProductJsonLd(product: ProductDetail) {
-  const { ratingValue, reviewCount } = productRatingStats(product);
   const productUrl = absoluteUrl(`/product/${product.id}`);
+  const validUntil = new Date();
+  validUntil.setMonth(validUntil.getMonth() + 3);
 
   return {
     "@context": "https://schema.org",
@@ -238,23 +233,22 @@ export function getProductJsonLd(product: ProductDetail) {
       img.startsWith("http") ? img : absoluteUrl(img),
     ),
     category: getCategoryBySlug(product.categoryId)?.label ?? "Refrigerator",
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: ratingValue.toFixed(1),
-      reviewCount: String(reviewCount),
-      bestRating: "5",
-      worstRating: "1",
-    },
+    url: productUrl,
     offers: {
       "@type": "Offer",
       price: product.price,
       priceCurrency: "INR",
+      priceValidUntil: validUntil.toISOString().slice(0, 10),
       availability: product.deliveryAvailable
         ? "https://schema.org/InStock"
         : "https://schema.org/PreOrder",
       url: productUrl,
       itemCondition: "https://schema.org/RefurbishedCondition",
-      seller: { "@type": "Organization", name: "Protronics" },
+      seller: {
+        "@type": "Organization",
+        name: "Protronics",
+        url: absoluteUrl("/"),
+      },
     },
   };
 }

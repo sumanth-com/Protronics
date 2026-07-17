@@ -2,7 +2,7 @@
 
 import type { ComponentType } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, Video, type LucideIcon } from "lucide-react";
+import { Mail, Phone, type LucideIcon } from "lucide-react";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import CtaButton from "@/components/ui/CtaButton";
 import SectionHeader from "@/components/contact/SectionHeader";
@@ -55,16 +55,6 @@ const options: Option[] = [
     href: BUSINESS.emailHref,
     external: true,
   },
-  {
-    icon: Video,
-    title: "Book Video Demo",
-    description:
-      "See the finish, hear the compressor, and review test reports live—before you decide.",
-    mobileDescription: "Live video walkthrough of finish, sound & test reports.",
-    cta: "Book Demo",
-    ctaShort: "Demo",
-    href: "#contact",
-  },
 ];
 
 export default function ContactOptions() {
@@ -84,7 +74,7 @@ export default function ContactOptions() {
             description="Every channel is staffed by real experts—not bots. Pick what feels right; we'll meet you there."
           />
 
-          <div className="contact-options-grid mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-4">
+          <div className="contact-options-grid mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-3">
             {options.map((opt) => {
               const Icon = opt.icon;
               const CustomIcon = opt.customIcon;

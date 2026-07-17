@@ -8,6 +8,7 @@ const DISALLOW = [
   "/test/",
   "/dev/",
   "/draft/",
+  "/private/",
 ];
 
 const AI_AND_SEARCH_BOTS = [

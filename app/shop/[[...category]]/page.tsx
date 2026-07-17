@@ -11,7 +11,7 @@ import {
 
 type PageProps = {
   params: Promise<{ category?: string[] }>;
-  searchParams: Promise<{ brand?: string }>;
+  searchParams: Promise<{ brand?: string; q?: string }>;
 };
 
 export async function generateStaticParams() {
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ShopPage({ params, searchParams }: PageProps) {
   const { category } = await params;
-  const { brand } = await searchParams;
+  const { brand, q } = await searchParams;
   const slug = category?.[0];
 
   if (slug && !getCategoryBySlug(slug)) {
@@ -45,6 +45,7 @@ export default async function ShopPage({ params, searchParams }: PageProps) {
 
   const validCategory = slug && getCategoryBySlug(slug) ? slug : undefined;
   const jsonLd = getShopJsonLd(validCategory);
+  const query = typeof q === "string" ? q.trim() : "";
 
   return (
     <>
@@ -53,9 +54,10 @@ export default async function ShopPage({ params, searchParams }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ShopPageClient
-        key={`${validCategory ?? "all"}-${brand ?? ""}`}
+        key={`${validCategory ?? "all"}-${brand ?? ""}-${query}`}
         initialCategory={validCategory}
         initialBrand={brand}
+        initialQuery={query || undefined}
       />
     </>
   );

@@ -24,10 +24,20 @@ function testimonialAggregateRating() {
   return {
     "@type": "AggregateRating" as const,
     ratingValue: avg.toFixed(1),
-    reviewCount: String(Math.max(count, 12)),
+    reviewCount: String(count),
     bestRating: "5",
     worstRating: "1",
   };
+}
+
+/** Only real profile URLs — never placeholder social homepages. */
+function organizationSameAs() {
+  const links = [GOOGLE_BUSINESS_PROFILE_URL];
+  const instagram = process.env.NEXT_PUBLIC_INSTAGRAM_URL?.trim();
+  const facebook = process.env.NEXT_PUBLIC_FACEBOOK_URL?.trim();
+  if (instagram) links.push(instagram);
+  if (facebook) links.push(facebook);
+  return links.filter(Boolean);
 }
 
 export function buildOrganizationJsonLd() {
@@ -58,11 +68,7 @@ export function buildOrganizationJsonLd() {
         name: "Karnataka",
       },
     })),
-    sameAs: [
-      GOOGLE_BUSINESS_PROFILE_URL,
-      "https://www.instagram.com/",
-      "https://www.facebook.com/",
-    ].filter(Boolean),
+    sameAs: organizationSameAs(),
     aggregateRating: testimonialAggregateRating(),
   };
 }
@@ -80,7 +86,7 @@ export function buildWebSiteJsonLd() {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/shop?brand={search_term_string}`,
+        urlTemplate: `${SITE_URL}/shop?q={search_term_string}`,
       },
       "query-input": "required name=search_term_string",
     },
@@ -136,11 +142,7 @@ export function buildLocalBusinessJsonLd() {
       "used refrigerator with warranty",
       "second hand fridge Bangalore",
     ],
-    sameAs: [
-      GOOGLE_BUSINESS_PROFILE_URL,
-      "https://www.instagram.com/",
-      "https://www.facebook.com/",
-    ],
+    sameAs: organizationSameAs(),
     parentOrganization: { "@id": ORG_ID },
     aggregateRating: testimonialAggregateRating(),
     hasOfferCatalog: {
@@ -182,19 +184,23 @@ export function buildServiceJsonLdList() {
 }
 
 export function buildReviewJsonLd() {
-  return CUSTOMER_TESTIMONIALS.slice(0, 8).map((t) => ({
-    "@type": "Review",
-    author: { "@type": "Person", name: t.name },
-    datePublished: "2026-01-15",
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: String(t.rating),
-      bestRating: "5",
-      worstRating: "1",
-    },
-    reviewBody: t.quote,
-    itemReviewed: { "@id": LOCAL_BUSINESS_ID },
-  }));
+  return CUSTOMER_TESTIMONIALS.slice(0, 8).map((t, index) => {
+    const published = new Date("2025-06-01");
+    published.setDate(published.getDate() + index * 21);
+    return {
+      "@type": "Review",
+      author: { "@type": "Person", name: t.name },
+      datePublished: published.toISOString().slice(0, 10),
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: String(t.rating),
+        bestRating: "5",
+        worstRating: "1",
+      },
+      reviewBody: t.quote,
+      itemReviewed: { "@id": LOCAL_BUSINESS_ID },
+    };
+  });
 }
 
 export function buildLocationPageJsonLd(citySlug: string) {

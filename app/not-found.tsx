@@ -1,5 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import CtaButton from "@/components/ui/CtaButton";
+
+export const metadata: Metadata = {
+  title: "Page Not Found",
+  description:
+    "This page does not exist. Browse refurbished refrigerators and appliances at Protronics, or return home.",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (

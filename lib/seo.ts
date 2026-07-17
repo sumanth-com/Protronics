@@ -99,7 +99,6 @@ export function buildRootMetadata(): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      site: "@protronics",
       title: SITE_TITLE_DEFAULT,
       description: SITE_DESCRIPTION,
       images: [absoluteUrl(DEFAULT_OG_IMAGE)],
@@ -134,13 +133,21 @@ export const PAGE_SEO = {
       "second hand fridge near me",
       "refurbished refrigerator bangalore",
       "used refrigerator with warranty",
+      "buy refurbished refrigerator online",
+      "certified refurbished appliances",
     ],
   },
   shop: {
     title: "Shop Refurbished Refrigerators",
     description:
-      "Browse certified refurbished refrigerators from trusted brands. Quality tested, sanitized, warranty included, and ready for delivery.",
+      "Browse certified refurbished refrigerators and washing machines from trusted brands. Quality tested, sanitized, warranty included, and ready for delivery.",
     path: "/shop",
+    keywords: [
+      "refurbished refrigerator",
+      "refurbished fridge",
+      "refurbished washing machine",
+      "second hand refrigerator",
+    ],
   },
   sell: {
     title: "Trade In Your Old Refrigerator",
@@ -153,6 +160,7 @@ export const PAGE_SEO = {
       "appliance exchange",
       "upgrade refrigerator",
       "appliance trade in bangalore",
+      "refrigerator trade-in Bangalore",
     ],
   },
   about: {
@@ -161,6 +169,11 @@ export const PAGE_SEO = {
     description:
       "Learn how Protronics restores and certifies refrigerators and appliances through rigorous quality testing, sanitization, and performance verification.",
     path: "/about",
+    keywords: [
+      "Protronics Bangalore",
+      "certified refurbished appliances",
+      "premium refurbished home appliances",
+    ],
   },
   contact: {
     title: "Contact Protronics | Appliance Support & Inquiries",
@@ -177,8 +190,12 @@ export const PAGE_SEO = {
   faq: {
     title: "Frequently Asked Questions",
     description:
-      "Find answers about refurbished appliances, warranties, delivery, trade-ins, quality testing, and support.",
+      "Find answers about refurbished appliances, warranties, delivery, trade-ins, quality testing, and support from Protronics.",
     path: "/support",
+    keywords: [
+      "refurbished refrigerator with warranty",
+      "refurbished appliances FAQ",
+    ],
   },
   privacy: {
     title: "Privacy Policy",
@@ -196,6 +213,10 @@ export const PAGE_SEO = {
     description:
       "1-year warranty, delivery and installation, and dedicated support for every premium refurbished appliance from Protronics.",
     path: "/warranty",
+    keywords: [
+      "refurbished refrigerator with warranty",
+      "appliance warranty Bangalore",
+    ],
   },
   howItWorks: {
     title: "How It Works",
@@ -208,6 +229,11 @@ export const PAGE_SEO = {
     description:
       "Browse certified refurbished refrigerators in Bangalore. Quality tested, sanitized, warranty included — delivery across Bengaluru metro.",
     path: "/shop",
-    keywords: ["refurbished refrigerator bangalore", "second hand refrigerator bangalore"],
+    keywords: [
+      "refurbished refrigerator bangalore",
+      "second hand refrigerator bangalore",
+      "second hand fridge bangalore",
+      "affordable refurbished appliances",
+    ],
   },
 } as const;

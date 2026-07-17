@@ -1,7 +1,7 @@
 {
   "name": "Protronics",
   "short_name": "Protronics",
-  "description": "Premium refurbished refrigerators and home appliances with warranty, quality testing, and trusted delivery.",
+  "description": "Premium refurbished refrigerators and home appliances with warranty, quality testing, and trusted delivery in Bangalore.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -9,6 +9,11 @@
   "theme_color": "#7f1d1d",
   "lang": "en-IN",
   "icons": [
+    {
+      "src": "/favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
     {
       "src": "/favicon-32x32.png",
       "sizes": "32x32",
@@ -18,11 +23,11 @@
       "src": "/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "/logo.webp",
-      "sizes": "512x512",
+      "sizes": "214x275",
       "type": "image/webp",
       "purpose": "any"
     }

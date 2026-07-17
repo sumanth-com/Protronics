@@ -40,7 +40,7 @@ function HeroSlideImageOnly({
     return (
       <Image
         src={src}
-        alt=""
+        alt="Premium refurbished refrigerator showcase from Protronics"
         width={src.width}
         height={src.height}
         sizes="100vw"
@@ -57,7 +57,7 @@ function HeroSlideImageOnly({
     <div className="relative aspect-[1717/916] w-full overflow-hidden bg-[#f9f9f9]">
       <Image
         src={src}
-        alt=""
+        alt="Premium refurbished refrigerator showcase from Protronics"
         fill
         sizes="100vw"
         className="object-cover object-center"
@@ -85,7 +85,7 @@ export default function HeroSlide({
         <div className="absolute inset-0">
           <Image
             src={slide.imageSrc}
-            alt=""
+            alt="Premium refurbished refrigerator showcase from Protronics"
             fill
             sizes="(max-width: 1200px) 90vw, 1200px"
             className="object-cover"

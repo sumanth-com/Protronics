@@ -11,11 +11,11 @@ export const SITE_TITLE_DEFAULT = `${SITE_NAME} | Premium Refurbished Appliances
 
 /** Global meta description for root / fallback. */
 export const SITE_DESCRIPTION =
-  "Shop professionally refurbished refrigerators and home appliances with warranty, quality testing, safe delivery, and trusted support from Protronics.";
+  "Shop professionally refurbished refrigerators, fridges, and washing machines with warranty, quality testing, safe delivery, and trusted support from Protronics in Bangalore.";
 
 /** Home page H1-adjacent SEO description (richer). */
 export const SITE_HOME_DESCRIPTION =
-  "Discover professionally refurbished refrigerators and home appliances backed by 100+ quality checks, warranty coverage, expert support, and trusted delivery across India.";
+  "Discover professionally refurbished refrigerators and home appliances backed by 100+ quality checks, warranty coverage, expert support, and trusted delivery across Bengaluru and India.";
 
 import { LOCAL_SEO_KEYWORDS } from "@/lib/local/business";
 

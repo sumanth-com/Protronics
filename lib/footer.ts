@@ -11,25 +11,26 @@ export const FOOTER_NAV_GROUPS: FooterLinkGroup[] = [
   {
     title: "Shop",
     links: [
-      { label: "All Refrigerators", href: "/shop" },
+      { label: "All Appliances", href: "/shop" },
       { label: "Double Door", href: "/shop/double-door" },
       { label: "Single Door", href: "/shop/single-door" },
       { label: "Mini Fridges", href: "/shop/mini-fridges" },
       { label: "Washing Machines", href: "/shop/washing-machines" },
+      { label: "Best Deals", href: "/best-deals" },
     ],
   },
   {
     title: "Support",
     links: [
-      { label: "Support", href: "/support" },
+      { label: "Help Center / FAQ", href: "/support" },
       { label: "Contact", href: "/contact" },
+      { label: "How It Works", href: "/how-it-works" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Sell", href: "/sell" },
-      { label: "Bangalore Store", href: "/locations/bangalore" },
+      { label: "Sell / Trade-In", href: "/sell" },
       { label: "About", href: "/about" },
     ],
   },
@@ -40,17 +41,10 @@ export const FOOTER_LEGAL_LINKS: FooterLink[] = [
   { label: "Terms & Conditions", href: "/terms-of-service" },
 ];
 
+/** Only include networks with a real business profile URL. */
 export const FOOTER_SOCIAL_LINKS = [
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/",
-  },
   {
     label: "WhatsApp",
     href: BUSINESS.whatsapp,
-  },
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/",
   },
 ] as const;

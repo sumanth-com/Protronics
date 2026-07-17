@@ -4,7 +4,7 @@ import { whyPageJsonLd } from "@/lib/why";
 import { buildPageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Why Protronics | Trust & Quality You Can Verify",
+  absoluteTitle: "Why Protronics | Trust & Quality You Can Verify",
   description:
     "Why trust Protronics over local dealers or marketplace sellers? 100+ quality checks, warranty, sanitization, certified performance, and expert support.",
   path: "/why-protronics",
@@ -12,6 +12,7 @@ export const metadata: Metadata = buildPageMetadata({
     "why Protronics",
     "refurbished refrigerator trust",
     "Protronics vs OLX",
+    "certified refurbished appliances Bangalore",
   ],
 });
 

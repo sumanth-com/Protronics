@@ -31,18 +31,20 @@ const ShopMobileFilters = dynamic(
 type ShopPageProps = {
   initialCategory?: string;
   initialBrand?: string;
+  initialQuery?: string;
 };
 
 export default function ShopPageClient({
   initialCategory,
   initialBrand,
+  initialQuery,
 }: ShopPageProps) {
   const router = useRouter();
-  const [filters, setFilters] = useState<ShopFilterState>(() =>
-    initialBrand
-      ? { ...DEFAULT_FILTERS, brands: [initialBrand] }
-      : DEFAULT_FILTERS,
-  );
+  const [filters, setFilters] = useState<ShopFilterState>(() => ({
+    ...DEFAULT_FILTERS,
+    ...(initialBrand ? { brands: [initialBrand] } : {}),
+    ...(initialQuery ? { query: initialQuery } : {}),
+  }));
   const [sort, setSort] = useState<ShopSortId>("popular");
   const [drawerOpen, setDrawerOpen] = useState(false);
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Check, X } from "lucide-react";
 import type { InspectionResult, ProductHighlight } from "@/lib/product-detail";
 import { IDEAL_FOR_CARDS } from "@/lib/product-detail";
@@ -139,6 +140,17 @@ export function ProductWarrantyDelivery({
           </li>
         ))}
       </ul>
+      <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[13px]">
+        <Link href="/warranty" className="font-medium text-white underline-offset-4 hover:underline">
+          Warranty details →
+        </Link>
+        <Link href="/sell" className="font-medium text-white underline-offset-4 hover:underline">
+          Trade in your old appliance →
+        </Link>
+        <Link href="/shop" className="font-medium text-white/70 underline-offset-4 hover:text-white hover:underline">
+          Browse more appliances →
+        </Link>
+      </div>
     </section>
   );
 }

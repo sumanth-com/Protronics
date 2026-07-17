@@ -1,5 +1,6 @@
 import { BUSINESS } from "@/lib/contact";
 import { productImagePath } from "@/lib/product-images";
+import { absoluteUrl } from "@/lib/site";
 
 export const shopGlass = [
   "rounded-2xl border border-white/[0.08]",
@@ -321,6 +322,8 @@ export type ShopFilterState = {
   energyRatings: string[];
   conditions: string[];
   deliveryOnly: boolean;
+  /** Free-text query (name, brand, capacity) for SearchAction / shop?q= */
+  query: string;
 };
 
 export const DEFAULT_FILTERS: ShopFilterState = {
@@ -332,6 +335,7 @@ export const DEFAULT_FILTERS: ShopFilterState = {
   energyRatings: [],
   conditions: [],
   deliveryOnly: false,
+  query: "",
 };
 
 export const PRICE_PRESETS = [
@@ -396,6 +400,11 @@ export function filterProducts(
     if (filters.energyRatings.length && !filters.energyRatings.includes(p.energyRating)) return false;
     if (filters.conditions.length && !filters.conditions.includes(p.condition)) return false;
     if (filters.deliveryOnly && !p.deliveryAvailable) return false;
+    const q = filters.query.trim().toLowerCase();
+    if (q) {
+      const haystack = `${p.name} ${p.brand} ${p.capacity} ${p.tag ?? ""}`.toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
     return true;
   });
 }
@@ -448,19 +457,29 @@ export function getShopJsonLd(categorySlug?: string) {
     "@type": "ItemList",
     name: categorySlug
       ? `${getCategoryBySlug(categorySlug)?.label} Appliances`
-      : "Protronics Shop",
+      : "Protronics Shop — Refurbished Appliances",
+    numberOfItems: products.length,
     itemListElement: products.map((p, i) => ({
       "@type": "ListItem",
       position: i + 1,
+      url: absoluteUrl(`/product/${p.id}`),
       item: {
         "@type": "Product",
+        "@id": absoluteUrl(`/product/${p.id}`),
         name: p.name,
-        brand: p.brand,
+        sku: p.id,
+        brand: { "@type": "Brand", name: p.brand },
+        image: p.image.startsWith("http") ? p.image : absoluteUrl(p.image),
+        url: absoluteUrl(`/product/${p.id}`),
         offers: {
           "@type": "Offer",
           price: p.price,
           priceCurrency: "INR",
-          availability: "https://schema.org/InStock",
+          availability: p.deliveryAvailable
+            ? "https://schema.org/InStock"
+            : "https://schema.org/PreOrder",
+          itemCondition: "https://schema.org/RefurbishedCondition",
+          url: absoluteUrl(`/product/${p.id}`),
         },
       },
     })),

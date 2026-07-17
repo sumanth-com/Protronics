@@ -70,7 +70,7 @@ export default function MobileHeroCarousel({
             >
               <Image
                 src={slide}
-                alt=""
+                alt="Protronics refurbished appliance banner"
                 fill
                 sizes="100vw"
                 className="hero-mobile-banner-img object-cover object-center"
