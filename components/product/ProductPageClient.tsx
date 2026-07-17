@@ -12,7 +12,6 @@ import {
   ProductWarrantyDelivery,
 } from "@/components/product/ProductSections";
 import ProductFloatingActions from "@/components/product/ProductFloatingActions";
-import CompareButton from "@/components/compare/CompareButton";
 import ProductShareButton from "@/components/product/ProductShareButton";
 import ProductPageMobile from "@/components/product/mobile/ProductPageMobile";
 import {
@@ -141,7 +140,6 @@ export default function ProductPageClient({ product, related }: ProductPageClien
                 </ul>
 
                 <div className="mt-1 flex flex-wrap items-center gap-2">
-                  <CompareButton productId={product.id} />
                   <ProductShareButton
                     productId={product.id}
                     productName={product.name}

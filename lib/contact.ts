@@ -23,7 +23,6 @@ export const BUSINESS = {
   emailHref: `mailto:${PROTRONICS_NAP.email}`,
   whatsapp: `https://wa.me/${PROTRONICS_NAP.telephoneE164.replace("+", "")}`,
   whatsappMessage: `https://wa.me/${PROTRONICS_NAP.telephoneE164.replace("+", "")}?text=${encodeURIComponent("Hi Protronics, I'd like help choosing a refurbished refrigerator in Bengaluru.")}`,
-  whatsappChannel: "https://whatsapp.com/channel/0029VaExampleChannelId",
   address: PROTRONICS_NAP.addressDisplay,
   streetAddress: PROTRONICS_NAP.streetAddress,
   locality: PROTRONICS_NAP.addressLocality,

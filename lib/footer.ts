@@ -31,7 +31,6 @@ export const FOOTER_NAV_GROUPS: FooterLinkGroup[] = [
       { label: "Sell", href: "/sell" },
       { label: "Bangalore Store", href: "/locations/bangalore" },
       { label: "About", href: "/about" },
-      { label: "Compare", href: "/compare" },
     ],
   },
 ];

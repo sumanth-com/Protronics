@@ -14,21 +14,20 @@ export const PROTRONICS_NAP = {
   /** Combined display for UI (both contact numbers). */
   telephoneDisplay: "8861236266 / 8618135976",
   email: "Protronicspro4@gmail.com",
-  streetAddress:
-    "4/1, Amani Byrathi Kaney, Vaddarapalya, near Hosanna AG Workshop",
+  streetAddress: "No 8, Bidarahalli Hobli, Chikkagubbi Village",
   addressLocality: "Bengaluru",
   addressRegion: "Karnataka",
-  postalCode: "560043",
+  postalCode: "560077",
   addressCountry: "IN",
   /** Display line for UI (consistent everywhere). */
   addressDisplay:
-    "4/1, Amani Byrathi Kaney, Vaddarapalya, near Hosanna AG Workshop, Bengaluru 560043",
-  latitude: 13.0504,
-  longitude: 77.5074,
+    "No 8, Bidarahalli Hobli, Chikkagubbi Village, Bengaluru, Karnataka 560077",
+  latitude: 13.071,
+  longitude: 77.704,
 } as const;
 
 const MAPS_ADDRESS_QUERY = encodeURIComponent(
-  "4/1 Amani Byrathi Kaney Vaddarapalya near Hosanna AG Workshop Bangalore 560043",
+  "No 8 Bidarahalli Hobli Chikkagubbi Village Bengaluru Karnataka 560077",
 );
 
 /** Google Business Profile / Maps listing — set in env when live. */
@@ -45,7 +44,7 @@ export const GOOGLE_MAPS_DIRECTIONS_URL =
   GOOGLE_BUSINESS_PROFILE_URL;
 
 export const BUSINESS_HOURS = {
-  label: "Mon–Sat · 10:00 AM – 7:00 PM",
+  label: "Mon–Sat · 10:00 AM – 8:00 PM",
   specification: [
     {
       dayOfWeek: [
@@ -57,7 +56,7 @@ export const BUSINESS_HOURS = {
         "Saturday",
       ] as const,
       opens: "10:00",
-      closes: "19:00",
+      closes: "20:00",
     },
   ],
 } as const;

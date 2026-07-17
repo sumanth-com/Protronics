@@ -187,14 +187,14 @@ Forms submit **directly from the browser** to Google Apps Script—no Node serve
 ### Quick setup
 
 1. Create a Google Spreadsheet.
-2. Open **Extensions → Apps Script** and paste `scripts/google-apps-script-backend.js` (or `scripts/Code.gs`).
-3. Run **`setupSheets()`** once in the script editor.
+2. Open **Extensions → Apps Script** and paste `scripts/Code.gs`.
+3. Run **`setupSheets()`**, then **`setupEmailNotifications()`** (edit the email in that function if needed).
 4. **Deploy → Web app** — Execute as **Me**, Who has access: **Anyone**.
 5. Copy the deployment **`/exec`** URL.
 6. Set `NEXT_PUBLIC_FORM_ENDPOINT` in `.env` and on Vercel.
 7. Run `npm run build` — generates `public/forms-endpoint.json` for runtime health checks.
 
-Supported flows include contact, warranty, service requests, and trade-in leads. Each form type maps to a dedicated sheet tab via `lib/forms/`.
+Supported flows include contact, warranty, service requests, and trade-in leads. Each form type maps to a dedicated sheet tab via `lib/forms/`. Email alerts are sent by Apps Script after each successful row.
 
 **Full guide:** [docs/FORMS.md](docs/FORMS.md)
 

@@ -3,6 +3,7 @@
 import { Star } from "lucide-react";
 import { CUSTOMER_TESTIMONIALS } from "@/lib/testimonials";
 import type { Testimonial } from "@/components/testimonials/TestimonialCard";
+import { cn } from "@/lib/utils";
 
 function initials(name: string) {
   return name
@@ -13,16 +14,16 @@ function initials(name: string) {
     .join("");
 }
 
-function MarqueeCard({ testimonial }: { testimonial: Testimonial }) {
+function TestimonialGridCard({ testimonial }: { testimonial: Testimonial }) {
   const rating = Math.max(0, Math.min(5, testimonial.rating ?? 5));
 
   return (
-    <article className="mobile-testimonial-card shrink-0">
-      <div className="flex items-center gap-2">
+    <article className="mobile-testimonial-card">
+      <div className="flex items-center gap-2.5">
         <span className="mobile-testimonial-avatar" aria-hidden>
           {initials(testimonial.name)}
         </span>
-        <div className="min-w-0">
+        <div className="min-w-0 flex-1">
           <p className="mobile-testimonial-name">{testimonial.name}</p>
           {testimonial.location ? (
             <p className="mobile-testimonial-location">{testimonial.location}</p>
@@ -46,38 +47,8 @@ function MarqueeCard({ testimonial }: { testimonial: Testimonial }) {
   );
 }
 
-function MarqueeRow({
-  items,
-  direction,
-}: {
-  items: Testimonial[];
-  direction: "right" | "left";
-}) {
-  const loop = [...items, ...items];
-
-  return (
-    <div
-      className="mobile-testimonial-marquee-row overflow-hidden"
-      aria-hidden={false}
-    >
-      <div
-        className={
-          direction === "right"
-            ? "mobile-testimonial-track mobile-testimonial-track--right"
-            : "mobile-testimonial-track mobile-testimonial-track--left"
-        }
-      >
-        {loop.map((item, i) => (
-          <MarqueeCard key={`${item.name}-${i}`} testimonial={item} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function MobileTestimonialsMarquee() {
-  const rowOne = CUSTOMER_TESTIMONIALS.filter((_, i) => i % 2 === 0);
-  const rowTwo = CUSTOMER_TESTIMONIALS.filter((_, i) => i % 2 === 1);
+  const featured = CUSTOMER_TESTIMONIALS.slice(0, 6);
 
   return (
     <section
@@ -93,9 +64,15 @@ export default function MobileTestimonialsMarquee() {
           </div>
         </div>
 
-        <div className="mobile-testimonial-marquee-stack">
-          <MarqueeRow items={rowOne} direction="right" />
-          <MarqueeRow items={rowTwo} direction="left" />
+        <div
+          className={cn(
+            "mobile-testimonial-grid",
+            "mt-5 grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 min-[400px]:gap-3.5",
+          )}
+        >
+          {featured.map((item) => (
+            <TestimonialGridCard key={`${item.name}-${item.quote.slice(0, 16)}`} testimonial={item} />
+          ))}
         </div>
       </div>
     </section>

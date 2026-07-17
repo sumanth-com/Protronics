@@ -48,7 +48,7 @@ export default function TopBrandsSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-12% 0px -8% 0px" }}
-          className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-4"
+          className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3 lg:gap-4 xl:grid-cols-6"
         >
           {SHOWCASE_BRANDS.map((brand) => (
             <motion.div key={brand.id} variants={fadeUp}>

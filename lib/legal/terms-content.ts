@@ -197,7 +197,7 @@ export const TERMS_OF_SERVICE_PAGE: LegalPageConfig = {
             "Email: Protronicspro4@gmail.com",
             "Phone: 8861236266 / 8618135976",
             "Website: protronics.in/contact",
-            "Business hours: Mon–Sat · 10:00 AM – 7:00 PM IST",
+            "Business hours: Mon–Sat · 10:00 AM – 8:00 PM IST",
           ],
         },
         {

@@ -1,12 +1,43 @@
 /**
- * Protronics — Google Apps Script backend (copy entire file into Apps Script editor)
+ * @deprecated Prefer scripts/Code.gs (same backend + email notifications).
+ * Keep this file as an alias: copy scripts/Code.gs into Apps Script.
  *
  * Deploy: Deploy → New deployment → Web app
  *   Execute as: Me
  *   Who has access: Anyone
- * Copy /exec URL → VITE_FORM_ENDPOINT_URL / NEXT_PUBLIC_FORM_ENDPOINT_URL
+ * Copy /exec URL → NEXT_PUBLIC_FORM_ENDPOINT in .env
  *
- * Run setupSheets() once from the editor before first live submission.
+ * Run setupSheets() then setupEmailNotifications() once from the editor.
+ *
+ * --- BEGIN: paste scripts/Code.gs below (kept in sync with Code.gs) ---
+ */
+
+/**
+ * ═══════════════════════════════════════════════════════════════════════════
+ * Protronics — Google Apps Script (paste this entire file into Code.gs)
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * SETUP (one-time)
+ * 1. Open your Google Spreadsheet → Extensions → Apps Script
+ * 2. Delete any default code → paste THIS entire file → Save
+ * 3. Select setupSheets → Run (authorize when prompted)
+ * 4. Select setupEmailNotifications → Run (sets who gets email alerts)
+ * 5. Deploy → New deployment → Type: Web app
+ *      Execute as: Me
+ *      Who has access: Anyone
+ * 6. Copy the Web app URL ending in /exec
+ * 7. Put that URL in project `.env` as NEXT_PUBLIC_FORM_ENDPOINT
+ *
+ * EMAIL ALERTS
+ * - Default recipient is set in setupEmailNotifications() below — edit before running.
+ * - Or: Project Settings → Script properties:
+ *     NOTIFICATION_EMAIL = you@email.com,team@email.com
+ *     NOTIFY_ENABLED     = true
+ *     NOTIFY_FROM_NAME   = Protronics Forms
+ *
+ * Endpoint env vars (Next.js):
+ *   NEXT_PUBLIC_FORM_ENDPOINT
+ *   NEXT_PUBLIC_FORM_ENDPOINT_URL   (alias)
  */
 
 var SHEET_TABS = {
@@ -18,7 +49,21 @@ var SHEET_TABS = {
   "warranty-registration": "Warranty",
 };
 
-/** Column headers per tab (after standard columns). */
+/** Universal columns on every tab. */
+var STANDARD_HEADERS = [
+  "Timestamp",
+  "Form Type",
+  "Source Page",
+  "Submitted At",
+  "Name",
+  "Phone",
+  "Email",
+  "City",
+  "Message",
+  "Source",
+];
+
+/** Extra columns per tab (after STANDARD_HEADERS). */
 var SHEET_HEADERS = {
   Contact: ["fullName", "phone", "email", "city", "product", "message"],
   Leads: [
@@ -57,23 +102,24 @@ var SHEET_HEADERS = {
   Warranty: ["name", "phone", "email", "serialNumber", "purchaseDate", "model"],
 };
 
-var STANDARD_HEADERS = [
-  "Timestamp",
-  "Form Type",
-  "Source Page",
-  "Submitted At",
-  "Name",
-  "Phone",
-  "Email",
-  "City",
-  "Message",
-  "Source",
-];
+var MAX_FIELD_LENGTH = 5000;
+var MAX_FORM_TYPE_LENGTH = 64;
+
+/** Friendly labels for email subjects. */
+var FORM_LABELS = {
+  contact: "Contact enquiry",
+  "product-lead": "Product lead / reserve",
+  "trade-in": "Trade-in / sell",
+  newsletter: "Newsletter signup",
+  "service-request": "Service request",
+  "warranty-registration": "Warranty registration",
+};
 
 function doGet() {
   return jsonResponse_(true, "Form webhook healthy", {
-    version: "2.0",
+    version: "3.1",
     forms: Object.keys(SHEET_TABS),
+    email: getNotifyConfig_().enabled ? "enabled" : "disabled",
   });
 }
 
@@ -85,34 +131,49 @@ function doPost(e) {
   var lock = LockService.getScriptLock();
   try {
     lock.waitLock(30000);
-    var payload = parseRequestPayload_(e);
-    if (!payload.success) {
-      return jsonResponse_(false, payload.error);
-    }
-    var body = payload.data;
 
-    var formType = String(body.form_type || "").trim();
-    var sheetTab = String(body.sheet_tab || "").trim();
-    var data = body.data;
-    var sourcePage = String(body.source_page || "");
-    var submittedAt = String(body.submitted_at || new Date().toISOString());
+    var parsed = parseRequestPayload_(e);
+    if (!parsed.success) {
+      Logger.log("doPost parse error: %s", parsed.error);
+      return jsonResponse_(false, parsed.error);
+    }
 
-    if (!formType) {
-      return jsonResponse_(false, "Missing form_type.");
+    var body = parsed.data;
+    var validation = validatePayload_(body);
+    if (!validation.success) {
+      Logger.log("doPost validation: %s", validation.error);
+      return jsonResponse_(false, validation.error);
     }
-    if (!sheetTab) {
-      sheetTab = SHEET_TABS[formType] || formType;
-    }
-    if (!data || typeof data !== "object") {
-      return jsonResponse_(false, "Missing data object.");
-    }
+
+    var formType = validation.formType;
+    var sheetTab = validation.sheetTab;
+    var data = validation.data;
+    var sourcePage = validation.sourcePage;
+    var submittedAt = validation.submittedAt;
+    var metadata = validation.metadata;
 
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName(sheetTab) || ss.insertSheet(sheetTab);
-    var metadata = body.metadata && typeof body.metadata === "object" ? body.metadata : {};
-    var row = prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, metadata);
     ensureSheetHeaders_(sheet, sheetTab);
+
+    var row = prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, metadata);
     sheet.appendRow(row);
+
+    try {
+      sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt, metadata);
+    } catch (mailErr) {
+      Logger.log(
+        "Email notify failed (row still saved): %s",
+        mailErr && mailErr.message ? mailErr.message : mailErr,
+      );
+    }
+
+    Logger.log(
+      "doPost success form_type=%s tab=%s page=%s",
+      formType,
+      sheetTab,
+      sourcePage,
+    );
 
     return jsonResponse_(true, "Submitted Successfully", {
       form_type: formType,
@@ -120,14 +181,14 @@ function doPost(e) {
       timestamp: submittedAt,
     });
   } catch (err) {
-    Logger.log("doPost error: %s", err && err.message ? err.message : err);
-    return jsonResponse_(false, err && err.message ? err.message : "Server error");
+    var msg = err && err.message ? err.message : String(err);
+    Logger.log("doPost error: %s", msg);
+    return jsonResponse_(false, msg || "Server error");
   } finally {
     lock.releaseLock();
   }
 }
 
-/** Run manually once to create tabs and header rows. */
 function setupSheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   for (var formType in SHEET_TABS) {
@@ -137,6 +198,103 @@ function setupSheets() {
     ensureSheetHeaders_(sheet, tab);
   }
   Logger.log("setupSheets complete");
+}
+
+function setupEmailNotifications() {
+  var props = PropertiesService.getScriptProperties();
+  props.setProperties(
+    {
+      NOTIFICATION_EMAIL: "Protronicspro4@gmail.com",
+      NOTIFY_ENABLED: "true",
+      NOTIFY_FROM_NAME: "Protronics Forms",
+    },
+    true,
+  );
+  Logger.log(
+    "Email notifications configured → %s (enabled=%s)",
+    props.getProperty("NOTIFICATION_EMAIL"),
+    props.getProperty("NOTIFY_ENABLED"),
+  );
+}
+
+function testEmailNotification() {
+  var cfg = getNotifyConfig_();
+  if (!cfg.to) {
+    throw new Error("NOTIFICATION_EMAIL is empty. Run setupEmailNotifications() first.");
+  }
+  MailApp.sendEmail({
+    to: cfg.to,
+    name: cfg.fromName,
+    subject: "[Protronics] Test email notification",
+    body:
+      "This is a test from the Protronics Google Apps Script form backend.\n\n" +
+      "If you received this, email alerts are working.\n",
+  });
+  Logger.log("Test email sent to %s", cfg.to);
+}
+
+function getNotifyConfig_() {
+  var props = PropertiesService.getScriptProperties();
+  var enabledRaw = String(props.getProperty("NOTIFY_ENABLED") || "true").toLowerCase();
+  var enabled = !(enabledRaw === "false" || enabledRaw === "0" || enabledRaw === "no");
+  return {
+    enabled: enabled,
+    to: String(props.getProperty("NOTIFICATION_EMAIL") || "").trim(),
+    fromName: String(props.getProperty("NOTIFY_FROM_NAME") || "Protronics Forms").trim(),
+  };
+}
+
+function sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt, metadata) {
+  var cfg = getNotifyConfig_();
+  if (!cfg.enabled) {
+    Logger.log("Notify disabled — skip email");
+    return;
+  }
+  if (!cfg.to) {
+    Logger.log("NOTIFICATION_EMAIL empty — skip email");
+    return;
+  }
+
+  var common = extractCommonFields_(data, sourcePage, metadata);
+  var label = FORM_LABELS[formType] || formType;
+  var subject = "[Protronics] New " + label;
+
+  var lines = [];
+  lines.push("New form submission on Protronics");
+  lines.push("");
+  lines.push("Type:        " + label + " (" + formType + ")");
+  lines.push("Sheet tab:   " + sheetTab);
+  lines.push("Submitted:   " + submittedAt);
+  lines.push("Source page: " + (sourcePage || "(none)"));
+  lines.push("");
+  lines.push("--- Contact ---");
+  lines.push("Name:    " + (common.name || "—"));
+  lines.push("Phone:   " + (common.phone || "—"));
+  lines.push("Email:   " + (common.email || "—"));
+  lines.push("City:    " + (common.city || "—"));
+  lines.push("Message: " + (common.message || "—"));
+  lines.push("Source:  " + (common.source || "—"));
+  lines.push("");
+  lines.push("--- Form fields ---");
+
+  var keys = Object.keys(data);
+  keys.sort();
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var val = data[key];
+    if (val === undefined || val === null || String(val).trim() === "") continue;
+    lines.push(key + ": " + String(val));
+  }
+
+  lines.push("");
+  lines.push("Open your Protronics leads spreadsheet to view / reply.");
+
+  MailApp.sendEmail({
+    to: cfg.to,
+    name: cfg.fromName,
+    subject: subject,
+    body: lines.join("\n"),
+  });
 }
 
 function parseRequestPayload_(e) {
@@ -183,6 +341,45 @@ function parseUrlEncoded_(raw) {
   return out;
 }
 
+function validatePayload_(body) {
+  if (!body || typeof body !== "object") {
+    return { success: false, error: "Invalid payload." };
+  }
+
+  var formType = sanitizeString_(String(body.form_type || ""), MAX_FORM_TYPE_LENGTH);
+  if (!formType) {
+    return { success: false, error: "Missing form_type." };
+  }
+
+  var sheetTab = sanitizeString_(String(body.sheet_tab || ""), 99);
+  if (!sheetTab) {
+    sheetTab = SHEET_TABS[formType] || formType;
+  }
+
+  var data = body.data;
+  if (!data || typeof data !== "object") {
+    return { success: false, error: "Missing data object." };
+  }
+
+  var sourcePage = sanitizeString_(String(body.source_page || ""), 500);
+  var submittedAt = sanitizeString_(
+    String(body.submitted_at || new Date().toISOString()),
+    40,
+  );
+  var metadata =
+    body.metadata && typeof body.metadata === "object" ? body.metadata : {};
+
+  return {
+    success: true,
+    formType: formType,
+    sheetTab: sheetTab,
+    data: data,
+    sourcePage: sourcePage,
+    submittedAt: submittedAt,
+    metadata: metadata,
+  };
+}
+
 function extractCommonFields_(data, sourcePage, metadata) {
   var name = data.name || data.fullName || data.full_name || "";
   var phone = data.phone || "";
@@ -198,25 +395,25 @@ function extractCommonFields_(data, sourcePage, metadata) {
     data.leadSource ||
     data.source ||
     "";
+
   return {
-    name: String(name),
-    phone: String(phone),
-    email: String(email),
-    city: String(city),
-    message: String(message),
-    page: String(page),
-    source: String(source),
+    name: sanitizeString_(String(name), 200),
+    phone: sanitizeString_(String(phone), 40),
+    email: sanitizeString_(String(email), 200),
+    city: sanitizeString_(String(city), 120),
+    message: sanitizeString_(String(message), MAX_FIELD_LENGTH),
+    page: sanitizeString_(String(page), 500),
+    source: sanitizeString_(String(source), 500),
   };
 }
 
-function prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt) {
-  var metadata = arguments[5] || {};
+function prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, metadata) {
   var common = extractCommonFields_(data, sourcePage, metadata);
-  var headers = getDataHeaders_(sheetTab);
+  var timestamp = new Date().toISOString();
   var row = [
-    new Date().toISOString(),
-    formType,
-    sourcePage,
+    timestamp,
+    sanitizeString_(formType, MAX_FORM_TYPE_LENGTH),
+    sanitizeString_(sourcePage, 500),
     submittedAt,
     common.name,
     common.phone,
@@ -225,10 +422,16 @@ function prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt) {
     common.message,
     common.source,
   ];
+
+  var headers = getDataHeaders_(sheetTab);
   for (var i = 0; i < headers.length; i++) {
     var key = headers[i];
     var val = data[key];
-    row.push(val === undefined || val === null ? "" : val);
+    row.push(
+      val === undefined || val === null
+        ? ""
+        : sanitizeString_(String(val), MAX_FIELD_LENGTH),
+    );
   }
   return row;
 }
@@ -256,6 +459,17 @@ function ensureSheetHeaders_(sheet, sheetTab) {
   if (sheet.getLastRow() === 1 && empty) {
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
   }
+}
+
+function sanitizeString_(value, maxLen) {
+  var str = String(value || "")
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "")
+    .replace(/<\s*script\b/gi, "")
+    .trim();
+  if (str.length > maxLen) {
+    return str.slice(0, maxLen);
+  }
+  return str;
 }
 
 function jsonResponse_(success, message, data) {

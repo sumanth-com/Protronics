@@ -1,14 +1,29 @@
 /**
- * Protronics — Google Apps Script Web App (production)
+ * ═══════════════════════════════════════════════════════════════════════════
+ * Protronics — Google Apps Script (paste this entire file into Code.gs)
+ * ═══════════════════════════════════════════════════════════════════════════
  *
- * Deploy: Deploy → New deployment → Web app
- *   Execute as: Me
- *   Who has access: Anyone
+ * SETUP (one-time)
+ * 1. Open your Google Spreadsheet → Extensions → Apps Script
+ * 2. Delete any default code → paste THIS entire file → Save
+ * 3. Select setupSheets → Run (authorize when prompted)
+ * 4. Select setupEmailNotifications → Run (sets who gets email alerts)
+ * 5. Deploy → New deployment → Type: Web app
+ *      Execute as: Me
+ *      Who has access: Anyone
+ * 6. Copy the Web app URL ending in /exec
+ * 7. Put that URL in project `.env` as NEXT_PUBLIC_FORM_ENDPOINT
  *
- * Copy this entire file into the Apps Script editor (Code.gs).
- * Run setupSheets() once before first live submission.
+ * EMAIL ALERTS
+ * - Default recipient is set in setupEmailNotifications() below — edit before running.
+ * - Or: Project Settings → Script properties:
+ *     NOTIFICATION_EMAIL = you@email.com,team@email.com
+ *     NOTIFY_ENABLED     = true
+ *     NOTIFY_FROM_NAME   = Protronics Forms
  *
- * Endpoint → NEXT_PUBLIC_FORM_ENDPOINT or NEXT_PUBLIC_FORM_ENDPOINT_URL
+ * Endpoint env vars (Next.js):
+ *   NEXT_PUBLIC_FORM_ENDPOINT
+ *   NEXT_PUBLIC_FORM_ENDPOINT_URL   (alias)
  */
 
 var SHEET_TABS = {
@@ -20,7 +35,7 @@ var SHEET_TABS = {
   "warranty-registration": "Warranty",
 };
 
-/** Universal columns on every tab (append-only; never overwrites existing rows). */
+/** Universal columns on every tab. */
 var STANDARD_HEADERS = [
   "Timestamp",
   "Form Type",
@@ -34,7 +49,7 @@ var STANDARD_HEADERS = [
   "Source",
 ];
 
-/** Extra columns per tab (appended after STANDARD_HEADERS). */
+/** Extra columns per tab (after STANDARD_HEADERS). */
 var SHEET_HEADERS = {
   Contact: ["fullName", "phone", "email", "city", "product", "message"],
   Leads: [
@@ -76,10 +91,21 @@ var SHEET_HEADERS = {
 var MAX_FIELD_LENGTH = 5000;
 var MAX_FORM_TYPE_LENGTH = 64;
 
+/** Friendly labels for email subjects. */
+var FORM_LABELS = {
+  contact: "Contact enquiry",
+  "product-lead": "Product lead / reserve",
+  "trade-in": "Trade-in / sell",
+  newsletter: "Newsletter signup",
+  "service-request": "Service request",
+  "warranty-registration": "Warranty registration",
+};
+
 function doGet() {
   return jsonResponse_(true, "Form webhook healthy", {
-    version: "3.0",
+    version: "3.1",
     forms: Object.keys(SHEET_TABS),
+    email: getNotifyConfig_().enabled ? "enabled" : "disabled",
   });
 }
 
@@ -119,6 +145,16 @@ function doPost(e) {
     var row = prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, metadata);
     sheet.appendRow(row);
 
+    // Email alert (does not fail the submission if mail fails)
+    try {
+      sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt, metadata);
+    } catch (mailErr) {
+      Logger.log(
+        "Email notify failed (row still saved): %s",
+        mailErr && mailErr.message ? mailErr.message : mailErr,
+      );
+    }
+
     Logger.log(
       "doPost success form_type=%s tab=%s page=%s",
       formType,
@@ -140,7 +176,7 @@ function doPost(e) {
   }
 }
 
-/** Run manually once to create tabs and header rows. */
+/** Run once — creates all sheet tabs + header rows. */
 function setupSheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   for (var formType in SHEET_TABS) {
@@ -150,6 +186,108 @@ function setupSheets() {
     ensureSheetHeaders_(sheet, tab);
   }
   Logger.log("setupSheets complete");
+}
+
+/**
+ * Run once — configures email notification Script Properties.
+ * EDIT the email below before running if you want a different inbox.
+ */
+function setupEmailNotifications() {
+  var props = PropertiesService.getScriptProperties();
+  props.setProperties(
+    {
+      NOTIFICATION_EMAIL: "Protronicspro4@gmail.com",
+      NOTIFY_ENABLED: "true",
+      NOTIFY_FROM_NAME: "Protronics Forms",
+    },
+    true,
+  );
+  Logger.log(
+    "Email notifications configured → %s (enabled=%s)",
+    props.getProperty("NOTIFICATION_EMAIL"),
+    props.getProperty("NOTIFY_ENABLED"),
+  );
+}
+
+/** Optional: send a test email using current Script Properties. */
+function testEmailNotification() {
+  var cfg = getNotifyConfig_();
+  if (!cfg.to) {
+    throw new Error("NOTIFICATION_EMAIL is empty. Run setupEmailNotifications() first.");
+  }
+  MailApp.sendEmail({
+    to: cfg.to,
+    name: cfg.fromName,
+    subject: "[Protronics] Test email notification",
+    body:
+      "This is a test from the Protronics Google Apps Script form backend.\n\n" +
+      "If you received this, email alerts are working.\n",
+  });
+  Logger.log("Test email sent to %s", cfg.to);
+}
+
+function getNotifyConfig_() {
+  var props = PropertiesService.getScriptProperties();
+  var enabledRaw = String(props.getProperty("NOTIFY_ENABLED") || "true").toLowerCase();
+  var enabled = !(enabledRaw === "false" || enabledRaw === "0" || enabledRaw === "no");
+  return {
+    enabled: enabled,
+    to: String(props.getProperty("NOTIFICATION_EMAIL") || "").trim(),
+    fromName: String(props.getProperty("NOTIFY_FROM_NAME") || "Protronics Forms").trim(),
+  };
+}
+
+function sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt, metadata) {
+  var cfg = getNotifyConfig_();
+  if (!cfg.enabled) {
+    Logger.log("Notify disabled — skip email");
+    return;
+  }
+  if (!cfg.to) {
+    Logger.log("NOTIFICATION_EMAIL empty — skip email");
+    return;
+  }
+
+  var common = extractCommonFields_(data, sourcePage, metadata);
+  var label = FORM_LABELS[formType] || formType;
+  var subject = "[Protronics] New " + label;
+
+  var lines = [];
+  lines.push("New form submission on Protronics");
+  lines.push("");
+  lines.push("Type:        " + label + " (" + formType + ")");
+  lines.push("Sheet tab:   " + sheetTab);
+  lines.push("Submitted:   " + submittedAt);
+  lines.push("Source page: " + (sourcePage || "(none)"));
+  lines.push("");
+  lines.push("--- Contact ---");
+  lines.push("Name:    " + (common.name || "—"));
+  lines.push("Phone:   " + (common.phone || "—"));
+  lines.push("Email:   " + (common.email || "—"));
+  lines.push("City:    " + (common.city || "—"));
+  lines.push("Message: " + (common.message || "—"));
+  lines.push("Source:  " + (common.source || "—"));
+  lines.push("");
+  lines.push("--- Form fields ---");
+
+  var keys = Object.keys(data);
+  keys.sort();
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var val = data[key];
+    if (val === undefined || val === null || String(val).trim() === "") continue;
+    lines.push(key + ": " + String(val));
+  }
+
+  lines.push("");
+  lines.push("Open your Protronics leads spreadsheet to view / reply.");
+
+  MailApp.sendEmail({
+    to: cfg.to,
+    name: cfg.fromName,
+    subject: subject,
+    body: lines.join("\n"),
+  });
 }
 
 function parseRequestPayload_(e) {
@@ -236,19 +374,11 @@ function validatePayload_(body) {
 }
 
 function extractCommonFields_(data, sourcePage, metadata) {
-  var name =
-    data.name ||
-    data.fullName ||
-    data.full_name ||
-    "";
+  var name = data.name || data.fullName || data.full_name || "";
   var phone = data.phone || "";
   var email = data.email || "";
   var city = data.city || "";
-  var message =
-    data.message ||
-    data.issue ||
-    data.notes ||
-    "";
+  var message = data.message || data.issue || data.notes || "";
   var page =
     sourcePage ||
     (metadata && metadata.path ? String(metadata.path) : "") ||
@@ -290,7 +420,11 @@ function prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, meta
   for (var i = 0; i < headers.length; i++) {
     var key = headers[i];
     var val = data[key];
-    row.push(val === undefined || val === null ? "" : sanitizeString_(String(val), MAX_FIELD_LENGTH));
+    row.push(
+      val === undefined || val === null
+        ? ""
+        : sanitizeString_(String(val), MAX_FIELD_LENGTH),
+    );
   }
   return row;
 }

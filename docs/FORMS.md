@@ -50,15 +50,33 @@ POST body: `application/x-www-form-urlencoded` with field `payload` = JSON strin
 
 ## Deployment checklist
 
-1. Create a Google Spreadsheet.
-2. **Extensions → Apps Script** → paste `scripts/google-apps-script-backend.js`.
-3. Run **`setupSheets()`** once from the editor.
-4. **Deploy → Web app** — Execute as **Me**, Access **Anyone**.
-5. Copy the **`/exec`** URL.
-6. Set `VITE_FORM_ENDPOINT_URL` in project root `.env` (and on Vercel/Netlify).
-7. `npm run build` — writes `public/forms-endpoint.json`. Missing URL warns but deploy continues; set `FORMS_REQUIRE_ENDPOINT=1` in CI to hard-fail without a URL.
-8. Submit a test form; confirm a row in the correct tab.
-9. In browser console: `window.__FORM_HEALTH__` → `{ ready: true, url: "...", source: "env"|"json" }`.
+1. Create a Google Spreadsheet (e.g. “Protronics Leads”).
+2. **Extensions → Apps Script** → paste **`scripts/Code.gs`** (full file).
+3. Run **`setupSheets()`** once from the editor (authorize Google access).
+4. Run **`setupEmailNotifications()`** once (sets alert inbox; edit email in that function first if needed).
+5. Optional: run **`testEmailNotification()`** to confirm mail works.
+6. **Deploy → New deployment → Web app** — Execute as **Me**, Access **Anyone**.
+7. Copy the **`/exec`** URL.
+8. Set in project `.env` (see `.env.example`):
+   ```env
+   NEXT_PUBLIC_FORM_ENDPOINT=https://script.google.com/macros/s/XXXX/exec
+   NEXT_PUBLIC_FORM_ENDPOINT_URL=https://script.google.com/macros/s/XXXX/exec
+   ```
+9. `npm run build` — writes `public/forms-endpoint.json`. Missing URL warns but deploy continues; set `FORMS_REQUIRE_ENDPOINT=1` in CI to hard-fail without a URL.
+10. Submit a test form; confirm a row in the correct tab **and** an email alert.
+11. In browser console: `window.__FORM_HEALTH__` → `{ ready: true, url: "...", source: "env"|"json" }`.
+
+## Email notifications
+
+Email is sent by **Apps Script** (`MailApp`) after each successful sheet row — not by Next.js.
+
+| Script property | Example | Purpose |
+|-----------------|---------|---------|
+| `NOTIFICATION_EMAIL` | `Protronicspro4@gmail.com` | Recipient(s); comma-separated for multiple |
+| `NOTIFY_ENABLED` | `true` | Set `false` to pause alerts |
+| `NOTIFY_FROM_NAME` | `Protronics Forms` | From display name |
+
+Run `setupEmailNotifications()` to write these, or set them under **Project Settings → Script properties**.
 
 ## Add a new form (5 steps)
 

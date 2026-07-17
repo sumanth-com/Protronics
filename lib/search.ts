@@ -22,7 +22,6 @@ const STATIC_PAGES: SearchResult[] = [
   { id: "how", type: "page", title: "How It Works", href: "/how-it-works" },
   { id: "warranty", type: "page", title: "Warranty & Support", href: "/warranty" },
   { id: "contact", type: "page", title: "Contact", href: "/contact" },
-  { id: "compare", type: "page", title: "Compare Products", href: "/compare" },
   { id: "best-deals", type: "page", title: "Best Deals", href: "/best-deals" },
   { id: "sell", type: "page", title: "Sell", href: "/sell" },
 ];

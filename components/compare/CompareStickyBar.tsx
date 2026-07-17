@@ -13,21 +13,23 @@ export default function CompareStickyBar() {
   const pathname = usePathname();
   const { ids, count, remove, clear } = useCompare();
   const products = getCompareProducts(ids);
-  const isProductPage = pathname.startsWith("/product/");
+  const hidden =
+    pathname === "/compare" || pathname.startsWith("/product/");
 
   useEffect(() => {
-    if (!isProductPage) return;
-    if (count > 0) {
-      document.body.classList.add("has-compare-sticky");
-    } else {
+    if (hidden || count === 0) {
       document.body.classList.remove("has-compare-sticky");
+      return () => {
+        document.body.classList.remove("has-compare-sticky");
+      };
     }
+    document.body.classList.add("has-compare-sticky");
     return () => {
       document.body.classList.remove("has-compare-sticky");
     };
-  }, [count, isProductPage]);
+  }, [count, hidden]);
 
-  if (pathname === "/compare") return null;
+  if (hidden) return null;
 
   return (
     <AnimatePresence>
@@ -39,9 +41,7 @@ export default function CompareStickyBar() {
           transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
             "fixed inset-x-0 z-[85] px-3 pb-2 pt-2 sm:bottom-6 sm:px-4 sm:pb-0",
-            isProductPage
-              ? "bottom-[calc(var(--mobile-bottom-nav-height)+env(safe-area-inset-bottom,0px))] sm:bottom-6 lg:bottom-6"
-              : "bottom-[calc(var(--mobile-bottom-nav-height)+env(safe-area-inset-bottom,0px))] lg:bottom-6",
+            "bottom-[calc(var(--mobile-bottom-nav-height)+env(safe-area-inset-bottom,0px))] lg:bottom-6",
           )}
         >
           <div

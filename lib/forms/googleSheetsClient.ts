@@ -78,14 +78,15 @@ export async function resolveFormEndpointUrl(): Promise<string> {
       throw new Error(health.error);
     }
 
-    const json = (await res.json()) as { url?: string };
-    const url = (json.url ?? "").trim();
+    const json = (await res.json()) as { url?: string | null };
+    const url = String(json.url ?? "").trim();
     if (!url || !isValidFormEndpointUrl(url)) {
       const health: FormEndpointHealth = {
         ready: false,
         url: null,
         source: "json",
-        error: "Invalid or missing url in forms-endpoint.json.",
+        error:
+          "Form endpoint not configured. Set NEXT_PUBLIC_FORM_ENDPOINT in .env (local) or Vercel env vars, then rebuild.",
       };
       setFormHealth(health);
       throw new Error(health.error);

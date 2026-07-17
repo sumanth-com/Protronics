@@ -14,8 +14,6 @@ import {
   Wrench,
 } from "lucide-react";
 import { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import CompareButton from "@/components/compare/CompareButton";
 import ProductShareButton from "@/components/product/ProductShareButton";
 import ProductMobileGallery from "@/components/product/mobile/ProductMobileGallery";
 import {
@@ -39,8 +37,6 @@ import {
 } from "@/lib/product-marketplace";
 import type { ShopCategory, ShopProduct } from "@/lib/shop";
 import { cn } from "@/lib/utils";
-
-import "swiper/css";
 
 import { DEFAULT_PRODUCT_IMAGE } from "@/lib/product-images";
 
@@ -80,7 +76,7 @@ function MarketplaceProductCard({ product: p }: { product: ShopProduct }) {
           src={p.image}
           alt={p.name}
           fill
-          sizes="140px"
+          sizes="50vw"
           className="object-contain p-2"
           onError={(e) => {
             (e.target as HTMLImageElement).src = FALLBACK;
@@ -140,7 +136,7 @@ function SpecAccordion({ groups }: { groups: ReturnType<typeof getProductSpecGro
   );
 }
 
-function ProductCarousel({
+function ProductGrid({
   title,
   products,
 }: {
@@ -152,18 +148,11 @@ function ProductCarousel({
   return (
     <section className="pdp-mobile-section">
       <h2 className="pdp-mobile-section-title">{title}</h2>
-      <Swiper
-        spaceBetween={10}
-        slidesPerView={2.35}
-        className="mt-2.5 !overflow-visible"
-        data-lenis-prevent
-      >
+      <div className="mt-2.5 grid grid-cols-2 gap-2.5">
         {products.map((p) => (
-          <SwiperSlide key={p.id}>
-            <MarketplaceProductCard product={p} />
-          </SwiperSlide>
+          <MarketplaceProductCard key={p.id} product={p} />
         ))}
-      </Swiper>
+      </div>
     </section>
   );
 }
@@ -187,7 +176,7 @@ export default function ProductPageMobile({
   const tradeInLabel = getTradeInCategoryLabel(product);
 
   return (
-    <div className="pdp-mobile bg-theme-bg pb-2 text-theme-fg">
+    <div className="pdp-mobile bg-theme-bg pb-6 text-theme-fg">
       <nav className="flex items-center gap-0.5 overflow-hidden px-3 py-2 text-[10px] text-theme-fg-faint">
         <Link href="/" className="shrink-0 hover:text-theme-fg">
           Home
@@ -386,26 +375,8 @@ export default function ProductPageMobile({
           </div>
         </section>
 
-        <section className={cn(pdpCard, "p-3")}>
-          <h2 className={cn("mb-2", pdpSectionTitle)}>Compare</h2>
-          <p className="mb-2.5 text-[12px] text-theme-fg-muted">
-            Add to compare with up to 2 other appliances
-          </p>
-          <div className="flex gap-2">
-            <CompareButton
-              productId={product.id}
-              className="min-w-0 flex-1 justify-center py-2.5 text-[13px]"
-            />
-            <ProductShareButton
-              productId={product.id}
-              productName={product.name}
-              className="min-w-0 flex-1 justify-center py-2.5 text-[13px]"
-            />
-          </div>
-        </section>
-
-        <ProductCarousel title="Related Products" products={related} />
-        <ProductCarousel title="Recently Viewed" products={recentlyViewed} />
+        <ProductGrid title="Related Products" products={related} />
+        <ProductGrid title="Recently Viewed" products={recentlyViewed} />
       </div>
     </div>
   );
