@@ -87,7 +87,7 @@ var FORM_LABELS = {
 
 function doGet() {
   return jsonResponse_(true, "Form webhook healthy", {
-    version: "6.0",
+    version: "6.1",
     tabs: Object.keys(SHEET_COLUMNS),
     forms: Object.keys(SHEET_TABS),
     email: getNotifyConfig_().enabled ? "enabled" : "disabled",
@@ -335,27 +335,26 @@ function getHeaderRow_(sheetTab) {
 
 function ensureSheetHeaders_(sheet, sheetTab) {
   var headers = getHeaderRow_(sheetTab);
+  var needed = headers.length;
+
+  // Wipe old/duplicate header cells so only form columns remain
+  var lastCol = Math.max(sheet.getLastColumn(), needed);
+  if (lastCol > 0) {
+    sheet.getRange(1, 1, 1, lastCol).clearContent();
+  }
 
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(headers);
-    sheet.setFrozenRows(1);
-    return;
+  } else {
+    sheet.getRange(1, 1, 1, needed).setValues([headers]);
   }
 
-  var width = Math.max(sheet.getLastColumn(), 1);
-  var existing = sheet.getRange(1, 1, 1, width).getValues()[0];
-  var needsUpdate = existing.length < headers.length;
-
-  for (var i = 0; i < Math.min(existing.length, headers.length); i++) {
-    if (String(existing[i] || "").trim() !== headers[i]) {
-      needsUpdate = true;
-      break;
-    }
+  // Drop leftover empty columns past the form schema (keeps sheet clean)
+  var maxCols = sheet.getMaxColumns();
+  if (maxCols > needed) {
+    sheet.deleteColumns(needed + 1, maxCols - needed);
   }
 
-  if (needsUpdate) {
-    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-  }
   sheet.setFrozenRows(1);
 }
 
