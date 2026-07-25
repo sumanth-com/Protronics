@@ -89,7 +89,7 @@ export default function SupportCenter({
       </div>
 
       {/* Desktop — three-pane help center, fits one viewport */}
-      <div className="support-desktop theme-section-a hidden h-[calc(100dvh-64px)] flex-col overflow-hidden bg-black lg:flex">
+      <div className="support-desktop theme-section-a hidden h-[calc(100dvh-var(--navbar-offset))] flex-col overflow-hidden bg-black lg:flex">
         <div className="mx-auto flex h-full min-h-0 w-full max-w-7xl flex-col px-6 py-3">
           <SupportHero />
 

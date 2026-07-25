@@ -85,7 +85,6 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
         phone: phone.trim(),
         preferredTime,
         pageUrl: typeof window !== "undefined" ? window.location.href : "",
-        leadSource: "Product Page — Callback",
       });
       setSubmitted(true);
     } catch (e) {

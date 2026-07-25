@@ -41,7 +41,7 @@ export default function AboutHero() {
         className={cn(
           "about-hero-inner relative mx-auto w-full max-w-7xl",
           "flex flex-col px-4 sm:px-6",
-          "md:grid md:min-h-[calc(100svh-64px)] md:grid-cols-12 md:items-center md:gap-10 md:py-16",
+          "md:grid md:min-h-[calc(100svh-var(--navbar-offset))] md:grid-cols-12 md:items-center md:gap-10 md:py-16",
         )}
       >
         <motion.div

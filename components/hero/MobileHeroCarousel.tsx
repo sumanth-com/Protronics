@@ -16,9 +16,6 @@ type Props = {
   className?: string;
 };
 
-/** Fixed aspect — prevents layout shift / page shake between slides */
-const BANNER_ASPECT = "1717 / 916";
-
 export default function MobileHeroCarousel({
   slides,
   intervalMs = 4500,
@@ -64,10 +61,7 @@ export default function MobileHeroCarousel({
       >
         {slides.map((slide, i) => (
           <SwiperSlide key={slide.src} className="hero-mobile-swiper-slide">
-            <div
-              className="hero-mobile-banner-frame relative w-full overflow-hidden"
-              style={{ aspectRatio: BANNER_ASPECT }}
-            >
+            <div className="hero-mobile-banner-frame relative w-full overflow-hidden">
               <Image
                 src={slide}
                 alt="Protronics refurbished appliance banner"

@@ -30,30 +30,6 @@ export const FORM_REGISTRY: FormRegistryEntry[] = [
     sourcePage: "/sell",
     submitter: "submitTradeInForm",
   },
-  {
-    id: FORM_TYPES.NEWSLETTER,
-    label: "Newsletter",
-    formType: FORM_TYPES.NEWSLETTER,
-    sheetTab: SHEET_TABS.newsletter,
-    sourcePage: "/",
-    submitter: "submitNewsletterForm",
-  },
-  {
-    id: FORM_TYPES.SERVICE_REQUEST,
-    label: "Service Request",
-    formType: FORM_TYPES.SERVICE_REQUEST,
-    sheetTab: SHEET_TABS["service-request"],
-    sourcePage: "/support",
-    submitter: "submitServiceRequestForm",
-  },
-  {
-    id: FORM_TYPES.WARRANTY_REGISTRATION,
-    label: "Warranty Registration",
-    formType: FORM_TYPES.WARRANTY_REGISTRATION,
-    sheetTab: SHEET_TABS["warranty-registration"],
-    sourcePage: "/warranty",
-    submitter: "submitWarrantyForm",
-  },
 ];
 
 export function getRegistryEntry(formType: string): FormRegistryEntry | undefined {

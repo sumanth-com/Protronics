@@ -46,25 +46,27 @@ public/forms-endpoint.json     # generated at build
 }
 ```
 
+Three forms → three sheet tabs. Columns match the form fields only (+ Timestamp / Reference ID where needed):
+
+| form_type | Sheet tab | Columns |
+|-----------|-----------|---------|
+| `contact` | **Contact** | Full Name, Phone, Email, City, Product, Message |
+| `product-lead` | **Leads** | Lead Type, Name, Phone, City, Contact Preference, Preferred Time, Message, Product Name, Price, Reference ID |
+| `trade-in` | **TradeIn** | Name, Phone, City, Appliance Type, Brand, Model, Age, Condition, Description, Reference ID |
+
 POST body: `application/x-www-form-urlencoded` with field `payload` = JSON string (CORS-friendly).
 
 ## Deployment checklist
 
 1. Create a Google Spreadsheet (e.g. “Protronics Leads”).
 2. **Extensions → Apps Script** → paste **`scripts/Code.gs`** (full file).
-3. Run **`setupSheets()`** once from the editor (authorize Google access).
-4. Run **`setupEmailNotifications()`** once (sets alert inbox; edit email in that function first if needed).
-5. Optional: run **`testEmailNotification()`** to confirm mail works.
+3. Run **`setupSheets()`** once (creates **Contact**, **Leads**, **TradeIn** + headers).
+4. Run **`setupEmailNotifications()`** once.
+5. Optional: run **`testEmailNotification()`**.
 6. **Deploy → New deployment → Web app** — Execute as **Me**, Access **Anyone**.
-7. Copy the **`/exec`** URL.
-8. Set in project `.env` (see `.env.example`):
-   ```env
-   NEXT_PUBLIC_FORM_ENDPOINT=https://script.google.com/macros/s/XXXX/exec
-   NEXT_PUBLIC_FORM_ENDPOINT_URL=https://script.google.com/macros/s/XXXX/exec
-   ```
-9. `npm run build` — writes `public/forms-endpoint.json`. Missing URL warns but deploy continues; set `FORMS_REQUIRE_ENDPOINT=1` in CI to hard-fail without a URL.
-10. Submit a test form; confirm a row in the correct tab **and** an email alert.
-11. In browser console: `window.__FORM_HEALTH__` → `{ ready: true, url: "...", source: "env"|"json" }`.
+7. Copy the **`/exec`** URL into `.env` as `NEXT_PUBLIC_FORM_ENDPOINT`.
+8. Submit a test form; confirm the matching tab gets only the form fields.
+9. Optional: delete unused old tabs / old wide header columns (or clear row 1 and re-run `setupSheets`).
 
 ## Email notifications
 
@@ -80,10 +82,10 @@ Run `setupEmailNotifications()` to write these, or set them under **Project Sett
 
 ## Add a new form (5 steps)
 
-1. Add `form_type` in `constants/formTypes.ts` and tab in `constants/sheetTabs.ts`.
+1. Add `form_type` in `constants/formTypes.ts` and tab name in `constants/sheetTabs.ts`.
 2. Add `validators/`, `transformers/`, `submitters/` modules.
 3. Register in `registry.ts`.
-4. Add tab + columns in Apps Script `SHEET_HEADERS`; run `setupSheets()` if needed.
+4. Add tab + columns in Apps Script `SHEET_TABS` / `SHEET_HEADERS`; run `setupSheets()`.
 5. Wire UI with `useFormSubmission({ submitter: submitYourForm })`.
 
 ## Troubleshooting
@@ -93,9 +95,9 @@ Run `setupEmailNotifications()` to write these, or set them under **Project Sett
 | Build fails “endpoint required” | Set `NEXT_PUBLIC_FORM_ENDPOINT_URL` on Vercel, or unset `FORMS_REQUIRE_ENDPOINT` if you opted into strict CI |
 | `__FORM_HEALTH__.ready === false` | Missing env or invalid `/forms-endpoint.json`; URL must match `https://script.google.com/macros/s/.../exec` |
 | CORS error | Use urlencoded `payload` (already in `googleSheetsClient.ts`); redeploy Apps Script as **Anyone** |
-| Row in wrong tab | `sheet_tab` / `SHEET_TABS` mismatch between frontend and Apps Script |
+| Row in wrong tab | Confirm Apps Script is v6.0 (`doGet` lists Contact / Leads / TradeIn); run `setupSheets()` |
 | Silent success, no row | Honeypot filled (bot); or check Apps Script **Executions** log |
-| Old Leads headers | Run `setupSheets()` on a new tab or align `SHEET_HEADERS` with existing row 1 |
+| Old extra columns | Clear header row or delete tab, then run `setupSheets()` for form-only columns |
 
 ## Local dev without Sheets
 

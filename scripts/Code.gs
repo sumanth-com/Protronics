@@ -14,96 +14,74 @@
  * 6. Copy the Web app URL ending in /exec
  * 7. Put that URL in project `.env` as NEXT_PUBLIC_FORM_ENDPOINT
  *
- * EMAIL ALERTS
- * - Default recipient is set in setupEmailNotifications() below — edit before running.
- * - Or: Project Settings → Script properties:
- *     NOTIFICATION_EMAIL = you@email.com,team@email.com
- *     NOTIFY_ENABLED     = true
- *     NOTIFY_FROM_NAME   = Protronics Forms
+ * SHEETS (3 tabs — columns match website forms only)
+ *   contact      → Contact
+ *   product-lead → Leads
+ *   trade-in     → TradeIn
  *
- * Endpoint env vars (Next.js):
- *   NEXT_PUBLIC_FORM_ENDPOINT
- *   NEXT_PUBLIC_FORM_ENDPOINT_URL   (alias)
+ * EMAIL ALERTS — edit setupEmailNotifications() or Script properties:
+ *   NOTIFICATION_EMAIL, NOTIFY_ENABLED, NOTIFY_FROM_NAME
  */
 
+/** form_type → sheet tab */
 var SHEET_TABS = {
   contact: "Contact",
   "product-lead": "Leads",
   "trade-in": "TradeIn",
-  newsletter: "Newsletter",
-  "service-request": "ServiceRequests",
-  "warranty-registration": "Warranty",
 };
 
-/** Universal columns on every tab. */
-var STANDARD_HEADERS = [
-  "Timestamp",
-  "Form Type",
-  "Source Page",
-  "Submitted At",
-  "Name",
-  "Phone",
-  "Email",
-  "City",
-  "Message",
-  "Source",
-];
-
-/** Extra columns per tab (after STANDARD_HEADERS). */
-var SHEET_HEADERS = {
-  Contact: ["fullName", "phone", "email", "city", "product", "message"],
+/**
+ * Columns per tab: [header label, data key]
+ * Timestamp is always first (auto). Only form fields after that.
+ */
+var SHEET_COLUMNS = {
+  Contact: [
+    ["Full Name", "fullName"],
+    ["Phone", "phone"],
+    ["Email", "email"],
+    ["City", "city"],
+    ["Product", "product"],
+    ["Message", "message"],
+  ],
   Leads: [
-    "referenceId",
-    "leadType",
-    "productName",
-    "productId",
-    "price",
-    "name",
-    "phone",
-    "city",
-    "contactPreference",
-    "message",
-    "preferredTime",
-    "leadSource",
+    ["Lead Type", "leadType"],
+    ["Name", "name"],
+    ["Phone", "phone"],
+    ["City", "city"],
+    ["Contact Preference", "contactPreference"],
+    ["Preferred Time", "preferredTime"],
+    ["Message", "message"],
+    ["Product Name", "productName"],
+    ["Price", "price"],
+    ["Reference ID", "referenceId"],
   ],
   TradeIn: [
-    "referenceId",
-    "name",
-    "phone",
-    "city",
-    "applianceType",
-    "brand",
-    "model",
-    "age",
-    "condition",
-    "expectedPrice",
-    "estimatedLow",
-    "estimatedHigh",
-    "imageCount",
-    "imageNames",
-    "leadSource",
+    ["Name", "name"],
+    ["Phone", "phone"],
+    ["City", "city"],
+    ["Appliance Type", "applianceType"],
+    ["Brand", "brand"],
+    ["Model", "model"],
+    ["Age", "age"],
+    ["Condition", "condition"],
+    ["Description", "description"],
+    ["Reference ID", "referenceId"],
   ],
-  Newsletter: ["email"],
-  ServiceRequests: ["name", "phone", "email", "issue", "preferredTime"],
-  Warranty: ["name", "phone", "email", "serialNumber", "purchaseDate", "model"],
 };
 
 var MAX_FIELD_LENGTH = 5000;
 var MAX_FORM_TYPE_LENGTH = 64;
 
-/** Friendly labels for email subjects. */
 var FORM_LABELS = {
   contact: "Contact enquiry",
   "product-lead": "Product lead / reserve",
   "trade-in": "Trade-in / sell",
-  newsletter: "Newsletter signup",
-  "service-request": "Service request",
-  "warranty-registration": "Warranty registration",
 };
 
 function doGet() {
   return jsonResponse_(true, "Form webhook healthy", {
-    version: "3.1",
+    version: "6.0",
+    tabs: Object.keys(SHEET_COLUMNS),
     forms: Object.keys(SHEET_TABS),
     email: getNotifyConfig_().enabled ? "enabled" : "disabled",
   });
@@ -124,8 +102,7 @@ function doPost(e) {
       return jsonResponse_(false, parsed.error);
     }
 
-    var body = parsed.data;
-    var validation = validatePayload_(body);
+    var validation = validatePayload_(parsed.data);
     if (!validation.success) {
       Logger.log("doPost validation: %s", validation.error);
       return jsonResponse_(false, validation.error);
@@ -136,18 +113,15 @@ function doPost(e) {
     var data = validation.data;
     var sourcePage = validation.sourcePage;
     var submittedAt = validation.submittedAt;
-    var metadata = validation.metadata;
 
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName(sheetTab) || ss.insertSheet(sheetTab);
     ensureSheetHeaders_(sheet, sheetTab);
 
-    var row = prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, metadata);
-    sheet.appendRow(row);
+    sheet.appendRow(prepareRowData_(sheetTab, data));
 
-    // Email alert (does not fail the submission if mail fails)
     try {
-      sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt, metadata);
+      sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt);
     } catch (mailErr) {
       Logger.log(
         "Email notify failed (row still saved): %s",
@@ -155,12 +129,7 @@ function doPost(e) {
       );
     }
 
-    Logger.log(
-      "doPost success form_type=%s tab=%s page=%s",
-      formType,
-      sheetTab,
-      sourcePage,
-    );
+    Logger.log("doPost success form_type=%s tab=%s", formType, sheetTab);
 
     return jsonResponse_(true, "Submitted Successfully", {
       form_type: formType,
@@ -176,22 +145,21 @@ function doPost(e) {
   }
 }
 
-/** Run once — creates all sheet tabs + header rows. */
+/** Run once — creates Contact, Leads, TradeIn + header rows. */
 function setupSheets() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var seen = {};
   for (var formType in SHEET_TABS) {
     if (!SHEET_TABS.hasOwnProperty(formType)) continue;
     var tab = SHEET_TABS[formType];
+    if (seen[tab]) continue;
+    seen[tab] = true;
     var sheet = ss.getSheetByName(tab) || ss.insertSheet(tab);
     ensureSheetHeaders_(sheet, tab);
   }
-  Logger.log("setupSheets complete");
+  Logger.log("setupSheets complete — Contact, Leads, TradeIn");
 }
 
-/**
- * Run once — configures email notification Script Properties.
- * EDIT the email below before running if you want a different inbox.
- */
 function setupEmailNotifications() {
   var props = PropertiesService.getScriptProperties();
   props.setProperties(
@@ -203,13 +171,12 @@ function setupEmailNotifications() {
     true,
   );
   Logger.log(
-    "Email notifications configured → %s (enabled=%s)",
+    "Email notifications → %s (enabled=%s)",
     props.getProperty("NOTIFICATION_EMAIL"),
     props.getProperty("NOTIFY_ENABLED"),
   );
 }
 
-/** Optional: send a test email using current Script Properties. */
 function testEmailNotification() {
   var cfg = getNotifyConfig_();
   if (!cfg.to) {
@@ -219,9 +186,7 @@ function testEmailNotification() {
     to: cfg.to,
     name: cfg.fromName,
     subject: "[Protronics] Test email notification",
-    body:
-      "This is a test from the Protronics Google Apps Script form backend.\n\n" +
-      "If you received this, email alerts are working.\n",
+    body: "This is a test from the Protronics form backend.\n",
   });
   Logger.log("Test email sent to %s", cfg.to);
 }
@@ -237,64 +202,38 @@ function getNotifyConfig_() {
   };
 }
 
-function sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt, metadata) {
+function sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt) {
   var cfg = getNotifyConfig_();
-  if (!cfg.enabled) {
-    Logger.log("Notify disabled — skip email");
-    return;
-  }
-  if (!cfg.to) {
-    Logger.log("NOTIFICATION_EMAIL empty — skip email");
-    return;
-  }
+  if (!cfg.enabled || !cfg.to) return;
 
-  var common = extractCommonFields_(data, sourcePage, metadata);
   var label = FORM_LABELS[formType] || formType;
-  var subject = "[Protronics] New " + label;
-
+  var columns = SHEET_COLUMNS[sheetTab] || [];
   var lines = [];
-  lines.push("New form submission on Protronics");
+  lines.push("New " + label);
+  lines.push("Tab: " + sheetTab);
+  lines.push("Submitted: " + submittedAt);
+  if (sourcePage) lines.push("Page: " + sourcePage);
   lines.push("");
-  lines.push("Type:        " + label + " (" + formType + ")");
-  lines.push("Sheet tab:   " + sheetTab);
-  lines.push("Submitted:   " + submittedAt);
-  lines.push("Source page: " + (sourcePage || "(none)"));
-  lines.push("");
-  lines.push("--- Contact ---");
-  lines.push("Name:    " + (common.name || "—"));
-  lines.push("Phone:   " + (common.phone || "—"));
-  lines.push("Email:   " + (common.email || "—"));
-  lines.push("City:    " + (common.city || "—"));
-  lines.push("Message: " + (common.message || "—"));
-  lines.push("Source:  " + (common.source || "—"));
-  lines.push("");
-  lines.push("--- Form fields ---");
 
-  var keys = Object.keys(data);
-  keys.sort();
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
+  for (var i = 0; i < columns.length; i++) {
+    var header = columns[i][0];
+    var key = columns[i][1];
     var val = data[key];
     if (val === undefined || val === null || String(val).trim() === "") continue;
-    lines.push(key + ": " + String(val));
+    lines.push(header + ": " + String(val));
   }
-
-  lines.push("");
-  lines.push("Open your Protronics leads spreadsheet to view / reply.");
 
   MailApp.sendEmail({
     to: cfg.to,
     name: cfg.fromName,
-    subject: subject,
+    subject: "[Protronics] New " + label,
     body: lines.join("\n"),
   });
 }
 
 function parseRequestPayload_(e) {
   try {
-    if (!e) {
-      return { success: false, error: "Empty request." };
-    }
+    if (!e) return { success: false, error: "Empty request." };
 
     if (e.parameter && e.parameter.payload) {
       return { success: true, data: JSON.parse(String(e.parameter.payload)) };
@@ -340,13 +279,9 @@ function validatePayload_(body) {
   }
 
   var formType = sanitizeString_(String(body.form_type || ""), MAX_FORM_TYPE_LENGTH);
-  if (!formType) {
-    return { success: false, error: "Missing form_type." };
-  }
-
-  var sheetTab = sanitizeString_(String(body.sheet_tab || ""), 99);
-  if (!sheetTab) {
-    sheetTab = SHEET_TABS[formType] || formType;
+  if (!formType) return { success: false, error: "Missing form_type." };
+  if (!SHEET_TABS[formType]) {
+    return { success: false, error: "Unknown form_type: " + formType };
   }
 
   var data = body.data;
@@ -354,71 +289,24 @@ function validatePayload_(body) {
     return { success: false, error: "Missing data object." };
   }
 
-  var sourcePage = sanitizeString_(String(body.source_page || ""), 500);
-  var submittedAt = sanitizeString_(
-    String(body.submitted_at || new Date().toISOString()),
-    40,
-  );
-  var metadata =
-    body.metadata && typeof body.metadata === "object" ? body.metadata : {};
-
   return {
     success: true,
     formType: formType,
-    sheetTab: sheetTab,
+    sheetTab: SHEET_TABS[formType],
     data: data,
-    sourcePage: sourcePage,
-    submittedAt: submittedAt,
-    metadata: metadata,
+    sourcePage: sanitizeString_(String(body.source_page || ""), 500),
+    submittedAt: sanitizeString_(
+      String(body.submitted_at || new Date().toISOString()),
+      40,
+    ),
   };
 }
 
-function extractCommonFields_(data, sourcePage, metadata) {
-  var name = data.name || data.fullName || data.full_name || "";
-  var phone = data.phone || "";
-  var email = data.email || "";
-  var city = data.city || "";
-  var message = data.message || data.issue || data.notes || "";
-  var page =
-    sourcePage ||
-    (metadata && metadata.path ? String(metadata.path) : "") ||
-    (metadata && metadata.page_url ? String(metadata.page_url) : "");
-  var source =
-    (metadata && metadata.referrer ? String(metadata.referrer) : "") ||
-    data.leadSource ||
-    data.source ||
-    "";
-
-  return {
-    name: sanitizeString_(String(name), 200),
-    phone: sanitizeString_(String(phone), 40),
-    email: sanitizeString_(String(email), 200),
-    city: sanitizeString_(String(city), 120),
-    message: sanitizeString_(String(message), MAX_FIELD_LENGTH),
-    page: sanitizeString_(String(page), 500),
-    source: sanitizeString_(String(source), 500),
-  };
-}
-
-function prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, metadata) {
-  var common = extractCommonFields_(data, sourcePage, metadata);
-  var timestamp = new Date().toISOString();
-  var row = [
-    timestamp,
-    sanitizeString_(formType, MAX_FORM_TYPE_LENGTH),
-    sanitizeString_(sourcePage, 500),
-    submittedAt,
-    common.name,
-    common.phone,
-    common.email,
-    common.city,
-    common.message,
-    common.source,
-  ];
-
-  var headers = getDataHeaders_(sheetTab);
-  for (var i = 0; i < headers.length; i++) {
-    var key = headers[i];
+function prepareRowData_(sheetTab, data) {
+  var columns = SHEET_COLUMNS[sheetTab] || [];
+  var row = [new Date().toISOString()];
+  for (var i = 0; i < columns.length; i++) {
+    var key = columns[i][1];
     var val = data[key];
     row.push(
       val === undefined || val === null
@@ -429,29 +317,39 @@ function prepareRowData_(formType, sheetTab, data, sourcePage, submittedAt, meta
   return row;
 }
 
-function getDataHeaders_(sheetTab) {
-  return SHEET_HEADERS[sheetTab] || [];
+function getHeaderRow_(sheetTab) {
+  var columns = SHEET_COLUMNS[sheetTab] || [];
+  var headers = ["Timestamp"];
+  for (var i = 0; i < columns.length; i++) {
+    headers.push(columns[i][0]);
+  }
+  return headers;
 }
 
 function ensureSheetHeaders_(sheet, sheetTab) {
-  var dataHeaders = getDataHeaders_(sheetTab);
-  var headers = STANDARD_HEADERS.concat(dataHeaders);
+  var headers = getHeaderRow_(sheetTab);
+
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(headers);
+    sheet.setFrozenRows(1);
     return;
   }
-  var width = Math.max(sheet.getLastColumn(), headers.length);
+
+  var width = Math.max(sheet.getLastColumn(), 1);
   var existing = sheet.getRange(1, 1, 1, width).getValues()[0];
-  var empty = true;
-  for (var i = 0; i < existing.length; i++) {
-    if (String(existing[i] || "").trim() !== "") {
-      empty = false;
+  var needsUpdate = existing.length < headers.length;
+
+  for (var i = 0; i < Math.min(existing.length, headers.length); i++) {
+    if (String(existing[i] || "").trim() !== headers[i]) {
+      needsUpdate = true;
       break;
     }
   }
-  if (sheet.getLastRow() === 1 && empty) {
+
+  if (needsUpdate) {
     sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
   }
+  sheet.setFrozenRows(1);
 }
 
 function sanitizeString_(value, maxLen) {
@@ -459,9 +357,7 @@ function sanitizeString_(value, maxLen) {
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "")
     .replace(/<\s*script\b/gi, "")
     .trim();
-  if (str.length > maxLen) {
-    return str.slice(0, maxLen);
-  }
+  if (str.length > maxLen) return str.slice(0, maxLen);
   return str;
 }
 

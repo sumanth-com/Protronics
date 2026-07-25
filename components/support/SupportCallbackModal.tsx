@@ -92,7 +92,6 @@ export default function SupportCallbackModal({
         phone: phone.trim(),
         preferredTime,
         pageUrl: typeof window !== "undefined" ? window.location.href : "/support",
-        leadSource: `${context} — Request Callback`,
       });
       setReferenceId(res.referenceId ?? "");
       setSubmitted(true);

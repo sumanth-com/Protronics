@@ -44,8 +44,8 @@ export default function WhyHero() {
         className={cn(
           "relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10",
           "px-4 sm:px-6 md:grid-cols-12",
-          "min-h-[calc(100svh-60px)] sm:min-h-[calc(100svh-64px)]",
-          "py-12 md:py-16",
+          "min-h-[calc(100svh-var(--navbar-offset))] why-hero-inner",
+          "py-10 sm:py-12 md:py-16",
         )}
       >
         <motion.div variants={stagger} initial="hidden" animate="show" className="md:col-span-6">

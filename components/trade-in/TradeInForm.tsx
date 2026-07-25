@@ -1,8 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
-import ImageUploader from "@/components/trade-in/ImageUploader";
 import FormAlert from "@/components/forms/FormAlert";
 import CtaButton, { ctaButtonSecondaryClass } from "@/components/ui/CtaButton";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
@@ -19,8 +18,6 @@ import {
   APPLIANCE_CATEGORIES,
   CONDITION_OPTIONS,
   TRADE_IN_LINKS,
-  WORKING_STATUS_OPTIONS,
-  estimateTradeInValue,
   tradeInGlass,
   tradeInSection,
   type AgeOption,
@@ -41,7 +38,7 @@ type FormState = {
   description: string;
 };
 
-type FormErrors = Partial<Record<keyof FormState, string>> & { images?: string };
+type FormErrors = Partial<Record<keyof FormState, string>>;
 
 const initial: FormState = {
   name: "",
@@ -62,45 +59,26 @@ const inputClass = (hasError: boolean) =>
     hasError ? "border-red-400/50" : "border-theme-border",
   );
 
-function validate(values: FormState, fileCount: number): FormErrors {
+function validate(values: FormState): FormErrors {
   const errors: FormErrors = {};
   if (!values.name.trim()) errors.name = "Please enter your name.";
   if (!values.phone.trim()) errors.phone = "Phone number is required.";
   else if (!isValidPhone(values.phone)) errors.phone = PHONE_VALIDATION_MESSAGE;
   if (!values.city.trim()) errors.city = "City is required.";
   if (!values.model.trim()) errors.model = "Model is required.";
-  if (fileCount === 0) errors.images = "Add at least one photo.";
   return errors;
 }
 
 export default function TradeInForm() {
   const [values, setValues] = useState<FormState>(initial);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [files, setFiles] = useState<File[]>([]);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [referenceId, setReferenceId] = useState("");
   const [submitError, setSubmitError] = useState("");
 
-  const estimate = useMemo(
-    () =>
-      estimateTradeInValue({
-        applianceType: values.applianceType,
-        brand: values.brand,
-        age: values.age,
-        condition: values.condition,
-        workingStatus: WORKING_STATUS_OPTIONS[0],
-      }),
-    [values.applianceType, values.brand, values.age, values.condition],
-  );
-
   const update = <K extends keyof FormState>(key: K, val: FormState[K]) => {
     setValues((v) => ({ ...v, [key]: val }));
     if (errors[key]) setErrors((e) => ({ ...e, [key]: undefined }));
-  };
-
-  const onFiles = (next: File[]) => {
-    setFiles(next.slice(0, 5));
-    if (errors.images) setErrors((e) => ({ ...e, images: undefined }));
   };
 
   const resetForAnother = () => {
@@ -108,13 +86,12 @@ export default function TradeInForm() {
     setReferenceId("");
     setSubmitError("");
     setValues(initial);
-    setFiles([]);
     setErrors({});
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const nextErrors = validate(values, files.length);
+    const nextErrors = validate(values);
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
       return;
@@ -135,17 +112,11 @@ export default function TradeInForm() {
         age: values.age,
         condition: values.condition,
         description: values.description.trim(),
-        imageCount: files.length,
-        imageNames: files.map((f) => f.name).join(", "),
-        estimatedLow: estimate?.low,
-        estimatedHigh: estimate?.high,
         pageUrl: typeof window !== "undefined" ? window.location.href : "/sell",
-        leadSource: "Sell Form",
       });
       setReferenceId(res.referenceId);
       setStatus("success");
       setValues(initial);
-      setFiles([]);
     } catch (err) {
       setStatus("error");
       setSubmitError(
@@ -160,7 +131,7 @@ export default function TradeInForm() {
         <header className="text-center">
           <h2 className="text-[20px] font-semibold text-theme-fg sm:text-[22px]">Sell Your Appliance</h2>
           <p className="mx-auto mt-1 max-w-md text-[14px] leading-relaxed text-theme-fg-muted">
-            Submit details and photos—we&apos;ll respond with your valuation.
+            Submit details—we&apos;ll respond with your valuation.
           </p>
         </header>
 
@@ -329,14 +300,6 @@ export default function TradeInForm() {
                   </select>
                 </label>
               </div>
-
-              <ImageUploader
-                files={files}
-                onChange={onFiles}
-                max={5}
-                required
-                error={errors.images}
-              />
 
               <label className="block">
                 <span className="mb-1.5 block text-[12px] font-medium text-theme-fg-muted">

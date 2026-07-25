@@ -95,7 +95,6 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
         contactPreference,
         message: message.trim() || undefined,
         pageUrl: typeof window !== "undefined" ? window.location.href : "",
-        leadSource: "Product Page — Reserve",
       });
       setReferenceId(res.referenceId ?? null);
     } catch (e) {

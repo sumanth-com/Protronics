@@ -79,7 +79,7 @@ export default function ProductPageClient({ product, related }: ProductPageClien
             <span className="truncate text-white/70">{product.name}</span>
           </nav>
 
-          <div className="grid gap-5 lg:grid-cols-2 lg:gap-8 lg:h-[calc(100dvh-64px-120px-52px)]">
+          <div className="product-hero-grid grid gap-5 lg:grid-cols-2 lg:gap-8 lg:h-[calc(100dvh-var(--navbar-offset)-10.75rem)]">
             <ProductGallery images={product.images} alt={product.name} className="h-full lg:min-h-0" />
 
             <div className="flex h-full items-center lg:py-1">

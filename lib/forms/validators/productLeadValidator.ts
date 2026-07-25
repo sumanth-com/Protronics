@@ -17,7 +17,6 @@ export type ProductLeadValues = {
   contactPreference?: string;
   message?: string;
   preferredTime?: string;
-  leadSource: string;
   referenceId?: string;
 };
 
@@ -27,14 +26,12 @@ export function validateProductLead(
   const errors: Record<string, string> = {};
   const name = String(raw.name ?? "");
   const phone = normalizePhone(String(raw.phone ?? ""));
-  const productId = String(raw.productId ?? "");
   const productName = String(raw.productName ?? "");
   const leadType = String(raw.leadType ?? "");
 
   if (required(name)) errors.name = "Name is required.";
   if (required(phone, "Phone is required.")) errors.phone = "Phone is required.";
   else if (!isValidPhone(phone)) errors.phone = PHONE_VALIDATION_MESSAGE;
-  if (required(productId)) errors.productId = "Product is required.";
   if (required(productName)) errors.productName = "Product name is required.";
   if (leadType === "reserve" && required(String(raw.city ?? ""), "City is required.")) {
     errors.city = "City is required for reservations.";
@@ -47,7 +44,7 @@ export function validateProductLead(
     data: {
       leadType,
       productName: productName.trim(),
-      productId,
+      productId: String(raw.productId ?? ""),
       price: String(raw.price ?? "0"),
       name: name.trim(),
       phone,
@@ -55,7 +52,6 @@ export function validateProductLead(
       contactPreference: String(raw.contactPreference ?? ""),
       message: String(raw.message ?? "").trim(),
       preferredTime: String(raw.preferredTime ?? ""),
-      leadSource: String(raw.leadSource ?? ""),
       referenceId: String(raw.referenceId ?? ""),
     },
   };

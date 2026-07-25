@@ -16,7 +16,7 @@ Protronics is a production-ready ecommerce experience for certified refurbished 
 - **Product comparison** — Side-by-side value comparison for informed buying decisions
 - **Responsive design** — Dedicated mobile navigation, carousels, and touch-friendly layouts
 - **Dark & light theme** — System-aware theming via `next-themes`
-- **Google Sheets form integration** — Contact, warranty, service requests, and trade-in leads without a backend API
+- **Google Sheets form integration** — Contact, product leads, and trade-in without a backend API
 - **SEO optimized** — Metadata, local keywords, canonical URLs, and rich structured data
 - **Dynamic product pages** — Per-product titles, descriptions, Open Graph, and Product schema
 - **Marketplace mobile experience** — Sticky filters, mobile shop toolbar, and optimized home/shop flows
@@ -194,7 +194,7 @@ Forms submit **directly from the browser** to Google Apps Script—no Node serve
 6. Set `NEXT_PUBLIC_FORM_ENDPOINT` in `.env` and on Vercel.
 7. Run `npm run build` — generates `public/forms-endpoint.json` for runtime health checks.
 
-Supported flows include contact, warranty, service requests, and trade-in leads. Each form type maps to a dedicated sheet tab via `lib/forms/`. Email alerts are sent by Apps Script after each successful row.
+Supported flows include contact, product leads, and trade-in. Each maps to its own sheet tab (**Contact**, **Leads**, **TradeIn**). Email alerts are sent by Apps Script after each successful row.
 
 **Full guide:** [docs/FORMS.md](docs/FORMS.md)
 

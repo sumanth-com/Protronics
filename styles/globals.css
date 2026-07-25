@@ -846,7 +846,14 @@ html.splash-exiting .splash-ambient {
 /* Navbar height offset (matches fixed header + spacer) */
 :root {
   --navbar-offset: 4rem;
+  --mobile-bottom-nav-height: 0px;
   --hero-trust-zone: 5rem;
+  /* Available content height under chrome — use for fullscreen sections */
+  --viewport-content-height: calc(100svh - var(--navbar-offset));
+  --viewport-content-height-safe: calc(
+    100svh - var(--navbar-offset) - var(--mobile-bottom-nav-height) -
+      env(safe-area-inset-bottom, 0px)
+  );
 }
 
 @media (min-width: 480px) {
@@ -2057,14 +2064,8 @@ html:not([data-theme="light"]) .contact-location-map-frame {
 /* About page — mobile hero fits one screen, image first, tight stack */
 @media (max-width: 1023px) {
   .about-hero-fullscreen {
-    min-height: calc(
-      100svh - var(--navbar-offset) - var(--mobile-bottom-nav-height) -
-        env(safe-area-inset-bottom, 0px)
-    );
-    max-height: calc(
-      100svh - var(--navbar-offset) - var(--mobile-bottom-nav-height) -
-        env(safe-area-inset-bottom, 0px)
-    );
+    min-height: var(--viewport-content-height-safe);
+    max-height: var(--viewport-content-height-safe);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -3958,8 +3959,8 @@ html:not([data-theme="light"]) .contact-location-map-frame {
 .hero-section {
   display: flex;
   flex-direction: column;
-  height: calc(100svh - var(--navbar-offset));
-  max-height: calc(100svh - var(--navbar-offset));
+  height: var(--viewport-content-height);
+  max-height: var(--viewport-content-height);
   min-height: 0;
   overflow: hidden;
 }
@@ -4511,32 +4512,6 @@ body.mobile-nav-scroll-lock {
 @media (max-width: 479px) {
   .hero-rating-pill-wrap {
     display: none;
-  }
-}
-
-/* Landscape phones & small-height viewports */
-@media (max-height: 520px) and (orientation: landscape) {
-  .hero-section {
-    height: auto;
-    max-height: none;
-    min-height: calc(100svh - var(--navbar-offset));
-  }
-
-  .hero-slider-shell {
-    min-height: 14rem;
-  }
-
-  .hero-trust-zone {
-    margin-top: 0.25rem;
-    padding-bottom: 0.375rem;
-  }
-
-  .hero-slide-title {
-    font-size: clamp(1.5rem, 4vw + 0.5rem, 2rem) !important;
-  }
-
-  .hero-feature-card {
-    padding: 0.375rem 0.5rem !important;
   }
 }
 
@@ -5621,6 +5596,8 @@ table {
 
   .hero-mobile-banner-frame {
     width: 100%;
+    aspect-ratio: 1717 / 916;
+    max-height: min(52svh, 420px);
     transform: translateZ(0);
     backface-visibility: hidden;
   }
@@ -6353,8 +6330,8 @@ table {
 
   /* Sell page — hero fills viewport; estimator below the fold */
   .trade-in-hero-fullscreen {
-    min-height: calc(100svh - var(--navbar-offset));
-    max-height: calc(100svh - var(--navbar-offset));
+    min-height: var(--viewport-content-height);
+    max-height: var(--viewport-content-height);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -6673,14 +6650,8 @@ table {
   }
 
   .trade-in-hero-fullscreen {
-    min-height: calc(
-      100svh - var(--navbar-offset) - var(--mobile-bottom-nav-height) -
-        env(safe-area-inset-bottom, 0px)
-    );
-    max-height: calc(
-      100svh - var(--navbar-offset) - var(--mobile-bottom-nav-height) -
-        env(safe-area-inset-bottom, 0px)
-    );
+    min-height: var(--viewport-content-height-safe);
+    max-height: var(--viewport-content-height-safe);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -6727,5 +6698,202 @@ table {
   .trade-in-hero .trade-in-hero-media {
     will-change: auto;
     transform: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Portrait / landscape polish (AFTER marketplace rules so overrides win)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Portrait phones — centered stacks, no iOS zoom on inputs */
+@media (max-width: 767px) and (orientation: portrait) {
+  .about-hero-media-wrap,
+  .about-hero-copy,
+  .trade-in-hero-column > div {
+    max-width: min(22rem, 100%);
+    margin-inline: auto;
+  }
+
+  .why-hero-inner {
+    min-height: var(--viewport-content-height-safe);
+  }
+
+  #contact input,
+  #contact select,
+  #contact textarea,
+  .trade-in-field,
+  .trade-in-page select,
+  .trade-in-page input,
+  .trade-in-page textarea {
+    font-size: 16px;
+  }
+}
+
+/* Tablet mid widths */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .why-hero-inner {
+    gap: 1.75rem;
+    min-height: var(--viewport-content-height-safe);
+  }
+}
+
+/* Short landscape — all viewports */
+@media (max-height: 560px) and (orientation: landscape) {
+  .hero-section {
+    height: auto;
+    max-height: none;
+    min-height: var(--viewport-content-height);
+  }
+
+  .hero-slider-shell {
+    min-height: 12rem;
+  }
+
+  .hero-trust-zone {
+    margin-top: 0.25rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .hero-slide-title {
+    font-size: clamp(1.35rem, 3.5vw + 0.4rem, 1.85rem) !important;
+  }
+
+  .hero-feature-card {
+    padding: 0.375rem 0.5rem !important;
+  }
+
+  .about-hero-fullscreen,
+  .trade-in-hero-fullscreen {
+    min-height: 0 !important;
+    max-height: none !important;
+    height: auto;
+    overflow: visible;
+  }
+
+  .about-hero-inner,
+  .trade-in-hero-inner {
+    flex: none;
+    justify-content: flex-start;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .about-hero-media {
+    max-height: min(28svh, 140px) !important;
+  }
+
+  .why-hero-inner {
+    min-height: 0 !important;
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+    gap: 1.25rem;
+  }
+
+  .trade-in-hero-showcase {
+    max-width: 260px;
+  }
+
+  .support-desktop {
+    height: auto !important;
+    min-height: var(--viewport-content-height);
+    overflow: visible !important;
+  }
+
+  .product-hero-grid {
+    height: auto !important;
+  }
+
+  .product-reserve-side {
+    top: auto;
+    bottom: calc(var(--mobile-bottom-nav-height, 0px) + 4.5rem + env(safe-area-inset-bottom, 0px));
+    transform: none;
+  }
+
+  #contact {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  .contact-location-map {
+    min-height: 180px !important;
+  }
+
+  .contact-whatsapp-fab {
+    height: 3rem;
+    width: 3rem;
+  }
+}
+
+/* Mobile / tablet landscape under lg — full-bleed banner, keep copy in frame */
+@media (max-width: 1023px) and (max-height: 560px) and (orientation: landscape) {
+  .hero-mobile-banner-frame {
+    aspect-ratio: auto;
+    width: 100% !important;
+    max-height: min(48svh, 180px) !important;
+    height: min(48svh, 180px) !important;
+    margin-inline: 0;
+  }
+
+  .hero-mobile-banner-img {
+    object-fit: cover !important;
+    object-position: left center !important;
+  }
+
+  .mobile-category-strip {
+    padding-bottom: 0.125rem;
+  }
+
+  .mobile-category-grid {
+    gap: 0.25rem;
+    padding-inline: 0.5rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .mobile-category-icon {
+    height: 2.25rem;
+    width: 2.25rem;
+  }
+
+  .mobile-category-label {
+    min-height: 0;
+    font-size: 0.625rem;
+    line-height: 1.2;
+  }
+
+  .about-hero-fullscreen,
+  .trade-in-hero-fullscreen {
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible;
+  }
+
+  .about-hero-media-wrap,
+  .about-hero-copy {
+    max-width: min(22rem, 92vw);
+  }
+
+  .about-hero-copy .about-hero-title {
+    font-size: clamp(1.35rem, 4vw, 1.75rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  .about-hero-copy .about-hero-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .about-hero-copy .about-hero-nav {
+    display: none;
+  }
+
+  .trade-in-hero-column h1 {
+    font-size: clamp(1.35rem, 4vw, 1.75rem) !important;
+  }
+
+  .trade-in-hero-column p {
+    margin-top: 0.375rem !important;
+    font-size: 0.875rem !important;
   }
 }

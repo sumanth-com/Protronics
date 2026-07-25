@@ -17,7 +17,6 @@ export type LeadPayload = {
   message?: string;
   preferredTime?: string;
   pageUrl: string;
-  leadSource: string;
 };
 
 export type LeadResponse = {
@@ -56,7 +55,6 @@ export async function submitLead(payload: LeadPayload): Promise<LeadResponse> {
       contactPreference: payload.contactPreference ?? "",
       message: payload.message ?? "",
       preferredTime: payload.preferredTime ?? "",
-      leadSource: payload.leadSource,
       referenceId,
     },
     { sourcePage: payload.pageUrl },

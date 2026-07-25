@@ -36,7 +36,7 @@ export default function ContactLocationMap({ className }: ContactLocationMapProp
     <div
       ref={containerRef}
       className={cn(
-        "contact-location-map relative isolate flex h-full min-h-[280px] flex-col overflow-hidden",
+        "contact-location-map relative isolate flex h-full min-h-[240px] flex-col overflow-hidden sm:min-h-[280px]",
         "rounded-3xl border border-white/12 bg-black",
         "outline-none ring-0 focus-within:outline-none focus-within:ring-0",
         "lg:min-h-[420px]",
