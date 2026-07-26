@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check, Minus, X } from "lucide-react";
 import CtaButton from "@/components/ui/CtaButton";
@@ -150,16 +149,9 @@ export default function ValueCompareSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
+          className="mt-8 flex justify-center"
         >
           <CtaButton href="/shop">Shop renewed appliances</CtaButton>
-          <Link
-            href="/compare"
-            prefetch
-            className="text-[13px] font-medium text-white/60 transition-colors hover:text-white"
-          >
-            Compare specific models →
-          </Link>
         </motion.div>
       </div>
     </section>

@@ -1,26 +1,17 @@
 "use client";
 
 import { useMemo } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import { ArrowUpRight } from "lucide-react";
 import "swiper/css";
-import "swiper/css/effect-fade";
 import "swiper/css/pagination";
-import "swiper/css/navigation";
 
-import { cn } from "@/lib/utils";
-import { DESKTOP_HERO_SLIDES, MOBILE_HERO_SLIDES } from "@/lib/hero-slides";
-import TrustMetrics from "@/components/hero/TrustMetrics";
-import SliderControls from "@/components/hero/SliderControls";
-import HeroSlide, { type Slide } from "@/components/hero/HeroSlide";
+import CtaButton from "@/components/ui/CtaButton";
 import MobileHeroCarousel from "@/components/hero/MobileHeroCarousel";
+import TrustMetrics from "@/components/hero/TrustMetrics";
+import { HERO_SLIDES } from "@/lib/hero-slides";
+import { cn } from "@/lib/utils";
 
 const HERO_DOTS_STYLE = `
-  .swiper,
-  .swiper-wrapper,
-  .swiper-slide {
-    height: 100%;
-  }
   .hero-dot {
     width: 8px;
     height: 8px;
@@ -40,69 +31,82 @@ const HERO_DOTS_STYLE = `
   }
 `;
 
-function toSlides(images: typeof MOBILE_HERO_SLIDES): Slide[] {
-  return images.map((imageSrc) => ({ imageSrc }));
-}
-
 export default function HeroSlider() {
-  const mobileSlides = useMemo(() => MOBILE_HERO_SLIDES, []);
-  const desktopSlides = useMemo(() => toSlides(DESKTOP_HERO_SLIDES), []);
+  const slides = useMemo(() => HERO_SLIDES, []);
 
   return (
-    <section className="hero-section relative overflow-hidden bg-theme-bg max-lg:bg-theme-bg">
-      <div className="hero-slider-wrap w-full">
+    <section className="hero-section relative overflow-hidden bg-theme-bg">
+      {/* Mobile / tablet — banner carousel only */}
+      <div className="hero-slider-wrap w-full lg:hidden">
         <div
           className={cn(
-            "theme-preserve-dark hero-slider-shell relative overflow-hidden rounded-2xl sm:rounded-[32px] lg:rounded-[32px]",
-            "max-lg:overflow-hidden max-lg:rounded-none",
-            "border border-white/10 bg-black",
+            "theme-preserve-dark hero-slider-shell relative overflow-hidden",
+            "border border-white/10 bg-black max-lg:rounded-none max-lg:border-x-0",
             "max-lg:shadow-[var(--theme-shadow-sm)]",
-            "lg:border-white/10 lg:bg-white/[0.03] lg:shadow-[0_40px_160px_rgba(0,0,0,0.75)]",
           )}
         >
-          {/* Mobile + tablet — full-width banner slides */}
-          <MobileHeroCarousel slides={mobileSlides} className="lg:hidden" />
-
-          {/* Desktop */}
-          <div className="absolute inset-0 hidden lg:block">
-            <Swiper
-              modules={[Autoplay, EffectFade, Navigation, Pagination]}
-              effect="fade"
-              fadeEffect={{ crossFade: true }}
-              navigation={{ nextEl: ".hero-next", prevEl: ".hero-prev" }}
-              pagination={{
-                el: ".hero-dots",
-                clickable: true,
-                bulletClass: "hero-dot",
-                bulletActiveClass: "hero-dot-active",
-              }}
-              autoplay={{ delay: 5200, disableOnInteraction: false }}
-              speed={700}
-              loop
-              className="h-full w-full"
-            >
-              {desktopSlides.map((s, i) => (
-                <SwiperSlide key={`d-${i}`}>
-                  <HeroSlide slide={s} priority={i === 0} variant="desktop" />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-            <SliderControls />
-          </div>
-
-          <div className="pointer-events-none absolute bottom-3 left-1/2 z-30 hidden -translate-x-1/2 items-center lg:bottom-5 lg:flex">
-            <div className="hero-dots-pill pointer-events-auto rounded-full border border-white/10 bg-black/55 px-3 py-2">
-              <div className="hero-dots flex items-center gap-2" />
-            </div>
-          </div>
-
-          <style jsx global>
-            {HERO_DOTS_STYLE}
-          </style>
+          <MobileHeroCarousel slides={slides} />
         </div>
       </div>
 
-      <TrustMetrics />
+      {/* Desktop — image + copy, trust card under both */}
+      <div className="hero-desktop-stack mx-auto hidden w-full max-w-[1320px] px-8 lg:flex lg:flex-col lg:justify-center xl:px-10">
+        <div className="hero-desktop-split grid w-full grid-cols-[minmax(0,1.4fr)_minmax(0,0.85fr)] items-stretch gap-8 xl:gap-10">
+          <div
+            className={cn(
+              "theme-preserve-dark hero-desktop-media relative w-full overflow-hidden rounded-3xl",
+              "border border-white/10 bg-black",
+            )}
+          >
+            <MobileHeroCarousel slides={slides} className="hero-desktop-carousel" />
+          </div>
+
+          <div className="hero-desktop-copy">
+            <div className="hero-desktop-copy-top">
+              <h1 className="hero-desktop-title">
+                <span className="hero-desktop-title-line">Certified refurbished</span>
+                <span className="hero-desktop-title-line">refrigerators with warranty</span>
+              </h1>
+
+              <p className="hero-desktop-lead">
+                Inspected, sanitized, and performance-tested—so you buy with confidence.
+              </p>
+
+              <p className="hero-desktop-support">
+                In-stock second-hand refrigerators and appliances with 100+ checks, warranty
+                cover, and safe delivery across Bengaluru.
+              </p>
+            </div>
+
+            <div className="hero-desktop-ctas">
+              <CtaButton
+                href="/shop"
+                size="md"
+                className="hero-desktop-cta"
+                aria-label="Shop certified refurbished refrigerators in Bengaluru"
+              >
+                Shop Fridges
+                <ArrowUpRight className="h-4 w-4 text-black/80" />
+              </CtaButton>
+              <CtaButton
+                href="/contact"
+                size="md"
+                className="hero-desktop-cta"
+                aria-label="Get expert help buying a refurbished refrigerator in Bangalore"
+              >
+                Get Buying Help
+                <ArrowUpRight className="h-4 w-4 text-black/80" />
+              </CtaButton>
+            </div>
+          </div>
+        </div>
+
+        <TrustMetrics />
+      </div>
+
+      <style jsx global>
+        {HERO_DOTS_STYLE}
+      </style>
     </section>
   );
 }

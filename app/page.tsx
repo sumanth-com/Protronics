@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import HeroSlider from "@/components/hero/HeroSlider";
-import CategorySection from "@/components/categories/CategorySection";
 import DeferredMount from "@/components/layout/DeferredMount";
 import MobileCategoryIcons from "@/components/mobile/MobileCategoryIcons";
 import { buildFaqJsonLd, HOMEPAGE_FAQS } from "@/lib/faq";
@@ -54,14 +53,12 @@ export default function Home() {
             <HeroSlider />
           </div>
 
-          <CategorySection />
+          <DeferredMount minHeight="480px" className="mobile-home-order-brands">
+            <TopBrandsSection />
+          </DeferredMount>
 
           <DeferredMount minHeight="720px" className="mobile-home-order-featured">
             <FeaturedProducts />
-          </DeferredMount>
-
-          <DeferredMount minHeight="480px" className="mobile-home-order-brands">
-            <TopBrandsSection />
           </DeferredMount>
 
           {/* Desktop only — hidden on mobile */}

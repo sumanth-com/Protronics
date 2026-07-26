@@ -60,8 +60,8 @@ export default function FeaturedProducts() {
             <MarketplaceProductCard key={p.name} product={p} />
           ))}
         </div>
-        <CtaButton href="/shop" fullWidth className="mt-3.5">
-          See more
+        <CtaButton href="/shop" fullWidth className="mt-3.5" aria-label="Shop all refurbished appliances">
+          Shop All Products
           <ArrowUpRight className="h-4 w-4" />
         </CtaButton>
       </div>
@@ -115,6 +115,19 @@ export default function FeaturedProducts() {
             ))}
           </motion.div>
         </div>
+
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-10% 0px" }}
+          className="mt-10 flex justify-center sm:mt-12"
+        >
+          <CtaButton href="/shop" size="lg" aria-label="Shop all refurbished appliances">
+            Shop All Products
+            <ArrowUpRight className="h-4 w-4 text-black/80" />
+          </CtaButton>
+        </motion.div>
       </div>
     </section>
   );

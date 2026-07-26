@@ -16,8 +16,11 @@ export const BUSINESS = {
   phoneSecondary: PROTRONICS_NAP.telephoneSecondary,
   phoneSecondaryHref: `tel:${PROTRONICS_NAP.telephoneSecondaryE164}`,
   phones: [
-    { display: "8861236266", href: `tel:${PROTRONICS_NAP.telephoneE164}` },
-    { display: "8618135976", href: `tel:${PROTRONICS_NAP.telephoneSecondaryE164}` },
+    { display: PROTRONICS_NAP.telephone, href: `tel:${PROTRONICS_NAP.telephoneE164}` },
+    {
+      display: PROTRONICS_NAP.telephoneSecondary,
+      href: `tel:${PROTRONICS_NAP.telephoneSecondaryE164}`,
+    },
   ] as const,
   email: PROTRONICS_NAP.email,
   emailHref: `mailto:${PROTRONICS_NAP.email}`,

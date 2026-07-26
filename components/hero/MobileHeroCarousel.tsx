@@ -16,12 +16,21 @@ type Props = {
   className?: string;
 };
 
+const LAST_SLIDE_OFFER = {
+  eyebrow: "Limited offer",
+  title: "Up to 30% OFF",
+  subtitleLine1: "Certified refurbished",
+  subtitleLine2: "Warranty included",
+} as const;
+
 export default function MobileHeroCarousel({
   slides,
   intervalMs = 4500,
   className,
 }: Props) {
   if (!slides.length) return null;
+
+  const lastIndex = slides.length - 1;
 
   return (
     <div
@@ -59,23 +68,42 @@ export default function MobileHeroCarousel({
         watchOverflow
         roundLengths
       >
-        {slides.map((slide, i) => (
-          <SwiperSlide key={slide.src} className="hero-mobile-swiper-slide">
-            <div className="hero-mobile-banner-frame relative w-full overflow-hidden">
-              <Image
-                src={slide}
-                alt="Protronics refurbished appliance banner"
-                fill
-                sizes="100vw"
-                className="hero-mobile-banner-img object-cover object-center"
-                quality={IMAGE_QUALITY.hero}
-                priority={i === 0}
-                loading={i === 0 ? undefined : "lazy"}
-                draggable={false}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
+        {slides.map((slide, i) => {
+          const isLast = i === lastIndex;
+
+          return (
+            <SwiperSlide key={slide.src} className="hero-mobile-swiper-slide">
+              <div className="hero-mobile-banner-frame relative w-full overflow-hidden">
+                <Image
+                  src={slide}
+                  alt={
+                    isLast
+                      ? "Protronics limited offer on refurbished appliances"
+                      : "Protronics refurbished appliance banner"
+                  }
+                  fill
+                  sizes="(max-width: 1023px) 100vw, 55vw"
+                  className="hero-mobile-banner-img object-cover object-center"
+                  quality={IMAGE_QUALITY.hero}
+                  priority={i === 0}
+                  loading={i === 0 ? undefined : "lazy"}
+                  draggable={false}
+                />
+
+                {isLast ? (
+                  <div className="hero-slide-offer">
+                    <p className="hero-slide-offer-eyebrow">{LAST_SLIDE_OFFER.eyebrow}</p>
+                    <p className="hero-slide-offer-title">{LAST_SLIDE_OFFER.title}</p>
+                    <p className="hero-slide-offer-subtitle">
+                      <span>{LAST_SLIDE_OFFER.subtitleLine1}</span>
+                      <span>{LAST_SLIDE_OFFER.subtitleLine2}</span>
+                    </p>
+                  </div>
+                ) : null}
+              </div>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );

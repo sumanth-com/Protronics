@@ -15,7 +15,6 @@ import Logo from "@/assets/Logo.webp";
 
 const navLinks = [
   { label: "Support", href: "/support" },
-  { label: "Warranty", href: "/warranty" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;

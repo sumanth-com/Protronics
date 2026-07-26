@@ -181,7 +181,7 @@ export const PRIVACY_POLICY_PAGE: LegalPageConfig = {
           type: "list",
           items: [
             "Email: Protronicspro4@gmail.com",
-            "Phone: 8861236266 / 8618135976",
+            `Phone: ${PROTRONICS_NAP.telephoneDisplay}`,
             `Address: ${PROTRONICS_NAP.addressDisplay}`,
           ],
         },
