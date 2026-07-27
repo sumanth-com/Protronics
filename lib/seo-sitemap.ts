@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllLocationSlugs } from "@/lib/local/locations";
 import { SHOP_CATEGORIES, SHOP_PRODUCTS } from "@/lib/shop";
 import { SITE_URL } from "@/lib/site";
+import { CANONICAL_SITE_URL, normalizeSiteUrl } from "@/lib/site-url";
 
 /** Soft limit per sitemap file (Google hard limit is 50,000). */
 export const SITEMAP_URL_LIMIT = 45_000;
@@ -12,16 +13,9 @@ export const SITEMAP_URL_LIMIT = 45_000;
  */
 export const SITE_CONTENT_UPDATED = new Date("2026-07-27T12:00:00.000Z");
 
-/** Production origin: HTTPS only, no trailing slash. */
+/** Production origin: HTTPS www only (via SITE_URL / normalizeSiteUrl). */
 export function getCanonicalSiteOrigin(): string {
-  let origin = (SITE_URL || "https://protronics.store").trim().replace(/\/+$/, "");
-  if (origin.startsWith("http://")) {
-    origin = `https://${origin.slice("http://".length)}`;
-  }
-  if (!origin.startsWith("https://")) {
-    origin = `https://${origin.replace(/^\/+/, "")}`;
-  }
-  return origin;
+  return normalizeSiteUrl(SITE_URL || CANONICAL_SITE_URL);
 }
 
 export function toSitemapUrl(path: string): string {

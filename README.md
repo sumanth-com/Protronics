@@ -4,7 +4,7 @@
 
 Protronics is a production-ready ecommerce experience for certified refurbished refrigerators and home appliances. The site combines a premium storefront, trade-in flows, comparison tools, and serverless form handling—optimized for SEO, performance, and mobile-first shopping in Bangalore and across India.
 
-**Live site:** [protronics.store](https://protronics.store)
+**Live site:** [www.protronics.store](https://www.protronics.store)
 
 ---
 
@@ -99,7 +99,7 @@ npm run dev
 |----------|----------|-------------|
 | `NEXT_PUBLIC_FORM_ENDPOINT` | Yes (production) | Google Apps Script Web App `/exec` URL for form submissions |
 | `NEXT_PUBLIC_FORM_ENDPOINT_URL` | Alias | Same as above; either name works |
-| `NEXT_PUBLIC_SITE_URL` | Recommended | Canonical site URL (e.g. `https://protronics.store`) |
+| `NEXT_PUBLIC_SITE_URL` | Recommended | Canonical site URL (`https://www.protronics.store`) |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Google Analytics measurement ID |
 | `NEXT_PUBLIC_GOOGLE_BUSINESS_PROFILE_URL` | Optional | Google Business Profile link for local SEO & maps |
 | `NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL` | Optional | Embedded map iframe URL |
@@ -110,7 +110,7 @@ npm run dev
 Example `.env`:
 
 ```env
-NEXT_PUBLIC_SITE_URL=https://protronics.store
+NEXT_PUBLIC_SITE_URL=https://www.protronics.store
 NEXT_PUBLIC_FORM_ENDPOINT=https://script.google.com/macros/s/XXXX/exec
 ```
 

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { CANONICAL_SITE_URL, normalizeSiteUrl } from "./lib/site-url";
 
 /**
  * OneDrive locks `.next` on Windows — use a cache path locally only.
@@ -9,12 +10,11 @@ const distDir =
     ? ".next"
     : "node_modules/.cache/next";
 
-const DEFAULT_SITE_URL = "https://protronics.store";
-
-const siteUrl =
+const siteUrl = normalizeSiteUrl(
   process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
-  process.env.VITE_SITE_URL?.trim() ||
-  DEFAULT_SITE_URL;
+    process.env.VITE_SITE_URL?.trim() ||
+    CANONICAL_SITE_URL,
+);
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -69,6 +69,13 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Apex → www (308). Prefer www as the single canonical host.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "protronics.store" }],
+        destination: `${CANONICAL_SITE_URL}/:path*`,
+        statusCode: 308,
+      },
       {
         source: "/trade-in",
         destination: "/sell",

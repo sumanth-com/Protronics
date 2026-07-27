@@ -1,8 +1,12 @@
-const DEFAULT_SITE_URL = "https://protronics.store";
+import { LOCAL_SEO_KEYWORDS } from "@/lib/local/business";
+import { CANONICAL_SITE_URL, normalizeSiteUrl } from "@/lib/site-url";
 
-/** Empty string from next.config env must not override the default (?? only catches null/undefined). */
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL;
+export { CANONICAL_SITE_URL, normalizeSiteUrl } from "@/lib/site-url";
+
+/** Empty string from next.config env must not override the default. */
+export const SITE_URL = normalizeSiteUrl(
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || CANONICAL_SITE_URL,
+);
 
 export const SITE_NAME = "Protronics";
 
@@ -16,8 +20,6 @@ export const SITE_DESCRIPTION =
 /** Home page SEO description (kept in sync with PAGE_SEO.home). */
 export const SITE_HOME_DESCRIPTION =
   "Protronics is a Bengaluru refurbished appliance store selling certified refrigerators and washing machines with warranty, trade-in, delivery, and local support. Browse quality-tested units with 100+ checks across Bangalore.";
-
-import { LOCAL_SEO_KEYWORDS } from "@/lib/local/business";
 
 export const SITE_KEYWORDS = [
   "refurbished refrigerators",
@@ -38,5 +40,7 @@ export const DEFAULT_OG_IMAGE = "/og/protronics-og.webp";
 export const OG_IMAGE_ALT = "Protronics — Premium Refurbished Refrigerators & Appliances";
 
 export function absoluteUrl(path: string) {
-  return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
+  const base = SITE_URL.replace(/\/+$/, "");
+  if (!path || path === "/") return base;
+  return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }
