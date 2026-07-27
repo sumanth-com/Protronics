@@ -1,19 +1,14 @@
 import type { MetadataRoute } from "next";
 import { getAllLocationSlugs } from "@/lib/local/locations";
 import { SHOP_CATEGORIES, SHOP_PRODUCTS } from "@/lib/shop";
-import { getAllArticlePaths, SUPPORT_CATEGORIES_VISIBLE } from "@/lib/support";
 import { SITE_URL } from "@/lib/site";
 
-/**
- * Google/Bing soft limit is 50,000 URLs per sitemap file.
- * Chunk below that so we never hit the hard ceiling.
- */
+/** Soft limit per sitemap file (Google hard limit is 50,000). */
 export const SITEMAP_URL_LIMIT = 45_000;
 
 /**
- * Manual content-revision stamp for non-product pages.
- * Bump when significant marketing/support/legal copy changes.
- * Product `lastmod` uses each product's `createdAt` (and shop pages use the newest product).
+ * Content revision for non-product pages.
+ * Bump when core marketing pages change meaningfully.
  */
 export const SITE_CONTENT_UPDATED = new Date("2026-07-27T12:00:00.000Z");
 
@@ -57,93 +52,41 @@ function maxDate(...dates: Array<Date | null | undefined>): Date {
 }
 
 /**
- * Canonical indexable paths only — no redirects, noindex targets, or private routes.
- * Products and support articles expand automatically from catalog data.
+ * Lean production sitemap — only high-value public URLs.
+ *
+ * Included: home, shop + categories, products, sell, contact, about,
+ * warranty, how-it-works, why, support hub, locations, legal.
+ *
+ * Excluded (unnecessary / thin / tools / duplicates):
+ * compare, best-deals, support category hubs, individual FAQ articles.
+ * Those pages stay crawlable via internal links; they just aren’t listed here.
  */
 export function getIndexablePaths(): string[] {
-  const staticPaths = [
+  const paths = [
     "/",
     "/shop",
-    "/about",
-    "/contact",
-    "/support",
+    ...SHOP_CATEGORIES.map((c) => `/shop/${c.slug}`),
+    ...SHOP_PRODUCTS.map((p) => `/product/${p.id}`),
     "/sell",
+    "/contact",
+    "/about",
     "/warranty",
     "/how-it-works",
+    "/why-protronics",
+    "/support",
+    ...getAllLocationSlugs().map((city) => `/locations/${city}`),
     "/privacy-policy",
     "/terms-of-service",
-    "/compare",
-    "/best-deals",
-    "/why-protronics",
-    ...getAllLocationSlugs().map((city) => `/locations/${city}`),
   ];
 
-  const categoryPaths = SHOP_CATEGORIES.map((c) => `/shop/${c.slug}`);
-  const productPaths = SHOP_PRODUCTS.map((p) => `/product/${p.id}`);
-  const supportCategoryPaths = SUPPORT_CATEGORIES_VISIBLE.map(
-    (c) => `/support/${c.id}`,
-  );
-  const supportArticlePaths = getAllArticlePaths().map(
-    ({ category, article }) => `/support/${category}/${article}`,
-  );
-
-  // Preserve a stable, intentional order while removing accidental duplicates.
   const seen = new Set<string>();
   const ordered: string[] = [];
-  for (const path of [
-    ...staticPaths,
-    ...categoryPaths,
-    ...productPaths,
-    ...supportCategoryPaths,
-    ...supportArticlePaths,
-  ]) {
+  for (const path of paths) {
     if (seen.has(path)) continue;
     seen.add(path);
     ordered.push(path);
   }
   return ordered;
-}
-
-type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
-
-function getPriorityAndFrequency(path: string): {
-  priority: number;
-  changeFrequency: ChangeFrequency;
-} {
-  if (path === "/") {
-    return { priority: 1, changeFrequency: "daily" };
-  }
-  if (path === "/shop" || path === "/sell" || path === "/contact") {
-    return { priority: 0.9, changeFrequency: "weekly" };
-  }
-  if (path.startsWith("/product/")) {
-    return { priority: 0.8, changeFrequency: "weekly" };
-  }
-  if (path.startsWith("/shop/")) {
-    return { priority: 0.75, changeFrequency: "weekly" };
-  }
-  if (
-    path === "/about" ||
-    path === "/warranty" ||
-    path === "/how-it-works" ||
-    path === "/why-protronics" ||
-    path.startsWith("/locations/")
-  ) {
-    return { priority: 0.7, changeFrequency: "weekly" };
-  }
-  if (path === "/best-deals" || path === "/compare") {
-    return { priority: 0.65, changeFrequency: "weekly" };
-  }
-  if (path === "/support") {
-    return { priority: 0.6, changeFrequency: "monthly" };
-  }
-  if (path.startsWith("/support/")) {
-    return { priority: 0.5, changeFrequency: "monthly" };
-  }
-  if (path === "/privacy-policy" || path === "/terms-of-service") {
-    return { priority: 0.3, changeFrequency: "yearly" };
-  }
-  return { priority: 0.5, changeFrequency: "monthly" };
 }
 
 function getLastModified(path: string, latestProduct: Date | null): Date {
@@ -155,35 +98,30 @@ function getLastModified(path: string, latestProduct: Date | null): Date {
     }
   }
 
-  // Catalog surfaces should reflect the newest product listing.
-  if (path === "/" || path === "/shop" || path.startsWith("/shop/") || path === "/best-deals") {
+  if (path === "/" || path === "/shop" || path.startsWith("/shop/")) {
     return maxDate(latestProduct, SITE_CONTENT_UPDATED);
   }
 
   return SITE_CONTENT_UPDATED;
 }
 
+/** Clean urlset entries: loc + lastmod only (Google ignores priority/changefreq). */
 export function getSitemapEntries(): MetadataRoute.Sitemap {
   const latestProduct = getLatestProductDate();
   const entries = getIndexablePaths().map((path) => {
-    const { priority, changeFrequency } = getPriorityAndFrequency(path);
     const url = toSitemapUrl(path);
-
     if (!url.startsWith("https://")) {
       throw new Error(`[sitemap] Non-HTTPS URL generated: ${url}`);
     }
-
     return {
       url,
       lastModified: getLastModified(path, latestProduct),
-      changeFrequency,
-      priority,
     };
   });
 
   const urls = entries.map((e) => e.url);
   if (new Set(urls).size !== urls.length) {
-    throw new Error("[sitemap] Duplicate URLs detected in sitemap entries.");
+    throw new Error("[sitemap] Duplicate URLs detected.");
   }
 
   return entries;
