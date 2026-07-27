@@ -23,7 +23,7 @@ export default function ProductCTA({
         size="sm"
         className="product-card-cta min-h-[38px] flex-1 gap-2 px-4 py-2.5 text-[13px] sm:min-h-[40px] sm:text-[14px]"
       >
-        View Details
+        View Product
         <ArrowUpRight className="h-4 w-4" />
       </CtaButton>
 
