@@ -118,13 +118,11 @@ export function buildRootMetadata(): Metadata {
       shortcut: "/favicon.ico",
     },
     manifest: "/site.webmanifest",
-    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-      ? {
-          verification: {
-            google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-          },
-        }
-      : {}),
+    verification: {
+      google:
+        process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() ||
+        "UVQBIxkLv3m2ax-ACBVPhAS999Ywy8KvFNG6aaLTM5s",
+    },
   };
 }
 
