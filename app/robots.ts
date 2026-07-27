@@ -1,47 +1,33 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
+import { getCanonicalSiteOrigin } from "@/lib/seo-sitemap";
 
+/**
+ * Production robots.txt — one default policy for all crawlers.
+ * Do not block `/_next/` or static assets; Google needs them to render pages.
+ *
+ * Blocked prefixes are non-public / non-indexable surfaces only.
+ */
 const DISALLOW = [
   "/api/",
-  "/_next/",
   "/admin/",
-  "/test/",
-  "/dev/",
-  "/draft/",
   "/private/",
-];
-
-const AI_AND_SEARCH_BOTS = [
-  "Googlebot",
-  "Googlebot-Image",
-  "Bingbot",
-  "DuckDuckBot",
-  "Slurp",
-  "GPTBot",
-  "ChatGPT-User",
-  "OAI-SearchBot",
-  "anthropic-ai",
-  "ClaudeBot",
-  "PerplexityBot",
-  "Applebot",
-  "facebookexternalhit",
+  "/draft/",
+  "/dev/",
+  "/test/",
 ] as const;
 
 export default function robots(): MetadataRoute.Robots {
+  const origin = getCanonicalSiteOrigin();
+
   return {
     rules: [
       {
         userAgent: "*",
         allow: "/",
-        disallow: DISALLOW,
+        disallow: [...DISALLOW],
       },
-      ...AI_AND_SEARCH_BOTS.map((userAgent) => ({
-        userAgent,
-        allow: "/",
-        disallow: DISALLOW,
-      })),
     ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
-    host: SITE_URL,
+    sitemap: `${origin}/sitemap.xml`,
+    host: origin,
   };
 }
