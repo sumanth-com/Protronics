@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import TradeInPage from "@/components/trade-in/TradeInPage";
 import { tradeInPageJsonLd } from "@/lib/trade-in";
 import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 const StickyWhatsApp = dynamic(
   () => import("@/components/contact/StickyWhatsApp"),
@@ -20,7 +21,7 @@ export default function SellPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(tradeInPageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(tradeInPageJsonLd) }}
       />
       <TradeInPage />
       <StickyWhatsApp />

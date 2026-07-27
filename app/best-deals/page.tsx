@@ -5,8 +5,13 @@ import { buildPageMetadata } from "@/lib/seo";
 export const metadata: Metadata = buildPageMetadata({
   title: "Best Deals on Refurbished Appliances",
   description:
-    "Limited-time offers on premium refurbished refrigerators—best value, popular picks, and newly listed deals from Protronics.",
+    "Shop discounted certified refurbished refrigerators and washing machines in Bangalore—best value picks with warranty, testing, and delivery from Protronics.",
   path: "/best-deals",
+  keywords: [
+    "refurbished refrigerator deals",
+    "discount refurbished fridge bangalore",
+    "best refurbished appliances",
+  ],
 });
 
 export default function BestDealsPage() {

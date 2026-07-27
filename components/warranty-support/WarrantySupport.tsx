@@ -83,7 +83,7 @@ export default function WarrantySupport() {
       if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
 
-      ctx = gsap.context(() => {
+      const nextCtx = gsap.context(() => {
         gsap.fromTo(
           visual,
           { y: -8 },
@@ -100,6 +100,12 @@ export default function WarrantySupport() {
           },
         );
       }, visual);
+
+      if (cancelled) {
+        nextCtx.revert();
+        return;
+      }
+      ctx = nextCtx;
     })();
 
     return () => {
@@ -126,7 +132,7 @@ export default function WarrantySupport() {
           >
             WARRANTY + SUPPORT
           </motion.p>
-          <motion.h2
+          <motion.h1
             variants={fadeUp}
             className={cn(
               "type-section-title mt-3 text-center font-semibold tracking-tight text-white",
@@ -135,7 +141,7 @@ export default function WarrantySupport() {
             )}
           >
             Warranty That Builds Confidence.
-          </motion.h2>
+          </motion.h1>
           <motion.p
             variants={fadeUp}
             className="mt-4 text-center text-[14px] leading-7 text-white/70 sm:text-[15px]"

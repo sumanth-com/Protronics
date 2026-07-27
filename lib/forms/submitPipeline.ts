@@ -46,6 +46,8 @@ export async function runSubmitPipeline<T extends Record<string, unknown>>(
   }
 
   const honeypot = String(input.raw._honeypot ?? "").trim();
+  // Client honeypot: pretend success so bots do not learn the trap.
+  // Server `/api/forms` also rejects filled honeypots if present in the body.
   if (honeypot) {
     return { success: true, message: "Submitted Successfully" };
   }
@@ -74,7 +76,10 @@ export async function runSubmitPipeline<T extends Record<string, unknown>>(
   }
 
   const task = (async (): Promise<PipelineResult> => {
-    const res = await postToGoogleSheets(payload, input.signal);
+    const res = await postToGoogleSheets(
+      { ...payload, _honeypot: "" },
+      input.signal,
+    );
     if (!res.success) {
       return {
         success: false,

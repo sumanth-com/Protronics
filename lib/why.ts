@@ -8,6 +8,7 @@ import {
   Truck,
 } from "lucide-react";
 import { BUSINESS } from "@/lib/contact";
+import { absoluteUrl } from "@/lib/site";
 
 export const whyGlass = [
   "rounded-3xl border border-white/12 bg-white/[0.05]",
@@ -168,13 +169,11 @@ export const WHY_METRICS: WhyMetric[] = [
 export const whyPageJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebPage",
+  "@id": `${absoluteUrl("/why-protronics")}#webpage`,
   name: "Why Protronics | Trust & Quality",
   description:
-    "See why Protronics is safer than local dealers, OLX, and marketplace sellers—100+ checks, warranty, sanitization, and certified performance.",
-  url: "https://protronics.in/why-protronics",
-  about: {
-    "@type": "Organization",
-    name: "Protronics",
-    description: "Premium professionally renewed refurbished refrigerators.",
-  },
+    "See why Protronics is safer than local dealers, OLX, and marketplace sellers—100+ checks, warranty, sanitization, and certified performance in Bangalore.",
+  url: absoluteUrl("/why-protronics"),
+  isPartOf: { "@id": `${absoluteUrl("/")}#website` },
+  about: { "@id": `${absoluteUrl("/")}#organization` },
 };

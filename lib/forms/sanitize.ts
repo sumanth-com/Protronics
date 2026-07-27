@@ -1,14 +1,27 @@
 import type { StandardFormPayload } from "@/lib/forms/types";
 
 const CONTROL_CHARS = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g;
-const SCRIPT_PATTERN = /<\s*script\b/gi;
+const HTML_TAG = /<\/?[a-z][^>]*>/gi;
+const EVENT_HANDLER = /\bon\w+\s*=/gi;
+const JS_PROTOCOL = /javascript\s*:/gi;
+
+/** Neutralize spreadsheet formula injection (=, +, -, @, tab, CR). */
+export function neutralizeFormulaInjection(value: string): string {
+  if (!value) return value;
+  const first = value.charAt(0);
+  if (first === "=" || first === "+" || first === "-" || first === "@" || first === "\t" || first === "\r") {
+    return `'${value}`;
+  }
+  return value;
+}
 
 export function sanitizeString(value: unknown, maxLength = 5000): string {
   if (value === null || value === undefined) return "";
   let str = String(value).replace(CONTROL_CHARS, "").trim();
-  if (SCRIPT_PATTERN.test(str)) {
-    str = str.replace(SCRIPT_PATTERN, "");
-  }
+  str = str.replace(HTML_TAG, "");
+  str = str.replace(EVENT_HANDLER, "");
+  str = str.replace(JS_PROTOCOL, "");
+  str = neutralizeFormulaInjection(str);
   return str.length > maxLength ? str.slice(0, maxLength) : str;
 }
 

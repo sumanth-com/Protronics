@@ -5,11 +5,12 @@ loadProjectEnv();
 const SCRIPT_RE = /^https:\/\/script\.google\.com\/macros\/s\/[a-zA-Z0-9_-]+\/exec$/;
 
 const url = (
+  process.env.FORM_ENDPOINT_URL ||
+  process.env.GOOGLE_SHEETS_WEBHOOK_URL ||
   process.env.VITE_FORM_ENDPOINT_URL ||
   process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL ||
   process.env.NEXT_PUBLIC_FORM_ENDPOINT ||
   process.env.NEXT_PUBLIC_VITE_FORM_ENDPOINT_URL ||
-  process.env.GOOGLE_SHEETS_WEBHOOK_URL ||
   ""
 ).trim();
 
@@ -28,7 +29,7 @@ if (skipAssert) {
 if (!url) {
   const message =
     "[forms] No form endpoint URL set. Forms will not submit until you set " +
-    "NEXT_PUBLIC_FORM_ENDPOINT or NEXT_PUBLIC_FORM_ENDPOINT_URL (Apps Script /exec URL).";
+    "FORM_ENDPOINT_URL or GOOGLE_SHEETS_WEBHOOK_URL (server-only Apps Script /exec URL).";
 
   if (requireEndpoint) {
     console.error(
@@ -53,10 +54,10 @@ if (!SCRIPT_RE.test(url)) {
 
   console.warn(
     `[forms] ${message}\n` +
-      "Fix NEXT_PUBLIC_FORM_ENDPOINT_URL in Vercel → Settings → Environment Variables. " +
+      "Fix FORM_ENDPOINT_URL in Vercel → Settings → Environment Variables. " +
       "Build will continue; forms will not submit until the URL is valid.",
   );
   process.exit(0);
 }
 
-console.info("[forms] Endpoint URL validated for production build.");
+console.info("[forms] Endpoint URL validated for production build (server-side only).");

@@ -1,5 +1,5 @@
 /**
- * Hidden honeypot — bots often fill this; server rejects non-empty values silently.
+ * Hidden honeypot — bots often fill this; client and `/api/forms` treat non-empty as spam.
  */
 export default function HoneypotField({
   value,

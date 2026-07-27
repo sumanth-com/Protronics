@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { buildBreadcrumbJsonLd } from "@/lib/faq";
 import WarrantySupport from "@/components/warranty-support/WarrantySupport";
 import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 const FinalCTA = dynamic(() => import("@/components/final-cta/FinalCTA"));
 
@@ -22,7 +23,7 @@ export default function WarrantyPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbJsonLd) }}
       />
       <div className="min-h-screen bg-black text-white">
         <WarrantySupport />

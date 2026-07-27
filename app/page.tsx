@@ -5,6 +5,7 @@ import DeferredMount from "@/components/layout/DeferredMount";
 import MobileCategoryIcons from "@/components/mobile/MobileCategoryIcons";
 import { buildFaqJsonLd, HOMEPAGE_FAQS } from "@/lib/faq";
 import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 const FeaturedProducts = dynamic(
   () => import("@/components/featured-products/FeaturedProducts"),
@@ -43,7 +44,7 @@ export default function Home() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqJsonLd) }}
       />
       <div className="min-h-screen bg-black text-white">
         <main className="mobile-home-main">

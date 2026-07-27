@@ -99,7 +99,7 @@ export const TERMS_OF_SERVICE_PAGE: LegalPageConfig = {
         {
           type: "callout",
           title: "Standard coverage",
-          text: "Most refrigerators include a 1-year Protronics warranty covering manufacturing and restoration-related defects under normal residential use. Full warranty details are available at protronics.in/warranty.",
+          text: "Most refrigerators include a 1-year Protronics warranty covering manufacturing and restoration-related defects under normal residential use. Full warranty details are available at protronics.store/warranty.",
         },
         {
           type: "paragraph",
@@ -197,7 +197,7 @@ export const TERMS_OF_SERVICE_PAGE: LegalPageConfig = {
           items: [
             "Email: Protronicspro4@gmail.com",
             `Phone: ${PROTRONICS_NAP.telephoneDisplay}`,
-            "Website: protronics.in/contact",
+            "Website: protronics.store/contact",
             "Business hours: Mon–Sat · 10:00 AM – 8:00 PM IST",
           ],
         },

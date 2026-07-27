@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import SupportCenter from "@/components/support/SupportCenter";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 import { buildPageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 import {
   buildArticleMetadata,
+  buildCategorySupportMetadata,
   buildSupportFaqJsonLd,
   buildSupportHubMetadata,
   getAllArticlePaths,
@@ -33,17 +35,59 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const [categorySlug, articleSlug] = slug ?? [];
-  const { categoryId, articleId } = resolveSelection(categorySlug, articleSlug);
-  const articleMeta = buildArticleMetadata(categoryId, articleId);
+  const selection = resolveSelection(categorySlug, articleSlug);
+  if (!selection) {
+    return buildPageMetadata({
+      absoluteTitle: "Support Page Not Found | Protronics",
+      description: "The requested help article could not be found.",
+      path: "/support",
+      noIndex: true,
+    });
+  }
+
+  const { categoryId, articleId } = selection;
   const hubMeta = buildSupportHubMetadata();
 
-  const meta = !slug?.length ? hubMeta : articleMeta ?? hubMeta;
+  if (!slug?.length) {
+    return buildPageMetadata({
+      absoluteTitle: hubMeta.title,
+      description: hubMeta.description,
+      path: hubMeta.path,
+    });
+  }
+
+  if (slug.length === 1) {
+    const categoryMeta = buildCategorySupportMetadata(categoryId);
+    if (!categoryMeta) {
+      return buildPageMetadata({
+        absoluteTitle: "Support Page Not Found | Protronics",
+        description: "The requested help category could not be found.",
+        path: "/support",
+        noIndex: true,
+      });
+    }
+    return buildPageMetadata({
+      absoluteTitle: categoryMeta.title,
+      description: categoryMeta.description,
+      path: categoryMeta.path,
+    });
+  }
+
+  const articleMeta = buildArticleMetadata(categoryId, articleId);
+  if (!articleMeta) {
+    return buildPageMetadata({
+      absoluteTitle: "Support Page Not Found | Protronics",
+      description: "The requested help article could not be found.",
+      path: "/support",
+      noIndex: true,
+    });
+  }
 
   return buildPageMetadata({
-    absoluteTitle: meta.title,
-    description: meta.description,
-    path: meta.path,
-    ogType: slug?.length === 2 ? "article" : "website",
+    absoluteTitle: articleMeta.title,
+    description: articleMeta.description,
+    path: articleMeta.path,
+    ogType: "article",
   });
 }
 
@@ -55,8 +99,13 @@ export default async function SupportPage({ params }: PageProps) {
     redirect("/support");
   }
 
-  const { categoryId, articleId } = resolveSelection(categorySlug, articleSlug);
-  const faqJsonLd = buildSupportFaqJsonLd();
+  const selection = resolveSelection(categorySlug, articleSlug);
+  if (!selection) {
+    notFound();
+  }
+  const { categoryId, articleId } = selection;
+  const isHub = !slug?.length;
+  const faqJsonLd = isHub ? buildSupportFaqJsonLd() : null;
   const article = getArticle(categoryId, articleId);
 
   const breadcrumbJsonLd = {
@@ -107,18 +156,20 @@ export default async function SupportPage({ params }: PageProps) {
 
   return (
     <>
+      {faqJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqJsonLd) }}
+        />
+      ) : null}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbJsonLd) }}
       />
       {articleJsonLd ? (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(articleJsonLd) }}
         />
       ) : null}
       <SupportCenter initialCategoryId={categoryId} initialArticleId={articleId} />

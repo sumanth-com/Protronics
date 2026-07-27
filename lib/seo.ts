@@ -27,6 +27,10 @@ export function buildPageMetadata(input: PageSeoInput): Metadata {
   const canonical = input.path.startsWith("/") ? input.path : `/${input.path}`;
   const ogImage = input.ogImage ?? DEFAULT_OG_IMAGE;
   const url = absoluteUrl(canonical);
+  const imageAlt =
+    input.ogImage && input.ogImage !== DEFAULT_OG_IMAGE
+      ? title
+      : OG_IMAGE_ALT;
 
   return {
     title: input.absoluteTitle
@@ -35,10 +39,11 @@ export function buildPageMetadata(input: PageSeoInput): Metadata {
         ? input.title
         : undefined,
     description: input.description,
-    keywords: [...SITE_KEYWORDS, ...(input.keywords ?? [])],
+    // Page-specific keywords only — avoid dumping the full site keyword set on every URL
+    keywords: input.keywords?.length ? [...input.keywords] : undefined,
     alternates: { canonical },
     robots: input.noIndex
-      ? { index: false, follow: false }
+      ? { index: false, follow: true }
       : { index: true, follow: true, googleBot: { index: true, follow: true } },
     openGraph: {
       type: input.ogType ?? "website",
@@ -52,7 +57,7 @@ export function buildPageMetadata(input: PageSeoInput): Metadata {
           url: ogImage.startsWith("http") ? ogImage : absoluteUrl(ogImage),
           width: 1200,
           height: 630,
-          alt: OG_IMAGE_ALT,
+          alt: imageAlt,
         },
       ],
     },
@@ -127,14 +132,14 @@ export const PAGE_SEO = {
   home: {
     absoluteTitle: `${SITE_NAME} | Premium Refurbished Refrigerators & Appliances`,
     description:
-      "Discover professionally refurbished refrigerators and home appliances in Bangalore — 100+ quality checks, warranty, trade-in, and delivery across Bengaluru and surrounding regions.",
+      "Protronics is a Bengaluru refurbished appliance store selling certified refrigerators and washing machines with warranty, trade-in, delivery, and local support. Browse quality-tested units with 100+ checks across Bangalore.",
     path: "/",
     keywords: [
-      "second hand fridge near me",
       "refurbished refrigerator bangalore",
-      "used refrigerator with warranty",
-      "buy refurbished refrigerator online",
+      "refurbished fridge",
       "certified refurbished appliances",
+      "refurbished refrigerator with warranty",
+      "buy refurbished refrigerator online",
     ],
   },
   shop: {
@@ -158,21 +163,19 @@ export const PAGE_SEO = {
       "refrigerator trade-in",
       "sell old fridge",
       "appliance exchange",
-      "upgrade refrigerator",
-      "appliance trade in bangalore",
       "refrigerator trade-in Bangalore",
     ],
   },
   about: {
-    title: "About Protronics | Premium Refurbished Appliances",
-    absoluteTitle: "About Protronics | Premium Refurbished Appliances",
+    title: "About Protronics | Certified Refurbished Appliances Bangalore",
+    absoluteTitle: "About Protronics | Certified Refurbished Appliances Bangalore",
     description:
-      "Learn how Protronics restores and certifies refrigerators and appliances through rigorous quality testing, sanitization, and performance verification.",
+      "Protronics restores and certifies refrigerators and washing machines in Bengaluru through rigorous quality testing, sanitization, performance verification, and warranty-backed delivery.",
     path: "/about",
     keywords: [
       "Protronics Bangalore",
       "certified refurbished appliances",
-      "premium refurbished home appliances",
+      "refurbished appliance store bangalore",
     ],
   },
   contact: {
@@ -183,14 +186,14 @@ export const PAGE_SEO = {
     path: "/contact",
     keywords: [
       "refurbished refrigerator bangalore",
-      "second hand fridge shop near me",
       "appliance store bengaluru",
+      "second hand fridge shop near me",
     ],
   },
   faq: {
-    title: "Frequently Asked Questions",
+    title: "Help Center & FAQs",
     description:
-      "Find answers about refurbished appliances, warranties, delivery, trade-ins, quality testing, and support from Protronics.",
+      "Find answers about refurbished appliances, warranties, delivery, trade-ins, quality testing, and support from Protronics in Bangalore.",
     path: "/support",
     keywords: [
       "refurbished refrigerator with warranty",
@@ -199,7 +202,8 @@ export const PAGE_SEO = {
   },
   privacy: {
     title: "Privacy Policy",
-    description: "Learn how Protronics collects, protects, and manages customer information.",
+    description:
+      "How Protronics collects, uses, stores, and protects personal data when you browse, enquire, trade in, or buy refurbished appliances.",
     path: "/privacy-policy",
   },
   terms: {
@@ -211,7 +215,7 @@ export const PAGE_SEO = {
   warranty: {
     title: "Warranty & Support",
     description:
-      "1-year warranty, delivery and installation, and dedicated support for every premium refurbished appliance from Protronics.",
+      "1-year warranty on restored function for Protronics refurbished appliances, plus delivery, installation guidance, and dedicated Bangalore support.",
     path: "/warranty",
     keywords: [
       "refurbished refrigerator with warranty",
@@ -219,10 +223,15 @@ export const PAGE_SEO = {
     ],
   },
   howItWorks: {
-    title: "How It Works",
+    title: "How Protronics Refurbishes Appliances",
+    absoluteTitle: "How Protronics Refurbishes Appliances",
     description:
-      "See how Protronics renews premium appliances through 100+ quality checks, deep sanitization, performance certification, and warranty-backed delivery.",
+      "See how Protronics renews refrigerators and washing machines through 100+ quality checks, deep sanitization, performance certification, and warranty-backed delivery in Bangalore.",
     path: "/how-it-works",
+    keywords: [
+      "how refurbished refrigerators work",
+      "certified refurbished appliances bangalore",
+    ],
   },
   shopLocal: {
     title: "Shop Refurbished Refrigerators",

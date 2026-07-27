@@ -1,4 +1,4 @@
-import { LOCAL_SEO_KEYWORDS, PRIMARY_LOCATION, PROTRONICS_SERVICES, SERVICE_AREA_CITIES } from "@/lib/local/business";
+import { PRIMARY_LOCATION, PROTRONICS_SERVICES, SERVICE_AREA_CITIES } from "@/lib/local/business";
 
 export type LocationPageConfig = {
   slug: string;
@@ -23,13 +23,20 @@ export const LOCATION_PAGES: LocationPageConfig[] = [
     title: "Refurbished Refrigerators in Bangalore | Protronics",
     description:
       "Looking for a second hand fridge shop near you in Bangalore? Protronics offers certified refurbished refrigerators and appliances with warranty, trade-in, delivery, and local support across Bengaluru.",
-    keywords: [...LOCAL_SEO_KEYWORDS],
+    keywords: [
+      "refurbished refrigerator bangalore",
+      "second hand fridge bangalore",
+      "refurbished appliances near me",
+      "used refrigerator with warranty",
+      "appliance trade in bangalore",
+      "refurbished washing machine bangalore",
+    ],
     heroTitle: "Refurbished Appliances in Bangalore",
     heroSubtitle:
-      "Certified second hand & refurbished refrigerators with warranty — serving Bengaluru and surrounding areas.",
+      "Certified refurbished refrigerators and washing machines with warranty — serving Bengaluru and surrounding areas.",
     intro: [
-      "Protronics is your local refurbished appliance store in Bengaluru, built for families who want premium quality without paying brand-new prices. Whether you search for a second hand fridge near me, a refurbished refrigerator in Bangalore, or a used refrigerator with warranty, we deliver transparent inspections, sanitization, and human support.",
-      "Browse single-door, double-door, mini, and premium refrigerators — all 100+ point tested. Trade in your old unit for fair value, or exchange toward an upgrade with doorstep pickup across Whitefield, Electronic City, Koramangala, HSR, Indiranagar, and the wider Bangalore metro.",
+      "Protronics is a Bengaluru refurbished appliance store for families who want certified quality without paying brand-new prices. Every refrigerator and washing machine is inspected, sanitized, and sold with clear warranty terms plus delivery support across Bangalore.",
+      "Browse single-door, double-door, and washing machine options—all 100+ point tested. Trade in your old unit for fair value, or exchange toward an upgrade with pickup across Whitefield, Electronic City, Koramangala, HSR, Indiranagar, and the wider metro.",
     ],
     localFaqs: [
       {
@@ -38,14 +45,14 @@ export const LOCATION_PAGES: LocationPageConfig[] = [
           "Yes. Protronics sells professionally refurbished refrigerators across Bengaluru — not unverified classified listings. Every unit is tested, sanitized, and sold with warranty and delivery support.",
       },
       {
-        question: "Is there a second hand fridge shop near me in Bengaluru?",
+        question: "Is there a refurbished appliance store near me in Bengaluru?",
         answer:
           "We serve the full Bangalore metro with delivery and installation. Contact us on WhatsApp or phone to confirm availability in your area — including Whitefield, Electronic City, Jayanagar, and surrounding districts.",
       },
       {
         question: "Do refurbished refrigerators come with warranty?",
         answer:
-          "Yes. Premium renewed units include warranty coverage with clear terms and responsive support — a key reason customers choose Protronics over informal second hand sellers.",
+          "Yes. Protronics refurbished refrigerators include a 1-year warranty covering restored function and restoration-related defects under normal residential use. Cosmetic wear from prior ownership may be excluded—see the warranty page for full terms.",
       },
       {
         question: "Can I trade in my old refrigerator in Bangalore?",

@@ -1,7 +1,10 @@
 import { getAllLocationSlugs } from "@/lib/local/locations";
 import { SHOP_CATEGORIES, SHOP_PRODUCTS } from "@/lib/shop";
-import { getAllArticlePaths } from "@/lib/support";
+import { getAllArticlePaths, SUPPORT_CATEGORIES_VISIBLE } from "@/lib/support";
 import { SITE_URL } from "@/lib/site";
+
+/** Stable content revision date for non-product sitemap entries. */
+const SITE_CONTENT_UPDATED = new Date("2026-07-27T00:00:00.000Z");
 
 /** All indexable canonical paths (products auto-expand when SHOP_PRODUCTS grows). */
 export function getIndexablePaths(): string[] {
@@ -24,16 +27,23 @@ export function getIndexablePaths(): string[] {
 
   const categoryPaths = SHOP_CATEGORIES.map((c) => `/shop/${c.slug}`);
   const productPaths = SHOP_PRODUCTS.map((p) => `/product/${p.id}`);
+  const supportCategoryPaths = SUPPORT_CATEGORIES_VISIBLE.map(
+    (c) => `/support/${c.id}`,
+  );
   const supportPaths = getAllArticlePaths().map(
     ({ category, article }) => `/support/${category}/${article}`,
   );
 
-  return [...staticPaths, ...categoryPaths, ...productPaths, ...supportPaths];
+  return [
+    ...staticPaths,
+    ...categoryPaths,
+    ...productPaths,
+    ...supportCategoryPaths,
+    ...supportPaths,
+  ];
 }
 
 export function getSitemapEntries() {
-  const now = new Date();
-
   return getIndexablePaths().map((path) => {
     const product = path.startsWith("/product/")
       ? SHOP_PRODUCTS.find((p) => `/product/${p.id}` === path)
@@ -53,14 +63,19 @@ export function getSitemapEntries() {
       changeFrequency = "weekly";
     } else if (path.startsWith("/shop")) {
       priority = 0.85;
+    } else if (path === "/support") {
+      priority = 0.75;
+      changeFrequency = "monthly";
     } else if (path.startsWith("/support/")) {
       priority = 0.7;
       changeFrequency = "monthly";
+    } else if (path === "/why-protronics" || path === "/warranty") {
+      priority = 0.82;
     }
 
     return {
       url: `${SITE_URL}${path}`,
-      lastModified: product ? new Date(product.createdAt) : now,
+      lastModified: product ? new Date(product.createdAt) : SITE_CONTENT_UPDATED,
       changeFrequency,
       priority,
     };

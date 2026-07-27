@@ -47,6 +47,9 @@ export default function HeroSlider() {
         >
           <MobileHeroCarousel slides={slides} />
         </div>
+        <h1 className="absolute h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]">
+          Certified refurbished refrigerators with warranty
+        </h1>
       </div>
 
       {/* Desktop — image + copy, trust card under both */}

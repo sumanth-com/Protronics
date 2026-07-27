@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import LegalPage from "@/components/legal/LegalPage";
 import { buildLegalPageJsonLd, TERMS_OF_SERVICE_PAGE } from "@/lib/legal";
 import { buildPageMetadata } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 const page = TERMS_OF_SERVICE_PAGE;
 
@@ -19,7 +20,7 @@ export default function TermsOfServicePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
       />
       <main>
         <LegalPage config={page} />

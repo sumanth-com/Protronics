@@ -12,6 +12,7 @@ export type TradeInLeadPayload = {
   condition: string;
   description?: string;
   pageUrl: string;
+  _honeypot?: string;
 };
 
 export type TradeInLeadResponse = {
@@ -38,6 +39,7 @@ export async function submitTradeInLead(
       condition: payload.condition,
       description: payload.description ?? "",
       referenceId,
+      _honeypot: payload._honeypot,
     },
     { sourcePage: payload.pageUrl },
   );

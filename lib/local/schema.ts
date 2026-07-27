@@ -13,13 +13,15 @@ const ORG_ID = `${SITE_URL}/#organization`;
 const LOCAL_BUSINESS_ID = `${SITE_URL}/#localbusiness`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 
+export { ORG_ID, LOCAL_BUSINESS_ID, WEBSITE_ID };
+
 function testimonialAggregateRating() {
+  const reviews = CUSTOMER_TESTIMONIALS;
   let total = 0;
-  let count = 0;
-  for (const t of CUSTOMER_TESTIMONIALS) {
+  for (const t of reviews) {
     total += t.rating ?? 5;
-    count += 1;
   }
+  const count = reviews.length;
   const avg = total / Math.max(count, 1);
   return {
     "@type": "AggregateRating" as const,
@@ -40,6 +42,22 @@ function organizationSameAs() {
   return links.filter(Boolean);
 }
 
+function areaServedPlaces() {
+  return SERVICE_AREA_CITIES.map((name) => ({
+    "@type": name === "Bengaluru" ? "City" : "Place",
+    name,
+    ...(name !== "Bengaluru"
+      ? {
+          containedInPlace: {
+            "@type": "City",
+            name: "Bengaluru",
+            alternateName: "Bangalore",
+          },
+        }
+      : { alternateName: "Bangalore" }),
+  }));
+}
+
 export function buildOrganizationJsonLd() {
   return {
     "@type": "Organization",
@@ -51,7 +69,7 @@ export function buildOrganizationJsonLd() {
     image: absoluteUrl("/logo.webp"),
     description: SITE_DESCRIPTION,
     email: PROTRONICS_NAP.email,
-    telephone: `${PROTRONICS_NAP.telephone}, ${PROTRONICS_NAP.telephoneSecondary}`,
+    telephone: PROTRONICS_NAP.telephoneE164,
     address: {
       "@type": "PostalAddress",
       streetAddress: PROTRONICS_NAP.streetAddress,
@@ -60,16 +78,24 @@ export function buildOrganizationJsonLd() {
       postalCode: PROTRONICS_NAP.postalCode,
       addressCountry: PROTRONICS_NAP.addressCountry,
     },
-    areaServed: SERVICE_AREA_CITIES.map((city) => ({
-      "@type": "City",
-      name: city,
-      containedInPlace: {
-        "@type": "State",
-        name: "Karnataka",
-      },
-    })),
+    areaServed: areaServedPlaces(),
     sameAs: organizationSameAs(),
-    aggregateRating: testimonialAggregateRating(),
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: PROTRONICS_NAP.telephoneE164,
+        contactType: "customer service",
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi", "Kannada"],
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: PROTRONICS_NAP.telephoneSecondaryE164,
+        contactType: "customer service",
+        areaServed: "IN",
+        availableLanguage: ["English", "Hindi", "Kannada"],
+      },
+    ],
   };
 }
 
@@ -101,12 +127,11 @@ export function buildLocalBusinessJsonLd() {
     legalName: PROTRONICS_NAP.legalName,
     additionalType: "https://schema.org/Store",
     category: PROTRONICS_NAP.category,
-    description:
-      "Protronics is a refurbished appliance store in Bengaluru offering certified refrigerators, washing machines, trade-in, exchange, warranty, and expert support.",
+    description: SITE_DESCRIPTION,
     url: SITE_URL,
     image: [absoluteUrl("/logo.webp"), absoluteUrl("/og/protronics-og.webp")],
     logo: absoluteUrl("/logo.webp"),
-    telephone: `${PROTRONICS_NAP.telephone}, ${PROTRONICS_NAP.telephoneSecondary}`,
+    telephone: PROTRONICS_NAP.telephoneE164,
     email: PROTRONICS_NAP.email,
     priceRange: "₹₹",
     currenciesAccepted: "INR",
@@ -131,10 +156,7 @@ export function buildLocalBusinessJsonLd() {
       opens: spec.opens,
       closes: spec.closes,
     })),
-    areaServed: SERVICE_AREA_CITIES.map((city) => ({
-      "@type": "City",
-      name: city,
-    })),
+    areaServed: areaServedPlaces(),
     knowsAbout: [
       "refurbished refrigerators",
       "refurbished washing machines",
@@ -160,6 +182,7 @@ export function buildLocalBusinessJsonLd() {
           areaServed: {
             "@type": "City",
             name: "Bengaluru",
+            alternateName: "Bangalore",
           },
         },
       })),
@@ -184,23 +207,19 @@ export function buildServiceJsonLdList() {
 }
 
 export function buildReviewJsonLd() {
-  return CUSTOMER_TESTIMONIALS.slice(0, 8).map((t, index) => {
-    const published = new Date("2025-06-01");
-    published.setDate(published.getDate() + index * 21);
-    return {
-      "@type": "Review",
-      author: { "@type": "Person", name: t.name },
-      datePublished: published.toISOString().slice(0, 10),
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: String(t.rating),
-        bestRating: "5",
-        worstRating: "1",
-      },
-      reviewBody: t.quote,
-      itemReviewed: { "@id": LOCAL_BUSINESS_ID },
-    };
-  });
+  return CUSTOMER_TESTIMONIALS.map((t, index) => ({
+    "@type": "Review",
+    "@id": `${SITE_URL}/#review-${index + 1}`,
+    author: { "@type": "Person", name: t.name },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: String(t.rating),
+      bestRating: "5",
+      worstRating: "1",
+    },
+    reviewBody: t.quote,
+    itemReviewed: { "@id": LOCAL_BUSINESS_ID },
+  }));
 }
 
 export function buildLocationPageJsonLd(citySlug: string) {
@@ -230,19 +249,11 @@ export function buildLocationPageJsonLd(citySlug: string) {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Locations",
-            item: absoluteUrl("/locations/bangalore"),
-          },
-          {
-            "@type": "ListItem",
-            position: 3,
             name: "Bengaluru",
             item: pageUrl,
           },
         ],
       },
-      buildLocalBusinessJsonLd(),
-      ...buildServiceJsonLdList(),
     ],
   };
 }

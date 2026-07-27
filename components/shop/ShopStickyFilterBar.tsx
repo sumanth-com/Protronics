@@ -92,7 +92,7 @@ export default function ShopStickyFilterBar({
 
   const sortLabel = BAR_SORT_OPTIONS.find((o) => o.id === sort)?.label ?? "Sort";
   const category = getCategoryBySlug(activeCategory);
-  const listTitle = category ? `${category.label}` : "All refrigerators";
+  const listTitle = category ? `${category.label}` : "All refurbished appliances";
 
   const sortMenu = (
     <>

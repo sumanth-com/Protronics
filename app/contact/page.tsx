@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import ContactForm from "@/components/contact/ContactForm";
 import { buildFaqJsonLd } from "@/lib/faq";
 import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 const ContactOptions = dynamic(
   () => import("@/components/contact/ContactOptions"),
@@ -21,7 +22,7 @@ const CONTACT_FAQS = [
   {
     question: "How long is warranty?",
     answer:
-      "Every Protronics refrigerator includes a 1-year comprehensive warranty covering parts and service, with optional extended coverage on select models.",
+      "Every Protronics refrigerator includes a 1-year warranty covering restored function and restoration-related defects under normal residential use. Cosmetic imperfections from prior ownership may be excluded—see our warranty page for full terms.",
   },
   {
     question: "Can I visit before buying?",
@@ -54,7 +55,7 @@ export default function Contact() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(faqJsonLd) }}
       />
       <div className="min-h-screen bg-black text-white">
         <main>

@@ -76,6 +76,7 @@ export default function ContactForm() {
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6">
         <SectionHeader
+          as="h1"
           align="center"
           title="Tell Us What You're Looking For"
           description="Submit your details—we'll reach out with curated refrigerator options, pricing, and delivery timelines."

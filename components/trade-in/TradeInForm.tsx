@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CheckCircle2, Loader2 } from "lucide-react";
 import FormAlert from "@/components/forms/FormAlert";
+import HoneypotField from "@/components/forms/HoneypotField";
 import CtaButton, { ctaButtonSecondaryClass } from "@/components/ui/CtaButton";
 import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import {
@@ -75,6 +76,7 @@ export default function TradeInForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [referenceId, setReferenceId] = useState("");
   const [submitError, setSubmitError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
   const update = <K extends keyof FormState>(key: K, val: FormState[K]) => {
     setValues((v) => ({ ...v, [key]: val }));
@@ -87,10 +89,12 @@ export default function TradeInForm() {
     setSubmitError("");
     setValues(initial);
     setErrors({});
+    setHoneypot("");
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (status === "loading") return;
     const nextErrors = validate(values);
     if (Object.keys(nextErrors).length > 0) {
       setErrors(nextErrors);
@@ -113,6 +117,7 @@ export default function TradeInForm() {
         condition: values.condition,
         description: values.description.trim(),
         pageUrl: typeof window !== "undefined" ? window.location.href : "/sell",
+        _honeypot: honeypot,
       });
       setReferenceId(res.referenceId);
       setStatus("success");
@@ -165,8 +170,9 @@ export default function TradeInForm() {
               </div>
             </div>
           ) : (
-            <form onSubmit={onSubmit} className="space-y-4">
+            <form onSubmit={onSubmit} className="space-y-4 relative">
               {submitError ? <FormAlert variant="error" message={submitError} /> : null}
+              <HoneypotField value={honeypot} onChange={setHoneypot} />
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <label className="block sm:col-span-2">

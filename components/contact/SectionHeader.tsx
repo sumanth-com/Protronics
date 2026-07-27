@@ -11,6 +11,8 @@ type SectionHeaderProps = {
   align?: "left" | "center";
   className?: string;
   headingId?: string;
+  /** Use h1 once per page (form hero). Other sections stay h2. */
+  as?: "h1" | "h2";
 };
 
 export default function SectionHeader({
@@ -20,8 +22,10 @@ export default function SectionHeader({
   align = "left",
   className,
   headingId,
+  as = "h2",
 }: SectionHeaderProps) {
   const centered = align === "center";
+  const HeadingTag = as;
 
   return (
     <motion.div
@@ -33,22 +37,20 @@ export default function SectionHeader({
           {eyebrow}
         </p>
       ) : null}
-      <h2
+      <HeadingTag
         id={headingId}
         className={cn(
           eyebrow ? "mt-2 sm:mt-3" : "mt-0",
           "type-page-hero font-semibold tracking-tight text-white",
-          "text-[24px] leading-[1.08] sm:text-[32px] lg:text-[36px]",
         )}
       >
         {title}
-      </h2>
-      <div className={cn("theme-accent-line mt-3 w-12", centered && "mx-auto")} />
+      </HeadingTag>
       {description ? (
         <p
           className={cn(
-            "mt-4 text-[14px] leading-7 text-white/65 sm:text-[15px]",
-            centered && "mx-auto",
+            "mt-3 text-[14px] leading-7 text-white/70 sm:mt-4 sm:text-[15px]",
+            centered && "mx-auto max-w-xl",
           )}
         >
           {description}

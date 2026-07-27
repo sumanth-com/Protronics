@@ -11,6 +11,7 @@ import {
   sanitizePhoneInput,
 } from "@/lib/forms/validation/shared";
 import { submitLead } from "@/lib/leads";
+import HoneypotField from "@/components/forms/HoneypotField";
 import { cn } from "@/lib/utils";
 
 const inputClass =
@@ -41,6 +42,7 @@ export default function SupportCallbackModal({
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [referenceId, setReferenceId] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
   useEffect(() => {
     if (!open) {
@@ -52,6 +54,7 @@ export default function SupportCallbackModal({
         setSubmitted(false);
         setLoading(false);
         setReferenceId("");
+        setHoneypot("");
       }, 300);
       return () => clearTimeout(t);
     }
@@ -65,9 +68,11 @@ export default function SupportCallbackModal({
     setPreferredTime(TIME_OPTIONS[0]);
     setError("");
     setLoading(false);
+    setHoneypot("");
   };
 
   const submit = async () => {
+    if (loading) return;
     if (!name.trim()) {
       setError("Please enter your name.");
       return;
@@ -92,6 +97,7 @@ export default function SupportCallbackModal({
         phone: phone.trim(),
         preferredTime,
         pageUrl: typeof window !== "undefined" ? window.location.href : "/support",
+        _honeypot: honeypot,
       });
       setReferenceId(res.referenceId ?? "");
       setSubmitted(true);
@@ -169,7 +175,8 @@ export default function SupportCallbackModal({
                 </div>
               </div>
             ) : (
-              <div className="mt-5 space-y-4">
+              <div className="mt-5 space-y-4 relative">
+                <HoneypotField value={honeypot} onChange={setHoneypot} />
                 <label className="block">
                   <span className="mb-2 block text-[12px] font-medium text-white/55">Name</span>
                   <input

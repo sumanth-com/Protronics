@@ -9,32 +9,48 @@ const distDir =
     ? ".next"
     : "node_modules/.cache/next";
 
-/** Expose VITE_* from .env to the Next.js client bundle. */
 const DEFAULT_SITE_URL = "https://protronics.store";
 
-const viteFormEndpoint = process.env.VITE_FORM_ENDPOINT_URL?.trim() ?? "";
-const viteGaId = process.env.VITE_GA_MEASUREMENT_ID?.trim() ?? "";
-const viteSiteUrl = process.env.VITE_SITE_URL?.trim() ?? "";
 const siteUrl =
-  viteSiteUrl ||
   process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
+  process.env.VITE_SITE_URL?.trim() ||
   DEFAULT_SITE_URL;
+
+const securityHeaders = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+  },
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'self'",
+      "form-action 'self'",
+      "img-src 'self' data: blob: https://images.unsplash.com https://*.googleusercontent.com https://maps.gstatic.com https://*.googleapis.com",
+      "font-src 'self' data:",
+      "style-src 'self' 'unsafe-inline'",
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
+      "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com",
+      "frame-src 'self' https://www.google.com https://maps.google.com https://www.google.com/maps",
+      "upgrade-insecure-requests",
+    ].join("; "),
+  },
+];
 
 const nextConfig: NextConfig = {
   distDir,
   env: {
-    NEXT_PUBLIC_FORM_ENDPOINT_URL:
-      viteFormEndpoint ||
-      process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL?.trim() ||
-      process.env.NEXT_PUBLIC_FORM_ENDPOINT?.trim() ||
-      "",
-    NEXT_PUBLIC_FORM_ENDPOINT:
-      viteFormEndpoint ||
-      process.env.NEXT_PUBLIC_FORM_ENDPOINT?.trim() ||
-      process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL?.trim() ||
-      "",
+    // Do NOT bake form webhook URLs into the client bundle.
     NEXT_PUBLIC_GA_MEASUREMENT_ID:
-      viteGaId || process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() || "",
+      process.env.VITE_GA_MEASUREMENT_ID?.trim() ||
+      process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() ||
+      "",
     NEXT_PUBLIC_SITE_URL: siteUrl,
   },
   turbopack: {
@@ -43,6 +59,14 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   poweredByHeader: false,
   compress: true,
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: securityHeaders,
+      },
+    ];
+  },
   async redirects() {
     return [
       {

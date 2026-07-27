@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import ShopPageClient from "@/components/shop/ShopPageClient";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
 import {
   SHOP_CATEGORIES,
@@ -24,6 +25,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { category } = await params;
   const slug = category?.[0];
+  if (slug && !getCategoryBySlug(slug)) {
+    return buildPageMetadata({
+      absoluteTitle: "Shop Category Not Found | Protronics",
+      description: "This shop category is unavailable. Browse all refurbished appliances instead.",
+      path: "/shop",
+      noIndex: true,
+    });
+  }
   const meta = buildCategoryMetadata(slug);
 
   return buildPageMetadata({
@@ -40,7 +49,7 @@ export default async function ShopPage({ params, searchParams }: PageProps) {
   const slug = category?.[0];
 
   if (slug && !getCategoryBySlug(slug)) {
-    redirect("/shop");
+    notFound();
   }
 
   const validCategory = slug && getCategoryBySlug(slug) ? slug : undefined;
@@ -51,7 +60,7 @@ export default async function ShopPage({ params, searchParams }: PageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
       />
       <ShopPageClient
         key={`${validCategory ?? "all"}-${brand ?? ""}-${query}`}

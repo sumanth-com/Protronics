@@ -378,13 +378,21 @@ export function buildCategoryMetadata(slug?: string) {
     return {
       title: "Shop Refurbished Appliances | Protronics",
       description:
-        "Browse certified refurbished refrigerators and washing machines from trusted brands. Quality tested, sanitized, warranty included, and ready for delivery.",
+        "Browse certified refurbished refrigerators and washing machines from trusted brands in Bangalore. Quality tested, sanitized, warranty included, and ready for delivery.",
     };
   }
-  const applianceLabel = category.id === "washing-machines" ? "washing machines" : "refrigerators";
+
+  if (category.id === "washing-machines") {
+    return {
+      title: "Refurbished Washing Machines for Sale | Protronics",
+      description:
+        "Shop certified refurbished washing machines in Bangalore—front load and top load, 100+ quality checks, sanitization, and warranty-backed delivery.",
+    };
+  }
+
   return {
-    title: `${category.label} Refurbished ${category.id === "washing-machines" ? "Washing Machines" : "Refrigerators"} | Protronics`,
-    description: `Shop certified refurbished ${category.label.toLowerCase()} ${applianceLabel}—100+ quality checks, sanitization, warranty included. ${category.description}.`,
+    title: `Refurbished ${category.label} Refrigerators | Protronics`,
+    description: `Shop certified refurbished ${category.label.toLowerCase()} refrigerators in Bangalore—100+ quality checks, sanitization, and warranty included. ${category.description}.`,
   };
 }
 
@@ -406,7 +414,7 @@ export function getShopJsonLd(categorySlug?: string) {
       url: absoluteUrl(`/product/${p.id}`),
       item: {
         "@type": "Product",
-        "@id": absoluteUrl(`/product/${p.id}`),
+        "@id": `${absoluteUrl(`/product/${p.id}`)}#product`,
         name: p.name,
         sku: p.id,
         brand: { "@type": "Brand", name: p.brand },

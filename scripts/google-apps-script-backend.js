@@ -1,11 +1,4 @@
 /**
- * @deprecated Prefer scripts/Code.gs (same backend + email notifications).
- * Keep this file as an alias: copy scripts/Code.gs into Apps Script.
- *
- * --- BEGIN: paste scripts/Code.gs below (kept in sync with Code.gs) ---
- */
-
-/**
  * ═══════════════════════════════════════════════════════════════════════════
  * Protronics — Google Apps Script (paste this entire file into Code.gs)
  * ═══════════════════════════════════════════════════════════════════════════
@@ -15,11 +8,13 @@
  * 2. Delete any default code → paste THIS entire file → Save
  * 3. Select setupSheets → Run (authorize when prompted)
  * 4. Select setupEmailNotifications → Run (sets who gets email alerts)
- * 5. Deploy → New deployment → Type: Web app
+ * 5. Optional: Project Settings → Script properties → add FORM_WEBHOOK_SECRET
+ *    (same value as FORM_WEBHOOK_SECRET in Vercel / .env)
+ * 6. Deploy → New deployment → Type: Web app
  *      Execute as: Me
  *      Who has access: Anyone
- * 6. Copy the Web app URL ending in /exec
- * 7. Put that URL in project `.env` as NEXT_PUBLIC_FORM_ENDPOINT
+ * 7. Copy the Web app URL ending in /exec
+ * 8. Put that URL in project `.env` as FORM_ENDPOINT_URL (server-only; not NEXT_PUBLIC)
  *
  * SHEETS (3 tabs — columns match website forms only)
  *   contact      → Contact
@@ -76,6 +71,21 @@ var SHEET_COLUMNS = {
   ],
 };
 
+var REQUIRED_FIELDS = {
+  contact: ["fullName", "phone", "email", "city"],
+  "product-lead": ["name", "phone", "productName", "leadType"],
+  "trade-in": [
+    "name",
+    "phone",
+    "city",
+    "applianceType",
+    "brand",
+    "model",
+    "age",
+    "condition",
+  ],
+};
+
 var MAX_FIELD_LENGTH = 5000;
 var MAX_FORM_TYPE_LENGTH = 64;
 
@@ -87,10 +97,11 @@ var FORM_LABELS = {
 
 function doGet() {
   return jsonResponse_(true, "Form webhook healthy", {
-    version: "6.1",
+    version: "7.0",
     tabs: Object.keys(SHEET_COLUMNS),
     forms: Object.keys(SHEET_TABS),
     email: getNotifyConfig_().enabled ? "enabled" : "disabled",
+    secret_required: Boolean(getWebhookSecret_()),
   });
 }
 
@@ -109,6 +120,12 @@ function doPost(e) {
       return jsonResponse_(false, parsed.error);
     }
 
+    var auth = authorizeRequest_(parsed.data);
+    if (!auth.success) {
+      Logger.log("doPost auth: %s", auth.error);
+      return jsonResponse_(false, auth.error);
+    }
+
     var validation = validatePayload_(parsed.data);
     if (!validation.success) {
       Logger.log("doPost validation: %s", validation.error);
@@ -120,12 +137,30 @@ function doPost(e) {
     var data = validation.data;
     var sourcePage = validation.sourcePage;
     var submittedAt = validation.submittedAt;
+    var idempotencyKey = validation.idempotencyKey;
+
+    if (idempotencyKey) {
+      var cache = CacheService.getScriptCache();
+      var cacheKey = "idem:" + idempotencyKey;
+      if (cache.get(cacheKey)) {
+        return jsonResponse_(true, "Submitted Successfully", {
+          form_type: formType,
+          sheet_tab: sheetTab,
+          timestamp: submittedAt,
+          duplicate: true,
+        });
+      }
+    }
 
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName(sheetTab) || ss.insertSheet(sheetTab);
-    ensureSheetHeaders_(sheet, sheetTab);
+    ensureSheetHeadersIfNeeded_(sheet, sheetTab);
 
     sheet.appendRow(prepareRowData_(sheetTab, data));
+
+    if (idempotencyKey) {
+      CacheService.getScriptCache().put("idem:" + idempotencyKey, "1", 600);
+    }
 
     try {
       sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt);
@@ -162,24 +197,27 @@ function setupSheets() {
     if (seen[tab]) continue;
     seen[tab] = true;
     var sheet = ss.getSheetByName(tab) || ss.insertSheet(tab);
-    ensureSheetHeaders_(sheet, tab);
+    forceSheetHeaders_(sheet, tab);
   }
-  Logger.log("setupSheets complete — Contact, Leads, TradeIn");
+  Logger.log(
+    "setupSheets complete — Contact, Leads, TradeIn (duplicate columns cleared)",
+  );
 }
 
 function setupEmailNotifications() {
   var props = PropertiesService.getScriptProperties();
-  props.setProperties(
-    {
-      NOTIFICATION_EMAIL: "Protronicspro4@gmail.com",
-      NOTIFY_ENABLED: "true",
-      NOTIFY_FROM_NAME: "Protronics Forms",
-    },
-    true,
-  );
+  var existing = String(props.getProperty("NOTIFICATION_EMAIL") || "").trim();
+  var updates = {
+    NOTIFY_ENABLED: "true",
+    NOTIFY_FROM_NAME: "Protronics Forms",
+  };
+  if (!existing) {
+    // Prefer setting NOTIFICATION_EMAIL manually in Script properties.
+    updates.NOTIFICATION_EMAIL = "";
+  }
+  props.setProperties(updates, false);
   Logger.log(
-    "Email notifications → %s (enabled=%s)",
-    props.getProperty("NOTIFICATION_EMAIL"),
+    "Email notifications configured (enabled=%s). Set NOTIFICATION_EMAIL in Script properties if empty.",
     props.getProperty("NOTIFY_ENABLED"),
   );
 }
@@ -187,7 +225,7 @@ function setupEmailNotifications() {
 function testEmailNotification() {
   var cfg = getNotifyConfig_();
   if (!cfg.to) {
-    throw new Error("NOTIFICATION_EMAIL is empty. Run setupEmailNotifications() first.");
+    throw new Error("NOTIFICATION_EMAIL is empty. Set it in Script properties first.");
   }
   MailApp.sendEmail({
     to: cfg.to,
@@ -207,6 +245,25 @@ function getNotifyConfig_() {
     to: String(props.getProperty("NOTIFICATION_EMAIL") || "").trim(),
     fromName: String(props.getProperty("NOTIFY_FROM_NAME") || "Protronics Forms").trim(),
   };
+}
+
+function getWebhookSecret_() {
+  return String(
+    PropertiesService.getScriptProperties().getProperty("FORM_WEBHOOK_SECRET") || "",
+  ).trim();
+}
+
+function authorizeRequest_(body) {
+  var expected = getWebhookSecret_();
+  if (!expected) {
+    // Secret optional until configured; Next.js proxy still provides validation.
+    return { success: true };
+  }
+  var provided = String((body && body.webhook_secret) || "").trim();
+  if (!provided || provided !== expected) {
+    return { success: false, error: "Unauthorized." };
+  }
+  return { success: true };
 }
 
 function sendNotificationEmail_(formType, sheetTab, data, sourcePage, submittedAt) {
@@ -296,6 +353,28 @@ function validatePayload_(body) {
     return { success: false, error: "Missing data object." };
   }
 
+  var required = REQUIRED_FIELDS[formType] || [];
+  for (var r = 0; r < required.length; r++) {
+    var field = required[r];
+    var value = data[field];
+    if (value === undefined || value === null || String(value).trim() === "") {
+      return { success: false, error: "Missing required field: " + field };
+    }
+  }
+
+  var phone = String(data.phone || "").replace(/\D/g, "");
+  if (phone.length !== 10) {
+    return { success: false, error: "Invalid phone number." };
+  }
+  data.phone = phone;
+
+  if (formType === "contact") {
+    var email = String(data.email || "").trim();
+    if (!email || email.indexOf("@") < 1) {
+      return { success: false, error: "Invalid email address." };
+    }
+  }
+
   return {
     success: true,
     formType: formType,
@@ -306,6 +385,7 @@ function validatePayload_(body) {
       String(body.submitted_at || new Date().toISOString()),
       40,
     ),
+    idempotencyKey: sanitizeString_(String(body.idempotency_key || ""), 80),
   };
 }
 
@@ -333,11 +413,31 @@ function getHeaderRow_(sheetTab) {
   return headers;
 }
 
-function ensureSheetHeaders_(sheet, sheetTab) {
+function headersMatch_(sheet, sheetTab) {
+  var expected = getHeaderRow_(sheetTab);
+  if (sheet.getLastRow() === 0) return false;
+  var lastCol = Math.max(sheet.getLastColumn(), 1);
+  var current = sheet.getRange(1, 1, 1, lastCol).getValues()[0] || [];
+  if (current.length < expected.length) return false;
+  for (var i = 0; i < expected.length; i++) {
+    if (String(current[i] || "") !== expected[i]) return false;
+  }
+  return true;
+}
+
+/** Only rewrite headers when missing/mismatched — never on every append. */
+function ensureSheetHeadersIfNeeded_(sheet, sheetTab) {
+  if (headersMatch_(sheet, sheetTab)) {
+    sheet.setFrozenRows(1);
+    return;
+  }
+  forceSheetHeaders_(sheet, sheetTab);
+}
+
+function forceSheetHeaders_(sheet, sheetTab) {
   var headers = getHeaderRow_(sheetTab);
   var needed = headers.length;
 
-  // Wipe old/duplicate header cells so only form columns remain
   var lastCol = Math.max(sheet.getLastColumn(), needed);
   if (lastCol > 0) {
     sheet.getRange(1, 1, 1, lastCol).clearContent();
@@ -349,7 +449,6 @@ function ensureSheetHeaders_(sheet, sheetTab) {
     sheet.getRange(1, 1, 1, needed).setValues([headers]);
   }
 
-  // Drop leftover empty columns past the form schema (keeps sheet clean)
   var maxCols = sheet.getMaxColumns();
   if (maxCols > needed) {
     sheet.deleteColumns(needed + 1, maxCols - needed);
@@ -361,8 +460,24 @@ function ensureSheetHeaders_(sheet, sheetTab) {
 function sanitizeString_(value, maxLen) {
   var str = String(value || "")
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, "")
-    .replace(/<\s*script\b/gi, "")
+    .replace(/<\/?[a-z][^>]*>/gi, "")
+    .replace(/\bon\w+\s*=/gi, "")
+    .replace(/javascript\s*:/gi, "")
     .trim();
+
+  // Spreadsheet formula injection
+  var first = str.charAt(0);
+  if (
+    first === "=" ||
+    first === "+" ||
+    first === "-" ||
+    first === "@" ||
+    first === "\t" ||
+    first === "\r"
+  ) {
+    str = "'" + str;
+  }
+
   if (str.length > maxLen) return str.slice(0, maxLen);
   return str;
 }

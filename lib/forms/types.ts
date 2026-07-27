@@ -26,7 +26,17 @@ export type PipelineResult = {
   success: boolean;
   message?: string;
   error?: string;
-  code?: "VALIDATION" | "HONEYPOT" | "OFFLINE" | "ENDPOINT" | "NETWORK" | "HTTP" | "PARSE" | "SERVER" | "DUPLICATE";
+  code?:
+    | "VALIDATION"
+    | "HONEYPOT"
+    | "OFFLINE"
+    | "ENDPOINT"
+    | "NETWORK"
+    | "HTTP"
+    | "PARSE"
+    | "SERVER"
+    | "DUPLICATE"
+    | "RATE_LIMIT";
   errors?: Record<string, string>;
   data?: {
     form_type: FormType;

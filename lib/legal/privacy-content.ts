@@ -11,7 +11,7 @@ export const PRIVACY_POLICY_PAGE: LegalPageConfig = {
   seo: {
     title: "Privacy Policy | Protronics",
     description:
-      "Learn how Protronics protects and manages your personal information.",
+      "How Protronics collects, uses, stores, and protects personal data when you browse, enquire, trade in, or buy refurbished appliances.",
     keywords: [
       "Protronics privacy policy",
       "data protection",

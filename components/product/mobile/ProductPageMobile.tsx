@@ -30,10 +30,8 @@ import {
   getMarketplaceOffers,
   getMonthlySavings,
   getProductRating,
-  getProductReviewCount,
   getProductSpecGroups,
   getTradeInCategoryLabel,
-  getVerifiedPurchaseCount,
 } from "@/lib/product-marketplace";
 import type { ShopCategory, ShopProduct } from "@/lib/shop";
 import { cn } from "@/lib/utils";
@@ -63,9 +61,6 @@ function OfferIcon({ type }: { type: "shield" | "truck" | "wrench" | "check" | "
 }
 
 function MarketplaceProductCard({ product: p }: { product: ShopProduct }) {
-  const rating = getProductRating(p);
-  const reviews = getProductReviewCount(p);
-
   return (
     <Link
       href={buildProductPath(p.id)}
@@ -74,7 +69,7 @@ function MarketplaceProductCard({ product: p }: { product: ShopProduct }) {
       <div className="relative aspect-square bg-theme-bg-secondary">
         <Image
           src={p.image}
-          alt={p.name}
+          alt={`Refurbished ${p.brand} ${p.capacity} ${p.categoryId === "washing-machines" ? "washing machine" : "refrigerator"}`}
           fill
           sizes="50vw"
           className="object-contain p-2"
@@ -85,11 +80,7 @@ function MarketplaceProductCard({ product: p }: { product: ShopProduct }) {
       </div>
       <div className="space-y-1 p-2.5">
         <p className="line-clamp-2 text-[12px] font-medium leading-snug text-theme-fg">{p.name}</p>
-        <div className="flex items-center gap-1 text-[10px] text-amber-700">
-          <Star className="h-3 w-3 fill-amber-500 text-amber-500" />
-          <span className="font-semibold">{rating}</span>
-          <span className="text-theme-fg-faint">({reviews})</span>
-        </div>
+        <p className="text-[10px] text-theme-fg-muted">Certified refurbished</p>
         <p className="text-[14px] font-bold text-theme-fg">₹{p.price.toLocaleString("en-IN")}</p>
         <p className="text-[10px] text-theme-fg-muted">{p.warranty} Warranty</p>
       </div>
@@ -166,8 +157,6 @@ export default function ProductPageMobile({
   const recentlyViewed = useRecentlyViewedProducts(product.id, 6);
 
   const rating = getProductRating(product);
-  const reviewCount = getProductReviewCount(product);
-  const verifiedCount = getVerifiedPurchaseCount(product);
   const discount = getDiscountPercent(product);
   const monthlySavings = getMonthlySavings(product);
   const offers = getMarketplaceOffers(product);
@@ -217,19 +206,16 @@ export default function ProductPageMobile({
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-theme-fg-muted">
           <div className="flex items-center gap-1">
             <span className="rounded bg-emerald-500/15 px-1.5 py-0.5 text-[13px] font-bold text-emerald-700">
               {rating}
             </span>
             <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+            <span>Quality score</span>
           </div>
-          <Link href="#pdp-reviews" className="text-[12px] text-sky-700">
-            {reviewCount} Reviews
-          </Link>
-          <span className="text-[11px] text-theme-fg-faint">
-            {verifiedCount} verified purchases
-          </span>
+          <span>{product.warranty} warranty</span>
+          <span>Certified refurbished</span>
         </div>
 
         <section className={cn(pdpCard, "p-3")}>
@@ -350,8 +336,8 @@ export default function ProductPageMobile({
           <SpecAccordion groups={specGroups} />
         </section>
 
-        <section id="pdp-reviews" className={cn(pdpCard, "p-3")}>
-          <h2 className={pdpSectionTitle}>Customer Reviews</h2>
+        <section id="pdp-trust" className={cn(pdpCard, "p-3")}>
+          <h2 className={pdpSectionTitle}>Quality & Trust</h2>
           <div className="mt-2 flex items-center gap-2">
             <span className="text-[22px] font-bold text-theme-fg">{rating}</span>
             <div>
@@ -369,7 +355,7 @@ export default function ProductPageMobile({
                 ))}
               </div>
               <p className="text-[11px] text-theme-fg-muted">
-                {reviewCount} reviews · {verifiedCount} verified
+                Internal quality score · {product.warranty} warranty
               </p>
             </div>
           </div>

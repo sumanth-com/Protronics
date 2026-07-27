@@ -12,6 +12,7 @@ import {
   sanitizePhoneInput,
 } from "@/lib/forms/validation/shared";
 import { submitLead, type ContactPreference } from "@/lib/leads";
+import HoneypotField from "@/components/forms/HoneypotField";
 import {
   getWhatsAppReserveSuccessLink,
   type ProductDetail,
@@ -36,6 +37,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [referenceId, setReferenceId] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
 
   useEffect(() => {
     if (!open) {
@@ -48,6 +50,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
         setError("");
         setReferenceId(null);
         setLoading(false);
+        setHoneypot("");
       }, 300);
       return () => clearTimeout(t);
     }
@@ -62,9 +65,11 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
     setMessage("");
     setError("");
     setLoading(false);
+    setHoneypot("");
   };
 
   const submit = async () => {
+    if (loading) return;
     if (!name.trim()) {
       setError("Please enter your name.");
       return;
@@ -95,6 +100,7 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
         contactPreference,
         message: message.trim() || undefined,
         pageUrl: typeof window !== "undefined" ? window.location.href : "",
+        _honeypot: honeypot,
       });
       setReferenceId(res.referenceId ?? null);
     } catch (e) {
@@ -186,7 +192,8 @@ export default function ReserveModal({ product, open, onClose }: ReserveModalPro
                   Show genuine interest—we&apos;ll hold this unit and contact you about availability.
                 </p>
 
-                <div className="mt-5 space-y-3">
+                <div className="mt-5 space-y-3 relative">
+                  <HoneypotField value={honeypot} onChange={setHoneypot} />
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}

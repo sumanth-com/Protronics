@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { buildBreadcrumbJsonLd } from "@/lib/faq";
 import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 const HowItWorks = dynamic(
   () => import("@/components/how-it-works/HowItWorks"),
@@ -9,9 +10,10 @@ const HowItWorks = dynamic(
 const FinalCTA = dynamic(() => import("@/components/final-cta/FinalCTA"));
 
 export const metadata: Metadata = buildPageMetadata({
-  title: PAGE_SEO.howItWorks.title,
+  absoluteTitle: PAGE_SEO.howItWorks.absoluteTitle,
   description: PAGE_SEO.howItWorks.description,
   path: PAGE_SEO.howItWorks.path,
+  keywords: [...PAGE_SEO.howItWorks.keywords],
 });
 
 export default function HowItWorksPage() {
@@ -24,7 +26,7 @@ export default function HowItWorksPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbJsonLd) }}
       />
       <div className="min-h-screen bg-black text-white">
         <HowItWorks />

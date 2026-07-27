@@ -30,14 +30,36 @@ const MAPS_ADDRESS_QUERY = encodeURIComponent(
   "No 8 Bidarahalli Hobli Chikkagubbi Village Bengaluru Karnataka 560077",
 );
 
+const DEFAULT_MAPS_EMBED = `https://maps.google.com/maps?q=${MAPS_ADDRESS_QUERY}&hl=en&z=15&output=embed`;
+
+const ALLOWED_MAP_HOSTS = new Set([
+  "maps.google.com",
+  "www.google.com",
+  "google.com",
+  "www.google.co.in",
+]);
+
+function isAllowedMapsEmbedUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:") return false;
+    return ALLOWED_MAP_HOSTS.has(parsed.hostname);
+  } catch {
+    return false;
+  }
+}
+
 /** Google Business Profile / Maps listing — set in env when live. */
 export const GOOGLE_BUSINESS_PROFILE_URL =
   process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_PROFILE_URL?.trim() ||
   `https://www.google.com/maps/search/?api=1&query=${MAPS_ADDRESS_QUERY}`;
 
-export const GOOGLE_MAPS_EMBED_URL =
-  process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL?.trim() ||
-  `https://maps.google.com/maps?q=${MAPS_ADDRESS_QUERY}&hl=en&z=15&output=embed`;
+const mapsEmbedCandidate =
+  process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL?.trim() || DEFAULT_MAPS_EMBED;
+
+export const GOOGLE_MAPS_EMBED_URL = isAllowedMapsEmbedUrl(mapsEmbedCandidate)
+  ? mapsEmbedCandidate
+  : DEFAULT_MAPS_EMBED;
 
 export const GOOGLE_MAPS_DIRECTIONS_URL =
   process.env.NEXT_PUBLIC_GOOGLE_MAPS_DIRECTIONS_URL?.trim() ||

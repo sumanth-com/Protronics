@@ -1,6 +1,6 @@
 import { BUSINESS } from "@/lib/contact";
 import { PRODUCT_GALLERY } from "@/lib/product-images";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, SITE_URL } from "@/lib/site";
 import {
   SHOP_PRODUCTS,
   getCategoryBySlug,
@@ -205,24 +205,26 @@ Please confirm availability and delivery details.`;
 
 export function buildProductMetadata(product: ProductDetail) {
   const category = getCategoryBySlug(product.categoryId);
-  const applianceLabel = isWashingMachineCategory(product.categoryId)
-    ? "Washing Machine"
-    : "Refrigerator";
+  const isWasher = isWashingMachineCategory(product.categoryId);
+  const applianceLabel = isWasher ? "Washing Machine" : "Refrigerator";
+  const priceLabel = `₹${product.price.toLocaleString("en-IN")}`;
   return {
     title: `${product.name} | Refurbished ${applianceLabel} | Protronics`,
-    description: `Buy the ${product.name} refurbished ${applianceLabel.toLowerCase()} from Protronics. Professionally tested, sanitized, ${product.warranty} warranty included, and ready for delivery in Bengaluru.`,
+    description: `Buy refurbished ${product.brand} ${product.capacity} ${applianceLabel.toLowerCase()} (${priceLabel}) at Protronics Bangalore—tested, sanitized, ${product.warranty} warranty, and delivery across Bengaluru.`,
     categoryLabel: category?.label ?? applianceLabel,
   };
 }
 
 export function getProductJsonLd(product: ProductDetail) {
   const productUrl = absoluteUrl(`/product/${product.id}`);
+  const productId = `${productUrl}#product`;
   const validUntil = new Date();
   validUntil.setMonth(validUntil.getMonth() + 3);
 
   return {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": productId,
     name: product.name,
     sku: product.id,
     mpn: product.id,
@@ -235,6 +237,7 @@ export function getProductJsonLd(product: ProductDetail) {
     url: productUrl,
     offers: {
       "@type": "Offer",
+      "@id": `${productUrl}#offer`,
       price: product.price,
       priceCurrency: "INR",
       priceValidUntil: validUntil.toISOString().slice(0, 10),
@@ -244,9 +247,7 @@ export function getProductJsonLd(product: ProductDetail) {
       url: productUrl,
       itemCondition: "https://schema.org/RefurbishedCondition",
       seller: {
-        "@type": "Organization",
-        name: "Protronics",
-        url: absoluteUrl("/"),
+        "@id": `${SITE_URL}/#localbusiness`,
       },
     },
   };

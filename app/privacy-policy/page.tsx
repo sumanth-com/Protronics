@@ -5,6 +5,7 @@ import {
   PRIVACY_POLICY_PAGE,
 } from "@/lib/legal";
 import { buildPageMetadata } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 const page = PRIVACY_POLICY_PAGE;
 
@@ -22,7 +23,7 @@ export default function PrivacyPolicyPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(jsonLd) }}
       />
       <main>
         <LegalPage config={page} />

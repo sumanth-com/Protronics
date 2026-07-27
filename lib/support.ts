@@ -264,20 +264,17 @@ export function getDefaultSelection() {
 }
 
 export function resolveSelection(categorySlug?: string, articleSlug?: string) {
-  const fallback = getDefaultSelection();
-  if (!categorySlug) return fallback;
+  if (!categorySlug) return getDefaultSelection();
 
   const category = getCategoryById(categorySlug);
-  if (!category) return fallback;
+  if (!category) return null;
 
   if (!articleSlug) {
     return { categoryId: category.id, articleId: category.articles[0]!.id };
   }
 
   const article = category.articles.find((a) => a.id === articleSlug);
-  if (!article) {
-    return { categoryId: category.id, articleId: category.articles[0]!.id };
-  }
+  if (!article) return null;
 
   return { categoryId: category.id, articleId: article.id };
 }
@@ -380,10 +377,54 @@ export function buildSupportFaqJsonLd() {
 
 export function buildSupportHubMetadata() {
   return {
-    title: "Frequently Asked Questions | Protronics",
+    title: "Help Center & FAQs | Protronics",
     description:
-      "Find answers about refurbished appliances, warranties, delivery, trade-ins, quality testing, and support.",
+      "Find answers about refurbished appliances, warranties, delivery, trade-ins, quality testing, and support from Protronics in Bangalore.",
     path: "/support",
+  };
+}
+
+const CATEGORY_META: Record<
+  string,
+  { title: string; description: string }
+> = {
+  warranty: {
+    title: "Refrigerator Warranty FAQ | Protronics Support",
+    description:
+      "Answers on Protronics 1-year warranty coverage, claims, transfers, and what refurbished refrigerators include in Bangalore.",
+  },
+  delivery: {
+    title: "Delivery & Installation FAQ | Protronics",
+    description:
+      "Delivery timelines, cities, installation, and tracking for refurbished appliances across Bengaluru.",
+  },
+  "product-condition": {
+    title: "Refurbished Condition & Testing FAQ | Protronics",
+    description:
+      "How Protronics tests, grades, sanitizes, and certifies refurbished refrigerators and washing machines.",
+  },
+  returns: {
+    title: "Returns & Refunds FAQ | Protronics",
+    description:
+      "Return policy, process, and refund timelines for Protronics refurbished appliances in Bangalore.",
+  },
+  "protronics-protection": {
+    title: "Protronics Protection FAQ",
+    description:
+      "What’s included in Protronics Protection—coverage, exclusions, claims, and installation support.",
+  },
+};
+
+export function buildCategorySupportMetadata(categoryId: string) {
+  const category = getCategoryById(categoryId);
+  if (!category) return null;
+  const custom = CATEGORY_META[categoryId];
+  return {
+    title: custom?.title ?? `${category.label} FAQ | Protronics Support`,
+    description:
+      custom?.description ??
+      `Help articles about ${category.label.toLowerCase()} for Protronics refurbished appliances in Bangalore.`,
+    path: `/support/${categoryId}`,
   };
 }
 

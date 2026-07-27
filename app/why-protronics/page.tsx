@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import WhyPage from "@/components/why/WhyPage";
 import { whyPageJsonLd } from "@/lib/why";
 import { buildPageMetadata } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: "Why Protronics | Trust & Quality You Can Verify",
@@ -21,7 +22,7 @@ export default function WhyProtronicsPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(whyPageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(whyPageJsonLd) }}
       />
       <div className="min-h-screen bg-black text-white">
         <WhyPage />

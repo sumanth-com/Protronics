@@ -32,7 +32,7 @@ export default function SectionHeading({
         {eyebrow}
       </motion.p>
 
-      <motion.h2
+      <motion.h1
         variants={fadeUp}
         className={cn(
           "type-section-title mt-3 text-center font-semibold tracking-tight text-white",
@@ -41,7 +41,7 @@ export default function SectionHeading({
         )}
       >
         {title}
-      </motion.h2>
+      </motion.h1>
 
       {description ? (
         <motion.p

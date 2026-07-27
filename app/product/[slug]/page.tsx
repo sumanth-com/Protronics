@@ -11,6 +11,7 @@ import {
 } from "@/lib/product-detail";
 import { absoluteUrl } from "@/lib/site";
 import { buildPageMetadata } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -23,7 +24,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = getProductBySlug(slug);
-  if (!product) return { title: "Product Not Found | Protronics" };
+  if (!product) {
+    return buildPageMetadata({
+      absoluteTitle: "Product Not Found | Protronics",
+      description: "This refurbished appliance listing is unavailable or has been sold.",
+      path: "/shop",
+      noIndex: true,
+    });
+  }
 
   const meta = buildProductMetadata(product);
   const ogImage = product.images[0]
@@ -37,6 +45,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: meta.description,
     path: `/product/${slug}`,
     ogImage,
+    keywords: [
+      `refurbished ${product.brand}`.toLowerCase(),
+      "refurbished refrigerator bangalore",
+      "refurbished refrigerator with warranty",
+    ],
   });
 }
 
@@ -57,11 +70,11 @@ export default async function ProductPage({ params }: PageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(productJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(breadcrumbJsonLd) }}
       />
       <ProductPageClient product={product} related={related} />
     </>

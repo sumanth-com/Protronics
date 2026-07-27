@@ -72,7 +72,7 @@ export default function BestDealsSection() {
             >
               Best Deals
             </motion.p>
-            <motion.h2
+            <motion.h1
               variants={fadeUp}
               className={cn(
                 "mt-2 font-semibold tracking-tight text-white sm:mt-3",
@@ -80,7 +80,7 @@ export default function BestDealsSection() {
               )}
             >
               Shop Best Deals
-            </motion.h2>
+            </motion.h1>
             <motion.p
               variants={fadeUp}
               className="mt-2 text-[13px] leading-6 text-white/65 sm:mt-3 sm:text-[15px]"

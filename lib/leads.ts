@@ -17,6 +17,7 @@ export type LeadPayload = {
   message?: string;
   preferredTime?: string;
   pageUrl: string;
+  _honeypot?: string;
 };
 
 export type LeadResponse = {
@@ -56,6 +57,7 @@ export async function submitLead(payload: LeadPayload): Promise<LeadResponse> {
       message: payload.message ?? "",
       preferredTime: payload.preferredTime ?? "",
       referenceId,
+      _honeypot: payload._honeypot,
     },
     { sourcePage: payload.pageUrl },
   );

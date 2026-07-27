@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import AboutHero from "@/components/about/AboutHero";
 import { aboutPageJsonLd } from "@/lib/about";
 import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
+import { safeJsonLdStringify } from "@/lib/safeJsonLd";
 
 const AboutWhyExists = dynamic(
   () => import("@/components/about/AboutWhyExists"),
@@ -23,6 +24,7 @@ export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: PAGE_SEO.about.absoluteTitle,
   description: PAGE_SEO.about.description,
   path: PAGE_SEO.about.path,
+  keywords: [...PAGE_SEO.about.keywords],
 });
 
 export default function AboutPage() {
@@ -30,7 +32,7 @@ export default function AboutPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(aboutPageJsonLd) }}
       />
       <div className="min-h-screen bg-black text-white">
         <main>

@@ -6,7 +6,6 @@ export { createFormSubmitter } from "@/lib/forms/createFormSubmitter";
 export { runSubmitPipeline } from "@/lib/forms/submitPipeline";
 export { submitForm } from "@/lib/forms/submitForm";
 export {
-  resolveFormEndpointUrl,
   initFormEndpointHealth,
   postToGoogleSheets,
   isValidFormEndpointUrl,

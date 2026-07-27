@@ -1,13 +1,8 @@
 import type { StandardFormPayload } from "@/lib/forms/types";
 
-const ENDPOINT_JSON_PATH = "/forms-endpoint.json";
-const SCRIPT_URL_RE = /^https:\/\/script\.google\.com\/macros\/s\/[a-zA-Z0-9_-]+\/exec$/;
-const REQUEST_TIMEOUT_MS = 18_000;
-
 export type FormEndpointHealth = {
   ready: boolean;
-  url: string | null;
-  source: "env" | "json" | "none";
+  source: "api" | "none";
   error?: string;
 };
 
@@ -17,92 +12,25 @@ declare global {
   }
 }
 
-let cachedUrl: string | null = null;
-let resolvePromise: Promise<string> | null = null;
-
-function readEnvEndpoint(): string | null {
-  const url =
-    process.env.NEXT_PUBLIC_FORM_ENDPOINT_URL ??
-    process.env.NEXT_PUBLIC_FORM_ENDPOINT ??
-    "";
-  const trimmed = url.trim();
-  return trimmed || null;
-}
-
-export function isValidFormEndpointUrl(url: string): boolean {
-  return SCRIPT_URL_RE.test(url.trim());
-}
+let healthCache: FormEndpointHealth | null = null;
+let healthPromise: Promise<FormEndpointHealth> | null = null;
 
 export function setFormHealth(health: FormEndpointHealth) {
+  healthCache = health;
   if (typeof window !== "undefined") {
     window.__FORM_HEALTH__ = health;
   }
 }
 
-/** Resolve Apps Script /exec URL: build env first, then /forms-endpoint.json. */
-export async function resolveFormEndpointUrl(): Promise<string> {
-  if (cachedUrl) return cachedUrl;
-  if (resolvePromise) return resolvePromise;
-
-  resolvePromise = (async () => {
-    const fromEnv = readEnvEndpoint();
-    if (fromEnv) {
-      if (!isValidFormEndpointUrl(fromEnv)) {
-        const health: FormEndpointHealth = {
-          ready: false,
-          url: null,
-          source: "env",
-          error: "Invalid form endpoint URL format (NEXT_PUBLIC_FORM_ENDPOINT).",
-        };
-        setFormHealth(health);
-        throw new Error(health.error);
-      }
-      cachedUrl = fromEnv;
-      setFormHealth({ ready: true, url: fromEnv, source: "env" });
-      return fromEnv;
-    }
-
-    if (typeof window === "undefined") {
-      throw new Error("Form endpoint not configured.");
-    }
-
-    const res = await fetch(ENDPOINT_JSON_PATH, { cache: "no-store" });
-    if (!res.ok) {
-      const health: FormEndpointHealth = {
-        ready: false,
-        url: null,
-        source: "none",
-        error: `Could not load ${ENDPOINT_JSON_PATH}.`,
-      };
-      setFormHealth(health);
-      throw new Error(health.error);
-    }
-
-    const json = (await res.json()) as { url?: string | null };
-    const url = String(json.url ?? "").trim();
-    if (!url || !isValidFormEndpointUrl(url)) {
-      const health: FormEndpointHealth = {
-        ready: false,
-        url: null,
-        source: "json",
-        error:
-          "Form endpoint not configured. Set NEXT_PUBLIC_FORM_ENDPOINT in .env (local) or Vercel env vars, then rebuild.",
-      };
-      setFormHealth(health);
-      throw new Error(health.error);
-    }
-
-    cachedUrl = url;
-    setFormHealth({ ready: true, url, source: "json" });
-    return url;
-  })();
-
-  return resolvePromise;
-}
-
 export type SheetsClientResult =
   | { success: true; message: string; data?: Record<string, unknown> }
-  | { success: false; error: string; code?: "ENDPOINT" | "NETWORK" | "HTTP" | "PARSE" | "SERVER" };
+  | {
+      success: false;
+      error: string;
+      code?: "ENDPOINT" | "NETWORK" | "HTTP" | "PARSE" | "SERVER" | "RATE_LIMIT";
+    };
+
+const REQUEST_TIMEOUT_MS = 20_000;
 
 async function fetchWithTimeout(
   url: string,
@@ -119,8 +47,7 @@ async function fetchWithTimeout(
     return await fetch(url, {
       ...init,
       signal: controller.signal,
-      mode: "cors",
-      credentials: "omit",
+      credentials: "same-origin",
     });
   } finally {
     clearTimeout(timeout);
@@ -135,6 +62,7 @@ function parseResponseBody(text: string): SheetsClientResult {
       success?: boolean;
       message?: string;
       error?: string;
+      code?: string;
       data?: Record<string, unknown>;
     };
     if (json.success === true) {
@@ -147,99 +75,127 @@ function parseResponseBody(text: string): SheetsClientResult {
     return {
       success: false,
       error: json.error ?? json.message ?? "Submission failed.",
-      code: "SERVER",
+      code:
+        json.code === "RATE_LIMIT"
+          ? "RATE_LIMIT"
+          : json.code === "ENDPOINT"
+            ? "ENDPOINT"
+            : "SERVER",
     };
   } catch {
-    if (trimmed.toLowerCase().includes("success")) {
-      return { success: true, message: "Submitted Successfully" };
-    }
-    return { success: false, error: "Unexpected response from form service.", code: "PARSE" };
+    return {
+      success: false,
+      error: "Unexpected response from form service.",
+      code: "PARSE",
+    };
   }
 }
 
 /**
- * POST to Google Apps Script using urlencoded `payload` (browser CORS-friendly).
+ * POST validated payload to the same-origin `/api/forms` proxy.
+ * The Apps Script webhook URL stays server-side only.
  */
 export async function postToGoogleSheets(
-  payload: StandardFormPayload,
+  payload: StandardFormPayload & { _honeypot?: string },
   signal?: AbortSignal,
 ): Promise<SheetsClientResult> {
-  let endpoint: string;
+  const idempotencyKey =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
   try {
-    endpoint = await resolveFormEndpointUrl();
-  } catch (err) {
-    return {
-      success: false,
-      error: err instanceof Error ? err.message : "Form endpoint not configured.",
-      code: "ENDPOINT",
-    };
-  }
+    const res = await fetchWithTimeout(
+      "/api/forms",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...payload,
+          idempotency_key: idempotencyKey,
+        }),
+      },
+      signal,
+    );
 
-  const body = new URLSearchParams({
-    payload: JSON.stringify(payload),
-  });
+    const text = await res.text();
+    const parsed = parseResponseBody(text);
 
-  const attempt = async (): Promise<SheetsClientResult> => {
-    try {
-      const res = await fetchWithTimeout(
-        endpoint,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: body.toString(),
-        },
-        signal,
-      );
-
-      const text = await res.text();
-      const parsed = parseResponseBody(text);
-
-      if (!res.ok && parsed.success) {
-        return parsed;
-      }
-      if (!parsed.success) {
-        return { ...parsed, code: parsed.code ?? "HTTP" };
-      }
-      return parsed;
-    } catch (err) {
-      if (signal?.aborted) {
-        return { success: false, error: "Submission cancelled.", code: "NETWORK" };
-      }
-      const isAbort = err instanceof Error && err.name === "AbortError";
+    if (res.status === 429) {
       return {
         success: false,
-        error: isAbort
-          ? "Request timed out. Please try again."
-          : "Network error. Check your connection and try again.",
-        code: "NETWORK",
+        error: parsed.success ? "Too many submissions." : parsed.error,
+        code: "RATE_LIMIT",
       };
     }
-  };
 
-  const first = await attempt();
-  if (first.success || first.code === "SERVER" || first.code === "PARSE") {
-    return first;
+    if (!res.ok && !parsed.success) {
+      return { ...parsed, code: parsed.code ?? "HTTP" };
+    }
+    return parsed;
+  } catch (err) {
+    if (signal?.aborted) {
+      return { success: false, error: "Submission cancelled.", code: "NETWORK" };
+    }
+    const isAbort = err instanceof Error && err.name === "AbortError";
+    return {
+      success: false,
+      error: isAbort
+        ? "Request timed out. Please try again."
+        : "Network error. Check your connection and try again.",
+      code: "NETWORK",
+    };
   }
-  if (first.code === "NETWORK") {
-    await new Promise((r) => setTimeout(r, 800));
-    return attempt();
-  }
-  return first;
 }
 
-/** Call on app startup (client) to warm endpoint resolution. */
+/** Warm `/api/forms` health without exposing webhook URLs. */
 export async function initFormEndpointHealth(): Promise<FormEndpointHealth> {
-  try {
-    await resolveFormEndpointUrl();
-    return window.__FORM_HEALTH__ ?? { ready: true, url: cachedUrl, source: "env" };
-  } catch {
-    return (
-      window.__FORM_HEALTH__ ?? {
-        ready: false,
-        url: null,
-        source: "none",
-        error: "Endpoint not ready",
+  if (healthCache?.ready) return healthCache;
+  if (healthPromise) return healthPromise;
+
+  healthPromise = (async () => {
+    try {
+      const res = await fetch("/api/forms", {
+        method: "GET",
+        cache: "no-store",
+        credentials: "same-origin",
+      });
+      if (!res.ok) {
+        const health: FormEndpointHealth = {
+          ready: false,
+          source: "none",
+          error: "Form API unavailable.",
+        };
+        setFormHealth(health);
+        return health;
       }
-    );
-  }
+      const json = (await res.json()) as { ready?: boolean };
+      const health: FormEndpointHealth = {
+        ready: Boolean(json.ready),
+        source: "api",
+        error: json.ready ? undefined : "Form endpoint not configured on the server.",
+      };
+      setFormHealth(health);
+      return health;
+    } catch {
+      const health: FormEndpointHealth = {
+        ready: false,
+        source: "none",
+        error: "Form API unavailable.",
+      };
+      setFormHealth(health);
+      return health;
+    } finally {
+      healthPromise = null;
+    }
+  })();
+
+  return healthPromise;
+}
+
+/** @deprecated Client no longer resolves Apps Script URLs. */
+export function isValidFormEndpointUrl(url: string): boolean {
+  return /^https:\/\/script\.google\.com\/macros\/s\/[a-zA-Z0-9_-]+\/exec$/.test(
+    url.trim(),
+  );
 }

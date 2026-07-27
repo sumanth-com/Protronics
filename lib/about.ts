@@ -235,28 +235,12 @@ export const aboutPageJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
-      "@id": `${absoluteUrl("/")}#organization`,
-      name: "Protronics",
-      url: absoluteUrl("/"),
-      description:
-        "Premium refurbished refrigerators and appliances—professionally restored, quality certified, and warranty backed.",
-      areaServed: "IN",
-      knowsAbout: [
-        "refurbished refrigerators",
-        "refurbished appliances",
-        "premium refurbished appliances",
-        "appliance warranty",
-        "appliance restoration",
-      ],
-    },
-    {
       "@type": "WebPage",
       "@id": `${absoluteUrl("/about")}#webpage`,
       url: absoluteUrl("/about"),
-      name: "About Protronics | Premium Refurbished Appliances",
+      name: "About Protronics | Certified Refurbished Appliances Bangalore",
       description:
-        "Protronics delivers premium refurbished refrigerators through rigorous testing, deep sanitization, performance certification, and 1-year warranty support.",
+        "Protronics is a Bengaluru refurbished appliance store that restores and certifies refrigerators and washing machines with testing, sanitization, and warranty-backed delivery.",
       isPartOf: { "@id": `${absoluteUrl("/")}#website` },
       about: { "@id": `${absoluteUrl("/")}#organization` },
     },

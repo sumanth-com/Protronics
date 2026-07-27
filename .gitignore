@@ -39,6 +39,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Generated at build — never commit a live Apps Script webhook URL
+# (tracked placeholder stays null; local builds overwrite configured flag)
+# public/forms-endpoint.json is rewritten with url:null on every build
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

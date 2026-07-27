@@ -10,6 +10,7 @@ import {
   sanitizePhoneInput,
 } from "@/lib/forms/validation/shared";
 import { submitLead } from "@/lib/leads";
+import HoneypotField from "@/components/forms/HoneypotField";
 import type { ProductDetail } from "@/lib/product-detail";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +37,7 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
 
   useEffect(() => {
     if (!open) {
@@ -46,6 +48,7 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
         setError("");
         setSubmitted(false);
         setLoading(false);
+        setHoneypot("");
       }, 300);
       return () => clearTimeout(t);
     }
@@ -58,9 +61,11 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
     setPreferredTime(TIME_OPTIONS[0]);
     setError("");
     setLoading(false);
+    setHoneypot("");
   };
 
   const submit = async () => {
+    if (loading) return;
     if (!name.trim()) {
       setError("Please enter your name.");
       return;
@@ -85,6 +90,7 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
         phone: phone.trim(),
         preferredTime,
         pageUrl: typeof window !== "undefined" ? window.location.href : "",
+        _honeypot: honeypot,
       });
       setSubmitted(true);
     } catch (e) {
@@ -155,7 +161,8 @@ export default function CallbackModal({ product, open, onClose }: CallbackModalP
                   We&apos;ll call you to discuss this appliance.
                 </p>
 
-                <div className="mt-4 space-y-3">
+                <div className="mt-4 space-y-3 relative">
+                  <HoneypotField value={honeypot} onChange={setHoneypot} />
                   <input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
