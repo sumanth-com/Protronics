@@ -4273,14 +4273,13 @@ html:not([data-theme="light"]) .contact-location-map-frame {
     z-index: 3;
   }
 
-  /* Five 3D trust cards in one row */
+  /* Five trust cards — same premium-card hover as Top Brands */
   .hero-trust-zone {
     display: block !important;
     width: 100%;
     flex-shrink: 0;
     margin: 0;
     padding: 0.15rem 0 0.25rem;
-    perspective: 1200px;
   }
 
   .hero-trust-grid {
@@ -4297,28 +4296,7 @@ html:not([data-theme="light"]) .contact-location-map-frame {
     padding: 0;
     border-radius: 1.15rem !important;
     overflow: hidden;
-    transform: translateY(0) rotateX(4deg);
-    transform-style: preserve-3d;
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.55) inset,
-      0 -1px 0 rgba(0, 0, 0, 0.04) inset,
-      0 10px 22px rgba(0, 0, 0, 0.1),
-      0 22px 40px rgba(0, 0, 0, 0.12);
-  }
-
-  .hero-trust-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-      165deg,
-      rgba(255, 255, 255, 0.55) 0%,
-      rgba(255, 255, 255, 0.08) 38%,
-      transparent 62%
-    );
-    pointer-events: none;
-    z-index: 0;
+    cursor: default;
   }
 
   .hero-trust-card-inner {
@@ -4339,9 +4317,6 @@ html:not([data-theme="light"]) .contact-location-map-frame {
     height: 2.5rem;
     flex-shrink: 0;
     border-radius: 9999px !important;
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.65) inset,
-      0 6px 14px rgba(112, 25, 27, 0.12);
   }
 
   .hero-trust-copy {
@@ -4356,6 +4331,7 @@ html:not([data-theme="light"]) .contact-location-map-frame {
     font-size: 0.8125rem;
     line-height: 1.15;
     letter-spacing: -0.01em;
+    transform-origin: left center;
   }
 
   .hero-trust-desc {
@@ -4442,20 +4418,7 @@ html:not([data-theme="light"]) .contact-location-map-frame {
   color: var(--theme-accent) !important;
 }
 
-/* Trust metrics cards — readable, clean 3D depth */
-.hero-trust-zone,
-.hero-trust-zone * {
-  cursor: default !important;
-  pointer-events: none !important;
-}
-
-.hero-trust-card *,
-.hero-trust-card:hover *,
-.hero-trust-zone:hover * {
-  transition: none !important;
-  animation: none !important;
-}
-
+/* Trust metrics cards — same premium hover as Top Brands */
 .hero-trust-icon-wrap {
   border: 1px solid color-mix(in srgb, var(--theme-accent) 18%, var(--theme-border));
   background: color-mix(in srgb, var(--theme-accent) 12%, var(--theme-elevated));
@@ -4483,14 +4446,12 @@ html:not([data-theme="light"]) .contact-location-map-frame {
 }
 
 [data-theme="light"] .hero-trust-card {
-  background:
-    linear-gradient(180deg, #ffffff 0%, #f7f5f4 100%) !important;
-  border-color: rgba(0, 0, 0, 0.06) !important;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 -1px 0 rgba(0, 0, 0, 0.04) inset,
-    0 10px 22px rgba(0, 0, 0, 0.08),
-    0 22px 40px rgba(112, 25, 27, 0.08) !important;
+  background-color: var(--theme-surface-card) !important;
+  border-color: var(--theme-border) !important;
+}
+
+[data-theme="light"] .hero-trust-card:hover {
+  background-color: color-mix(in srgb, var(--theme-surface-card) 92%, var(--theme-accent)) !important;
 }
 
 [data-theme="light"] .hero-trust-title {
@@ -4503,14 +4464,14 @@ html:not([data-theme="light"]) .contact-location-map-frame {
   -webkit-text-fill-color: #666666 !important;
 }
 
+[data-theme="light"] .hero-trust-card:hover .hero-trust-desc {
+  color: #444444 !important;
+  -webkit-text-fill-color: #444444 !important;
+}
+
 [data-theme="dark"] .hero-trust-card {
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.04) 100%) !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.12) inset,
-    0 12px 28px rgba(0, 0, 0, 0.4),
-    0 24px 48px rgba(0, 0, 0, 0.28) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 [data-theme="dark"] .hero-trust-icon,
@@ -5502,6 +5463,33 @@ body.mobile-nav-scroll-lock {
 body.product-page-active {
   overflow-anchor: none;
   overscroll-behavior-y: contain;
+}
+
+/* Product gallery — stay in left column with clear product framing */
+.product-gallery {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.product-gallery-main {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: min(62vh, 560px);
+  min-height: 280px;
+}
+
+@media (min-width: 1024px) {
+  .product-gallery-main {
+    aspect-ratio: 1 / 1;
+    max-height: min(58vh, 520px);
+    min-height: 360px;
+  }
+}
+
+[data-theme="light"] .product-gallery-main {
+  background: #f3f3f3 !important;
+  border-color: var(--theme-border) !important;
 }
 
 .trust-badge-row {
@@ -7064,7 +7052,6 @@ table {
     .hero-trust-card {
       min-height: 3.75rem;
       border-radius: 0.95rem !important;
-      transform: translateY(0) rotateX(2deg);
     }
 
     .hero-trust-card-inner {

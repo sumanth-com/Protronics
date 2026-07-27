@@ -9,12 +9,6 @@ import { CATEGORY_COVER_IMAGES } from "@/lib/product-images";
 
 const categories = [
   {
-    title: "Mini Fridges",
-    img: CATEGORY_COVER_IMAGES["mini-fridges"],
-    pos: "50% 50%",
-    href: "/shop/mini-fridges",
-  },
-  {
     title: "Single Door",
     img: CATEGORY_COVER_IMAGES["single-door"],
     pos: "50% 50%",

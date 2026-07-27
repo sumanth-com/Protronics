@@ -11,7 +11,6 @@ export const shopGlass = [
 export type ShopCategoryId =
   | "single-door"
   | "double-door"
-  | "mini-fridges"
   | "washing-machines"
   | "premium-hubs";
 
@@ -25,7 +24,6 @@ export type ShopCategory = {
 export const SHOP_CATEGORIES: ShopCategory[] = [
   { id: "single-door", slug: "single-door", label: "Single Door", description: "Compact & efficient" },
   { id: "double-door", slug: "double-door", label: "Double Door", description: "Frost-free family size" },
-  { id: "mini-fridges", slug: "mini-fridges", label: "Mini Fridges", description: "Dorms & small spaces" },
   {
     id: "washing-machines",
     slug: "washing-machines",
@@ -71,25 +69,6 @@ export type ShopProduct = {
 };
 
 export const SHOP_PRODUCTS: ShopProduct[] = [
-  {
-    id: "sf-godrej-240",
-    name: "Godrej Edge Pro Single Door 240L",
-    brand: "Godrej",
-    categoryId: "single-door",
-    capacity: "240L",
-    capacityLiters: 240,
-    price: 14999,
-    originalPrice: 19999,
-    condition: "Excellent",
-    warranty: "1 Year",
-    energyRating: "3 Star",
-    deliveryAvailable: true,
-    image: productImagePath("sf-godrej-240"),
-    specs: ["Quick Chill", "Low Power", "Compact"],
-    popularity: 86,
-    salesRank: 9,
-    createdAt: "2026-02-20",
-  },
   {
     id: "sf-lg-190",
     name: "LG 190 Litre Inverter Single Door Refrigerator",
@@ -149,44 +128,6 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     popularity: 90,
     salesRank: 2,
     createdAt: "2026-07-16",
-  },
-  {
-    id: "mini-haier-190",
-    name: "Haier Compact Mini Fridge 190L",
-    brand: "Haier",
-    categoryId: "mini-fridges",
-    capacity: "190L",
-    capacityLiters: 190,
-    price: 12999,
-    originalPrice: 16999,
-    condition: "Like New",
-    warranty: "1 Year",
-    energyRating: "3 Star",
-    deliveryAvailable: true,
-    image: productImagePath("mini-haier-190"),
-    specs: ["190L", "Space Optimized", "Quick Chill"],
-    popularity: 82,
-    salesRank: 10,
-    createdAt: "2026-01-15",
-  },
-  {
-    id: "mini-lg-170",
-    name: "LG Direct Cool Mini 170L",
-    brand: "LG",
-    categoryId: "mini-fridges",
-    capacity: "170L",
-    capacityLiters: 170,
-    price: 11999,
-    originalPrice: 15499,
-    condition: "Excellent",
-    warranty: "1 Year",
-    energyRating: "3 Star",
-    deliveryAvailable: true,
-    image: productImagePath("mini-lg-170"),
-    specs: ["170L", "Low Power", "Dorm Ready"],
-    popularity: 79,
-    salesRank: 11,
-    createdAt: "2026-02-10",
   },
   {
     id: "wm-samsung-7kg",

@@ -27,8 +27,9 @@ export default function TrustMetrics() {
             <div
               key={m.desc}
               className={cn(
-                "hero-trust-card pointer-events-none",
-                "border border-theme-border bg-theme-surface-card",
+                "hero-trust-card premium-card group relative overflow-hidden",
+                "border border-white/[0.08] bg-white/[0.02]",
+                "transition-all duration-300 hover:border-white/20 hover:bg-white/[0.05]",
               )}
             >
               <div className="hero-trust-card-inner">
@@ -36,8 +37,12 @@ export default function TrustMetrics() {
                   <Icon className="hero-trust-icon h-4 w-4" strokeWidth={1.85} />
                 </div>
                 <div className="hero-trust-copy">
-                  <div className="hero-trust-title">{m.title}</div>
-                  <div className="hero-trust-desc">{m.desc}</div>
+                  <div className="hero-trust-title transition-transform duration-300 group-hover:scale-105">
+                    {m.title}
+                  </div>
+                  <div className="hero-trust-desc transition-colors duration-300 group-hover:text-white/70">
+                    {m.desc}
+                  </div>
                 </div>
               </div>
             </div>

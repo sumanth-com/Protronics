@@ -15,6 +15,9 @@ const AboutWarrantySection = dynamic(
 const AboutWhyChoose = dynamic(() => import("@/components/about/AboutWhyChoose"));
 const AboutFAQ = dynamic(() => import("@/components/about/AboutFAQ"));
 const AboutFinalCTA = dynamic(() => import("@/components/about/AboutFinalCTA"));
+const StickyWhatsApp = dynamic(
+  () => import("@/components/contact/StickyWhatsApp"),
+);
 
 export const metadata: Metadata = buildPageMetadata({
   absoluteTitle: PAGE_SEO.about.absoluteTitle,
@@ -40,6 +43,7 @@ export default function AboutPage() {
           <AboutFAQ />
           <AboutFinalCTA />
         </main>
+        <StickyWhatsApp />
       </div>
     </>
   );

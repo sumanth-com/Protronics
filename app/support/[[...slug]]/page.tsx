@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 import SupportCenter from "@/components/support/SupportCenter";
 import { buildPageMetadata } from "@/lib/seo";
@@ -11,6 +12,10 @@ import {
   getArticle,
   resolveSelection,
 } from "@/lib/support";
+
+const StickyWhatsApp = dynamic(
+  () => import("@/components/contact/StickyWhatsApp"),
+);
 
 type PageProps = {
   params: Promise<{ slug?: string[] }>;
@@ -117,6 +122,7 @@ export default async function SupportPage({ params }: PageProps) {
         />
       ) : null}
       <SupportCenter initialCategoryId={categoryId} initialArticleId={articleId} />
+      <StickyWhatsApp />
     </>
   );
 }

@@ -8,7 +8,6 @@ const categories = [
   "All Refrigerators",
   "Single Door",
   "Double Door",
-  "Mini Fridges",
   "Washing Machines",
 ] as const;
 

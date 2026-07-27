@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import TradeInPage from "@/components/trade-in/TradeInPage";
 import { tradeInPageJsonLd } from "@/lib/trade-in";
 import { buildPageMetadata, PAGE_SEO } from "@/lib/seo";
+
+const StickyWhatsApp = dynamic(
+  () => import("@/components/contact/StickyWhatsApp"),
+);
 
 export const metadata: Metadata = buildPageMetadata({
   title: PAGE_SEO.sell.title,
@@ -18,6 +23,7 @@ export default function SellPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(tradeInPageJsonLd) }}
       />
       <TradeInPage />
+      <StickyWhatsApp />
     </>
   );
 }

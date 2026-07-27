@@ -41,9 +41,9 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
 
   return (
     <>
-      <div className={cn("flex h-full min-h-[260px] flex-col gap-2 sm:min-h-[320px] lg:min-h-0", className)}>
+      <div className={cn("product-gallery flex w-full flex-col gap-3", className)}>
         {/* Mobile — swipeable gallery with pagination */}
-        <div className="product-gallery-mobile relative min-h-0 flex-1 lg:hidden">
+        <div className="product-gallery-mobile relative w-full lg:hidden">
           <Swiper
             modules={[Pagination]}
             pagination={{ clickable: true }}
@@ -57,14 +57,14 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
               setActive(swiper.activeIndex);
               setMobileZoom(false);
             }}
-            className="h-full min-h-[260px] w-full overflow-hidden rounded-2xl border border-white/[0.08] sm:min-h-[320px]"
+            className="w-full overflow-hidden rounded-2xl border border-white/[0.08]"
             data-lenis-prevent
           >
             {images.map((img, i) => (
               <SwiperSlide key={img + i}>
                 <button
                   type="button"
-                  className="relative block h-[260px] w-full overflow-hidden bg-black sm:h-[320px]"
+                  className="product-gallery-main relative block w-full overflow-hidden bg-black"
                   onClick={handleMobileTap}
                   aria-label={`View image ${i + 1}`}
                 >
@@ -79,7 +79,7 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
                       fill
                       priority={i === 0}
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover object-center"
+                      className="object-contain object-center"
                       quality={92}
                       draggable={false}
                     />
@@ -98,10 +98,10 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
           </button>
         </div>
 
-        {/* Desktop — hover zoom (unchanged) */}
+        {/* Desktop — contained in left column */}
         <div
           className={cn(
-            "relative hidden min-h-0 flex-1 overflow-hidden rounded-2xl bg-black lg:block",
+            "product-gallery-main relative hidden w-full overflow-hidden rounded-2xl bg-black lg:block",
             "border border-white/[0.08]",
           )}
           onMouseEnter={() => setZoom(true)}
@@ -109,7 +109,7 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
         >
           <motion.div
             className="absolute inset-0"
-            animate={{ scale: zoom ? 1.04 : 1 }}
+            animate={{ scale: zoom ? 1.03 : 1 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
@@ -117,15 +117,15 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
               alt={alt}
               fill
               priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 42vw"
+              className="object-contain object-center p-3"
               quality={92}
             />
           </motion.div>
           <button
             type="button"
             onClick={() => setFullscreen(true)}
-            className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-black/50 text-white backdrop-blur-sm"
+            className="absolute right-3 top-3 z-10 grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-black/50 text-white backdrop-blur-sm"
             aria-label="Fullscreen"
           >
             <Maximize2 className="h-4 w-4" />
@@ -133,7 +133,7 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
         </div>
 
         <div
-          className="flex shrink-0 gap-2 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="product-gallery-thumbs flex w-full shrink-0 gap-2 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           data-lenis-prevent
         >
           {images.map((img, i) => (
@@ -146,7 +146,7 @@ export default function ProductGallery({ images, alt, className }: ProductGaller
                 i === active ? "border-white/50" : "border-white/10 opacity-70",
               )}
             >
-              <Image src={img} alt="" fill className="object-cover object-center" sizes="64px" />
+              <Image src={img} alt="" fill className="object-contain object-center p-1" sizes="64px" />
             </button>
           ))}
         </div>

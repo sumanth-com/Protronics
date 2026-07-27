@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Box, DoorClosed, DoorOpen, WashingMachine } from "lucide-react";
+import { DoorClosed, DoorOpen, WashingMachine } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const categories = [
-  { label: "Mini Fridges", href: "/shop/mini-fridges", icon: Box },
   { label: "Single Door", href: "/shop/single-door", icon: DoorClosed },
   { label: "Double Door", href: "/shop/double-door", icon: DoorOpen },
   { label: "Washing Machines", href: "/shop/washing-machines", icon: WashingMachine },

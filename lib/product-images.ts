@@ -1,11 +1,8 @@
 /** Semantic product image filenames (assets + public/images/) */
 export const REFRIGERATOR_IMAGE_FILES: Record<string, string> = {
-  "sf-godrej-240": "godrej-edge-pro-single-door-240l.webp",
   "sf-lg-190": "lg-single-door-190l.webp",
   "sf-godrej-edge-190": "godrej-edge-pro-190l.webp",
   "df-whirlpool-protton-260": "whirlpool-protton-triple-door-260l.webp",
-  "mini-haier-190": "haier-compact-mini-fridge-190l.webp",
-  "mini-lg-170": "lg-direct-cool-mini-170l.webp",
 };
 
 export const WASHING_MACHINE_IMAGE_FILES: Record<string, string> = {
@@ -25,7 +22,6 @@ const IMAGE_ROOTS = {
 
 /** Shop-by-category cover images (your product photos). */
 export const CATEGORY_COVER_IMAGES = {
-  "mini-fridges": imageUrl("refrigerators", "haier-compact-mini-fridge-190l.webp"),
   "single-door": imageUrl("refrigerators", REFRIGERATOR_IMAGE_FILES["sf-lg-190"]!),
   "double-door": imageUrl(
     "refrigerators",

@@ -117,7 +117,6 @@ function getIdealFor(product: ShopProduct): string[] {
   if (product.categoryId === "washing-machines") {
     return ["Families", "Apartments", "Rental Homes"];
   }
-  if (product.categoryId === "mini-fridges") return ["Apartments", "Office Spaces", "Rental Homes"];
   if (product.capacityLiters >= 500) return ["Families", "Premium Homes", "Office Spaces"];
   return ["Families", "Apartments", "Rental Homes"];
 }

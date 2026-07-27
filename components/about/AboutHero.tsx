@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import AboutAmbient from "@/components/about/AboutAmbient";
 import CtaButton from "@/components/ui/CtaButton";
 import HeroImage from "@/assets/About.webp";
@@ -127,27 +126,15 @@ export default function AboutHero() {
 
           <motion.div
             variants={fadeUp}
-            className="about-hero-ctas grid w-full max-w-sm grid-cols-2 gap-2 md:mt-8 md:flex md:max-w-none md:flex-row md:items-center md:justify-start"
+            className="about-hero-ctas flex w-full max-w-sm justify-center md:mt-8 md:max-w-none md:justify-start"
           >
             <CtaButton
               href={ABOUT_LINKS.collection}
               size="md"
-              fullWidth
-              className="min-h-[48px] text-[12px] sm:w-auto sm:text-[13px]"
+              className="min-h-[48px] text-[12px] sm:text-[13px]"
             >
               <span className="truncate">Explore</span>
               <ArrowUpRight className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
-            </CtaButton>
-
-            <CtaButton
-              href={ABOUT_LINKS.whatsapp}
-              external
-              size="md"
-              fullWidth
-              className="min-h-[48px] text-[12px] sm:w-auto sm:text-[13px]"
-            >
-              <WhatsAppIcon className="h-3.5 w-3.5 shrink-0 sm:h-4 sm:w-4" />
-              <span className="truncate">WhatsApp</span>
             </CtaButton>
           </motion.div>
         </motion.div>
