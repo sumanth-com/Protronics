@@ -37,15 +37,16 @@
   --shadow-soft: var(--theme-shadow-sm);
 }
 
-/* ─── Light theme (clean marketplace — maroon + peach) ─── */
+/* ─── Light theme (page bg = soft starlight, not pure white) ─── */
 [data-theme="light"] {
-  --theme-bg: #f9f9f9;
-  --theme-bg-secondary: #f5f5f5;
-  --theme-surface: #ffffff;
-  --theme-surface-card: #ffffff;
-  --theme-elevated: #ffffff;
-  --theme-border: #e8e8e8;
-  --theme-border-subtle: #ebebeb;
+  /* Stronger starlight page wash; sections share one continuous bg */
+  --theme-bg: #ebe3d6;
+  --theme-bg-secondary: #ebe3d6;
+  --theme-surface: #f4eee4;
+  --theme-surface-card: #f4eee4;
+  --theme-elevated: #f8f3ea;
+  --theme-border: #d6ccbc;
+  --theme-border-subtle: #e0d6c6;
   --theme-fg: #000000;
   --theme-fg-secondary: #666666;
   --theme-fg-muted: #666666;
@@ -58,15 +59,15 @@
   --theme-gold: #70191b;
   --theme-bronze: #5a1416;
   --theme-hover-accent: #8a1f22;
-  --theme-nav-bg: rgba(249, 249, 249, 0.94);
-  --theme-nav-border: #e8e8e8;
+  --theme-nav-bg: rgba(235, 227, 214, 0.94);
+  --theme-nav-border: #d6ccbc;
   --theme-shadow: 0 18px 48px rgba(112, 25, 27, 0.08);
   --theme-shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.06);
-  --theme-section-a: #f9f9f9;
-  --theme-section-b: #ffffff;
-  --theme-section-c: #f5f5f5;
-  --theme-glass: rgba(255, 255, 255, 0.88);
-  --theme-input-bg: #ffffff;
+  --theme-section-a: #ebe3d6;
+  --theme-section-b: #ebe3d6;
+  --theme-section-c: #ebe3d6;
+  --theme-glass: rgba(244, 238, 228, 0.9);
+  --theme-input-bg: #f4eee4;
 
   --background: var(--theme-bg);
   --foreground: var(--theme-fg);
@@ -704,17 +705,16 @@ html.splash-exiting .splash-ambient {
   }
 }
 
-/* Section alternation (light mode) */
-[data-theme="light"] .theme-section-a {
-  background-color: var(--theme-section-a) !important;
-}
-
-[data-theme="light"] .theme-section-b {
-  background-color: var(--theme-section-b) !important;
-}
-
+/* Section backgrounds — continuous light page (no alternating bands) */
+[data-theme="light"] .theme-section-a,
+[data-theme="light"] .theme-section-b,
 [data-theme="light"] .theme-section-c {
-  background-color: var(--theme-section-c) !important;
+  background-color: var(--theme-bg) !important;
+}
+
+/* Hide dark-mode seam fades that read as section split lines in light mode */
+[data-theme="light"] .section-seam-fade {
+  display: none !important;
 }
 
 /* ─── Light mode: map legacy dark Tailwind utilities to theme tokens ─── */
@@ -758,7 +758,7 @@ html.splash-exiting .splash-ambient {
 }
 
 [data-theme="light"] .bg-white {
-  background-color: #ffffff;
+  background-color: var(--theme-surface-card);
 }
 
 [data-theme="light"] .bg-white\/\[0\.02\],
@@ -961,7 +961,7 @@ html.splash-exiting .splash-ambient {
 
 [data-theme="light"] .navbar-logo-pill {
   border-color: color-mix(in srgb, var(--theme-border) 85%, var(--theme-accent) 15%);
-  background: #ffffff;
+  background: var(--theme-surface-card);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
@@ -1750,11 +1750,11 @@ html:not([data-theme="light"]) .contact-location-map-frame {
 
 /* ─── Final CTA — light showroom treatment ─── */
 [data-theme="light"] .final-cta-section {
-  background-color: var(--theme-section-b) !important;
+  background-color: var(--theme-bg) !important;
 }
 
 [data-theme="light"] .final-cta-effects {
-  background-color: var(--theme-section-b) !important;
+  background-color: var(--theme-bg) !important;
 }
 
 [data-theme="light"] .final-cta-bg-image {
@@ -1765,10 +1765,10 @@ html:not([data-theme="light"]) .contact-location-map-frame {
 [data-theme="light"] .final-cta-cinematic-mask {
   background: linear-gradient(
     to top,
-    rgba(255, 255, 255, 0.96),
-    rgba(255, 255, 255, 0.72) 50%,
-    rgba(249, 249, 249, 0.35) 75%,
-    rgba(249, 249, 249, 0.08)
+    color-mix(in srgb, var(--theme-bg) 96%, transparent),
+    color-mix(in srgb, var(--theme-bg) 72%, transparent) 50%,
+    color-mix(in srgb, var(--theme-bg) 35%, transparent) 75%,
+    color-mix(in srgb, var(--theme-bg) 8%, transparent)
   ) !important;
 }
 
@@ -3185,12 +3185,12 @@ html:not([data-theme="light"]) .contact-location-map-frame {
 }
 
 [data-theme="light"] .shop-product-stage {
-  background-color: #ffffff !important;
+  background-color: var(--theme-surface-card) !important;
   background-image: radial-gradient(
     650px 280px at 50% 38%,
-    rgba(255, 255, 255, 1),
-    rgba(248, 248, 248, 0.95) 55%,
-    rgba(240, 240, 240, 0.9) 100%
+    #f8f3ea,
+    #ebe3d6 55%,
+    #ebe3d6 100%
   ) !important;
   border-color: var(--theme-border) !important;
 }
@@ -5488,7 +5488,7 @@ body.product-page-active {
 }
 
 [data-theme="light"] .product-gallery-main {
-  background: #f3f3f3 !important;
+  background: var(--theme-bg-secondary) !important;
   border-color: var(--theme-border) !important;
 }
 
