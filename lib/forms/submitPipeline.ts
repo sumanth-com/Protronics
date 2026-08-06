@@ -1,3 +1,4 @@
+import { trackGoogleAdsLeadConversion } from "@/lib/analytics";
 import { postToGoogleSheets } from "@/lib/forms/googleSheetsClient";
 import { sanitizePayload } from "@/lib/forms/sanitize";
 import type { PipelineResult, StandardFormPayload, ValidationResult } from "@/lib/forms/types";
@@ -87,6 +88,7 @@ export async function runSubmitPipeline<T extends Record<string, unknown>>(
         code: res.code ?? "SERVER",
       };
     }
+    trackGoogleAdsLeadConversion();
     return {
       success: true,
       message: res.message,
